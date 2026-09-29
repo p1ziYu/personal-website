@@ -1,0 +1,191 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+const title = "诅咒字体生成器";
+const description =
+	"输入一段文字，一键生成让字体设计师血压升高的诅咒排版。灵感来自 Show HN 热门项目 Bastardica（Times New Bastard）。";
+---
+
+<MainGridLayout title={title} description={description}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
+		<div class="card-base z-10 px-9 py-6 relative w-full">
+			<h1 class="text-2xl font-bold mb-2">诅咒字体生成器</h1>
+			<p class="text-sm opacity-70 mb-1">
+				灵感来自 Show HN 本周热门
+				<a class="underline" href="https://bastardica.mitpit.com" target="_blank" rel="noopener">Bastardica</a>
+				—— 用 OpenType 连字把两种字体搅在一起，做出 "Times New Bastard"
+				这种让人难受又好笑的字体。原版要改字体文件，我做了个轻量网页版：不碰字体，只在渲染层搞事。
+			</p>
+			<p class="text-sm opacity-70 mb-6">输入文字，选个诅咒，实时预览。效果稳定不闪烁，不满意点"换一批"。</p>
+
+			<textarea
+				id="cursed-input"
+				rows="3"
+				class="w-full rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3 text-base outline-none focus:ring-2 focus:ring-[var(--primary)]"
+			>好好学习，天天向上。The quick brown fox jumps over the lazy dog.</textarea>
+
+			<div id="cursed-presets" class="flex flex-wrap gap-2 mt-4"></div>
+			<p id="cursed-preset-desc" class="text-sm opacity-60 mt-2 h-5"></p>
+
+			<div
+				id="cursed-preview"
+				class="mt-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] p-6 text-[28px] leading-[2.2] break-words"
+				style="white-space: pre-wrap;"
+			></div>
+
+			<div class="flex flex-wrap gap-2 mt-4">
+				<button
+					id="cursed-shuffle"
+					class="px-4 py-2 rounded-xl bg-[var(--primary)] text-white text-sm font-medium hover:opacity-90 active:scale-95 transition"
+				>🎲 换一批</button>
+				<button
+					id="cursed-copy"
+					class="px-4 py-2 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
+				>📋 复制 HTML</button>
+				<span id="cursed-toast" class="text-sm opacity-0 transition-opacity self-center">已复制，去富文本编辑器里粘贴试试</span>
+			</div>
+
+			<hr class="my-6 border-black/10 dark:border-white/10" />
+			<p class="text-xs opacity-50">
+				玩法说明：字体混搭致敬 Bastardica 的 "base font but every nth glyph is mix-in"；
+				字距灾难致敬评论区刷屏的 "keming" 梗。本页面由 AI 生成。
+			</p>
+		</div>
+	</div>
+
+	<script>
+		const STACKS = [
+			'Georgia, "Times New Roman", "Songti SC", "SimSun", serif',
+			'"Comic Sans MS", "Chalkboard SE", "Comic Neue", "Segoe Print", "Bradley Hand", "STKaiti", "KaiTi", cursive',
+			'"Courier New", Courier, "Nimbus Mono PS", monospace',
+			'system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
+			'Impact, "Arial Black", "STHeiti", sans-serif',
+		];
+
+		const PRESETS = {
+			mix: { name: "🔀 字体混搭", desc: "每 3 个字换一种混蛋字体，致敬 Times New Bastard" },
+			keming: { name: "↔️ 字距灾难", desc: "kerning 写成 keming：字距全凭缘分，有的挤死有的离家出走" },
+			ransom: { name: "✂️ 赎金信条", desc: "每个字随机字体、大小、上下浮动、旋转，像从报纸上剪的" },
+			chaos: { name: "🔥 地狱全开", desc: "以上全部叠加，字体设计师看了会报警" },
+		};
+
+		const state = { preset: "mix", seed: 7 };
+
+		const input = document.getElementById("cursed-input");
+		const preview = document.getElementById("cursed-preview");
+		const presetBar = document.getElementById("cursed-presets");
+		const presetDesc = document.getElementById("cursed-preset-desc");
+		const toast = document.getElementById("cursed-toast");
+
+		function xmur3(str) {
+			let h = 1779033703 ^ str.length;
+			for (let i = 0; i < str.length; i++) {
+				h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+				h = (h << 13) | (h >>> 19);
+			}
+			return function () {
+				h = Math.imul(h ^ (h >>> 16), 2246822507);
+				h = Math.imul(h ^ (h >>> 13), 3266489909);
+				return (h ^= h >>> 16) >>> 0;
+			};
+		}
+
+		function mulberry32(a) {
+			return function () {
+				a |= 0;
+				a = (a + 0x6d2b79f5) | 0;
+				let t = Math.imul(a ^ (a >>> 15), 1 | a);
+				t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+				return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+			};
+		}
+
+		function esc(ch) {
+			return ch.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+		}
+
+		function render() {
+			const text = input.value;
+			const rng = mulberry32(xmur3(text + "|" + state.preset + "|" + state.seed)());
+			let html = "";
+			for (let i = 0; i < text.length; i++) {
+				const ch = text[i];
+				if (ch === "\n") {
+					html += "<br>";
+					continue;
+				}
+				let s = "";
+				const p = state.preset;
+				if (p === "mix" || p === "chaos") {
+					const f = p === "mix" ? (i % 3 === 2 ? 1 : 0) : Math.floor(rng() * STACKS.length);
+					s += "font-family:" + STACKS[f] + ";";
+				}
+				if (p === "keming" || p === "chaos") {
+					s += "letter-spacing:" + (rng() * 0.85 - 0.25).toFixed(2) + "em;";
+				}
+				if (p === "ransom" || p === "chaos") {
+					const f = Math.floor(rng() * STACKS.length);
+					const size = (0.85 + rng() * 0.5).toFixed(2);
+					const dy = ((rng() - 0.5) * 0.35).toFixed(2);
+					const rot = ((rng() - 0.5) * 14).toFixed(1);
+					s +=
+						"font-family:" + STACKS[f] + ";" +
+						"font-size:" + size + "em;" +
+						"display:inline-block;" +
+						"transform:translateY(" + dy + "em) rotate(" + rot + "deg);";
+					if (rng() < 0.35) s += "font-weight:bold;";
+					if (rng() < 0.25) s += "font-style:italic;";
+				}
+				html += '<span style="' + s + '">' + esc(ch) + "</span>";
+			}
+			preview.innerHTML = html || '<span class="opacity-40 text-base">在这里输入文字…</span>';
+		}
+
+		function renderPresetBar() {
+			presetBar.innerHTML = "";
+			Object.keys(PRESETS).forEach((key) => {
+				const b = document.createElement("button");
+				b.textContent = PRESETS[key].name;
+				const active = key === state.preset;
+				b.className =
+					"px-3 py-1.5 rounded-full text-sm border transition active:scale-95 " +
+					(active
+						? "bg-[var(--primary)] text-white border-transparent"
+						: "border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5");
+				b.addEventListener("click", () => {
+					state.preset = key;
+					renderPresetBar();
+					render();
+				});
+				presetBar.appendChild(b);
+			});
+			presetDesc.textContent = PRESETS[state.preset].desc;
+		}
+
+		document.getElementById("cursed-shuffle").addEventListener("click", () => {
+			state.seed = Math.floor(Math.random() * 1e9);
+			render();
+		});
+
+		document.getElementById("cursed-copy").addEventListener("click", async () => {
+			const snippet =
+				'<div style="font-size:28px;line-height:2.2;white-space:pre-wrap">' +
+				preview.innerHTML +
+				"</div>";
+			try {
+				await navigator.clipboard.writeText(snippet);
+				toast.style.opacity = "1";
+				setTimeout(() => (toast.style.opacity = "0"), 2500);
+			} catch (e) {
+				toast.textContent = "复制失败，浏览器不允许访问剪贴板";
+				toast.style.opacity = "1";
+				setTimeout(() => (toast.style.opacity = "0"), 2500);
+			}
+		});
+
+		input.addEventListener("input", render);
+
+		renderPresetBar();
+		render();
+	</script>
+</MainGridLayout>
