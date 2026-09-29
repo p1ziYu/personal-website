@@ -1,0 +1,74 @@
+---
+import QRCode from "qrcode";
+import { siteConfig } from "@/config/siteConfig";
+import { profileConfig } from "@/config/profileConfig";
+import { getSortedPosts } from "@/utils/content-utils";
+
+interface Props {
+	class?: string;
+	style?: string;
+}
+
+const { class: className, style } = Astro.props;
+const posts = await getSortedPosts();
+const startDate = siteConfig.siteStartDate || "2026-09-27";
+const ticketNumber = `PZY${startDate.replaceAll("-", "").slice(2)}`;
+const qrCode = await QRCode.toDataURL(siteConfig.site_url, {
+	width: 112,
+	margin: 1,
+	color: { dark: "#153044", light: "#ffffff" },
+});
+---
+
+<section class:list={["card-base", "ticket-card", className]} style={style} aria-label={`${profileConfig.name}的车票`}>
+	<div class="ticket-top">
+		<span>{profileConfig.name} · BOARDING PASS</span>
+		<strong>{ticketNumber}</strong>
+	</div>
+	<div class="ticket-route" aria-label="行程">
+		<div><small>出发</small><strong>{profileConfig.name}</strong></div>
+		<span aria-hidden="true">✦ ─── ✦</span>
+		<div><small>前往</small><strong>下一站</strong></div>
+	</div>
+	<p class="ticket-bio">{profileConfig.bio}</p>
+	<div class="ticket-rule"></div>
+	<div class="ticket-details">
+		<div><small>乘客</small><strong>{profileConfig.name}</strong></div>
+		<div><small>发车</small><strong>{startDate}</strong></div>
+		<div><small>已航行</small><strong><span class="ticket-days">—</span> 天</strong></div>
+		<div><small>文章</small><strong>{posts.length} 篇</strong></div>
+	</div>
+	<div class="ticket-bottom">
+		<div><span class="ticket-stamp">个人<br />空间</span><small>扫码访问本站</small></div>
+		<img src={qrCode} width="88" height="88" alt={`${siteConfig.title}二维码，地址 ${siteConfig.site_url}`} loading="lazy" />
+	</div>
+</section>
+
+<style>
+	.ticket-card { padding: 1rem; overflow: hidden; color: var(--content); }
+	.ticket-top { display:flex; justify-content:space-between; align-items:center; gap:.5rem; font-size:.66rem; font-weight:700; letter-spacing:.12em; color:var(--content-meta); }
+	.ticket-top strong { color:var(--primary); font-size:.7rem; }
+	.ticket-route { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:1.1rem 0 .4rem; }
+	.ticket-route div { display:flex; flex-direction:column; min-width:0; }
+	.ticket-route div:last-child { text-align:right; }
+	.ticket-route small,.ticket-details small,.ticket-bottom small { color:var(--content-meta); font-size:.7rem; }
+	.ticket-route strong { font-size:1.25rem; letter-spacing:.04em; }
+	.ticket-route span { color:var(--primary); font-size:.65rem; white-space:nowrap; }
+	.ticket-bio { color:var(--content-meta); font-size:.78rem; margin-bottom:1rem; }
+	.ticket-rule { border-top:1px dashed var(--line-divider); margin:0 -.25rem 1rem; }
+	.ticket-details { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; }
+	.ticket-details div { display:flex; flex-direction:column; gap:.15rem; }
+	.ticket-details strong { font-size:.82rem; }
+	.ticket-bottom { display:flex; justify-content:space-between; align-items:end; margin-top:1rem; }
+	.ticket-bottom > div { display:flex; flex-direction:column; gap:.35rem; }
+	.ticket-stamp { color:var(--primary); border:1px solid currentColor; border-radius:50%; width:3.7rem; height:3.7rem; display:grid; place-content:center; text-align:center; transform:rotate(-14deg); font-size:.56rem; font-weight:800; line-height:1.1; letter-spacing:.1em; }
+	.ticket-bottom img { background:#fff; border-radius:.5rem; padding:.25rem; }
+</style>
+
+<script is:inline define:vars={{ startDate }}>
+	(function () {
+		const start = new Date(startDate);
+		const days = Math.max(1, Math.ceil(Math.abs(Date.now() - start.getTime()) / 86400000));
+		document.querySelectorAll('.ticket-days').forEach((item) => { item.textContent = String(days); });
+	})();
+</script>

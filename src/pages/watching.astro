@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/pages/common.css";
+---
+
+<MainGridLayout title="追番" description="痞子宇的追番记录">
+	<section class="card-base p-8 sm:p-10">
+		<div class="page-heading mb-6">
+			<div class="page-icon" aria-hidden="true"><Icon name="material-symbols:movie-outline" /></div>
+			<div><h2>追番</h2><p>动画与作品记录</p></div>
+		</div>
+		<p class="text-neutral-600 dark:text-neutral-300 leading-7">追番页面已恢复，列表会在接入 Bangumi 或 B 站账号后展示。</p>
+		<p class="text-sm text-neutral-500 dark:text-neutral-400 mt-4">目前没有接入账号，因此这里不会显示主题作者的示例记录。</p>
+	</section>
+</MainGridLayout>

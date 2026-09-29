@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/pages/common.css";
+---
+
+<MainGridLayout title="支持本站" description="谢谢你来到痞子宇的个人空间">
+	<section class="card-base p-8 sm:p-10">
+		<div class="page-heading mb-6">
+			<div class="page-icon" aria-hidden="true"><Icon name="material-symbols:favorite-outline" /></div>
+			<div><h2>支持本站</h2><p>感谢你的支持</p></div>
+		</div>
+		<p class="text-neutral-600 dark:text-neutral-300 leading-7">如果你喜欢这里的内容，分享一篇文章或把网站加入书签，就是很好的支持。</p>
+		<p class="text-sm text-neutral-500 dark:text-neutral-400 mt-4">目前没有设置收款方式，因此不会显示其他人的收款码。</p>
+	</section>
+</MainGridLayout>
