@@ -1,0 +1,134 @@
+---
+import { Icon } from "astro-icon/components";
+import AnilistGrid from "@/components/pages/anilist/AnilistGrid.svelte";
+import { siteConfig } from "@/config";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import "@/styles/pages/common.css";
+import "@/styles/pages/media-grid.css";
+import type { AnilistListGroup } from "@/types/anilist";
+import { fetchAnilistLists } from "@/utils/anilist-utils";
+import { formatDateI18n } from "@/utils/date-utils";
+
+// 检查页面是否启用
+if (!siteConfig.pages.anilist) {
+	return Astro.redirect("/404/");
+}
+
+// 获取构建时间
+const buildTime = formatDateI18n(new Date());
+
+// AniList 配置
+const ANILIST_USERNAME = siteConfig.anilist?.username;
+const isConfigured = !!ANILIST_USERNAME && ANILIST_USERNAME.trim() !== "";
+
+// 获取 AniList 追番数据
+let groups: AnilistListGroup[] = [];
+let fetchError = "";
+if (isConfigured) {
+	try {
+		groups = await fetchAnilistLists(ANILIST_USERNAME);
+		console.log(`[AniList] Page data: ${groups.reduce((s, g) => s + g.entries.length, 0)} items`);
+	} catch (error) {
+		fetchError = error instanceof Error ? error.message : String(error);
+		console.error("[AniList] Failed to fetch data:", error);
+	}
+}
+
+// 统计数据
+const totalCount = groups.reduce((s, g) => s + g.entries.length, 0);
+const watchingCount = groups.find((g) => g.name === "Watching")?.entries.length ?? 0;
+const myScores = groups.flatMap((g) => g.entries.map((e) => e.score)).filter((s) => s != null);
+const avgMyScore =
+	myScores.length > 0 ? (myScores.reduce((a, b) => a + b, 0) / myScores.length).toFixed(1) : "—";
+---
+
+<MainGridLayout title="AniList 追番" description={`${ANILIST_USERNAME} 的 AniList 追番列表`}>
+  <div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
+    <div class="card-base z-10 px-4 sm:px-6 md:px-9 py-4 sm:py-6 relative w-full">
+      <!-- 页面标题 -->
+      <div class="relative w-full mb-8">
+        <div class="mb-6">
+          <div class="page-heading">
+            <div class="page-icon" aria-hidden="true">
+              <Icon name="material-symbols:movie" />
+            </div>
+            <div>
+              <h2>AniList 追番</h2>
+              <p>@{ANILIST_USERNAME} 的追番列表</p>
+            </div>
+            <p class="page-updated">
+              <span>最后更新</span>
+              <span>{buildTime}</span>
+            </p>
+          </div>
+        </div>
+
+        {!isConfigured ? (
+          /* 未配置提示 */
+          <div class="text-center py-16">
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-(--btn-regular-bg) rounded-full mb-6 border border-(--line-divider)">
+              <Icon name="material-symbols:settings" class="text-[2rem] text-(--btn-content)" />
+            </div>
+            <h2 class="text-xl font-semibold text-black/80 dark:text-white/80 mb-3">
+              还没接上 AniList
+            </h2>
+            <p class="text-black/60 dark:text-white/60 mb-4 max-w-md mx-auto">
+              在站点配置里填上 AniList 用户名，重新构建后这里就会显示追番列表。
+            </p>
+          </div>
+        ) : fetchError ? (
+          <div class="text-center py-16">
+            <h2 class="text-xl font-semibold text-black/80 dark:text-white/80 mb-3">
+              列表拉取失败
+            </h2>
+            <p class="text-black/60 dark:text-white/60 mb-4 max-w-md mx-auto">
+              {fetchError}
+            </p>
+          </div>
+        ) : (
+          <>
+            <!-- 统计卡片 -->
+            <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-6">
+              <div class="bg-(--card-bg) rounded-xl p-3 sm:p-4 border border-(--line-divider)">
+                <div class="flex items-center gap-2 sm:gap-3">
+                  <div class="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-(--primary)/10 flex items-center justify-center shrink-0">
+                    <Icon name="material-symbols:movie-filter" class="text-[1rem] sm:text-[1.25rem] text-(--primary)" />
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-[10px] sm:text-xs text-neutral-500 dark:text-neutral-400">全部</div>
+                    <div class="text-lg sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100">{totalCount}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-(--card-bg) rounded-xl p-3 sm:p-4 border border-(--line-divider)">
+                <div class="flex items-center gap-2 sm:gap-3">
+                  <div class="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-sky-500/10 flex items-center justify-center shrink-0">
+                    <Icon name="material-symbols:play-circle" class="text-[1rem] sm:text-[1.25rem] text-sky-500" />
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-[10px] sm:text-xs text-neutral-500 dark:text-neutral-400">在看</div>
+                    <div class="text-lg sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100">{watchingCount}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="bg-(--card-bg) rounded-xl p-3 sm:p-4 border border-(--line-divider)">
+                <div class="flex items-center gap-2 sm:gap-3">
+                  <div class="h-8 w-8 sm:h-10 sm:w-10 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
+                    <Icon name="material-symbols:star" class="text-[1rem] sm:text-[1.25rem] text-amber-500" />
+                  </div>
+                  <div class="min-w-0">
+                    <div class="text-[10px] sm:text-xs text-neutral-500 dark:text-neutral-400">我的均分</div>
+                    <div class="text-lg sm:text-2xl font-bold text-neutral-900 dark:text-neutral-100">{avgMyScore}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 追番网格（Svelte 交互组件） -->
+            <AnilistGrid client:load groups={groups} />
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+</MainGridLayout>
