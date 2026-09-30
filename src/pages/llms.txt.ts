@@ -59,7 +59,7 @@ const KEY_PAGES: KeyPage[] = [
 	},
 	{
 		labelKey: I18nKey.bilibili,
-		path: "/bilibili/",
+		path: "/watching/",
 		descKey: I18nKey.bilibiliSubtitle,
 		pageKey: "bilibili",
 	},
