@@ -228,18 +228,6 @@ const remoteReferrerPolicy =
 				try { apiUrls = JSON.parse(apiUrlsAttr); } catch (_e) { /* ignore */ }
 			}
 
-			const hideLoading = () => {
-				container.setAttribute('data-loading', 'false');
-				img.style.opacity = '1';
-				const placeholder = container.querySelector('.lqip-placeholder') as HTMLElement | null;
-				if (placeholder) placeholder.classList.add('loaded');
-			};
-
-			const showError = () => {
-				container.setAttribute('data-loading', 'false');
-				container.setAttribute('data-error', 'true');
-			};
-
 			// 统一的错误处理：尝试下一个API或显示错误提示
 			const onError = () => {
 				if (img.dataset.remote !== 'true') return;
@@ -253,6 +241,24 @@ const remoteReferrerPolicy =
 				} else {
 					showError();
 				}
+			};
+
+			// 有些随机图 API 会返回“触发 load 事件但实际空白”的响应，必须校验真实尺寸，
+			// 无效时走 onError 换下一个 API，而不是直接显示空白图
+			const hideLoading = () => {
+				if (img.naturalWidth === 0 || img.naturalHeight === 0) {
+					onError();
+					return;
+				}
+				container.setAttribute('data-loading', 'false');
+				img.style.opacity = '1';
+				const placeholder = container.querySelector('.lqip-placeholder') as HTMLElement | null;
+				if (placeholder) placeholder.classList.add('loaded');
+			};
+
+			const showError = () => {
+				container.setAttribute('data-loading', 'false');
+				container.setAttribute('data-error', 'true');
 			};
 
 			if (img.complete) {
