@@ -60,7 +60,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "Discord",
 			icon: "simple-icons:discord",
-			url: "/about/#contact",
+			url: "https://discord.com/users/882814057315434546",
 			showName: false,
 		},
 		{
