@@ -54,7 +54,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "QQ",
 			icon: "simple-icons:qq",
-			url: "/about/#contact",
+			url: "https://qm.qq.com/q/LqbOKYQAua",
 			showName: false,
 		},
 		{
