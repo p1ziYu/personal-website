@@ -4,9 +4,10 @@
 
 你所热爱的，就是你的生活。
 
-更多个人介绍和联系方式会在准备好后补上。
+更多个人介绍会在准备好后补上。
 
-这个网站基于 [Firefly](https://github.com/CuteLeaf/Firefly) 构建，首屏海岸插画为本站生成的原创素材。
+联系邮箱：[contact@p1ziyu.com](mailto:contact@p1ziyu.com)。
+
+这个网站基于 [Firefly](https://github.com/CuteLeaf/Firefly) 构建。
 
 追番、歌单和留言服务会在相关资料准备好后接入。
-
