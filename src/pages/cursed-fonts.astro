@@ -63,7 +63,7 @@ const description =
 		];
 
 		const PRESETS = {
-			mix: { name: "🔀 字体混搭", desc: "每 3 个字换一种混蛋字体，致敬 Times New Bastard" },
+			mix: { name: "🔀 字体混搭", desc: "每 3 个字换一种混蛋字体，致敬 Times New Bastard；换一批换一对字体" },
 			keming: { name: "↔️ 字距灾难", desc: "kerning 写成 keming：字距全凭缘分，有的挤死有的离家出走" },
 			ransom: { name: "✂️ 赎金信条", desc: "每个字随机字体、大小、上下浮动、旋转，像从报纸上剪的" },
 			chaos: { name: "🔥 地狱全开", desc: "以上全部叠加，字体设计师看了会报警" },
@@ -107,6 +107,13 @@ const description =
 		function render() {
 			const text = input.value;
 			const rng = mulberry32(xmur3(text + "|" + state.preset + "|" + state.seed)());
+			// mix 预设按 seed 随机选一对字体(base + mix-in)，保证"换一批"有效果
+			let mixBase = 0, mixIn = 1;
+			if (state.preset === "mix") {
+				mixBase = Math.floor(rng() * STACKS.length);
+				mixIn = Math.floor(rng() * (STACKS.length - 1));
+				if (mixIn >= mixBase) mixIn += 1;
+			}
 			let html = "";
 			for (let i = 0; i < text.length; i++) {
 				const ch = text[i];
@@ -117,7 +124,7 @@ const description =
 				let s = "";
 				const p = state.preset;
 				if (p === "mix" || p === "chaos") {
-					const f = p === "mix" ? (i % 3 === 2 ? 1 : 0) : Math.floor(rng() * STACKS.length);
+					const f = p === "mix" ? (i % 3 === 2 ? mixIn : mixBase) : Math.floor(rng() * STACKS.length);
 					s += "font-family:" + STACKS[f] + ";";
 				}
 				if (p === "keming" || p === "chaos") {
