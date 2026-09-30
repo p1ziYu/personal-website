@@ -1,7 +1,7 @@
 ---
 title: 诅咒字体生成器
 published: 2026-09-29
-image: assets/images/projects/cursed-fonts-cover.webp
+image: ../../assets/images/projects/cursed-fonts-cover.webp
 description: 输入文字，一键生成被诅咒的排版：4 种预设（混搭/字距灾难/赎金信条/地狱全开），实时预览，复制 HTML 即用。
 tags: [Astro, 小工具, 字体]
 status: published
