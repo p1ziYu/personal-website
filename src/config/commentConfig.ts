@@ -7,6 +7,7 @@ export const commentConfig: CommentConfig = {
 	//twikoo评论系统配置
 	twikoo: {
 		envId: "https://comments.p1ziyu.com",
+		jsUrl: "https://registry.npmmirror.com/twikoo/2.0.12/files/dist/twikoo.min.js",
 		// 设置 Twikoo 评论系统语言
 		lang: "zh-CN",
 		// 是否启用文章访问量统计功能
