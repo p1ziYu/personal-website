@@ -264,7 +264,7 @@ export const siteConfig: SiteConfig = {
 	// ── AniList配置 ──────────────────────────────────
 	anilist: {
 		// 你的 AniList 用户名
-		username: "",
+		username: "P1ziyu",
 	},
 
 	// ── 番组计划bangumi配置 ──────────────────────────────────
