@@ -8,7 +8,7 @@ status: published
 link:
   - label: 打开使用
     icon: material-symbols:open-in-new
-    value: /cursed-fonts/
+    value: /projects/cursed-fonts/
 ---
 
 诅咒字体生成器：输入任意文字，选择诅咒预设，实时预览被诅咒的排版效果，一键复制 HTML 代码。
