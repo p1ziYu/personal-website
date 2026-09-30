@@ -17,7 +17,7 @@
 - 小红书：[小红书主页](https://www.xiaohongshu.com/user/profile/652f6e13000000002a018ddd)
 - LinkedIn：[LinkedIn主页](https://www.linkedin.com/in/zhengfan-ryan-yang)
 - Steam：[p1ziYu](https://steamcommunity.com/id/p1ziYu/)
-- QQ：[QQ名片](https://qm.qq.com/q/LqbOKYQAua)（45019151）
+- QQ：[QQ名片](https://qm.qq.com/q/LqbOKYQAua)
 - Discord：[Discord主页](https://discord.com/users/882814057315434546)
 
 这个网站基于 [Firefly](https://github.com/CuteLeaf/Firefly) 构建。
