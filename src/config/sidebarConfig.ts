@@ -4,19 +4,19 @@ import type { SidebarLayoutConfig } from "../types/sidebarConfig";
 export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	enable: true,
 	position: "both",
-	hideSidebarOnPostPage: true,
+	hideSidebarOnPostPage: false,
 	leftComponents: [
 		{
 			type: "profile",
 			enable: true,
 			position: "top",
-			showOnPostPage: false,
+			showOnPostPage: true,
 		},
 		{
 			type: "music",
 			enable: true,
 			position: "top",
-			showOnPostPage: false,
+			showOnPostPage: true,
 		},
 		{
 			type: "categories",
@@ -43,13 +43,20 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			type: "siteInfo",
 			enable: true,
 			position: "top",
-			showOnPostPage: false,
+			showOnPostPage: true,
 		},
 		{
 			type: "calendar",
 			enable: true,
 			position: "top",
 			showOnPostPage: false,
+		},
+		{
+			type: "sidebarToc",
+			enable: true,
+			position: "top",
+			showOnPostPage: true,
+			hideOnNonPostPage: true,
 		},
 	],
 	mobileBottomComponents: [
