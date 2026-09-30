@@ -27,6 +27,9 @@ const showTitle = widgetConfig?.showTitle !== false;
 
 // 加密文章不在服务端渲染目录（避免标题泄露），交由客户端解密后生成
 const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
+
+// 无目录项且非加密页时隐藏空组件（如无标题的项目工具页）
+const isEmptyToc = !encrypted && items.length === 0;
 ---
 
 <WidgetLayout
@@ -34,7 +37,7 @@ const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
   showTitle={showTitle}
   id="sidebar-toc"
   class={className}
-  style={style}
+  style={isEmptyToc ? "display:none" : style}
 >
   <div class="toc-scroll-container custom-scrollbar">
     <div
