@@ -33,6 +33,25 @@ html.is-page-transitioning .banner-home-text-overlay {
     animation: banner-fadeInUp 0.3s ease-out 0.3s both;
 }
 
+/* 桌面端可读性增强：亮色壁纸（如烟花）上也能看清标题/副标题 */
+@media (min-width: 641px) {
+    /* 文字背后的柔和暗色光晕 */
+    .banner-home-text-overlay::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 55% 42% at center, rgba(0, 0, 0, 0.38), transparent 70%);
+        pointer-events: none;
+        z-index: -1;
+    }
+    .banner-title {
+        text-shadow: 0 2px 24px rgba(0, 0, 0, 0.9), 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+    .banner-subtitle {
+        text-shadow: 0 1px 14px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
+    }
+}
+
 @keyframes banner-fadeInUp {
     from {
         opacity: 0;
