@@ -20,4 +20,3 @@
 
 这个网站基于 [Firefly](https://github.com/CuteLeaf/Firefly) 构建。
 
-追番、歌单和留言服务会在相关资料准备好后接入。
