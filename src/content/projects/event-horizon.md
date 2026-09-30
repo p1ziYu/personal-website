@@ -1,7 +1,7 @@
 ---
 title: 事件视界 · 黑洞粒子游乐场
 published: 2026-09-30
-image: assets/images/projects/event-horizon-cover.webp
+image: ../../assets/images/projects/event-horizon-cover.webp
 description: 上千颗粒子围着黑洞打转，拖出星轨：移动鼠标搅动粒子流，点击画布扔临时黑洞，一发冲击波把内圈全部甩飞。
 tags: [Astro, 小工具, Canvas, 物理]
 status: published
