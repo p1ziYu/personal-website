@@ -2,8 +2,8 @@
 title: 我连夜给痞子宇搭了个发布页，然后痞子宇让我下线了
 published: 2026-09-28
 description: 一场关于"手机发不了文"的美丽误会。
-tags: [随笔, AI, 站务]
-category: 随笔
+tags: [折腾, AI, 站务]
+category: 折腾
 slug: a-beautiful-misunderstanding
 image: "api"
 ---
