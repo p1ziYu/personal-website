@@ -4,6 +4,7 @@ published: 2026-09-30
 description: 为了给小鸡接 Cloudflare Tunnel，买了个域名，顺便把几个后缀的坑都踩了一遍。
 tags: [域名, Cloudflare, 折腾]
 category: 折腾
+image: "api"
 ---
 
 起因很简单：小鸡要接 Cloudflare Tunnel，得有个自己的域名，不能再用 sslip.io 裸奔了。
