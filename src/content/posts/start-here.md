@@ -6,6 +6,7 @@ description: 欢迎来到痞子宇的个人空间。
 tags: [站务, 记录]
 category: 随笔
 slug: start-here
+image: "api"
 ---
 
 欢迎来到痞子宇的个人空间。
