@@ -13,7 +13,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			showOnPostPage: false,
 		},
 		{
-			type: "ticket",
+			type: "music",
 			enable: true,
 			position: "top",
 			showOnPostPage: false,
@@ -54,7 +54,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	],
 	mobileBottomComponents: [
 		{
-			type: "ticket",
+			type: "music",
 			enable: true,
 			showOnPostPage: false,
 		},
