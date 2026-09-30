@@ -3,7 +3,7 @@ import type { SidebarLayoutConfig } from "../types/sidebarConfig";
 // 侧栏显示资料、分类、标签和站点统计，文章页继续让正文占满宽度。
 export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	enable: true,
-	position: "left",
+	position: "both",
 	hideSidebarOnPostPage: true,
 	leftComponents: [
 		{
