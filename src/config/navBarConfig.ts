@@ -28,7 +28,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => ({
 			children: [
 				LinkPresets.About,
 				LinkPresets.Watching,
-				LinkPresets.Music,
 				LinkPresets.Support,
 				LinkPresets.RSS,
 			],
@@ -151,11 +150,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "追番",
 		url: "/watching/",
 		icon: "material-symbols:movie-outline",
-	},
-	Music: {
-		name: "音乐",
-		url: "/music/",
-		icon: "material-symbols:music-note-rounded",
 	},
 	Support: {
 		name: "支持本站",
