@@ -10,15 +10,15 @@
 
 <a id="contact"></a>
 
-## 找到我
+## 其他平台
 
 - GitHub：[p1ziYu](https://github.com/p1ziYu)
 - Bilibili：[B站主页](https://space.bilibili.com/347153863)
 - 小红书：[小红书主页](https://www.xiaohongshu.com/user/profile/652f6e13000000002a018ddd)
-- LinkedIn：[Zhengfan (Ryan) Yang](https://www.linkedin.com/in/zhengfan-ryan-yang)
+- LinkedIn：[LinkedIn主页](https://www.linkedin.com/in/zhengfan-ryan-yang)
 - Steam：[p1ziYu](https://steamcommunity.com/id/p1ziYu/)
-- QQ：45019151
-- Discord：piziyu_
+- QQ：[QQ名片](https://qm.qq.com/q/LqbOKYQAua)（45019151）
+- Discord：[Discord主页](https://discord.com/users/882814057315434546)
 
 这个网站基于 [Firefly](https://github.com/CuteLeaf/Firefly) 构建。
 
