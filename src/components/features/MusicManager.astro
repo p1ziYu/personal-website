@@ -471,28 +471,49 @@ const managerConfigStr = JSON.stringify({
 
                 loadTrack(startIndex, false);
 
-                // 断点续播 + 自动播放
+                // 断点续播 + 自动播放（被浏览器拦截时，改为用户首次交互时开始）
                 var wantAutoplay = !!config.autoplay || (savedPlayback && savedPlayback.wasPlaying);
                 if (wantAutoplay) {
-                    var resumeAndPlay = function () {
+                    var interactHandler = null;
+                    var clearInteractHandler = function () {
+                        if (interactHandler) {
+                            window.removeEventListener('pointerdown', interactHandler);
+                            window.removeEventListener('keydown', interactHandler);
+                            interactHandler = null;
+                        }
+                    };
+                    var doSeekResume = function () {
                         if (savedPlayback && savedPlayback.time > 1) {
                             try { audio.currentTime = Math.min(savedPlayback.time, audio.duration || savedPlayback.time); } catch (e) {}
                         }
+                    };
+                    var doAutoPlay = function () {
                         audio.play().then(function () {
+                            clearInteractHandler();
                             state.isPlaying = true;
                             state.error = null;
                             emit('fm:play-state', { isPlaying: true });
                             savePlaybackState();
                         }).catch(function (e) {
-                            if (e && e.name !== 'AbortError') console.warn('Autoplay blocked:', e);
+                            if (e && e.name === 'AbortError') return;
+                            if (!interactHandler) {
+                                interactHandler = function () { doSeekResume(); doAutoPlay(); };
+                                window.addEventListener('pointerdown', interactHandler);
+                                window.addEventListener('keydown', interactHandler);
+                            }
+                            console.warn('Autoplay blocked; will start on first interaction');
                         });
                     };
+                    var kickOffPlayback = function () {
+                        doSeekResume();
+                        doAutoPlay();
+                    };
                     if (audio.readyState >= 1) {
-                        resumeAndPlay();
+                        kickOffPlayback();
                     } else {
                         audio.addEventListener('loadedmetadata', function onMusicMeta() {
                             audio.removeEventListener('loadedmetadata', onMusicMeta);
-                            resumeAndPlay();
+                            kickOffPlayback();
                         });
                     }
                 }
