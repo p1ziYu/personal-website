@@ -22,6 +22,48 @@ export const profileConfig: ProfileConfig = {
 	// showName: true 时显示图标和名称，false 时只显示图标
 	links: [
 		{
+			name: "GitHub",
+			icon: "fa7-brands:github",
+			url: "https://github.com/p1ziYu",
+			showName: false,
+		},
+		{
+			name: "Bilibili",
+			icon: "simple-icons:bilibili",
+			url: "https://space.bilibili.com/347153863",
+			showName: false,
+		},
+		{
+			name: "小红书",
+			icon: "simple-icons:xiaohongshu",
+			url: "https://www.xiaohongshu.com/user/profile/652f6e13000000002a018ddd",
+			showName: false,
+		},
+		{
+			name: "LinkedIn",
+			icon: "simple-icons:linkedin",
+			url: "https://www.linkedin.com/in/zhengfan-ryan-yang",
+			showName: false,
+		},
+		{
+			name: "Steam",
+			icon: "simple-icons:steam",
+			url: "https://steamcommunity.com/id/p1ziYu/",
+			showName: false,
+		},
+		{
+			name: "QQ",
+			icon: "simple-icons:qq",
+			url: "/about/#contact",
+			showName: false,
+		},
+		{
+			name: "Discord",
+			icon: "simple-icons:discord",
+			url: "/about/#contact",
+			showName: false,
+		},
+		{
 			name: "RSS",
 			icon: "fa7-solid:rss",
 			url: "/rss/",
