@@ -95,6 +95,7 @@ export type SiteConfig = {
 		mal: boolean; // MyAnimeList 页面开关
 		gallery: boolean; // 相册页面开关
 		bilibili: boolean; // 哔哩哔哩追番页面开关
+		anilist: boolean; // AniList 追番页面开关
 		dynamic: boolean; // 动态页面开关
 		projects: boolean; // 项目展示页开关
 	};
@@ -216,6 +217,11 @@ export type SiteConfig = {
 	// Bilibili 配置
 	bilibili?: {
 		uid?: string; // Bilibili 用户 UID
+	};
+
+	// AniList 配置
+	anilist?: {
+		username?: string; // AniList 用户名
 	};
 
 	// 分页配置
