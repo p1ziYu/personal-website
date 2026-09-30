@@ -5,6 +5,7 @@ description: 一场关于"手机发不了文"的美丽误会。
 tags: [随笔, AI, 站务]
 category: 随笔
 slug: ta-lian-ye-da-le-ge-fa-bu-ye
+image: "api"
 ---
 
 今晚痞子宇问我：小鸡上的个人空间还缺什么。
