@@ -35,6 +35,7 @@ const managerConfigStr = JSON.stringify({
 	volume: config.volume ?? 0.7,
 	playMode: config.playMode ?? "list",
 	showLyrics: config.showLyrics ?? true,
+	autoplay: config.autoplay ?? false,
 	i18n: {
 		noPlaying: i18n(I18nKey.musicNoPlaying),
 		lyrics: i18n(I18nKey.musicLyrics),
@@ -98,9 +99,9 @@ const managerConfigStr = JSON.stringify({
     var audio = document.createElement('audio');
     audio.crossOrigin = 'anonymous';
     audio.style.display = 'none';
-    audio.preload = 'none'; // 阻止浏览器预加载和自动恢复播放
+    audio.preload = 'metadata';
     document.body.appendChild(audio);
-    audio.pause(); // 确保不自动播放
+    audio.pause();
 
     // ── State ────────────────────────────────────────────────
     var loadVersion = 0; // incremented on each loadTrack to discard stale play() results
@@ -124,6 +125,28 @@ const managerConfigStr = JSON.stringify({
     if (config.playMode === 'random') state.playMode = 2;
     else if (config.playMode === 'one') state.playMode = 1;
     else state.playMode = 0;
+
+    // ── Playback persistence (resume after refresh) ──────────
+    var PLAYBACK_SAVE_KEY = 'music-player-state';
+    var lastStateSave = 0;
+    function savePlaybackState() {
+        try {
+            localStorage.setItem(PLAYBACK_SAVE_KEY, JSON.stringify({
+                index: state.currentIndex,
+                time: audio.currentTime || 0,
+                wasPlaying: state.isPlaying
+            }));
+        } catch (e) {}
+    }
+    function loadPlaybackState() {
+        try {
+            var raw = localStorage.getItem(PLAYBACK_SAVE_KEY);
+            if (!raw) return null;
+            var s = JSON.parse(raw);
+            if (typeof s.index !== 'number' || s.index < 0) return null;
+            return s;
+        } catch (e) { return null; }
+    }
 
     // ── Event helpers ────────────────────────────────────────
     function emit(name, detail) {
@@ -378,6 +401,18 @@ const managerConfigStr = JSON.stringify({
         }
     });
 
+    // Throttled playback-state persistence
+    audio.addEventListener('timeupdate', function () {
+        var now = Date.now();
+        if (now - lastStateSave > 5000) {
+            lastStateSave = now;
+            savePlaybackState();
+        }
+    });
+    audio.addEventListener('play', savePlaybackState);
+    audio.addEventListener('pause', savePlaybackState);
+    window.addEventListener('beforeunload', savePlaybackState);
+
     audio.addEventListener('ended', function () {
         playNext(true);
     });
@@ -417,8 +452,11 @@ const managerConfigStr = JSON.stringify({
                 // Apply volume
                 audio.volume = state.volume;
 
+                var savedPlayback = loadPlaybackState();
                 var startIndex = 0;
-                if (state.playMode === 2) {
+                if (savedPlayback && savedPlayback.index < state.playlist.length) {
+                    startIndex = savedPlayback.index;
+                } else if (state.playMode === 2) {
                     startIndex = Math.floor(Math.random() * state.playlist.length);
                 }
 
@@ -432,6 +470,32 @@ const managerConfigStr = JSON.stringify({
                 });
 
                 loadTrack(startIndex, false);
+
+                // 断点续播 + 自动播放
+                var wantAutoplay = !!config.autoplay || (savedPlayback && savedPlayback.wasPlaying);
+                if (wantAutoplay) {
+                    var resumeAndPlay = function () {
+                        if (savedPlayback && savedPlayback.time > 1) {
+                            try { audio.currentTime = Math.min(savedPlayback.time, audio.duration || savedPlayback.time); } catch (e) {}
+                        }
+                        audio.play().then(function () {
+                            state.isPlaying = true;
+                            state.error = null;
+                            emit('fm:play-state', { isPlaying: true });
+                            savePlaybackState();
+                        }).catch(function (e) {
+                            if (e && e.name !== 'AbortError') console.warn('Autoplay blocked:', e);
+                        });
+                    };
+                    if (audio.readyState >= 1) {
+                        resumeAndPlay();
+                    } else {
+                        audio.addEventListener('loadedmetadata', function onMusicMeta() {
+                            audio.removeEventListener('loadedmetadata', onMusicMeta);
+                            resumeAndPlay();
+                        });
+                    }
+                }
             } else {
                 state.initialized = true;
                 emit('fm:init', {
