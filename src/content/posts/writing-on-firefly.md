@@ -4,6 +4,7 @@ published: 2026-09-27
 description: 新站的文章放在 src/content/posts，写好 Markdown 后会自动出现在首页、归档、分类和搜索中。
 tags: [写作, Markdown, Firefly]
 category: 指南
+image: "api"
 ---
 
 这个网站基于 Firefly，文章放在 `src/content/posts/` 中。每篇文章是一个 Markdown 文件，不需要维护单独的 JavaScript 文章列表。
