@@ -31,6 +31,8 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			showOnPostPage: false,
 			specificConfig: { collapseThreshold: 12 },
 		},
+	],
+	rightComponents: [
 		{
 			type: "stats",
 			enable: true,
@@ -50,7 +52,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			showOnPostPage: false,
 		},
 	],
-	rightComponents: [],
 	mobileBottomComponents: [
 		{
 			type: "ticket",
