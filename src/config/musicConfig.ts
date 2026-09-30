@@ -17,6 +17,9 @@ export const musicPlayerConfig: MusicPlayerConfig = {
 	// 播放模式：'list'=列表循环, 'one'=单曲循环, 'random'=随机播放
 	playMode: "list",
 
+	// 是否尝试自动播放（注意：浏览器会拦截用户交互前的自动播放，首次访问可能需要手动点一次）
+	autoplay: true,
+
 	// 是否显启用歌词
 	showLyrics: false,
 
