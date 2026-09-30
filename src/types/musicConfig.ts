@@ -9,6 +9,9 @@ export type MusicPlayerConfig = {
 	// 播放模式：'list'=列表循环, 'one'=单曲循环, 'random'=随机播放
 	playMode?: "list" | "one" | "random";
 
+	// 是否尝试自动播放：页面加载时自动开始播放（受浏览器自动播放策略限制）
+	autoplay?: boolean;
+
 	// 是否显示歌词
 	showLyrics?: boolean;
 
