@@ -8,7 +8,7 @@ status: published
 link:
   - label: 打开游玩
     icon: material-symbols:open-in-new
-    value: /event-horizon/
+    value: /projects/event-horizon/
 ---
 
 事件视界：一个黑洞粒子游乐场。上千颗粒子在引力场中盘旋成吸积盘，移动鼠标可以搅动粒子流，点击画布任意处扔一个持续 6 秒的临时黑洞，冲击波按钮把内圈粒子全部甩飞。引力、粒子数、拖尾、配色都可调。
