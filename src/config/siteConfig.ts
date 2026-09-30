@@ -48,7 +48,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "你所热爱的，就是你的生活。",
 
 	// 站点 URL
-	site_url: "https://night-voyage.129-146-105-64.sslip.io",
+	site_url: "https://p1ziyu.com",
 
 	// 站点描述
 	description: "痞子宇的个人空间。你所热爱的，就是你的生活。",
