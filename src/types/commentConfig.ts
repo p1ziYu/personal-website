@@ -19,6 +19,7 @@ export type CommentConfig = {
 		 * Twikoo 自定义 CSS 文件地址，为空则不加载
 		 */
 		cssUrl?: string;
+		requiredFields?: string[];
 	};
 	waline?: {
 		serverURL: string;
