@@ -170,8 +170,8 @@ const visibleTags = tags || [];
           </div>
         )}
 
-        <!-- 封面（在元数据与链接下方，完整显示、灯箱放大；未配置则不显示） -->
-        {entry.data.image && (
+        <!-- 封面（在元数据与链接下方，完整显示、灯箱放大；未配置则显示火箭占位，与卡片一致） -->
+        {entry.data.image ? (
           <div class="mt-4">
             <div
               data-fancybox="project-cover"
@@ -187,6 +187,12 @@ const visibleTags = tags || [];
                 preview={false}
                 naturalHeight
               />
+            </div>
+          </div>
+        ) : (
+          <div class="mt-4">
+            <div class="relative block w-full overflow-hidden rounded-xl aspect-2/1 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+              <Icon name="material-symbols:rocket-launch" class="text-gray-400 text-6xl" />
             </div>
           </div>
         )}
