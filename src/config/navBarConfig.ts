@@ -28,6 +28,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => ({
 			children: [
 				LinkPresets.About,
 				LinkPresets.Watching,
+				LinkPresets.Anilist,
 				LinkPresets.Support,
 				LinkPresets.RSS,
 			],
@@ -106,12 +107,6 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		icon: "material-symbols:bookmarks",
 		pageKey: "booknav",
 	},
-	Bilibili: {
-		name: "哔哩哔哩",
-		url: "/bilibili/",
-		icon: "fa7-brands:bilibili",
-		pageKey: "bilibili",
-	},
 	Bangumi: {
 		name: "番组计划",
 		url: "/bangumi/",
@@ -150,6 +145,13 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "追番",
 		url: "/watching/",
 		icon: "material-symbols:movie-outline",
+		pageKey: "bilibili",
+	},
+	Anilist: {
+		name: "AniList",
+		url: "/anilist/",
+		icon: "material-symbols:movie",
+		pageKey: "anilist",
 	},
 	Support: {
 		name: "支持本站",
