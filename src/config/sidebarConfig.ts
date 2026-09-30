@@ -37,6 +37,18 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			position: "top",
 			showOnPostPage: false,
 		},
+		{
+			type: "siteInfo",
+			enable: true,
+			position: "top",
+			showOnPostPage: false,
+		},
+		{
+			type: "calendar",
+			enable: true,
+			position: "top",
+			showOnPostPage: false,
+		},
 	],
 	rightComponents: [],
 	mobileBottomComponents: [
