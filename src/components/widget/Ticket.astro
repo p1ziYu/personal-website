@@ -45,7 +45,8 @@ const qrCode = await QRCode.toDataURL(siteConfig.site_url, {
 </section>
 
 <style>
-	.ticket-card { padding: 1rem; overflow: hidden; color: var(--content); }
+	.ticket-card { padding: 1rem; overflow: hidden; color: oklch(0.25 0.02 var(--hue)); }
+	:root.dark .ticket-card { color: oklch(0.93 0.01 var(--hue)); }
 	.ticket-top { display:flex; justify-content:space-between; align-items:center; gap:.5rem; font-size:.66rem; font-weight:700; letter-spacing:.12em; color:var(--content-meta); }
 	.ticket-top strong { color:var(--primary); font-size:.7rem; }
 	.ticket-route { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin:1.1rem 0 .4rem; }
