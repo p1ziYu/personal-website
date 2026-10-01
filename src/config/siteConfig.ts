@@ -83,12 +83,16 @@ export const siteConfig: SiteConfig = {
 	// 如果启用了OpenGraph图片功能，数组中需要包含png格式的favicon图标
 	favicon: [
 		{
-			// 图标文件路径
-			src: "/favicon/night-voyage-32.png",
+			// 图标文件路径（站长头像）
+			src: "/favicon/avatar-180.png",
+			sizes: "180x180",
+		},
+		{
+			src: "/favicon/avatar-32.png",
 			sizes: "32x32",
 		},
 		{
-			src: "/favicon/night-voyage-192.png",
+			src: "/favicon/avatar-192.png",
 			sizes: "192x192",
 			// 可选，指定主题 'light' | 'dark'
 			// theme: "light",
