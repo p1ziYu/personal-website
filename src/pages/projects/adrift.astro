@@ -1,0 +1,394 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+const title = "纸船漂流 · Adrift";
+const description =
+	"一只纸船，一条河：手机倾斜或键盘左右键操控，躲开礁石、捡星星，看能漂多远。灵感来自 r/SideProject 上今天一位开发者分享的「手机倾斜操控小船」小游戏。";
+---
+
+<MainGridLayout title={title} description={description}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
+		<div class="card-base z-10 px-9 py-6 relative w-full">
+			<h1 class="text-2xl font-bold mb-2">纸船漂流</h1>
+			<p class="text-sm opacity-70 mb-1">
+				一只纸船，一条河。灵感来自 r/SideProject 上今天一位开发者分享的「手机倾斜操控小船」小游戏——我做了个网页版：手机倾斜船就跟着转，电脑上用 ←/→ 或 A/D，也能直接拖。
+			</p>
+			<p class="text-sm opacity-70 mb-4">
+				玩法：躲开礁石，捡星星加分，河越流越快。撞上礁石就翻船。
+			</p>
+
+			<div class="relative rounded-xl overflow-hidden bg-black">
+				<canvas
+					id="ad-canvas"
+					class="block w-full touch-none select-none"
+					style="height: min(64vh, 560px); min-height: 400px;"
+				></canvas>
+				<div class="absolute top-2 left-3 text-xs text-white/80 font-mono pointer-events-none">
+					<span id="ad-score">0</span> 分
+					<span class="mx-1 opacity-40">·</span>
+					最高 <span id="ad-best">0</span>
+				</div>
+				<div class="absolute top-2 right-3 text-xs text-white/50 pointer-events-none hidden sm:block" id="ad-hint">
+					←/→ 或 A/D 操控 · 手机倾斜也行
+				</div>
+
+				<div id="ad-overlay" class="absolute inset-0 flex items-center justify-center bg-black/55 backdrop-blur-[2px]">
+					<div class="text-center px-6">
+						<div class="text-4xl mb-3">⛵</div>
+						<h2 id="ad-overlay-title" class="text-white text-xl font-bold mb-2">准备出发</h2>
+						<p id="ad-overlay-sub" class="text-white/60 text-sm mb-5">手机倾斜操控 · 电脑用键盘或拖动</p>
+						<button id="ad-start" class="px-6 py-2.5 rounded-xl bg-[var(--primary)] text-white text-sm font-medium hover:opacity-90 active:scale-95 transition">
+							开始漂流
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="flex flex-wrap items-center gap-2 mt-4">
+				<button id="ad-pause" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">⏸ 暂停</button>
+				<button id="ad-restart" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">↺ 重来</button>
+				<span class="text-xs opacity-50 ml-1">iPhone 上玩需要点一下「开始漂流」授权陀螺仪</span>
+			</div>
+
+			<hr class="my-6 border-black/10 dark:border-white/10" />
+			<p class="text-xs opacity-50">
+				实现：Canvas 2D，纸船用折纸几何手绘；河面波纹、礁石、星星全是程序生成的。手机上也可以倾斜游玩。本页面由 AI 生成。
+			</p>
+		</div>
+	</div>
+
+	<script>
+		(() => {
+			const canvas = document.getElementById("ad-canvas");
+			const ctx = canvas.getContext("2d");
+			const scoreEl = document.getElementById("ad-score");
+			const bestEl = document.getElementById("ad-best");
+			const overlay = document.getElementById("ad-overlay");
+			const overlayTitle = document.getElementById("ad-overlay-title");
+			const overlaySub = document.getElementById("ad-overlay-sub");
+			const startBtn = document.getElementById("ad-start");
+			const pauseBtn = document.getElementById("ad-pause");
+			const restartBtn = document.getElementById("ad-restart");
+
+			const BEST_KEY = "adrift-best";
+			let W = 0, H = 0;
+			let state = "ready"; // ready | playing | paused | over
+			let boat = { x: 0 };
+			let rocks = [], stars = [], ripples = [], splash = [];
+			let score = 0, starCount = 0, dist = 0;
+			let best = 0;
+			let speed = 0;
+			let spawnT = 0, starT = 0, elapsed = 0;
+			let tilt = 0, tiltActive = false;
+			let keyDir = 0, dragX = null;
+			let last = performance.now();
+			let overT = 0;
+
+			try { best = parseInt(localStorage.getItem(BEST_KEY) || "0", 10) || 0; } catch (e) { best = 0; }
+			bestEl.textContent = best;
+
+			function resize() {
+				const dpr = Math.min(2, window.devicePixelRatio || 1);
+				const r = canvas.getBoundingClientRect();
+				W = Math.max(280, r.width); H = Math.max(380, r.height);
+				canvas.width = Math.round(W * dpr);
+				canvas.height = Math.round(H * dpr);
+				ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+				boat.x = clamp(boat.x || W / 2, bankL() + 24, W - bankR() - 24);
+			}
+
+			const bankL = () => W * 0.06;
+			const bankR = () => W * 0.06;
+			const riverL = () => bankL() + 6;
+			const riverR = () => W - bankR() - 6;
+			const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+			const rand = (a, b) => a + Math.random() * (b - a);
+
+			function reset() {
+				boat.x = W / 2;
+				rocks = []; stars = []; ripples = []; splash = [];
+				score = 0; starCount = 0; dist = 0;
+				speed = 190; elapsed = 0; spawnT = 0.6; starT = 1.2;
+				overT = 0;
+				updateHUD();
+				// 预铺波纹
+				for (let i = 0; i < 40; i++) ripples.push({ x: rand(riverL(), riverR()), y: rand(0, H), w: rand(24, 70), p: Math.random() * 6.28 });
+			}
+
+			function updateHUD() {
+				scoreEl.textContent = score;
+				if (score > best) { best = score; bestEl.textContent = best; try { localStorage.setItem(BEST_KEY, String(best)); } catch (e) {} }
+			}
+
+			function spawnRock() {
+				const r = rand(14, 30);
+				rocks.push({ x: rand(riverL() + r, riverR() - r), y: -r - 10, r, wob: rand(0, 6.28) });
+			}
+			function spawnStar() {
+				const r = 9;
+				stars.push({ x: rand(riverL() + r + 6, riverR() - r - 6), y: -20, r, spin: 0 });
+			}
+
+			function startGame() {
+				requestTilt();
+				reset();
+				state = "playing";
+				overlay.style.display = "none";
+				pauseBtn.textContent = "⏸ 暂停";
+				last = performance.now();
+			}
+
+			function gameOver() {
+				state = "over";
+				overT = 0;
+				// 翻船水花
+				for (let i = 0; i < 26; i++) {
+					splash.push({ x: boat.x + rand(-14, 14), y: boatY() + rand(-8, 8), vx: rand(-160, 160), vy: rand(-260, -40), life: rand(0.4, 0.9), r: rand(2, 5) });
+				}
+				setTimeout(() => {
+					if (state !== "over") return;
+					overlayTitle.textContent = "翻船了！";
+					overlaySub.textContent = `漂了 ${Math.floor(dist)} 米 · 捡到 ${starCount} 颗星 · 得分 ${score}`;
+					startBtn.textContent = "再漂一次";
+					overlay.style.display = "flex";
+				}, 700);
+			}
+
+			function requestTilt() {
+				try {
+					const DOE = window.DeviceOrientationEvent;
+					if (DOE && typeof DOE.requestPermission === "function") {
+						DOE.requestPermission().catch(() => {});
+					}
+				} catch (e) {}
+			}
+
+			window.addEventListener("deviceorientation", (e) => {
+				if (e.gamma == null) return;
+				tilt = clamp(e.gamma, -45, 45);
+				tiltActive = true;
+			});
+
+			window.addEventListener("keydown", (e) => {
+				if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keyDir = -1;
+				if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keyDir = 1;
+				if ((e.key === " " || e.key === "Enter") && state !== "playing") startGame();
+			});
+			window.addEventListener("keyup", (e) => {
+				if (["ArrowLeft", "a", "A", "ArrowRight", "d", "D"].includes(e.key)) keyDir = 0;
+			});
+
+			function pointerX(e) {
+				const r = canvas.getBoundingClientRect();
+				return e.clientX - r.left;
+			}
+			canvas.addEventListener("pointerdown", (e) => { dragX = pointerX(e); canvas.setPointerCapture(e.pointerId); });
+			canvas.addEventListener("pointermove", (e) => { if (dragX !== null) dragX = pointerX(e); });
+			canvas.addEventListener("pointerup", () => { dragX = null; });
+			canvas.addEventListener("pointercancel", () => { dragX = null; });
+
+			startBtn.addEventListener("click", startGame);
+			restartBtn.addEventListener("click", startGame);
+			pauseBtn.addEventListener("click", () => {
+				if (state === "playing") { state = "paused"; pauseBtn.textContent = "▶ 继续"; }
+				else if (state === "paused") { state = "playing"; pauseBtn.textContent = "⏸ 暂停"; last = performance.now(); }
+			});
+			window.addEventListener("resize", resize);
+
+			const boatY = () => H * 0.78;
+
+			function step(dt) {
+				elapsed += dt;
+				speed = Math.min(520, 190 + elapsed * 9);
+				dist += (speed * dt) / 24; // 米
+				score = Math.floor(dist) + starCount * 25;
+
+				// 操控
+				let vx = 0;
+				const maxV = 300;
+				if (dragX !== null) {
+					boat.x += clamp(dragX - boat.x, -maxV * dt * 1.6, maxV * dt * 1.6);
+				} else if (tiltActive && Math.abs(tilt) > 3) {
+					vx = (tilt / 45) * maxV * 1.35;
+				} else if (keyDir !== 0) {
+					vx = keyDir * maxV;
+				}
+				if (dragX === null) boat.x = clamp(boat.x + vx * dt, riverL() + 18, riverR() - 18);
+				else boat.x = clamp(boat.x, riverL() + 18, riverR() - 18);
+
+				// 生成
+				spawnT -= dt;
+				if (spawnT <= 0) { spawnRock(); spawnT = rand(0.35, 0.8) * (240 / speed); }
+				starT -= dt;
+				if (starT <= 0) { spawnStar(); starT = rand(1.2, 2.6); }
+
+				// 移动
+				const dy = speed * dt;
+				for (const r of rocks) { r.y += dy; r.wob += dt * 2; }
+				for (const s of stars) { s.y += dy; s.spin += dt * 4; }
+				for (const rp of ripples) { rp.y += dy * 0.9; rp.p += dt * 2; if (rp.y > H + 10) { rp.y = -10; rp.x = rand(riverL(), riverR()); } }
+				if (ripples.length < 46 && Math.random() < 0.3) ripples.push({ x: rand(riverL(), riverR()), y: -10, w: rand(24, 70), p: 0 });
+				for (const p of splash) { p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 900 * dt; p.life -= dt; }
+				splash = splash.filter((p) => p.life > 0);
+
+				rocks = rocks.filter((r) => r.y < H + 60);
+				stars = stars.filter((s) => s.y < H + 40);
+
+				// 碰撞：礁石
+				const by = boatY();
+				for (const r of rocks) {
+					const dx = r.x - boat.x, dyy = r.y - by;
+					if (dx * dx + dyy * dyy < (r.r + 13) * (r.r + 13)) { gameOver(); return; }
+				}
+				// 捡星星
+				for (let i = stars.length - 1; i >= 0; i--) {
+					const s = stars[i];
+					const dx = s.x - boat.x, dyy = s.y - by;
+					if (dx * dx + dyy * dyy < 26 * 26) { stars.splice(i, 1); starCount++; }
+				}
+				updateHUD();
+			}
+
+			function drawBoat(bx, by, tiltAngle) {
+				ctx.save();
+				ctx.translate(bx, by);
+				ctx.rotate(clamp(tiltAngle, -0.35, 0.35));
+				// 船体：折纸船
+				ctx.fillStyle = "#f5f0e6";
+				ctx.strokeStyle = "rgba(0,0,0,0.25)";
+				ctx.lineWidth = 1.5;
+				ctx.beginPath();
+				ctx.moveTo(-20, -4); ctx.lineTo(20, -4); ctx.lineTo(10, 12); ctx.lineTo(-10, 12);
+				ctx.closePath(); ctx.fill(); ctx.stroke();
+				// 折痕
+				ctx.strokeStyle = "rgba(0,0,0,0.18)";
+				ctx.beginPath(); ctx.moveTo(0, -4); ctx.lineTo(0, 12); ctx.stroke();
+				// 船帆（纸三角）
+				ctx.fillStyle = "#ffffff";
+				ctx.beginPath(); ctx.moveTo(0, -4); ctx.lineTo(0, -26); ctx.lineTo(13, -4);
+				ctx.closePath(); ctx.fill(); ctx.stroke();
+				ctx.restore();
+			}
+
+			function draw() {
+				// 河水
+				const g = ctx.createLinearGradient(0, 0, 0, H);
+				g.addColorStop(0, "#0e3a5d"); g.addColorStop(0.5, "#0c4a6e"); g.addColorStop(1, "#0e3a5d");
+				ctx.fillStyle = g;
+				ctx.fillRect(0, 0, W, H);
+				// 河岸
+				const bg = ctx.createLinearGradient(bankL(), 0, 0, 0);
+				bg.addColorStop(0, "#1d4a2a"); bg.addColorStop(1, "rgba(29,74,42,0)");
+				ctx.fillStyle = bg; ctx.fillRect(0, 0, bankL(), H);
+				const bg2 = ctx.createLinearGradient(W - bankR(), 0, W, 0);
+				bg2.addColorStop(0, "rgba(29,74,42,0)"); bg2.addColorStop(1, "#1d4a2a");
+				ctx.fillStyle = bg2; ctx.fillRect(W - bankR(), 0, bankR(), H);
+				ctx.strokeStyle = "rgba(255,255,255,0.25)";
+				ctx.lineWidth = 2;
+				ctx.beginPath(); ctx.moveTo(bankL(), 0); ctx.lineTo(bankL(), H); ctx.stroke();
+				ctx.beginPath(); ctx.moveTo(W - bankR(), 0); ctx.lineTo(W - bankR(), H); ctx.stroke();
+
+				// 波纹
+				ctx.strokeStyle = "rgba(255,255,255,0.14)";
+				ctx.lineWidth = 2;
+				for (const rp of ripples) {
+					const w = rp.w * (0.8 + 0.2 * Math.sin(rp.p));
+					ctx.beginPath();
+					ctx.moveTo(rp.x - w / 2, rp.y);
+					ctx.quadraticCurveTo(rp.x, rp.y - 5, rp.x + w / 2, rp.y);
+					ctx.stroke();
+				}
+
+				// 星星
+				for (const s of stars) {
+					ctx.save();
+					ctx.translate(s.x, s.y);
+					ctx.rotate(Math.sin(s.spin) * 0.4);
+					const sc = 0.8 + 0.2 * Math.abs(Math.cos(s.spin));
+					ctx.scale(sc, 1);
+					ctx.fillStyle = "#ffd34d";
+					ctx.strokeStyle = "#b8860b";
+					ctx.lineWidth = 1.5;
+					ctx.beginPath();
+					for (let i = 0; i < 5; i++) {
+						const a = -Math.PI / 2 + (i * 4 * Math.PI) / 5;
+						const px = Math.cos(a) * 10, py = Math.sin(a) * 10;
+						i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+					}
+					ctx.closePath(); ctx.fill(); ctx.stroke();
+					ctx.restore();
+				}
+
+				// 礁石
+				for (const r of rocks) {
+					ctx.fillStyle = "#5b6470";
+					ctx.strokeStyle = "#39404b";
+					ctx.lineWidth = 2;
+					ctx.beginPath();
+					ctx.ellipse(r.x, r.y + Math.sin(r.wob) * 2, r.r, r.r * 0.82, 0, 0, 6.283);
+					ctx.fill(); ctx.stroke();
+					ctx.fillStyle = "rgba(255,255,255,0.25)";
+					ctx.beginPath();
+					ctx.ellipse(r.x - r.r * 0.3, r.y - r.r * 0.3, r.r * 0.35, r.r * 0.22, -0.5, 0, 6.283);
+					ctx.fill();
+					// 水花圈
+					ctx.strokeStyle = "rgba(255,255,255,0.2)";
+					ctx.beginPath();
+					ctx.ellipse(r.x, r.y + r.r * 0.7, r.r * 1.15, r.r * 0.35, 0, 0, 6.283);
+					ctx.stroke();
+				}
+
+				// 船
+				if (state !== "over") {
+					const lean = dragX !== null ? clamp((dragX - boat.x) * 0.004, -0.35, 0.35)
+						: tiltActive ? clamp((tilt / 45) * 0.3, -0.35, 0.35)
+						: keyDir * 0.22;
+					drawBoat(boat.x, boatY(), lean);
+					// 船尾波纹
+					ctx.strokeStyle = "rgba(255,255,255,0.25)";
+					ctx.beginPath();
+					ctx.moveTo(boat.x - 12, boatY() + 16);
+					ctx.quadraticCurveTo(boat.x, boatY() + 26, boat.x + 12, boatY() + 16);
+					ctx.stroke();
+				}
+
+				// 翻船水花
+				for (const p of splash) {
+					ctx.globalAlpha = clamp(p.life * 1.6, 0, 1);
+					ctx.fillStyle = "#bfe6ff";
+					ctx.beginPath();
+					ctx.arc(p.x, p.y, p.r, 0, 6.283);
+					ctx.fill();
+				}
+				ctx.globalAlpha = 1;
+
+				// 速度线（快时）
+				if (state === "playing" && speed > 380) {
+					ctx.strokeStyle = "rgba(255,255,255,0.08)";
+					ctx.lineWidth = 1;
+					for (let i = 0; i < 6; i++) {
+						const x = ((i * 173 + elapsed * 700) % (W + 80)) - 40;
+						ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+					}
+				}
+			}
+
+			function loop(now) {
+				const dt = Math.min(0.05, (now - last) / 1000);
+				last = now;
+				if (state === "playing") step(dt);
+				if (state === "over") { overT += dt; }
+				draw();
+				requestAnimationFrame(loop);
+			}
+
+			resize();
+			reset();
+			state = "ready";
+			requestAnimationFrame(loop);
+
+			// 供自动化冒烟测试
+			window.__adrift = { get state() { return state; }, startGame, step, reset, gameOver, get boat() { return boat; }, get rocks() { return rocks; }, get stars() { return stars; }, get score() { return score; } };
+		})();
+	</script>
+</MainGridLayout>
