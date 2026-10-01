@@ -19,6 +19,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => ({
 			children: [LinkPresets.Archive, LinkPresets.Categories, LinkPresets.Tags],
 		},
 		LinkPresets.Projects,
+		LinkPresets.PixelWall,
 		LinkPresets.Friends,
 		LinkPresets.Guestbook,
 		{
@@ -94,6 +95,12 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		url: "/projects/",
 		icon: "material-symbols:rocket-launch",
 		pageKey: "projects",
+	},
+	PixelWall: {
+		name: "像素墙",
+		url: "https://pixels.p1ziyu.com/",
+		icon: "material-symbols:grid-on-rounded",
+		external: true,
 	},
 	Gallery: {
 		name: "相册",
