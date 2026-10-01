@@ -18,8 +18,10 @@ const getDynamicNavBarConfig = (): NavBarConfig => ({
 			icon: "material-symbols:article-outline",
 			children: [LinkPresets.Archive, LinkPresets.Categories, LinkPresets.Tags],
 		},
-		LinkPresets.Projects,
-		LinkPresets.PixelWall,
+		{
+			...LinkPresets.Projects,
+			children: [LinkPresets.Projects, LinkPresets.PixelWall],
+		},
 		LinkPresets.Friends,
 		LinkPresets.Guestbook,
 		{
