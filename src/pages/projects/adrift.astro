@@ -11,7 +11,7 @@ const description =
 		<div class="card-base z-10 px-9 py-6 relative w-full">
 			<h1 class="text-2xl font-bold mb-2">纸船漂流</h1>
 			<p class="text-sm opacity-70 mb-1">
-				一只纸船，一条河。灵感来自 r/SideProject 上今天一位开发者分享的「手机倾斜操控小船」小游戏——我做了个网页版：手机倾斜船就跟着转，电脑上用 ←/→ 或 A/D，也能直接拖。
+				一只纸船，一条河。灵感来自 r/SideProject 上今天一位开发者分享的「手机倾斜操控小船」小游戏——我做了个网页版：倾斜手机屏幕，纸船就跟着左右转；电脑上用 ←/→ 或 A/D，也能直接拖。
 			</p>
 			<p class="text-sm opacity-70 mb-4">
 				玩法：躲开礁石，捡星星加分，河越流越快。撞上礁石就翻船。
@@ -28,18 +28,25 @@ const description =
 					<span class="mx-1 opacity-40">·</span>
 					最高 <span id="ad-best">0</span>
 				</div>
-				<div class="absolute top-2 right-3 text-xs text-white/50 pointer-events-none hidden sm:block" id="ad-hint">
-					←/→ 或 A/D 操控 · 手机倾斜也行
+				<div class="absolute top-2 right-3 text-xs text-white/50 pointer-events-none" id="ad-hint">
+					<span class="hidden sm:inline">←/→ 或 A/D · </span>📱 倾斜手机控制小船
 				</div>
 
 				<div id="ad-overlay" class="absolute inset-0 flex items-center justify-center bg-black/55 backdrop-blur-[2px]">
 					<div class="text-center px-6">
 						<div class="text-4xl mb-3">⛵</div>
 						<h2 id="ad-overlay-title" class="text-white text-xl font-bold mb-2">准备出发</h2>
-						<p id="ad-overlay-sub" class="text-white/60 text-sm mb-5">手机倾斜操控 · 电脑用键盘或拖动</p>
-						<button id="ad-start" class="px-6 py-2.5 rounded-xl bg-[var(--primary)] text-white text-sm font-medium hover:opacity-90 active:scale-95 transition">
-							开始漂流
-						</button>
+						<p id="ad-overlay-sub" class="text-white/80 text-sm mb-1">📱 倾斜手机屏幕，控制小船左右移动</p>
+						<p class="text-white/40 text-xs mb-4">电脑：←/→ 或 A/D 键，也可直接拖动</p>
+						<p id="ad-tilt-status" class="text-xs mb-4 hidden"></p>
+						<div class="flex flex-col items-center gap-2">
+							<button id="ad-tilt-btn" class="hidden px-6 py-2.5 rounded-xl border border-white/30 text-white text-sm font-medium hover:bg-white/10 active:scale-95 transition">
+								📱 启用倾斜控制
+							</button>
+							<button id="ad-start" class="px-6 py-2.5 rounded-xl bg-[var(--primary)] text-white text-sm font-medium hover:opacity-90 active:scale-95 transition">
+								开始漂流
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -47,7 +54,7 @@ const description =
 			<div class="flex flex-wrap items-center gap-2 mt-4">
 				<button id="ad-pause" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">⏸ 暂停</button>
 				<button id="ad-restart" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">↺ 重来</button>
-				<span class="text-xs opacity-50 ml-1">iPhone 上玩需要点一下「开始漂流」授权陀螺仪</span>
+				<span class="text-xs opacity-50 ml-1">iPhone：点「📱 启用倾斜控制」授权陀螺仪；若被拒绝，可用手指拖动操控</span>
 			</div>
 
 			<hr class="my-6 border-black/10 dark:border-white/10" />
@@ -67,6 +74,8 @@ const description =
 			const overlayTitle = document.getElementById("ad-overlay-title");
 			const overlaySub = document.getElementById("ad-overlay-sub");
 			const startBtn = document.getElementById("ad-start");
+			const tiltBtn = document.getElementById("ad-tilt-btn");
+			const tiltStatus = document.getElementById("ad-tilt-status");
 			const pauseBtn = document.getElementById("ad-pause");
 			const restartBtn = document.getElementById("ad-restart");
 
@@ -129,8 +138,11 @@ const description =
 				stars.push({ x: rand(riverL() + r + 6, riverR() - r - 6), y: -20, r, spin: 0 });
 			}
 
-			function startGame() {
-				requestTilt();
+			async function startGame() {
+				// iOS：首次开始时在用户手势内申请陀螺仪权限；拒绝也不阻塞，用拖动照样玩
+				if (needsTiltPermission() && tiltPerm === "unknown") {
+					await ensureTiltPermission();
+				}
 				reset();
 				state = "playing";
 				overlay.style.display = "none";
@@ -154,13 +166,48 @@ const description =
 				}, 700);
 			}
 
-			function requestTilt() {
+			// iOS 13+ 必须在用户手势内调用 requestPermission()，否则收不到陀螺仪数据
+			const needsTiltPermission = () => {
+				const DOE = window.DeviceOrientationEvent;
+				return !!(DOE && typeof DOE.requestPermission === "function");
+			};
+			let tiltPerm = "unknown"; // unknown | granted | denied
+
+			async function ensureTiltPermission() {
+				if (!needsTiltPermission()) return true;
+				if (tiltPerm === "granted") return true;
+				if (tiltPerm === "denied") return false;
 				try {
-					const DOE = window.DeviceOrientationEvent;
-					if (DOE && typeof DOE.requestPermission === "function") {
-						DOE.requestPermission().catch(() => {});
-					}
-				} catch (e) {}
+					const res = await window.DeviceOrientationEvent.requestPermission();
+					tiltPerm = res === "granted" ? "granted" : "denied";
+				} catch (e) {
+					tiltPerm = "denied";
+				}
+				updateTiltUI();
+				return tiltPerm === "granted";
+			}
+
+			function updateTiltUI() {
+				if (!needsTiltPermission()) {
+					tiltBtn.classList.add("hidden");
+					tiltStatus.classList.add("hidden");
+					return;
+				}
+				if (tiltPerm === "granted") {
+					tiltStatus.textContent = "✅ 倾斜控制已启用";
+					tiltStatus.className = "text-xs mb-4 text-emerald-300";
+					tiltBtn.classList.add("hidden");
+				} else if (tiltPerm === "denied") {
+					tiltStatus.textContent = "⚠️ 陀螺仪被拒绝：在 设置 → Safari → 动作与方向 中开启，或用手指拖动小船";
+					tiltStatus.className = "text-xs mb-4 text-amber-300";
+					tiltBtn.textContent = "📱 重新申请倾斜权限";
+					tiltBtn.classList.remove("hidden");
+				} else {
+					tiltStatus.textContent = "";
+					tiltStatus.className = "text-xs mb-4 hidden";
+					tiltBtn.textContent = "📱 启用倾斜控制";
+					tiltBtn.classList.remove("hidden");
+				}
 			}
 
 			window.addEventListener("deviceorientation", (e) => {
@@ -189,6 +236,7 @@ const description =
 
 			startBtn.addEventListener("click", startGame);
 			restartBtn.addEventListener("click", startGame);
+			tiltBtn.addEventListener("click", () => { ensureTiltPermission(); });
 			pauseBtn.addEventListener("click", () => {
 				if (state === "playing") { state = "paused"; pauseBtn.textContent = "▶ 继续"; }
 				else if (state === "paused") { state = "playing"; pauseBtn.textContent = "⏸ 暂停"; last = performance.now(); }
@@ -385,6 +433,7 @@ const description =
 			resize();
 			reset();
 			state = "ready";
+			updateTiltUI();
 			requestAnimationFrame(loop);
 
 			// 供自动化冒烟测试
