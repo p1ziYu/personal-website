@@ -61,7 +61,9 @@ export function mount() {
 		$("pause-overlay").hidden = !game.paused || !game.active;
 		const waveIndex = Math.min(
 			14,
-			game.phase === "battle" ? game.wave - 1 : game.wave,
+			game.phase === "battle" || game.phase === "defeat"
+				? game.wave - 1
+				: game.wave,
 		);
 		const wave = WAVES[waveIndex];
 		$("next-index").textContent =
@@ -144,7 +146,9 @@ export function mount() {
 				$("result-stats").textContent =
 					`得分 ${game.score.toLocaleString("zh-CN")} · 守住 ${game.cleared} 波 · 击破 ${game.kills} · 耐久 ${game.lives}`;
 				$("begin").innerHTML = "再守一次 <span>→</span>";
-				$("overlay-foot").textContent = "最佳纪录已保存在此设备";
+				$("overlay-foot").textContent = game.saveSucceeded
+					? "最佳纪录已保存在此设备"
+					: "最佳纪录未能保存至此设备，仅在本次游戏中保留";
 			} else if (game.phase === "intro") {
 				$("overlay-title").innerHTML = "长夜将至<br /><span>余烬不灭。</span>";
 				$("overlay-description").innerHTML =
