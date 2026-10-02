@@ -20,8 +20,11 @@ export class Game {
 				localStorage.getItem("emberhold-record") || "{}",
 			);
 			this.best = {
-				score: Math.max(0, Number(saved.score) || 0),
-				wave: Math.min(15, Math.max(0, Number(saved.wave) || 0)),
+				score: Number.isFinite(saved?.score) ? Math.max(0, saved.score) : 0,
+				wave:
+					Number.isInteger(saved?.wave) && saved.wave > 0
+						? Math.min(WAVES.length, saved.wave)
+						: 0,
 			};
 		} catch {
 			/* Private browsing and corrupt records cannot stop a game. */
@@ -55,12 +58,25 @@ export class Game {
 			buildType: "arrow",
 			shake: 0,
 			achievements: new Set(),
+			saveSucceeded: false,
+			noticeQueue: [],
+			noticeTime: 0,
 			notice: "点击空地，建立你的第一座防御塔。",
 		});
 		this.changed();
 	}
 	changed() {
 		this.onChange?.(this);
+	}
+	get notice() {
+		return this._notice;
+	}
+	set notice(message) {
+		if (this.noticeTime > 0) this.noticeQueue.push(message);
+		else {
+			this._notice = message;
+			this.noticeTime = 3;
+		}
 	}
 	start() {
 		this.sound.unlock();
@@ -245,13 +261,19 @@ export class Game {
 			});
 			for (const enemy of targets) {
 				this.damage(enemy, spec.damage[index], tower);
-				enemy.slow = 1.8;
-				enemy.slowFactor = 0.6 - index * 0.08;
+				enemy.slowFactor = Math.min(
+					enemy.slow > 0 ? enemy.slowFactor : 1,
+					0.6 - index * 0.08,
+				);
+				enemy.slow = Math.max(enemy.slow, 1.8);
 			}
 			return;
 		}
 		const target = targets.sort(
-			(a, b) => a.route.length - a.point - (b.route.length - b.point),
+			(a, b) =>
+				a.route.length - a.point - (b.route.length - b.point) ||
+				Math.hypot(a.route[a.point].x - a.x, a.route[a.point].y - a.y) -
+					Math.hypot(b.route[b.point].x - b.x, b.route[b.point].y - b.y),
 		)[0];
 		tower.angle = Math.atan2(target.y - tower.y, target.x - tower.x);
 		if (tower.type === "sniper") {
@@ -282,6 +304,13 @@ export class Game {
 		}
 	}
 	update(dt) {
+		if (!this.paused) {
+			this.noticeTime = Math.max(0, this.noticeTime - dt);
+			if (this.noticeTime === 0 && this.noticeQueue.length) {
+				this.notice = this.noticeQueue.shift();
+				this.changed();
+			}
+		}
 		if (!this.active || this.paused) return;
 		dt *= this.speed;
 		this.elapsed += dt;
@@ -450,8 +479,9 @@ export class Game {
 		this.best.wave = Math.max(this.best.wave, this.cleared);
 		try {
 			localStorage.setItem("emberhold-record", JSON.stringify(this.best));
+			this.saveSucceeded = true;
 		} catch {
-			/* Storage may be disabled. */
+			this.saveSucceeded = false;
 		}
 	}
 	finish(win) {
