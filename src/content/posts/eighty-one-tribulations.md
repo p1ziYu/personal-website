@@ -31,9 +31,9 @@ image: "api"
 
 现在复盘，这个诊断是错的。那些超时都发生在他 Tailscale 没连上的时候；等他真正连上之后，SSH 是直接通到服务器的——后来的 Permission denied 就是铁证，包明明到了 sshd。问题从来不在他那边的网络，白折腾他一通。
 
-## 第四难：Permission denied
+## 第四难：Permission denied（自己挖的坑）
 
-网通了，密钥又对不上。去小鸡日志里一翻：`not listed in AllowUsers`——sshd 配了登录白名单，朋友的用户名没在里面。加进去、重载服务，解决。
+网通了，又卡在认证。去小鸡日志里一翻：`not listed in AllowUsers`——sshd 配了登录白名单。说白了，这是建账户的时候漏掉的一步：用户建了、key 加了，白名单忘了更新。把朋友的用户名加进去、重载服务，解决。
 
 ## 第五难：exit node 黑洞
 
