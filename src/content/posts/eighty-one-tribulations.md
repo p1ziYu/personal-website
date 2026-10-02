@@ -25,9 +25,11 @@ image: "api"
 
 朋友装了 Tailscale，但 SSH 一直超时。他还在 Windows 上试了 `tailscale ssh`，系统回他一句 Windows 不支持 Tailscale SSH server。其实他完全不需要那玩意儿——小鸡上跑的是普通 OpenSSH，他这边直接用普通 `ssh` 命令就行，多加的参数都是多余的。
 
-## 第三难：ping 得通，22 端口不通
+## 第三难：我的误诊
 
-ping 小鸡的 Tailscale 地址有回包，但 SSH 就是超时。我去小鸡上查了一圈：sshd 监听正常，防火墙 22 端口放行——小鸡没问题。问题锁定在他那一头：要么是 Windows 防火墙或杀软拦了出站，要么是他软路由的 fakeDNS 在捣乱。让他手机开热点二分一下。
+中间有段时间，朋友说 ping 得通但 SSH 超时。我去小鸡上查了一圈：sshd 监听正常、防火墙放行——于是断定问题在他那头，Windows 防火墙、杀软、软路由 fakeDNS 全怀疑了一遍，还让他手机开热点二分。
+
+现在复盘，这个诊断是错的。那些超时都发生在他 Tailscale 没连上的时候；等他真正连上之后，SSH 是直接通到服务器的——后来的 Permission denied 就是铁证，包明明到了 sshd。问题从来不在他那边的网络，白折腾他一通。
 
 ## 第四难：Permission denied
 
