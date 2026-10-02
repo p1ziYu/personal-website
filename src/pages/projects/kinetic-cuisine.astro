@@ -1,0 +1,914 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+const title = "动能厨房 · 拍熟一只鸡";
+const description =
+	"如果动能全部转化为内能，要拍多少巴掌才能把一只鸡拍熟？源自 23,034 掌拍熟一只鸡的经典物理迷因：在线计算动能烹饪，体验连环神掌与超音速一击！";
+---
+
+<MainGridLayout title={title} description={description}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
+		<div class="card-base z-10 px-6 sm:px-9 py-7 relative w-full space-y-8">
+			<!-- Header -->
+			<header class="space-y-2 border-b border-black/10 dark:border-white/10 pb-5">
+				<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+					<span>🔥 热力学迷因实验室</span>
+					<span class="opacity-40">·</span>
+					<span>Kinetic Cuisine</span>
+				</div>
+				<h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">动能厨房 · 拍熟一只鸡</h1>
+				<p class="text-sm sm:text-base opacity-75 leading-relaxed">
+					“如果拍击的动能 100% 转化为内能，要拍多少巴掌才能把鸡拍熟？”
+					源自 Pubity 爆火迷因：拍熟一只整鸡需 <strong>23,034</strong> 掌（或以 <strong>3,726 mph</strong> 超音速一掌瞬熟）。这里我们用真实物理学公式带你算个清楚！
+				</p>
+			</header>
+
+			<!-- Calculator Section -->
+			<section class="space-y-6">
+				<div class="flex items-center justify-between">
+					<h2 class="text-lg font-bold flex items-center gap-2">
+						<span class="w-2 h-2 rounded-full bg-[var(--primary)]"></span>
+						食材与拍击参数
+					</h2>
+					<span class="text-xs opacity-50">基于真实比热容 Q = m·c·ΔT</span>
+				</div>
+
+				<!-- Food Preset Selector -->
+				<div>
+					<label class="block text-xs font-semibold uppercase tracking-wider opacity-60 mb-2.5">
+						选择食材预设 (质量 · 熟成目标温)
+					</label>
+					<div id="food-presets" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+						<!-- Injected by JS -->
+					</div>
+				</div>
+
+				<!-- Sliders and Options Grid -->
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-5 rounded-2xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10">
+					<!-- Start Temp Toggle -->
+					<div class="space-y-2">
+						<div class="flex justify-between items-center text-sm">
+							<span class="font-medium opacity-80">初始温度 (T₀)</span>
+							<span id="start-temp-badge" class="font-mono text-xs px-2 py-0.5 rounded bg-black/10 dark:bg-white/10 font-bold">4°C (冷藏)</span>
+						</div>
+						<div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5">
+							<button id="temp-fridge" type="button" class="py-1.5 text-xs font-medium rounded-lg transition active:scale-95 bg-[var(--primary)] text-white shadow-xs">
+								❄️ 冷藏 4°C
+							</button>
+							<button id="temp-room" type="button" class="py-1.5 text-xs font-medium rounded-lg transition active:scale-95 text-inherit opacity-70 hover:opacity-100">
+								🌡️ 常温 20°C
+							</button>
+						</div>
+						<p class="text-[11px] opacity-50 leading-tight">冷藏整鸡至熟温需升温 71°C</p>
+					</div>
+
+					<!-- Slap Speed Slider -->
+					<div class="space-y-2">
+						<div class="flex justify-between items-center text-sm">
+							<span class="font-medium opacity-80">单掌挥击速度 (v)</span>
+							<span class="font-mono text-xs font-bold text-[var(--primary)]" id="slap-speed-val">7.9 m/s</span>
+						</div>
+						<input
+							id="slap-speed"
+							type="range"
+							min="3"
+							max="40"
+							step="0.1"
+							value="7.9"
+							class="w-full accent-[var(--primary)] cursor-pointer"
+						/>
+						<div class="flex justify-between text-[11px] opacity-50 font-mono">
+							<span>3 m/s (微风拂面)</span>
+							<span id="slap-speed-kmh">28.4 km/h</span>
+							<span>40 m/s (职业拳击)</span>
+						</div>
+					</div>
+
+					<!-- Slap Rate Slider -->
+					<div class="space-y-2">
+						<div class="flex justify-between items-center text-sm">
+							<span class="font-medium opacity-80">拍击频率 (f)</span>
+							<span class="font-mono text-xs font-bold" id="slap-rate-val">2 掌/秒</span>
+						</div>
+						<input
+							id="slap-rate"
+							type="range"
+							min="1"
+							max="6"
+							step="1"
+							value="2"
+							class="w-full accent-[var(--primary)] cursor-pointer"
+						/>
+						<div class="flex justify-between text-[11px] opacity-50 font-mono">
+							<span>1 掌/秒 (慢悠悠)</span>
+							<span>3 掌/秒 (无影手)</span>
+							<span>6 掌/秒 (电风扇)</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Live Computation Results Cards -->
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-amber-500/5 dark:bg-amber-400/5">
+						<div class="text-xs opacity-60 mb-1">所需拍击总次数</div>
+						<div class="text-2xl sm:text-3xl font-black font-mono tracking-tight text-amber-600 dark:text-amber-400" id="res-slap-count">
+							23,038
+						</div>
+						<div class="text-[11px] opacity-60 mt-1" id="res-meme-note">
+							≈ 23,034 掌（完美对应迷因！）
+						</div>
+					</div>
+
+					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
+						<div class="text-xs opacity-60 mb-1">所需总热能 (Q)</div>
+						<div class="text-2xl font-bold font-mono" id="res-total-energy">
+							287.6 kJ
+						</div>
+						<div class="text-[11px] opacity-50 mt-1" id="res-energy-sub">
+							单掌动能: 12.48 J (手重 0.4kg)
+						</div>
+					</div>
+
+					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
+						<div class="text-xs opacity-60 mb-1">持续拍熟耗时</div>
+						<div class="text-2xl font-bold font-mono" id="res-total-time">
+							3 小时 12 分
+						</div>
+						<div class="text-[11px] opacity-50 mt-1" id="res-time-sub">
+							按 2 掌/秒无休止连续拍击
+						</div>
+					</div>
+
+					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
+						<div class="text-xs opacity-60 mb-1">熟成温差 (ΔT)</div>
+						<div class="text-2xl font-bold font-mono" id="res-delta-temp">
+							71.0 °C
+						</div>
+						<div class="text-[11px] opacity-50 mt-1" id="res-temp-sub">
+							4°C 升至 75°C 熟透
+						</div>
+					</div>
+				</div>
+
+				<!-- One-Slap Mode Callout -->
+				<div class="relative overflow-hidden rounded-2xl p-5 border border-purple-500/20 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent">
+					<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+						<div class="space-y-1">
+							<div class="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 dark:text-purple-400">
+								<span>⚡</span>
+								<span>超音速「神之一掌」模式 (One-Slap Mode)</span>
+							</div>
+							<p class="text-xs opacity-75 leading-relaxed max-w-xl">
+								如果想只用<strong>一掌</strong>将食材瞬间彻底拍熟（v = √(2·Q / m_hand)），这一掌的挥手速度必须达到：
+							</p>
+						</div>
+
+						<div class="flex flex-wrap items-baseline gap-3 bg-black/10 dark:bg-white/10 px-4 py-2.5 rounded-xl backdrop-blur-xs font-mono">
+							<div>
+								<span class="text-xl sm:text-2xl font-black text-purple-600 dark:text-purple-300" id="one-slap-ms">1,199</span>
+								<span class="text-xs opacity-60 ml-0.5">m/s</span>
+							</div>
+							<span class="opacity-30">≈</span>
+							<div>
+								<span class="text-lg font-bold" id="one-slap-kmh">4,317</span>
+								<span class="text-xs opacity-60 ml-0.5">km/h</span>
+							</div>
+							<span class="opacity-30">≈</span>
+							<div>
+								<span class="text-lg font-bold text-amber-500 dark:text-amber-300" id="one-slap-mph">2,682</span>
+								<span class="text-xs opacity-60 ml-0.5">mph</span>
+							</div>
+						</div>
+					</div>
+					<div class="mt-3 pt-3 border-t border-purple-500/15 flex items-center justify-between text-xs opacity-70">
+						<span>🔥 迷因传言值: <strong class="font-mono text-purple-600 dark:text-purple-300">3,726 mph</strong>（约 1,666 m/s / 4.9 马赫）</span>
+						<span class="hidden sm:inline text-[11px] opacity-60">此速度挥掌会在触碰瞬间将手和肉同时汽化</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- Interactive Slap Simulator -->
+			<section class="space-y-5">
+				<div class="flex items-center justify-between">
+					<h2 class="text-lg font-bold flex items-center gap-2">
+						<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+						巴掌烹饪互动模拟器
+					</h2>
+					<span class="text-xs opacity-50">点击或敲击空格键开拍！</span>
+				</div>
+
+				<div class="relative rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-black/30 overflow-hidden p-6 sm:p-8 flex flex-col items-center justify-center min-h-[380px]">
+					<!-- Milestone Toast Banner -->
+					<div id="milestone-toast" class="absolute top-4 left-4 right-4 sm:left-auto sm:right-4 max-w-sm px-4 py-2.5 rounded-xl bg-amber-500 text-white font-medium text-xs shadow-lg transition-all duration-300 transform -translate-y-12 opacity-0 pointer-events-none z-30 flex items-center gap-2">
+						<span class="text-base" id="toast-icon">👋</span>
+						<span id="toast-text" class="flex-1">热身完毕！</span>
+					</div>
+
+					<!-- Visual Arena (No emoji, no external images) -->
+					<div class="relative w-full max-w-md h-52 sm:h-60 flex items-center justify-center my-2">
+						<!-- Steam Particles -->
+						<div id="steam-container" class="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 z-10 flex items-center justify-center">
+							<svg viewBox="0 0 120 100" class="w-32 h-28 -translate-y-12 text-amber-500/40 dark:text-white/40 fill-none stroke-current stroke-2">
+								<path class="steam-line steam-1" d="M30,80 Q20,50 35,30 T25,5" stroke-linecap="round"></path>
+								<path class="steam-line steam-2" d="M60,85 Q75,55 58,35 T65,8" stroke-linecap="round"></path>
+								<path class="steam-line steam-3" d="M90,80 Q80,50 95,30 T85,5" stroke-linecap="round"></path>
+							</svg>
+						</div>
+
+						<!-- Food SVG Target -->
+						<div id="food-stage" class="relative z-0 cursor-pointer select-none transform transition-transform duration-75">
+							<!-- SVG will be dynamically injected / rendered here -->
+							<div id="food-svg-wrap" class="w-44 h-44 sm:w-52 sm:h-52 drop-shadow-md"></div>
+						</div>
+
+						<!-- Slap Motion Streak & Flash -->
+						<div id="slap-fx" class="absolute inset-0 pointer-events-none z-20 flex items-center justify-center opacity-0">
+							<svg viewBox="0 0 200 200" class="w-56 h-56">
+								<!-- Slash motion streak -->
+								<path d="M20,40 Q100,90 180,160" fill="none" stroke="rgba(245, 158, 11, 0.85)" stroke-width="12" stroke-linecap="round" stroke-dasharray="140" stroke-dashoffset="0"></path>
+								<path d="M40,20 Q120,70 190,140" fill="none" stroke="rgba(255, 255, 255, 0.9)" stroke-width="6" stroke-linecap="round"></path>
+								<!-- Comic impact burst -->
+								<polygon points="120,95 135,80 135,95 155,90 140,105 160,115 138,118 142,135 125,122 115,138 112,120 95,125 108,110 90,98 110,100" fill="#f59e0b" opacity="0.9"></polygon>
+							</svg>
+						</div>
+
+						<!-- Floating Slap Text -->
+						<div id="slap-floats" class="absolute inset-0 pointer-events-none z-30"></div>
+					</div>
+
+					<!-- Temperature Progress Bar -->
+					<div class="w-full max-w-md space-y-2 mt-2">
+						<div class="flex justify-between items-baseline text-xs font-mono">
+							<span class="opacity-75 font-sans font-medium flex items-center gap-1.5">
+								<span id="status-icon">❄️</span>
+								<span id="cook-status-text">冰凉生鲜</span>
+							</span>
+							<span class="font-bold">
+								<span id="sim-current-temp" class="text-amber-500">4.0</span>°C / <span id="sim-target-temp">75.0</span>°C
+								(<span id="sim-progress-pct" class="opacity-75">0.0%</span>)
+							</span>
+						</div>
+
+						<div class="w-full h-3 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden p-0.5 border border-black/5 dark:border-white/5">
+							<div
+								id="temp-progress-bar"
+								class="h-full rounded-full transition-all duration-150 bg-gradient-to-r from-blue-500 via-amber-500 to-rose-600"
+								style="width: 0%;"
+							></div>
+						</div>
+
+						<div class="flex justify-between items-center text-[11px] opacity-60 font-mono">
+							<span>已拍击: <strong id="sim-slap-count" class="font-bold text-inherit">0</strong> 掌</span>
+							<span>已注入动能: <span id="sim-energy-added">0.0</span> J</span>
+						</div>
+					</div>
+
+					<!-- Action Controls -->
+					<div class="flex flex-wrap items-center justify-center gap-3 mt-5">
+						<button
+							id="btn-slap"
+							type="button"
+							class="px-8 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-rose-600 hover:from-amber-600 hover:to-rose-700 text-white font-extrabold text-base shadow-md hover:shadow-lg active:scale-95 transition cursor-pointer flex items-center gap-2"
+						>
+							<svg viewBox="0 0 24 24" class="w-5 h-5 fill-current" aria-hidden="true">
+								<path d="M21 10.5a1.5 1.5 0 0 0-1.5-1.5h-4.2l.63-3.03.02-.21a1.49 1.49 0 0 0-.44-1.06L14.44 3.6 8.72 9.32c-.45.45-.72 1.07-.72 1.68V19a2 2 0 0 0 2 2h7c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.5M4 11H2v9h2c.55 0 1-.45 1-1v-7c0-.55-.45-1-1-1Z"/>
+							</svg>
+							<span>开拍！</span>
+						</button>
+
+						<button
+							id="btn-slap-10"
+							type="button"
+							class="px-4 py-3 rounded-2xl border border-black/15 dark:border-white/15 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
+							title="快速进行 10 次拍击"
+						>
+							⚡ 十连掌
+						</button>
+
+						<button
+							id="btn-slap-100"
+							type="button"
+							class="px-4 py-3 rounded-2xl border border-black/15 dark:border-white/15 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
+							title="百掌连环"
+						>
+							🔥 百掌轰击
+						</button>
+
+						<button
+							id="btn-reset-food"
+							type="button"
+							class="px-4 py-3 rounded-2xl border border-rose-500/20 text-rose-500 hover:bg-rose-500/10 text-xs font-semibold active:scale-95 transition"
+						>
+							↺ 重置当前
+						</button>
+					</div>
+				</div>
+			</section>
+
+			<!-- Physics Notes Section -->
+			<section class="p-6 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 space-y-3">
+				<h3 class="text-sm font-bold opacity-90 flex items-center gap-2">
+					<span>📐</span>
+					<span>物理考据与科学说明 (Physics Notes)</span>
+				</h3>
+				<ul class="text-xs sm:text-sm opacity-75 space-y-2 leading-relaxed list-disc list-inside">
+					<li>
+						<strong>能量守恒与升温公式：</strong>所需加热总热量为 <code>Q = m · c · ΔT</code>（其中 m 为质量，c 为比热容，ΔT 为目标熟化温差）；单次挥掌击打产生的动能为 <code>E = ½ · m_hand · v²</code>（本计算假定单侧手掌与小臂联动有效挥击质量为 0.4 kg）。
+					</li>
+					<li>
+						<strong>完全无损理想假设：</strong>计算模型严格假定手掌的机械动能在击中肉质瞬间 <strong>100% 毫无损耗地转化为内能</strong>，且食材不向周围空气散发任何热量。但在真实物理世界中，绝大部分能量会转化为击打声波、机体反弹与震动。
+					</li>
+					<li>
+						<strong>真实人类实验（Parker Ormonde，2019）：</strong>物理爱好者 Parker Ormonde 曾制造过一台专用机械臂进行「拍鸡」实测。在连续挥拍约 <strong>135,000 次（耗时约 6.5 小时）</strong>后，整鸡核心温度仅攀升到约 <strong>55°C</strong>，随后拍击产生的热量与向室温散失的热量完全抵消达到热平衡，鸡肉不仅没熟，反而已被拍成肉泥。
+					</li>
+					<li>
+						<strong>超音速一掌的现实代价：</strong>若想以一掌瞬熟（约 2,682 ~ 3,726 mph），手掌需以超高马赫数划过空气。此极端速度下引发的绝热空气压缩激波温度高达数千度，在手掌触碰到鸡肉的前数微秒，空气阻力与激波高温就会将手掌和整鸡一并汽化炸裂。
+					</li>
+				</ul>
+			</section>
+
+			<!-- Footer -->
+			<footer class="pt-4 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs opacity-50">
+				<span>© Kinetic Cuisine · 动能厨房实验项目</span>
+				<span>本页面由 AI 生成。</span>
+			</footer>
+		</div>
+	</div>
+
+	<!-- Custom Animation Styles -->
+	<style>
+		@keyframes slapSquash {
+			0% { transform: scale(1, 1); }
+			25% { transform: scale(1.25, 0.72) rotate(-4deg); }
+			55% { transform: scale(0.9, 1.12) rotate(2deg); }
+			75% { transform: scale(1.05, 0.98); }
+			100% { transform: scale(1, 1); }
+		}
+
+		.slap-squash {
+			animation: slapSquash 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+		}
+
+		@keyframes steamFloat {
+			0% { stroke-dashoffset: 80; opacity: 0; transform: translateY(0); }
+			40% { opacity: 0.8; }
+			100% { stroke-dashoffset: 0; opacity: 0; transform: translateY(-16px); }
+		}
+
+		.steam-1 {
+			stroke-dasharray: 40;
+			animation: steamFloat 2s ease-in-out infinite;
+		}
+		.steam-2 {
+			stroke-dasharray: 45;
+			animation: steamFloat 2.4s ease-in-out 0.4s infinite;
+		}
+		.steam-3 {
+			stroke-dasharray: 40;
+			animation: steamFloat 2.1s ease-in-out 0.8s infinite;
+		}
+
+		@keyframes floatUpFade {
+			0% { opacity: 1; transform: translate(-50%, 0) scale(0.9); }
+			100% { opacity: 0; transform: translate(-50%, -40px) scale(1.15); }
+		}
+
+		.float-text {
+			position: absolute;
+			left: 50%;
+			top: 35%;
+			pointer-events: none;
+			font-family: monospace;
+			font-weight: 800;
+			font-size: 14px;
+			animation: floatUpFade 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		}
+	</style>
+
+	<!-- Interactive Logic -->
+	<script is:inline>
+		(() => {
+			// Food Definitions grounded in requested physics:
+			// c in kJ/(kg·K), mass in kg, targetTemp in °C
+			const FOOD_PRESETS = [
+				{
+					id: "whole-chicken",
+					name: "整鸡",
+					subtitle: "经典整鸡",
+					mass: 1.5,
+					c: 2.7,
+					targetTemp: 75,
+					svg: `
+						<svg viewBox="0 0 200 200" class="w-full h-full">
+							<defs>
+								<radialGradient id="chk-grad" cx="45%" cy="40%" r="55%">
+									<stop offset="0%" stop-color="#fbbf24"/>
+									<stop offset="65%" stop-color="#d97706"/>
+									<stop offset="100%" stop-color="#92400e"/>
+								</radialGradient>
+								<linearGradient id="bone-grad" x1="0" y1="0" x2="1" y2="1">
+									<stop offset="0%" stop-color="#fef3c7"/>
+									<stop offset="100%" stop-color="#cbd5e1"/>
+								</linearGradient>
+							</defs>
+							<!-- Shadow -->
+							<ellipse cx="100" cy="165" rx="70" ry="14" fill="rgba(0,0,0,0.18)"/>
+							<!-- Chicken main body -->
+							<path d="M50,110 C45,70 80,45 115,50 C145,55 160,85 150,125 C140,150 70,155 50,110 Z" fill="url(#chk-grad)"/>
+							<!-- Drumstick 1 -->
+							<path d="M125,120 C145,115 165,130 155,145 C145,155 125,140 125,120 Z" fill="url(#chk-grad)"/>
+							<!-- Bone 1 -->
+							<path d="M152,142 L168,154" stroke="url(#bone-grad)" stroke-width="8" stroke-linecap="round"/>
+							<circle cx="166" cy="151" r="4.5" fill="#f8fafc"/>
+							<circle cx="170" cy="157" r="4.5" fill="#f8fafc"/>
+							<!-- Wing -->
+							<path d="M60,105 C75,90 95,95 90,115 C85,125 65,120 60,105 Z" fill="#b45309" opacity="0.6"/>
+							<!-- Herbs / seasoning specks -->
+							<circle cx="85" cy="75" r="1.5" fill="#065f46"/>
+							<circle cx="110" cy="80" r="1.8" fill="#065f46"/>
+							<circle cx="95" cy="98" r="1.5" fill="#065f46"/>
+							<circle cx="125" cy="90" r="1.5" fill="#065f46"/>
+							<circle cx="135" cy="115" r="1.5" fill="#065f46"/>
+						</svg>
+					`
+				},
+				{
+					id: "chicken-breast",
+					name: "鸡胸肉",
+					subtitle: "高蛋白肉块",
+					mass: 0.25,
+					c: 2.7,
+					targetTemp: 75,
+					svg: `
+						<svg viewBox="0 0 200 200" class="w-full h-full">
+							<defs>
+								<radialGradient id="brst-grad" cx="45%" cy="35%" r="60%">
+									<stop offset="0%" stop-color="#fef08a"/>
+									<stop offset="60%" stop-color="#f59e0b"/>
+									<stop offset="100%" stop-color="#b45309"/>
+								</radialGradient>
+							</defs>
+							<ellipse cx="100" cy="160" rx="65" ry="12" fill="rgba(0,0,0,0.18)"/>
+							<!-- Breast tender fillet -->
+							<path d="M45,120 C35,75 80,45 130,55 C165,65 170,115 140,140 C105,160 55,150 45,120 Z" fill="url(#brst-grad)"/>
+							<!-- Meat grain texture -->
+							<path d="M65,85 Q100,75 140,90" fill="none" stroke="#d97706" stroke-width="2" opacity="0.5"/>
+							<path d="M60,105 Q100,95 145,110" fill="none" stroke="#d97706" stroke-width="2" opacity="0.5"/>
+							<path d="M65,125 Q100,115 135,130" fill="none" stroke="#d97706" stroke-width="2" opacity="0.5"/>
+							<circle cx="90" cy="88" r="1.8" fill="#15803d"/>
+							<circle cx="115" cy="102" r="1.6" fill="#15803d"/>
+						</svg>
+					`
+				},
+				{
+					id: "steak",
+					name: "牛排",
+					subtitle: "M9 极佳西冷",
+					mass: 0.3,
+					c: 2.8,
+					targetTemp: 65,
+					svg: `
+						<svg viewBox="0 0 200 200" class="w-full h-full">
+							<defs>
+								<radialGradient id="stk-grad" cx="40%" cy="40%" r="60%">
+									<stop offset="0%" stop-color="#ef4444"/>
+									<stop offset="65%" stop-color="#991b1b"/>
+									<stop offset="100%" stop-color="#450a0a"/>
+								</radialGradient>
+							</defs>
+							<ellipse cx="100" cy="160" rx="65" ry="13" fill="rgba(0,0,0,0.2)"/>
+							<!-- Steak contour -->
+							<path d="M45,95 C45,65 90,50 145,60 C165,75 168,125 140,145 C95,165 40,140 45,95 Z" fill="url(#stk-grad)"/>
+							<!-- Fat edge -->
+							<path d="M45,95 C45,65 90,50 145,60" fill="none" stroke="#fef3c7" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+							<!-- Marbling strips -->
+							<path d="M70,85 Q85,95 80,110" fill="none" stroke="#fef2f2" stroke-width="2.5" opacity="0.75"/>
+							<path d="M100,75 Q115,88 110,105" fill="none" stroke="#fef2f2" stroke-width="2.5" opacity="0.75"/>
+							<path d="M125,85 Q135,100 130,120" fill="none" stroke="#fef2f2" stroke-width="2.5" opacity="0.75"/>
+							<!-- Grill sear cross -->
+							<line x1="65" y1="80" x2="135" y2="130" stroke="#262626" stroke-width="3" opacity="0.4" stroke-linecap="round"/>
+							<line x1="85" y1="68" x2="145" y2="115" stroke="#262626" stroke-width="3" opacity="0.4" stroke-linecap="round"/>
+							<line x1="135" y1="75" x2="65" y2="130" stroke="#262626" stroke-width="3" opacity="0.4" stroke-linecap="round"/>
+						</svg>
+					`
+				},
+				{
+					id: "salmon",
+					name: "三文鱼",
+					subtitle: "鲜嫩鱼腩",
+					mass: 0.2,
+					c: 3.0,
+					targetTemp: 63,
+					svg: `
+						<svg viewBox="0 0 200 200" class="w-full h-full">
+							<defs>
+								<linearGradient id="salm-grad" x1="0" y1="0" x2="1" y2="1">
+									<stop offset="0%" stop-color="#fb923c"/>
+									<stop offset="60%" stop-color="#f97316"/>
+									<stop offset="100%" stop-color="#c2410c"/>
+								</linearGradient>
+							</defs>
+							<ellipse cx="100" cy="160" rx="65" ry="12" fill="rgba(0,0,0,0.18)"/>
+							<!-- Salmon fillet slice -->
+							<path d="M40,110 C50,65 140,55 165,85 C170,115 155,145 130,148 C85,152 40,140 40,110 Z" fill="url(#salm-grad)"/>
+							<!-- Skin edge -->
+							<path d="M40,110 C40,140 85,152 130,148" fill="none" stroke="#334155" stroke-width="5" opacity="0.85"/>
+							<!-- Curved fat striations -->
+							<path d="M65,75 Q90,105 85,135" fill="none" stroke="#ffedd5" stroke-width="3" opacity="0.85"/>
+							<path d="M90,70 Q115,100 110,138" fill="none" stroke="#ffedd5" stroke-width="3" opacity="0.85"/>
+							<path d="M115,70 Q140,98 135,135" fill="none" stroke="#ffedd5" stroke-width="3" opacity="0.85"/>
+							<path d="M140,78 Q155,100 150,125" fill="none" stroke="#ffedd5" stroke-width="3" opacity="0.85"/>
+						</svg>
+					`
+				},
+				{
+					id: "potato",
+					name: "土豆",
+					subtitle: "软糯黄心薯",
+					mass: 0.25,
+					c: 3.4,
+					targetTemp: 95,
+					svg: `
+						<svg viewBox="0 0 200 200" class="w-full h-full">
+							<defs>
+								<radialGradient id="pot-grad" cx="40%" cy="35%" r="60%">
+									<stop offset="0%" stop-color="#fde047"/>
+									<stop offset="60%" stop-color="#ca8a04"/>
+									<stop offset="100%" stop-color="#713f12"/>
+								</radialGradient>
+							</defs>
+							<ellipse cx="100" cy="160" rx="60" ry="12" fill="rgba(0,0,0,0.18)"/>
+							<!-- Potato body -->
+							<path d="M50,115 C45,75 75,55 120,60 C155,65 165,100 155,130 C145,155 75,155 50,115 Z" fill="url(#pot-grad)"/>
+							<!-- Potato eyes / dimples -->
+							<ellipse cx="80" cy="85" rx="3" ry="1.5" fill="#451a03" opacity="0.6"/>
+							<ellipse cx="125" cy="85" rx="3.5" ry="1.8" fill="#451a03" opacity="0.6"/>
+							<ellipse cx="105" cy="115" rx="3" ry="1.5" fill="#451a03" opacity="0.6"/>
+							<ellipse cx="75" cy="125" rx="2.5" ry="1.2" fill="#451a03" opacity="0.6"/>
+							<ellipse cx="135" cy="115" rx="2.5" ry="1.2" fill="#451a03" opacity="0.6"/>
+							<!-- Melting butter pat on top -->
+							<rect x="90" y="60" width="22" height="12" rx="4" fill="#fef08a" stroke="#eab308" stroke-width="1.5"/>
+							<ellipse cx="101" cy="72" rx="14" ry="4" fill="#fef08a" opacity="0.6"/>
+						</svg>
+					`
+				},
+				{
+					id: "egg",
+					name: "鸡蛋",
+					subtitle: "完美水煮蛋",
+					mass: 0.06,
+					c: 3.2,
+					targetTemp: 70,
+					svg: `
+						<svg viewBox="0 0 200 200" class="w-full h-full">
+							<defs>
+								<radialGradient id="egg-grad" cx="40%" cy="35%" r="60%">
+									<stop offset="0%" stop-color="#ffffff"/>
+									<stop offset="60%" stop-color="#fed7aa"/>
+									<stop offset="100%" stop-color="#c2410c"/>
+								</radialGradient>
+							</defs>
+							<ellipse cx="100" cy="165" rx="45" ry="10" fill="rgba(0,0,0,0.18)"/>
+							<!-- Minimalist Egg Stand -->
+							<path d="M75,160 L125,160 L120,150 L80,150 Z" fill="#94a3b8"/>
+							<!-- Oval Egg -->
+							<path d="M100,50 C125,50 145,85 145,120 C145,148 125,155 100,155 C75,155 55,148 55,120 C55,85 75,50 100,50 Z" fill="url(#egg-grad)"/>
+							<!-- Soft light sheen -->
+							<path d="M80,75 C85,65 98,62 105,62" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" opacity="0.8"/>
+						</svg>
+					`
+				}
+			];
+
+			// Constants
+			const HAND_MASS = 0.4; // kg
+			const STORAGE_KEY = "kc_slaps_v1";
+
+			// State
+			let currentFoodIndex = 0; // whole-chicken by default
+			let startTemp = 4; // fridge by default
+			let slapSpeed = 7.9; // m/s default (calibrated so whole-chicken = ~23,034)
+			let slapRate = 2; // slaps / sec
+
+			// Load counts from localStorage
+			let foodSlapCounts = {};
+			try {
+				const stored = localStorage.getItem(STORAGE_KEY);
+				if (stored) foodSlapCounts = JSON.parse(stored);
+			} catch (e) {
+				foodSlapCounts = {};
+			}
+
+			// DOM Elements
+			const foodPresetsContainer = document.getElementById("food-presets");
+			const tempFridgeBtn = document.getElementById("temp-fridge");
+			const tempRoomBtn = document.getElementById("temp-room");
+			const startTempBadge = document.getElementById("start-temp-badge");
+			const slapSpeedInput = document.getElementById("slap-speed");
+			const slapSpeedVal = document.getElementById("slap-speed-val");
+			const slapSpeedKmh = document.getElementById("slap-speed-kmh");
+			const slapRateInput = document.getElementById("slap-rate");
+			const slapRateVal = document.getElementById("slap-rate-val");
+
+			// Result Elements
+			const resSlapCount = document.getElementById("res-slap-count");
+			const resMemeNote = document.getElementById("res-meme-note");
+			const resTotalEnergy = document.getElementById("res-total-energy");
+			const resEnergySub = document.getElementById("res-energy-sub");
+			const resTotalTime = document.getElementById("res-total-time");
+			const resTimeSub = document.getElementById("res-time-sub");
+			const resDeltaTemp = document.getElementById("res-delta-temp");
+			const resTempSub = document.getElementById("res-temp-sub");
+
+			// One-slap Elements
+			const oneSlapMs = document.getElementById("one-slap-ms");
+			const oneSlapKmh = document.getElementById("one-slap-kmh");
+			const oneSlapMph = document.getElementById("one-slap-mph");
+
+			// Simulator Elements
+			const foodStage = document.getElementById("food-stage");
+			const foodSvgWrap = document.getElementById("food-svg-wrap");
+			const slapFx = document.getElementById("slap-fx");
+			const slapFloats = document.getElementById("slap-floats");
+			const steamContainer = document.getElementById("steam-container");
+			const simCurrentTemp = document.getElementById("sim-current-temp");
+			const simTargetTemp = document.getElementById("sim-target-temp");
+			const simProgressPct = document.getElementById("sim-progress-pct");
+			const tempProgressBar = document.getElementById("temp-progress-bar");
+			const simSlapCount = document.getElementById("sim-slap-count");
+			const simEnergyAdded = document.getElementById("sim-energy-added");
+			const cookStatusText = document.getElementById("cook-status-text");
+			const statusIcon = document.getElementById("status-icon");
+
+			const btnSlap = document.getElementById("btn-slap");
+			const btnSlap10 = document.getElementById("btn-slap-10");
+			const btnSlap100 = document.getElementById("btn-slap-100");
+			const btnResetFood = document.getElementById("btn-reset-food");
+
+			// Milestone Toast Elements
+			const toastEl = document.getElementById("milestone-toast");
+			const toastIcon = document.getElementById("toast-icon");
+			const toastText = document.getElementById("toast-text");
+			let toastTimer = null;
+
+			function saveCounts() {
+				try {
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(foodSlapCounts));
+				} catch (e) {}
+			}
+
+			function getAccumulatedSlaps(foodId) {
+				return foodSlapCounts[foodId] || 0;
+			}
+
+			function setAccumulatedSlaps(foodId, count) {
+				foodSlapCounts[foodId] = Math.max(0, count);
+				saveCounts();
+			}
+
+			function showToast(icon, message) {
+				if (toastTimer) clearTimeout(toastTimer);
+				toastIcon.textContent = icon;
+				toastText.textContent = message;
+				toastEl.classList.remove("-translate-y-12", "opacity-0", "pointer-events-none");
+				toastEl.classList.add("translate-y-0", "opacity-100");
+
+				toastTimer = setTimeout(() => {
+					toastEl.classList.add("-translate-y-12", "opacity-0", "pointer-events-none");
+					toastEl.classList.remove("translate-y-0", "opacity-100");
+				}, 3500);
+			}
+
+			function formatTime(seconds) {
+				if (seconds < 60) return `${Math.round(seconds)} 秒`;
+				if (seconds < 3600) {
+					const m = Math.floor(seconds / 60);
+					const s = Math.round(seconds % 60);
+					return `${m} 分 ${s} 秒`;
+				}
+				const h = Math.floor(seconds / 3600);
+				const m = Math.round((seconds % 3600) / 60);
+				return `${h} 小时 ${m} 分`;
+			}
+
+			function renderPresets() {
+				foodPresetsContainer.innerHTML = "";
+				FOOD_PRESETS.forEach((food, idx) => {
+					const btn = document.createElement("button");
+					btn.type = "button";
+					const isActive = idx === currentFoodIndex;
+					btn.className = `p-3 rounded-xl border text-left transition active:scale-95 flex flex-col justify-between ${
+						isActive
+							? "bg-[var(--primary)] text-white border-transparent shadow-sm"
+							: "border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 opacity-80"
+					}`;
+					btn.innerHTML = `
+						<div class="font-bold text-sm leading-snug">${food.name}</div>
+						<div class="text-[11px] opacity-75 mt-1 font-mono">${food.mass} kg · ${food.targetTemp}°C</div>
+					`;
+					btn.addEventListener("click", () => {
+						currentFoodIndex = idx;
+						renderPresets();
+						updateCalculations();
+					});
+					foodPresetsContainer.appendChild(btn);
+				});
+			}
+
+			function updateCalculations() {
+				const food = FOOD_PRESETS[currentFoodIndex];
+				const deltaT = Math.max(1, food.targetTemp - startTemp);
+				// Q = m * c * ΔT (Joules)
+				const eNeededJoules = food.mass * (food.c * 1000) * deltaT;
+				const eNeededKj = eNeededJoules / 1000;
+
+				// E_per_slap = 0.5 * m_hand * v^2
+				const ePerSlapJoules = 0.5 * HAND_MASS * Math.pow(slapSpeed, 2);
+
+				// Required Slaps
+				const requiredSlaps = Math.ceil(eNeededJoules / ePerSlapJoules);
+
+				// Live Results Update
+				resSlapCount.textContent = requiredSlaps.toLocaleString();
+				if (food.id === "whole-chicken" && startTemp === 4) {
+					resMemeNote.textContent = `≈ 23,034 掌（与迷因仅差 ${Math.abs(requiredSlaps - 23034)} 掌）`;
+				} else {
+					resMemeNote.textContent = `按当前速度 (${slapSpeed.toFixed(1)} m/s) 计算`;
+				}
+
+				resTotalEnergy.textContent = `${eNeededKj.toFixed(1)} kJ`;
+				resEnergySub.textContent = `单掌动能: ${ePerSlapJoules.toFixed(2)} J (手重 ${HAND_MASS}kg)`;
+
+				const totalSeconds = requiredSlaps / slapRate;
+				resTotalTime.textContent = formatTime(totalSeconds);
+				resTimeSub.textContent = `按 ${slapRate} 掌/秒连续拍击`;
+
+				resDeltaTemp.textContent = `${deltaT.toFixed(1)} °C`;
+				resTempSub.textContent = `${startTemp}°C 升至 ${food.targetTemp}°C 熟透`;
+
+				// One-Slap Calculation: v = sqrt(2 * E_needed / m_hand)
+				const oneSlapSpeedMs = Math.sqrt((2 * eNeededJoules) / HAND_MASS);
+				const oneSlapSpeedKmh = oneSlapSpeedMs * 3.6;
+				const oneSlapSpeedMph = oneSlapSpeedMs * 2.236936;
+
+				oneSlapMs.textContent = Math.round(oneSlapSpeedMs).toLocaleString();
+				oneSlapKmh.textContent = Math.round(oneSlapSpeedKmh).toLocaleString();
+				oneSlapMph.textContent = Math.round(oneSlapSpeedMph).toLocaleString();
+
+				// Simulator Stage Update
+				foodSvgWrap.innerHTML = food.svg;
+				simTargetTemp.textContent = food.targetTemp.toFixed(1);
+
+				updateSimulatorProgress(food, requiredSlaps, ePerSlapJoules);
+			}
+
+			function updateSimulatorProgress(food, requiredSlaps, ePerSlapJoules) {
+				const currentCount = getAccumulatedSlaps(food.id);
+				simSlapCount.textContent = currentCount.toLocaleString();
+
+				const accumulatedEnergyJoules = currentCount * ePerSlapJoules;
+				simEnergyAdded.textContent = accumulatedEnergyJoules < 1000
+					? `${accumulatedEnergyJoules.toFixed(1)}`
+					: `${(accumulatedEnergyJoules / 1000).toFixed(2)} k`;
+
+				const tempRise = accumulatedEnergyJoules / (food.mass * (food.c * 1000));
+				const currentTemp = Math.min(food.targetTemp, startTemp + tempRise);
+				simCurrentTemp.textContent = currentTemp.toFixed(1);
+
+				const pct = Math.min(100, (currentCount / requiredSlaps) * 100);
+				simProgressPct.textContent = `${pct.toFixed(2)}%`;
+				tempProgressBar.style.width = `${Math.min(100, Math.max(2, pct))}%`;
+
+				// Status badges and color shift
+				if (pct >= 100) {
+					cookStatusText.textContent = "外焦里嫩 · 大功告成！";
+					statusIcon.textContent = "🍗";
+					steamContainer.style.opacity = "1";
+					foodSvgWrap.style.filter = "sepia(40%) saturate(140%) brightness(95%)";
+				} else if (pct >= 50) {
+					cookStatusText.textContent = "滋滋冒气 · 半熟状态";
+					statusIcon.textContent = "🔥";
+					steamContainer.style.opacity = "0.85";
+					foodSvgWrap.style.filter = "sepia(25%) saturate(120%)";
+				} else if (pct >= 15) {
+					cookStatusText.textContent = "温热回暖 · 渐入佳境";
+					statusIcon.textContent = "♨️";
+					steamContainer.style.opacity = "0.4";
+					foodSvgWrap.style.filter = "sepia(10%)";
+				} else {
+					cookStatusText.textContent = startTemp === 4 ? "冰凉生鲜" : "常温待烤";
+					statusIcon.textContent = startTemp === 4 ? "❄️" : "🌡️";
+					steamContainer.style.opacity = "0";
+					foodSvgWrap.style.filter = "none";
+				}
+			}
+
+			function triggerSlap(count = 1) {
+				const food = FOOD_PRESETS[currentFoodIndex];
+				const deltaT = Math.max(1, food.targetTemp - startTemp);
+				const eNeededJoules = food.mass * (food.c * 1000) * deltaT;
+				const ePerSlapJoules = 0.5 * HAND_MASS * Math.pow(slapSpeed, 2);
+				const requiredSlaps = Math.ceil(eNeededJoules / ePerSlapJoules);
+
+				const oldCount = getAccumulatedSlaps(food.id);
+				const newCount = oldCount + count;
+				setAccumulatedSlaps(food.id, newCount);
+
+				// Visual squash on food
+				foodStage.classList.remove("slap-squash");
+				void foodStage.offsetWidth; // trigger reflow
+				foodStage.classList.add("slap-squash");
+
+				// Flash streak FX
+				slapFx.style.opacity = "1";
+				slapFx.style.transform = `scale(${1 + Math.random() * 0.2 - 0.1}) rotate(${(Math.random() - 0.5) * 15}deg)`;
+				setTimeout(() => {
+					slapFx.style.opacity = "0";
+				}, 120);
+
+				// Floating slap indicator text
+				const floatEl = document.createElement("div");
+				floatEl.className = "float-text text-amber-500 dark:text-amber-400";
+				floatEl.textContent = count > 1 ? `+${count} 连击!` : `+1 啪!`;
+				floatEl.style.left = `${50 + (Math.random() - 0.5) * 30}%`;
+				slapFloats.appendChild(floatEl);
+				setTimeout(() => floatEl.remove(), 650);
+
+				// Check Funny Milestone Toasts
+				checkMilestones(oldCount, newCount, requiredSlaps);
+
+				// Update Simulator UI
+				updateSimulatorProgress(food, requiredSlaps, ePerSlapJoules);
+			}
+
+			function checkMilestones(before, after, required) {
+				if (before < 10 && after >= 10) {
+					showToast("👋", "热身完毕！手掌开始微微发烫…");
+				} else if (before < 100 && after >= 100) {
+					showToast("🔥", "手酸了吗？温度刚升了一丁点，麒麟臂正在充能！");
+				} else if (before < 1000 && after >= 1000) {
+					showToast("💪", "千掌达成！掌风呼啸，肉质感受到了热烈的诚意！");
+				} else if (before < 10000 && after >= 10000) {
+					showToast("⚡", "万掌归宗！手掌可能快熟了，食材正在冲向全熟终点！");
+				} else if (before < required && after >= required) {
+					showToast("🎉", "叮！不可思议！你真的亲手拍熟了它！物理学的奇迹！");
+				}
+			}
+
+			// Event Listeners
+			tempFridgeBtn.addEventListener("click", () => {
+				startTemp = 4;
+				tempFridgeBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 bg-[var(--primary)] text-white shadow-xs";
+				tempRoomBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 text-inherit opacity-70 hover:opacity-100";
+				startTempBadge.textContent = "4°C (冷藏)";
+				updateCalculations();
+			});
+
+			tempRoomBtn.addEventListener("click", () => {
+				startTemp = 20;
+				tempRoomBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 bg-[var(--primary)] text-white shadow-xs";
+				tempFridgeBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 text-inherit opacity-70 hover:opacity-100";
+				startTempBadge.textContent = "20°C (常温)";
+				updateCalculations();
+			});
+
+			slapSpeedInput.addEventListener("input", (e) => {
+				slapSpeed = parseFloat(e.target.value);
+				slapSpeedVal.textContent = `${slapSpeed.toFixed(1)} m/s`;
+				slapSpeedKmh.textContent = `${(slapSpeed * 3.6).toFixed(1)} km/h`;
+				updateCalculations();
+			});
+
+			slapRateInput.addEventListener("input", (e) => {
+				slapRate = parseInt(e.target.value, 10);
+				slapRateVal.textContent = `${slapRate} 掌/秒`;
+				updateCalculations();
+			});
+
+			btnSlap.addEventListener("click", () => triggerSlap(1));
+			btnSlap10.addEventListener("click", () => triggerSlap(10));
+			btnSlap100.addEventListener("click", () => triggerSlap(100));
+
+			foodStage.addEventListener("click", () => triggerSlap(1));
+
+			btnResetFood.addEventListener("click", () => {
+				const food = FOOD_PRESETS[currentFoodIndex];
+				setAccumulatedSlaps(food.id, 0);
+				updateCalculations();
+				showToast("↺", `已重置【${food.name}】的拍击计数`);
+			});
+
+			// Spacebar to slap
+			window.addEventListener("keydown", (e) => {
+				if (e.code === "Space" && e.target === document.body) {
+					e.preventDefault();
+					triggerSlap(1);
+				}
+			});
+
+			// Init
+			renderPresets();
+			updateCalculations();
+		})();
+	</script>
+</MainGridLayout>
