@@ -1,0 +1,1082 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+const title = "最小的三角形 · Heilbronn 问题游乐场";
+const description =
+	"在正方形里放 n 个点，怎么放才能让任意三点组成的三角形都不太“瘦”？1950 年 Hans Heilbronn 极值几何问题交互式模拟、实时退火算法优化与已知世界纪录。";
+---
+
+<MainGridLayout title={title} description={description}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-5 sm:px-9 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#0a0e17] text-zinc-100 border border-zinc-800/80 shadow-2xl selection:bg-red-500/30 selection:text-red-200">
+			<!-- Background Ambient Glow & Grid -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#ef4444_1px,transparent_1px)] [background-size:24px_24px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/2 -right-32 w-80 h-80 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO SECTION -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+					<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono font-medium tracking-wide">
+						<span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+						EXTREMAL GEOMETRY · HEILBRONN PROBLEM
+					</div>
+					<div class="text-xs font-mono text-zinc-300">
+						HN 热议 · 2026-10-04
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-3">
+					最小的三角形
+				</h1>
+				<p class="text-lg sm:text-xl font-medium text-red-400/90 mb-4 tracking-wide font-mono">
+					Heilbronn 问题 · 点的布局游乐场
+				</p>
+				<p class="text-sm sm:text-base text-zinc-300/80 max-w-3xl leading-relaxed mb-8">
+					在正方形里放 n 个点，怎么放才能让任意三点组成的三角形都不太"瘦"？1950 年 Hans Heilbronn 提出的问题：最大化所有三点组合中面积最小的那个三角形。n 增大时答案以什么速度衰减，至今仍是未解之谜。
+				</p>
+
+				<!-- Stats Dashboard Display -->
+				<div class="rounded-2xl bg-black/80 border border-zinc-800 p-5 sm:p-7 shadow-inner relative overflow-hidden">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+						<div class="flex items-center gap-2">
+							<span class="text-xs font-mono uppercase tracking-widest text-zinc-300">
+								实时几何指标 · REAL-TIME TRIANGLE METRICS
+							</span>
+						</div>
+						<div id="status-indicator" class="text-[11px] font-mono text-red-400/80 bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/50">
+							INTERACTIVE READY
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 text-center max-w-3xl mx-auto">
+						<!-- STAT 1: Current Min Area -->
+						<div class="flex flex-col items-center justify-center bg-zinc-950/90 rounded-xl p-3 sm:p-5 border border-zinc-800/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
+							<div id="stat-min-area" class="stat-digit font-mono text-3xl sm:text-4xl font-black text-red-500 drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]">
+								0.0000
+							</div>
+							<span class="mt-2 text-xs font-mono text-zinc-300">当前最小三角形面积</span>
+							<span class="text-[10px] font-mono text-zinc-400">min Area(Δ)</span>
+						</div>
+
+						<!-- STAT 2: Session Best -->
+						<div class="flex flex-col items-center justify-center bg-zinc-950/90 rounded-xl p-3 sm:p-5 border border-zinc-800/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
+							<div id="stat-session-best" class="stat-digit font-mono text-3xl sm:text-4xl font-black text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.7)]">
+								0.0000
+							</div>
+							<span class="mt-2 text-xs font-mono text-zinc-300">本次会话最优</span>
+							<span class="text-[10px] font-mono text-zinc-400">Session Best</span>
+						</div>
+
+						<!-- STAT 3: Total Triangles C(n, 3) -->
+						<div class="flex flex-col items-center justify-center bg-zinc-950/90 rounded-xl p-3 sm:p-5 border border-zinc-800/80 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
+							<div id="stat-total-triangles" class="stat-digit font-mono text-3xl sm:text-4xl font-black text-white">
+								56
+							</div>
+							<span class="mt-2 text-xs font-mono text-zinc-300">三角形总数</span>
+							<span class="text-[10px] font-mono text-zinc-400">C(n, 3) 组合数</span>
+						</div>
+					</div>
+
+					<!-- Benchmark Comparison Note -->
+					<div class="mt-4 pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between text-xs font-mono text-zinc-300 px-2 gap-2">
+						<div class="flex items-center gap-2">
+							<span class="text-zinc-400">当前点数数学已知最优纪录:</span>
+							<span id="stat-known-best" class="text-red-400 font-bold">0.0724</span>
+							<span id="stat-known-tag" class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300">已证明最优</span>
+						</div>
+						<div class="text-[11px] text-zinc-400">
+							单位正方形 Area = 1.0000
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE CANVAS & CONTROLS SECTION -->
+			<section class="relative z-10 mb-10 pb-10 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+					<div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+							<span class="text-red-500 font-mono text-xl">01/</span> 交互游乐场 (Interactive Arena)
+						</h2>
+						<p class="text-xs sm:text-sm text-zinc-300 mt-1">
+							在单位正方形中自由拖拽点，或启动模拟退火算法让点阵自主寻优。瓶颈最小三角形将以脉冲红光突出显示。
+						</p>
+					</div>
+
+					<!-- Secondary helpers -->
+					<div class="flex flex-wrap gap-2 text-xs font-mono">
+						<button id="btn-load-best" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 hover:border-emerald-500/60 hover:text-white transition active:scale-95 text-zinc-300 flex items-center gap-1.5">
+							<span>⭐ 载入会话最优</span>
+						</button>
+					</div>
+				</div>
+
+				<!-- Main Playground Layout Grid -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+					<!-- Canvas Container (Left / Top) -->
+					<div class="lg:col-span-7 flex flex-col items-center">
+						<div class="relative w-full max-w-[500px] aspect-square rounded-2xl bg-[#070b12] border border-zinc-800 p-2 sm:p-4 shadow-[0_0_30px_rgba(0,0,0,0.6)] flex items-center justify-center overflow-hidden">
+							<!-- Subtle Ambient glow inside canvas card -->
+							<div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.06)_0,transparent_70%)]"></div>
+							
+							<canvas
+								id="heilbronn-canvas"
+								class="w-full h-full block cursor-crosshair touch-none rounded-xl"
+							></canvas>
+						</div>
+
+						<div class="w-full max-w-[500px] mt-3 px-2 flex items-center justify-between text-xs font-mono text-zinc-300">
+							<div class="flex items-center gap-1.5">
+								<span class="inline-block w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+								<span>红色高亮：当前瓶颈最小三角形</span>
+							</div>
+							<div class="text-[11px] text-zinc-400">
+								支持鼠标与触屏多点拖拽
+							</div>
+						</div>
+					</div>
+
+					<!-- Controls Deck (Right / Bottom) -->
+					<div class="lg:col-span-5 flex flex-col gap-5">
+						<!-- Slider Card -->
+						<div class="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800">
+							<div class="flex items-center justify-between mb-3">
+								<label for="slider-n" class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold">
+									点数配置 (Point Count n)
+								</label>
+								<div class="flex items-center gap-2">
+									<span class="text-xs font-mono text-zinc-400">n =</span>
+									<span id="label-n" class="font-mono text-xl font-black text-red-400">8</span>
+								</div>
+							</div>
+
+							<input
+								id="slider-n"
+								type="range"
+								min="3"
+								max="16"
+								value="8"
+								step="1"
+								class="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-500"
+							/>
+
+							<div class="flex justify-between text-[10px] font-mono text-zinc-400 mt-2">
+								<span>n = 3 (初阶)</span>
+								<span>n = 8 (推荐)</span>
+								<span>n = 16 (组合爆炸)</span>
+							</div>
+
+							<div class="mt-4 p-2.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-[11px] font-mono text-zinc-300 flex justify-between items-center">
+								<span>当前组合空间 C(n, 3):</span>
+								<span id="calc-comb-text" class="text-white font-bold">56 个三元组</span>
+							</div>
+						</div>
+
+						<!-- Action Buttons Card -->
+						<div class="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex flex-col gap-3">
+							<span class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold mb-1">
+								优化与布局动作
+							</span>
+
+							<!-- Toggle Annealing Button -->
+							<button
+								id="btn-anneal"
+								class="w-full py-3.5 px-4 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(239,68,68,0.4)] transition flex items-center justify-center gap-2.5"
+							>
+								<span id="anneal-icon" class="text-lg">🔥</span>
+								<span id="anneal-btn-text">退火优化 (Simulated Annealing)</span>
+							</button>
+
+							<div class="grid grid-cols-2 gap-3 mt-1">
+								<!-- Randomize Button -->
+								<button
+									id="btn-random"
+									class="py-2.5 px-3 rounded-xl bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:text-white transition active:scale-95 text-xs font-mono font-semibold text-zinc-200 flex items-center justify-center gap-1.5"
+								>
+									<span>🎲 随机撒点</span>
+								</button>
+
+								<!-- Reset Circular Button -->
+								<button
+									id="btn-reset"
+									class="py-2.5 px-3 rounded-xl bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:text-white transition active:scale-95 text-xs font-mono font-semibold text-zinc-200 flex items-center justify-center gap-1.5"
+								>
+									<span>🔄 重置 (圆周)</span>
+								</button>
+							</div>
+
+							<!-- Annealing Status Pill -->
+							<div id="anneal-status-banner" class="mt-2 p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800 text-[11px] font-mono text-zinc-400 flex items-center justify-between">
+								<span class="flex items-center gap-1.5">
+									<span id="anneal-live-dot" class="w-2 h-2 rounded-full bg-zinc-500"></span>
+									<span id="anneal-rate-text">退火引擎就绪 (~30 步/秒)</span>
+								</span>
+								<span id="anneal-steps-counter">0 次尝试</span>
+							</div>
+						</div>
+
+						<!-- Legend Card -->
+						<div class="p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 text-xs font-mono space-y-2 text-zinc-300">
+							<div class="text-[11px] uppercase tracking-wider text-zinc-300 font-semibold mb-1">
+								图例与交互说明
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="w-3 h-3 rounded-full bg-red-500 border border-white"></span>
+								<span>红色顶点：瓶颈最小三角形角点</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="w-2.5 h-2.5 rounded-full bg-zinc-300 border border-zinc-700"></span>
+								<span>灰色顶点：普通散点（均可拖拽调整）</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="w-3 h-3 border border-red-500/60 bg-red-500/20"></span>
+								<span>红色半透明区：面积最小的瓶颈三角形（若并列则全亮）</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- WHY IS IT SO HARD SECTION -->
+			<section class="relative z-10 mb-10 pb-10 border-b border-zinc-800/80">
+				<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2 mb-2">
+					<span class="text-red-500 font-mono text-xl">02/</span> 为什么这么难 (Why It's So Hard)
+				</h2>
+				<p class="text-xs sm:text-sm text-zinc-300 mb-6">
+					看似简单的几何摆放，背后是极值几何与组合优化领域的“硬骨头”。
+				</p>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<!-- Bullet Card 1 -->
+					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
+						<div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">挑战 01</div>
+							<h3 class="text-base font-bold text-white mb-2">
+								组合爆炸 (Combinatorial Explosion)
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
+								每帧要检查 <span class="text-red-400 font-mono">C(n, 3)</span> 个三角形；当 n 从 8 增长至 16 时，三角形总数从 56 激增至 560。随着点数增加，需全局比对的三元子集呈现三次幂级数膨胀。
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
+							瓶颈判定：任意三点接近共线即归零
+						</div>
+					</div>
+
+					<!-- Bullet Card 2 -->
+					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
+						<div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">挑战 02</div>
+							<h3 class="text-base font-bold text-white mb-2">
+								优化景观布满局部最优 (Rough Landscape)
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
+								优化景观布满局部最优，贪心很容易卡住；目标函数由 <code class="text-red-300 font-mono">min</code> 算子定义，导数不连续且极度陡峭，微小的局部移动往往导致其他无关三点突变为新的瓶颈。
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
+							算法机制：以 5% 概率接受劣解跳出陷阱
+						</div>
+					</div>
+
+					<!-- Bullet Card 3 -->
+					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
+						<div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">挑战 03</div>
+							<h3 class="text-base font-bold text-white mb-2">
+								极小已知边界 (Sparse Exact Solutions)
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
+								精确最优解只在很小的 n 已知（正方形 n=9 的最优性 2026 年才被证明），更大的 n 全靠计算机搜索不断刷新纪录。理论渐近衰减阶至今仍未被完全闭合。
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
+							数学前沿：n=9 刚于 2026 得到严格证明
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- CREDIT & BENCHMARK SECTION -->
+			<section class="relative z-10 mb-8 pb-8">
+				<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2 mb-2">
+					<span class="text-red-500 font-mono text-xl">03/</span> 灵感来源与参考纪录 (Credits & Benchmark)
+				</h2>
+				<p class="text-xs sm:text-sm text-zinc-300 mb-6">
+					站在数学家与分布式计算探索者的肩膀上。
+				</p>
+
+				<!-- Benchmark Table + External Link Card -->
+				<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+					<!-- Leaderboard Card -->
+					<div class="lg:col-span-2 p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800">
+						<div class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold mb-3 flex items-center justify-between">
+							<span>单位正方形已知数学最优解一览表 (n = 3 ~ 10)</span>
+							<span class="text-red-400 text-[11px]">Δ 标记表示严格证明</span>
+						</div>
+
+						<div class="overflow-x-auto">
+							<table class="w-full text-xs font-mono text-left">
+								<thead>
+									<tr class="border-b border-zinc-800 text-zinc-400">
+										<th class="py-2 px-3">点数 n</th>
+										<th class="py-2 px-3">最小面积 Δ(n)</th>
+										<th class="py-2 px-3">状态</th>
+										<th class="py-2 px-3">几何构型特征</th>
+									</tr>
+								</thead>
+								<tbody class="divide-y divide-zinc-800/60 text-zinc-300">
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 3</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.500000</td>
+										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
+										<td class="py-2 px-3 text-zinc-400">正方形任意 3 个角点</td>
+									</tr>
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 4</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.500000</td>
+										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
+										<td class="py-2 px-3 text-zinc-400">正方形 4 个角点</td>
+									</tr>
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 5</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.192450</td>
+										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
+										<td class="py-2 px-3 text-zinc-400">凸五边形变体</td>
+									</tr>
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 6</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.125000</td>
+										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
+										<td class="py-2 px-3 text-zinc-400">1/8 面积对称布局</td>
+									</tr>
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 7</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.083859</td>
+										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
+										<td class="py-2 px-3 text-zinc-400">多边界吸附点</td>
+									</tr>
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 8</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.072376</td>
+										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
+										<td class="py-2 px-3 text-zinc-400">非均匀环形分散</td>
+									</tr>
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 9</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.054876</td>
+										<td class="py-2 px-3 text-emerald-400">严格最优 Δ (2026)</td>
+										<td class="py-2 px-3 text-zinc-400">2026 最新严格数学证明</td>
+									</tr>
+									<tr class="hover:bg-zinc-900/50">
+										<td class="py-2 px-3 font-bold text-white">n = 10</td>
+										<td class="py-2 px-3 text-red-400 font-bold">0.046537</td>
+										<td class="py-2 px-3 text-amber-400">计算机搜索纪录</td>
+										<td class="py-2 px-3 text-zinc-400">记录保持中</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<!-- External Credit Card -->
+					<div class="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex flex-col justify-between">
+						<div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">COMMUNITY & SOURCE</div>
+							<h3 class="text-base font-bold text-white mb-2">
+								Tej Stead 纪录榜与讨论
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
+								灵感来自 2026-10-04 Hacker News 首页讨论。已知最优布局与纪录榜见 Tej Stead 的 Heilbronn 跟踪项目，提供各凸多边形下高精度坐标集与验证工具。
+							</p>
+						</div>
+
+						<div class="pt-4 border-t border-zinc-800/80 space-y-3">
+							<a
+								href="https://math.tejstead.com/heilbronn/"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-red-500/60 text-zinc-200 hover:text-white transition font-mono text-xs font-semibold"
+							>
+								<span>访问 Tej Stead 纪录榜</span>
+								<span class="text-red-400">↗</span>
+							</a>
+							<div class="text-[11px] font-mono text-zinc-400 text-center">
+								math.tejstead.com/heilbronn
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- FOOTER -->
+			<hr class="my-6 border-zinc-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-red-500/40 pl-3 py-1 my-4 italic">
+				<em>本文由 AI 生成。</em>
+			</blockquote>
+		</div>
+	</div>
+
+	<style>
+		.stat-digit {
+			letter-spacing: 0.05em;
+		}
+	</style>
+
+	<script is:inline>
+		// ==========================================
+		// Heilbronn Problem Interactive Engine
+		// Vanilla JavaScript (No TypeScript-only syntax in client bundle)
+		// ==========================================
+
+		// Benchmark values for unit square
+		const BENCHMARK_MAP = {
+			3: { val: 0.5000, tag: "严格最优 Δ", proven: true },
+			4: { val: 0.5000, tag: "严格最优 Δ", proven: true },
+			5: { val: 0.1925, tag: "严格最优 Δ", proven: true },
+			6: { val: 0.1250, tag: "严格最优 Δ", proven: true },
+			7: { val: 0.0839, tag: "严格最优 Δ", proven: true },
+			8: { val: 0.0724, tag: "严格最优 Δ", proven: true },
+			9: { val: 0.0549, tag: "严格最优 Δ (2026)", proven: true },
+			10: { val: 0.0465, tag: "搜索纪录", proven: false },
+			11: { val: 0.0381, tag: "搜索纪录", proven: false },
+			12: { val: 0.0336, tag: "搜索纪录", proven: false },
+			13: { val: 0.0292, tag: "搜索纪录", proven: false },
+			14: { val: 0.0261, tag: "搜索纪录", proven: false },
+			15: { val: 0.0233, tag: "搜索纪录", proven: false },
+			16: { val: 0.0210, tag: "搜索纪录", proven: false }
+		};
+
+		// Lifecycle state
+		let activeAnimFrameId = null;
+		let activeResizeObserver = null;
+
+		function initPlayground() {
+			// Cleanup previous instances if navigating via astro:page-load
+			if (activeAnimFrameId) {
+				cancelAnimationFrame(activeAnimFrameId);
+				activeAnimFrameId = null;
+			}
+			if (activeResizeObserver) {
+				activeResizeObserver.disconnect();
+				activeResizeObserver = null;
+			}
+
+			// DOM Elements
+			const canvas = document.getElementById("heilbronn-canvas");
+			if (!canvas) return;
+			const ctx = canvas.getContext("2d");
+			if (!ctx) return;
+
+			const statMinArea = document.getElementById("stat-min-area");
+			const statSessionBest = document.getElementById("stat-session-best");
+			const statTotalTriangles = document.getElementById("stat-total-triangles");
+			const statKnownBest = document.getElementById("stat-known-best");
+			const statKnownTag = document.getElementById("stat-known-tag");
+			const statusIndicator = document.getElementById("status-indicator");
+
+			const sliderN = document.getElementById("slider-n");
+			const labelN = document.getElementById("label-n");
+			const calcCombText = document.getElementById("calc-comb-text");
+
+			const btnRandom = document.getElementById("btn-random");
+			const btnReset = document.getElementById("btn-reset");
+			const btnAnneal = document.getElementById("btn-anneal");
+			const btnLoadBest = document.getElementById("btn-load-best");
+			const annealBtnText = document.getElementById("anneal-btn-text");
+			const annealIcon = document.getElementById("anneal-icon");
+			const annealLiveDot = document.getElementById("anneal-live-dot");
+			const annealRateText = document.getElementById("anneal-rate-text");
+			const annealStepsCounter = document.getElementById("anneal-steps-counter");
+
+			// Playground State
+			let currentN = parseInt(sliderN ? sliderN.value : "8", 10) || 8;
+			let points = []; // Array of { u, v } in [0, 1]
+			let sessionBestPerN = {}; // Track best area per N
+			let sessionBestPointsPerN = {}; // Track best layout per N
+
+			let isAnnealing = false;
+			let annealStepCount = 0;
+			let lastAnnealAttemptTime = 0;
+			const ANNEAL_INTERVAL_MS = 1000 / 30; // ~30 moves per second
+
+			// Interaction State
+			let draggingIndex = -1;
+			let hoveredIndex = -1;
+
+			// Combinations calculation C(n, 3)
+			function combinations3(n) {
+				if (n < 3) return 0;
+				return (n * (n - 1) * (n - 2)) / 6;
+			}
+
+			// Generate points evenly spaced on a circle inside unit square
+			function generateCircularPoints(count) {
+				const pts = [];
+				const cx = 0.5;
+				const cy = 0.5;
+				const r = 0.38; // Inscribed circle margin
+				for (let i = 0; i < count; i++) {
+					const angle = (i * 2 * Math.PI) / count - Math.PI / 2;
+					pts.push({
+						u: Math.max(0.01, Math.min(0.99, cx + r * Math.cos(angle))),
+						v: Math.max(0.01, Math.min(0.99, cy + r * Math.sin(angle)))
+					});
+				}
+				return pts;
+			}
+
+			// Generate randomized points inside unit square
+			function generateRandomPoints(count) {
+				const pts = [];
+				for (let i = 0; i < count; i++) {
+					pts.push({
+						u: 0.05 + Math.random() * 0.9,
+						v: 0.05 + Math.random() * 0.9
+					});
+				}
+				return pts;
+			}
+
+			// Initialize points
+			points = generateCircularPoints(currentN);
+
+			// Triangle area formula from 3 normalized coordinates
+			function calcTriangleArea(p1, p2, p3) {
+				return 0.5 * Math.abs((p2.u - p1.u) * (p3.v - p1.v) - (p3.u - p1.u) * (p2.v - p1.v));
+			}
+
+			// Full evaluation: find minimum area and all minimal triangles
+			function evaluateLayout(pts) {
+				const n = pts.length;
+				if (n < 3) return { minArea: 0, minTriangles: [], totalCount: 0 };
+
+				let minArea = Infinity;
+				const triangles = [];
+
+				for (let i = 0; i < n - 2; i++) {
+					for (let j = i + 1; j < n - 1; j++) {
+						for (let k = j + 1; k < n; k++) {
+							const area = calcTriangleArea(pts[i], pts[j], pts[k]);
+							if (area < minArea) {
+								minArea = area;
+							}
+							triangles.push({ i, j, k, area });
+						}
+					}
+				}
+
+				// Find ties within epsilon
+				const epsilon = 1e-5;
+				const minTriangles = [];
+				for (let t = 0; t < triangles.length; t++) {
+					if (Math.abs(triangles[t].area - minArea) <= epsilon) {
+						minTriangles.push(triangles[t]);
+					}
+				}
+
+				return {
+					minArea: minArea,
+					minTriangles: minTriangles,
+					totalCount: triangles.length
+				};
+			}
+
+			// Fast minArea evaluation for annealing step
+			function evaluateMinAreaOnly(pts) {
+				const n = pts.length;
+				if (n < 3) return 0;
+				let minA = Infinity;
+				for (let i = 0; i < n - 2; i++) {
+					for (let j = i + 1; j < n - 1; j++) {
+						for (let k = j + 1; k < n; k++) {
+							const a = 0.5 * Math.abs((pts[j].u - pts[i].u) * (pts[k].v - pts[i].v) - (pts[k].u - pts[i].u) * (pts[j].v - pts[i].v));
+							if (a < minA) {
+								minA = a;
+							}
+						}
+					}
+				}
+				return minA;
+			}
+
+			// Record session best for current N
+			function updateSessionBest(area) {
+				const currentBest = sessionBestPerN[currentN] || 0;
+				if (area > currentBest) {
+					sessionBestPerN[currentN] = area;
+					sessionBestPointsPerN[currentN] = points.map(function(p) { return { u: p.u, v: p.v }; });
+				}
+			}
+
+			// Initial evaluation
+			const initialEval = evaluateLayout(points);
+			updateSessionBest(initialEval.minArea);
+
+			// Update DOM metrics
+			function updateMetricsUI(evalResult) {
+				const minArea = evalResult.minArea;
+				if (statMinArea) statMinArea.textContent = minArea.toFixed(4);
+
+				const bestForThisN = sessionBestPerN[currentN] || minArea;
+				if (statSessionBest) statSessionBest.textContent = bestForThisN.toFixed(4);
+
+				const totalComb = combinations3(currentN);
+				if (statTotalTriangles) statTotalTriangles.textContent = String(totalComb);
+				if (calcCombText) calcCombText.textContent = totalComb + " 个三元组";
+
+				const bench = BENCHMARK_MAP[currentN];
+				if (bench) {
+					if (statKnownBest) statKnownBest.textContent = bench.val.toFixed(4);
+					if (statKnownTag) {
+						statKnownTag.textContent = bench.tag;
+						statKnownTag.className = bench.proven
+							? "text-[10px] px-1.5 py-0.5 rounded bg-emerald-950/60 border border-emerald-800 text-emerald-300"
+							: "text-[10px] px-1.5 py-0.5 rounded bg-amber-950/60 border border-amber-800 text-amber-300";
+					}
+				}
+			}
+
+			// Update Annealing UI
+			function updateAnnealingButtonState() {
+				if (!btnAnneal || !annealBtnText || !annealIcon || !annealLiveDot || !annealRateText) return;
+				if (isAnnealing) {
+					btnAnneal.className = "w-full py-3.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 active:scale-95 text-white font-mono font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(217,119,6,0.6)] transition flex items-center justify-center gap-2.5 animate-pulse";
+					annealBtnText.textContent = "停止优化 (Pause Annealing)";
+					annealIcon.textContent = "⏸️";
+					annealLiveDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-ping";
+					annealRateText.textContent = "正在模拟退火搜索中 (~30 步/秒)";
+					if (statusIndicator) {
+						statusIndicator.textContent = "ANNEALING SEARCHING";
+						statusIndicator.className = "text-[11px] font-mono text-amber-400 bg-amber-950/60 px-2.5 py-0.5 rounded border border-amber-900/80";
+					}
+				} else {
+					btnAnneal.className = "w-full py-3.5 px-4 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(239,68,68,0.4)] transition flex items-center justify-center gap-2.5";
+					annealBtnText.textContent = "退火优化 (Simulated Annealing)";
+					annealIcon.textContent = "🔥";
+					annealLiveDot.className = "w-2 h-2 rounded-full bg-zinc-500";
+					annealRateText.textContent = "退火引擎已就绪 (~30 步/秒)";
+					if (statusIndicator) {
+						statusIndicator.textContent = "INTERACTIVE READY";
+						statusIndicator.className = "text-[11px] font-mono text-red-400/80 bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/50";
+					}
+				}
+			}
+
+			// Resize canvas buffer crisp on retina
+			let canvasDisplayWidth = 400;
+			function resizeCanvas() {
+				const rect = canvas.getBoundingClientRect();
+				const dpr = window.devicePixelRatio || 1;
+				const displaySize = Math.max(300, Math.floor(rect.width));
+				canvasDisplayWidth = displaySize;
+
+				if (canvas.width !== Math.round(displaySize * dpr) || canvas.height !== Math.round(displaySize * dpr)) {
+					canvas.width = Math.round(displaySize * dpr);
+					canvas.height = Math.round(displaySize * dpr);
+				}
+			}
+
+			resizeCanvas();
+			activeResizeObserver = new ResizeObserver(function() {
+				resizeCanvas();
+			});
+			activeResizeObserver.observe(canvas.parentElement || canvas);
+
+			// Render canvas frame
+			function render(timestamp) {
+				const dpr = window.devicePixelRatio || 1;
+				ctx.save();
+				ctx.scale(dpr, dpr);
+
+				const width = canvasDisplayWidth;
+				const height = canvasDisplayWidth;
+				ctx.clearRect(0, 0, width, height);
+
+				// Canvas background
+				ctx.fillStyle = "#070b12";
+				ctx.fillRect(0, 0, width, height);
+
+				// Unit square bounds inside canvas (with padding for points)
+				const padding = Math.max(24, Math.round(width * 0.08));
+				const sqSize = width - 2 * padding;
+
+				// Unit square background fill
+				ctx.fillStyle = "#0c111a";
+				ctx.fillRect(padding, padding, sqSize, sqSize);
+
+				// Subtle dot grid inside unit square
+				ctx.fillStyle = "rgba(255, 255, 255, 0.07)";
+				const gridStep = sqSize / 10;
+				for (let gx = 1; gx < 10; gx++) {
+					for (let gy = 1; gy < 10; gy++) {
+						ctx.beginPath();
+						ctx.arc(padding + gx * gridStep, padding + gy * gridStep, 1.2, 0, Math.PI * 2);
+						ctx.fill();
+					}
+				}
+
+				// Unit square boundary border
+				ctx.strokeStyle = "#27272a";
+				ctx.lineWidth = 1.5;
+				ctx.strokeRect(padding, padding, sqSize, sqSize);
+
+				// Corner labels
+				ctx.fillStyle = "#52525b";
+				ctx.font = "9px ui-monospace, SFMono-Regular, monospace";
+				ctx.textBaseline = "middle";
+				ctx.textAlign = "right";
+				ctx.fillText("(0,0)", padding - 6, padding);
+				ctx.fillText("(0,1)", padding - 6, padding + sqSize);
+				ctx.textAlign = "left";
+				ctx.fillText("(1,0)", padding + sqSize + 6, padding);
+				ctx.fillText("(1,1)", padding + sqSize + 6, padding + sqSize);
+
+				// Compute evaluation
+				const evalResult = evaluateLayout(points);
+				updateSessionBest(evalResult.minArea);
+
+				// Pulse animation factor for smallest triangle
+				const now = timestamp || performance.now();
+				const pulse = Math.sin(now * 0.005);
+				const fillAlpha = 0.28 + 0.14 * pulse; // 0.14 ~ 0.42
+				const strokeAlpha = 0.75 + 0.25 * pulse;
+
+				// Track minimal triangle vertices for highlight
+				const minimalVertexSet = {};
+
+				// Draw all smallest triangle(s)
+				if (evalResult.minTriangles.length > 0) {
+					for (let m = 0; m < evalResult.minTriangles.length; m++) {
+						const tri = evalResult.minTriangles[m];
+						const p1 = points[tri.i];
+						const p2 = points[tri.j];
+						const p3 = points[tri.k];
+
+						minimalVertexSet[tri.i] = true;
+						minimalVertexSet[tri.j] = true;
+						minimalVertexSet[tri.k] = true;
+
+						const x1 = padding + p1.u * sqSize;
+						const y1 = padding + p1.v * sqSize;
+						const x2 = padding + p2.u * sqSize;
+						const y2 = padding + p2.v * sqSize;
+						const x3 = padding + p3.u * sqSize;
+						const y3 = padding + p3.v * sqSize;
+
+						// Fill
+						ctx.beginPath();
+						ctx.moveTo(x1, y1);
+						ctx.lineTo(x2, y2);
+						ctx.lineTo(x3, y3);
+						ctx.closePath();
+						ctx.fillStyle = "rgba(239, 68, 68, " + fillAlpha + ")";
+						ctx.fill();
+
+						// Stroke
+						ctx.lineWidth = 2.5;
+						ctx.lineJoin = "round";
+						ctx.strokeStyle = "rgba(239, 68, 68, " + strokeAlpha + ")";
+						ctx.stroke();
+
+						// Centroid callout badge on the primary smallest triangle
+						if (m === 0) {
+							const cx = (x1 + x2 + x3) / 3;
+							const cy = (y1 + y2 + y3) / 3;
+							const badgeText = "min S = " + evalResult.minArea.toFixed(4);
+
+							ctx.font = "bold 10px ui-monospace, SFMono-Regular, monospace";
+							const textW = ctx.measureText(badgeText).width;
+							const badgeW = textW + 12;
+							const badgeH = 18;
+							const badgeX = Math.max(padding + 2, Math.min(padding + sqSize - badgeW - 2, cx - badgeW / 2));
+							const badgeY = Math.max(padding + 2, Math.min(padding + sqSize - badgeH - 2, cy - badgeH / 2));
+
+							ctx.fillStyle = "rgba(10, 14, 23, 0.9)";
+							ctx.strokeStyle = "rgba(239, 68, 68, 0.8)";
+							ctx.lineWidth = 1;
+							ctx.beginPath();
+							ctx.roundRect ? ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 4) : ctx.rect(badgeX, badgeY, badgeW, badgeH);
+							ctx.fill();
+							ctx.stroke();
+
+							ctx.fillStyle = "#ffffff";
+							ctx.textAlign = "center";
+							ctx.textBaseline = "middle";
+							ctx.fillText(badgeText, badgeX + badgeW / 2, badgeY + badgeH / 2);
+						}
+					}
+				}
+
+				// Draw all points
+				for (let i = 0; i < points.length; i++) {
+					const px = padding + points[i].u * sqSize;
+					const py = padding + points[i].v * sqSize;
+					const isMinimal = minimalVertexSet[i] === true;
+					const isDragged = draggingIndex === i;
+					const isHovered = hoveredIndex === i;
+
+					if (isMinimal) {
+						// Bottleneck vertex: Red glow & ring
+						ctx.fillStyle = "rgba(239, 68, 68, " + (0.3 + 0.15 * pulse) + ")";
+						ctx.beginPath();
+						ctx.arc(px, py, 12, 0, Math.PI * 2);
+						ctx.fill();
+
+						ctx.fillStyle = "#ef4444";
+						ctx.beginPath();
+						ctx.arc(px, py, 5.5, 0, Math.PI * 2);
+						ctx.fill();
+
+						ctx.fillStyle = "#ffffff";
+						ctx.beginPath();
+						ctx.arc(px, py, 2, 0, Math.PI * 2);
+						ctx.fill();
+					} else {
+						// Other points: small dots as requested
+						ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+						ctx.beginPath();
+						ctx.arc(px, py, 6.5, 0, Math.PI * 2);
+						ctx.fill();
+
+						ctx.fillStyle = "#d4d4d8";
+						ctx.beginPath();
+						ctx.arc(px, py, 4, 0, Math.PI * 2);
+						ctx.fill();
+
+						ctx.fillStyle = "#18181b";
+						ctx.beginPath();
+						ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Active drag/hover focus ring
+					if (isDragged || isHovered) {
+						ctx.strokeStyle = "#ffffff";
+						ctx.lineWidth = 2;
+						ctx.beginPath();
+						ctx.arc(px, py, 14, 0, Math.PI * 2);
+						ctx.stroke();
+
+						// Coordinate tooltip above point
+						ctx.fillStyle = "#ffffff";
+						ctx.font = "9px ui-monospace, SFMono-Regular, monospace";
+						ctx.textAlign = "center";
+						ctx.textBaseline = "bottom";
+						ctx.fillText("P" + (i + 1) + " (" + points[i].u.toFixed(2) + ", " + points[i].v.toFixed(2) + ")", px, py - 16);
+					}
+				}
+
+				ctx.restore();
+
+				// Update live numbers in DOM
+				updateMetricsUI(evalResult);
+			}
+
+			// Simulated annealing step
+			function annealStep(timestamp) {
+				if (!isAnnealing) return;
+
+				if (timestamp - lastAnnealAttemptTime >= ANNEAL_INTERVAL_MS) {
+					lastAnnealAttemptTime = timestamp;
+
+					// Current min area
+					const currentMinArea = evaluateMinAreaOnly(points);
+
+					// 1. Pick random point
+					const idx = Math.floor(Math.random() * points.length);
+					const oldU = points[idx].u;
+					const oldV = points[idx].v;
+
+					// 2. Jitter position by small amount
+					const jitterRadius = 0.045;
+					const du = (Math.random() * 2 - 1) * jitterRadius;
+					const dv = (Math.random() * 2 - 1) * jitterRadius;
+					points[idx].u = Math.max(0.01, Math.min(0.99, oldU + du));
+					points[idx].v = Math.max(0.01, Math.min(0.99, oldV + dv));
+
+					// 3. Evaluate new min area
+					const newMinArea = evaluateMinAreaOnly(points);
+
+					// 4. Accept if improved, or with ~5% probability if worsening
+					if (newMinArea > currentMinArea) {
+						// Keep improvement!
+						annealStepCount++;
+					} else if (Math.random() < 0.05) {
+						// Keep worsening change to escape local minimum
+						annealStepCount++;
+					} else {
+						// Revert change
+						points[idx].u = oldU;
+						points[idx].v = oldV;
+					}
+
+					if (annealStepsCounter) {
+						annealStepsCounter.textContent = annealStepCount + " 次尝试";
+					}
+				}
+			}
+
+			// Main continuous animation loop
+			function animationLoop(timestamp) {
+				if (isAnnealing) {
+					annealStep(timestamp);
+				}
+				render(timestamp);
+				activeAnimFrameId = requestAnimationFrame(animationLoop);
+			}
+
+			// Start loop
+			activeAnimFrameId = requestAnimationFrame(animationLoop);
+
+			// ==========================================
+			// Event Listeners & Interaction
+			// ==========================================
+
+			// Coordinate conversion helpers
+			function getPointerCanvasPos(e) {
+				const rect = canvas.getBoundingClientRect();
+				const x = e.clientX - rect.left;
+				const y = e.clientY - rect.top;
+				return { x: x, y: y };
+			}
+
+			function canvasToUnit(x, y) {
+				const padding = Math.max(24, Math.round(canvasDisplayWidth * 0.08));
+				const sqSize = canvasDisplayWidth - 2 * padding;
+				const u = Math.max(0.005, Math.min(0.995, (x - padding) / sqSize));
+				const v = Math.max(0.005, Math.min(0.995, (y - padding) / sqSize));
+				return { u: u, v: v };
+			}
+
+			function findPointNear(x, y, radius) {
+				const padding = Math.max(24, Math.round(canvasDisplayWidth * 0.08));
+				const sqSize = canvasDisplayWidth - 2 * padding;
+				let foundIdx = -1;
+				let minD = radius;
+
+				for (let i = 0; i < points.length; i++) {
+					const px = padding + points[i].u * sqSize;
+					const py = padding + points[i].v * sqSize;
+					const d = Math.hypot(px - x, py - y);
+					if (d < minD) {
+						minD = d;
+						foundIdx = i;
+					}
+				}
+				return foundIdx;
+			}
+
+			// Pointer Down
+			canvas.addEventListener("pointerdown", function(e) {
+				const pos = getPointerCanvasPos(e);
+				const hitIdx = findPointNear(pos.x, pos.y, 20);
+
+				if (hitIdx !== -1) {
+					draggingIndex = hitIdx;
+					canvas.setPointerCapture(e.pointerId);
+					const uv = canvasToUnit(pos.x, pos.y);
+					points[draggingIndex].u = uv.u;
+					points[draggingIndex].v = uv.v;
+				}
+			});
+
+			// Pointer Move
+			canvas.addEventListener("pointermove", function(e) {
+				const pos = getPointerCanvasPos(e);
+
+				if (draggingIndex !== -1) {
+					const uv = canvasToUnit(pos.x, pos.y);
+					points[draggingIndex].u = uv.u;
+					points[draggingIndex].v = uv.v;
+				} else {
+					const hitIdx = findPointNear(pos.x, pos.y, 16);
+					hoveredIndex = hitIdx;
+					canvas.style.cursor = hitIdx !== -1 ? "grab" : "crosshair";
+				}
+			});
+
+			// Pointer Up / Cancel
+			function onPointerUp(e) {
+				if (draggingIndex !== -1) {
+					try {
+						canvas.releasePointerCapture(e.pointerId);
+					} catch (_err) {}
+					draggingIndex = -1;
+				}
+			}
+
+			canvas.addEventListener("pointerup", onPointerUp);
+			canvas.addEventListener("pointercancel", onPointerUp);
+
+			// Slider N Change
+			if (sliderN) {
+				sliderN.addEventListener("input", function() {
+					const newN = parseInt(sliderN.value, 10);
+					if (newN === currentN) return;
+					currentN = newN;
+					if (labelN) labelN.textContent = String(currentN);
+
+					// Stop annealing when N changes
+					if (isAnnealing) {
+						isAnnealing = false;
+						updateAnnealingButtonState();
+					}
+
+					// If session best already exists for new N, restore it; otherwise circular
+					if (sessionBestPointsPerN[currentN]) {
+						points = sessionBestPointsPerN[currentN].map(function(p) { return { u: p.u, v: p.v }; });
+					} else {
+						points = generateCircularPoints(currentN);
+					}
+				});
+			}
+
+			// Randomize Points Button
+			if (btnRandom) {
+				btnRandom.addEventListener("click", function() {
+					points = generateRandomPoints(currentN);
+				});
+			}
+
+			// Reset Circular Button
+			if (btnReset) {
+				btnReset.addEventListener("click", function() {
+					points = generateCircularPoints(currentN);
+				});
+			}
+
+			// Anneal Toggle Button
+			if (btnAnneal) {
+				btnAnneal.addEventListener("click", function() {
+					isAnnealing = !isAnnealing;
+					updateAnnealingButtonState();
+				});
+			}
+
+			// Restore Best Button
+			if (btnLoadBest) {
+				btnLoadBest.addEventListener("click", function() {
+					const bestPts = sessionBestPointsPerN[currentN];
+					if (bestPts && bestPts.length === currentN) {
+						points = bestPts.map(function(p) { return { u: p.u, v: p.v }; });
+						btnLoadBest.textContent = "已恢复最优 ✓";
+						setTimeout(function() {
+							btnLoadBest.textContent = "⭐ 载入会话最优";
+						}, 1500);
+					} else {
+						btnLoadBest.textContent = "当前已是最优";
+						setTimeout(function() {
+							btnLoadBest.textContent = "⭐ 载入会话最优";
+						}, 1200);
+					}
+				});
+			}
+		}
+
+		// Initial start and Astro page transition support
+		initPlayground();
+		document.addEventListener("astro:page-load", initPlayground);
+	</script>
+</MainGridLayout>
