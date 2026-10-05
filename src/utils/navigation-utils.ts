@@ -149,7 +149,12 @@ export function getCurrentPath(): string {
  */
 export function isHomePage(): boolean {
 	const path = getCurrentPath();
-	return path === url("/") || path === url("");
+	return (
+		path === url("/") ||
+		path === url("") ||
+		path === url("/en/") ||
+		path === url("/en")
+	);
 }
 
 /**
