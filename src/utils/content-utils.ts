@@ -3,6 +3,14 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils";
 
+/** One entry per article, preferring the requested language. */
+export async function getPreferredPosts(lang?: string): Promise<CollectionEntry<"posts">[]> {
+	const primary = await getSortedPosts(lang);
+	if (lang !== "en") return primary;
+	const translated = new Set(primary.map((p) => p.id.replace(/^en\//, "")));
+	return [...primary, ...(await getSortedPosts()).filter((p) => !translated.has(p.id))];
+}
+
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts(lang?: string) {
 	const allBlogPosts = await getCollection("posts", ({ data, id }) => {
@@ -272,13 +280,12 @@ export async function getRelatedPosts(
 	currentPost: CollectionEntry<"posts">,
 	maxCount = 5,
 ): Promise<PostForList[]> {
-	const allPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const lang = currentPost.data.lang === "en" || currentPost.id.startsWith("en/") ? "en" : undefined;
+	const allPosts = await getPreferredPosts(lang);
 
 	// 排除自身和加密文章
 	const candidates = allPosts.filter(
-		(p) => p.id !== currentPost.id && !p.data.password,
+		(p) => p.id.replace(/^en\//, "") !== currentPost.id.replace(/^en\//, "") && !p.data.password,
 	);
 
 	const currentTags = new Set(currentPost.data.tags || []);
