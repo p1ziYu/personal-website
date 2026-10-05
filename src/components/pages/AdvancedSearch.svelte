@@ -7,7 +7,8 @@ import type { SearchResult } from "@/global";
 import { url as formatUrl } from "@/utils/url-utils";
 
 // --- Props ---
-export let title = i18n(I18nKey.search);
+export let lang: string | undefined = undefined;
+export let title = i18n(I18nKey.search, lang);
 export let description = "";
 
 // --- State ---
@@ -15,6 +16,7 @@ let keyword = "";
 let results: SearchResult[] = [];
 let isSearching = false;
 let initialized = false;
+let requestId = 0;
 
 // 在客户端获取 URL 参数
 const getInitialKeyword = (): string => {
@@ -41,8 +43,10 @@ const fakeResult: SearchResult[] = [
 
 // --- Core Search Logic ---
 const search = async () => {
+	const currentRequest = ++requestId;
 	if (!initialized || !keyword.trim()) {
 		results = [];
+		isSearching = false;
 		return;
 	}
 	isSearching = true;
@@ -53,20 +57,21 @@ const search = async () => {
 			const rawResults = await Promise.all(
 				response.results.map((item) => item.data()),
 			);
-			results = rawResults;
+			if (currentRequest === requestId) results = rawResults.filter((item) => lang === "en" ? new URL(item.url, window.location.origin).pathname.startsWith("/en/") : !new URL(item.url, window.location.origin).pathname.startsWith("/en/"));
 		} else if (import.meta.env.DEV) {
 			// 开发模式下的模拟结果
-			results = fakeResult.filter(
+			const devResults = fakeResult.filter(
 				(item) =>
 					item.excerpt.toLowerCase().includes(keyword.toLowerCase()) ||
 					item.meta.title.toLowerCase().includes(keyword.toLowerCase()),
 			);
+			if (currentRequest === requestId) results = devResults;
 		}
 	} catch (error) {
 		console.error("Search error:", error);
-		results = [];
+		if (currentRequest === requestId) results = [];
 	} finally {
-		isSearching = false;
+		if (currentRequest === requestId) isSearching = false;
 	}
 };
 
@@ -106,6 +111,9 @@ onMount(() => {
 let debounceTimer: NodeJS.Timeout;
 const handleInput = () => {
 	clearTimeout(debounceTimer);
+	requestId += 1;
+	results = [];
+	isSearching = false;
 	debounceTimer = setTimeout(() => {
 		search();
 	}, 300);
@@ -139,7 +147,7 @@ const handleInput = () => {
             <input
                 type="text"
                 class="block w-full p-4 pl-10 text-sm bg-transparent border border-black/10 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-(--primary) focus:border-(--primary) hover:border-black/20 dark:hover:border-white/20 text-75 placeholder:opacity-50 transition-colors outline-hidden"
-                placeholder={i18n(I18nKey.search)}
+                placeholder={i18n(I18nKey.search, lang)}
                 bind:value={keyword}
                 on:input={handleInput}
             >
@@ -171,11 +179,11 @@ const handleInput = () => {
             </div>
         {:else if keyword}
             <div class="card-base p-10 text-center text-50 rounded-(--radius-large)">
-                {i18n(I18nKey.searchNoResults)}
+                {i18n(I18nKey.searchNoResults, lang)}
             </div>
         {:else}
              <div class="card-base p-10 text-center text-50 rounded-(--radius-large)">
-                {i18n(I18nKey.searchTypeSomething)}
+                {i18n(I18nKey.searchTypeSomething, lang)}
             </div>
         {/if}
     </div>
