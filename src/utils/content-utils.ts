@@ -4,9 +4,12 @@ import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils";
 
 // // Retrieve posts and sort them by publication date
-async function getRawSortedPosts() {
-	const allBlogPosts = await getCollection("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
+async function getRawSortedPosts(lang?: string) {
+	const allBlogPosts = await getCollection("posts", ({ data, id }) => {
+		const isDraft = import.meta.env.PROD ? data.draft === true : false;
+		if (isDraft) return false;
+		const isEn = data.lang === "en" || id.startsWith("en/");
+		return lang === "en" ? isEn : !isEn;
 	});
 
 	const sorted = allBlogPosts.sort((a, b) => {
@@ -22,8 +25,8 @@ async function getRawSortedPosts() {
 	return sorted;
 }
 
-export async function getSortedPosts(): Promise<CollectionEntry<"posts">[]> {
-	const sorted = await getRawSortedPosts();
+export async function getSortedPosts(lang?: string): Promise<CollectionEntry<"posts">[]> {
+	const sorted = await getRawSortedPosts(lang);
 
 	for (let i = 1; i < sorted.length; i++) {
 		sorted[i].data.nextSlug = sorted[i - 1].id;
@@ -40,8 +43,8 @@ export type PostForList = {
 	id: string;
 	data: CollectionEntry<"posts">["data"];
 };
-export async function getSortedPostsList(): Promise<PostForList[]> {
-	const sortedFullPosts = await getRawSortedPosts();
+export async function getSortedPostsList(lang?: string): Promise<PostForList[]> {
+	const sortedFullPosts = await getRawSortedPosts(lang);
 
 	// delete post.body
 	const sortedPostsList = sortedFullPosts.map((post) => ({
@@ -57,11 +60,14 @@ export async function getSortedPostsList(): Promise<PostForList[]> {
  * 排序规则：手动 order 降序（越大越靠前，未设置排最后）→ 发布时间降序 → 标题兜底
  * 注意：判断 order 是否设置必须用 !== undefined，否则 0 会被当作「未设置」排到最后
  */
-export async function getSortedProjects(): Promise<
+export async function getSortedProjects(lang?: string): Promise<
 	CollectionEntry<"projects">[]
 > {
-	const allProjects = await getCollection("projects", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
+	const allProjects = await getCollection("projects", ({ data, id }) => {
+		const isDraft = import.meta.env.PROD ? data.draft === true : false;
+		if (isDraft) return false;
+		const isEn = data.lang === "en" || id.startsWith("en/");
+		return lang === "en" ? isEn : !isEn;
 	});
 
 	return allProjects.sort((a, b) => {
@@ -156,9 +162,12 @@ export type Tag = {
 	count: number;
 };
 
-export async function getTagList(): Promise<Tag[]> {
-	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
+export async function getTagList(lang?: string): Promise<Tag[]> {
+	const allBlogPosts = await getCollection<"posts">("posts", ({ data, id }) => {
+		const isDraft = import.meta.env.PROD ? data.draft === true : false;
+		if (isDraft) return false;
+		const isEn = data.lang === "en" || id.startsWith("en/");
+		return lang === "en" ? isEn : !isEn;
 	});
 
 	const countMap: { [key: string]: number } = {};
@@ -183,14 +192,17 @@ export type Category = {
 	url: string;
 };
 
-export async function getCategoryList(): Promise<Category[]> {
-	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
+export async function getCategoryList(lang?: string): Promise<Category[]> {
+	const allBlogPosts = await getCollection<"posts">("posts", ({ data, id }) => {
+		const isDraft = import.meta.env.PROD ? data.draft === true : false;
+		if (isDraft) return false;
+		const isEn = data.lang === "en" || id.startsWith("en/");
+		return lang === "en" ? isEn : !isEn;
 	});
 	const count: { [key: string]: number } = {};
 	allBlogPosts.forEach((post: { data: { category: string | null } }) => {
 		if (!post.data.category) {
-			const ucKey = i18n(I18nKey.uncategorized);
+			const ucKey = i18n(I18nKey.uncategorized, lang);
 			count[ucKey] = count[ucKey] ? count[ucKey] + 1 : 1;
 			return;
 		}
@@ -214,7 +226,7 @@ export async function getCategoryList(): Promise<Category[]> {
 		ret.push({
 			name: c,
 			count: count[c],
-			url: getCategoryUrl(c),
+			url: getCategoryUrl(c, lang),
 		});
 	}
 	return ret;
