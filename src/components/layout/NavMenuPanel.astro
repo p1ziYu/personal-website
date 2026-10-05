@@ -34,13 +34,13 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
     <!-- 遮罩（scrim）：点击关闭 -->
     <div class="mobile-menu-scrim" aria-hidden="true"></div>
     <!-- 抽屉：MD3 侧边导航，右侧滑入，占满整高，内部滚动 -->
-    <aside class="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label={i18n(I18nKey.navigationMenu, isEn ? "en" : undefined)}>
+    <aside class="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label={i18n(I18nKey.navigationMenu, isEn ? "en" : undefined)} data-label-zh={i18n(I18nKey.navigationMenu, "zh_CN")} data-label-en={i18n(I18nKey.navigationMenu, "en")}>
         <header class="mobile-menu-header">
             <span class="mobile-menu-title">
                 <span class="lang-zh">{navTitle}</span>
                 <span class="lang-en">p1ziYu's Space</span>
             </span>
-            <button type="button" class="mobile-menu-close" aria-label={i18n(I18nKey.closeMenu, isEn ? "en" : undefined)}>
+            <button type="button" class="mobile-menu-close" aria-label={i18n(I18nKey.closeMenu, isEn ? "en" : undefined)} data-label-zh={i18n(I18nKey.closeMenu, "zh_CN")} data-label-en={i18n(I18nKey.closeMenu, "en")}>
                 <Icon name="material-symbols:close-rounded" class="text-[1.5rem]" />
             </button>
         </header>
@@ -384,6 +384,16 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
         markActiveNav();
         syncMobileLangBtn();
     });
+
+    function syncMenuLabels() {
+        const isEnglish = isEnPath(location.pathname);
+        document.querySelectorAll("#nav-menu-panel [data-label-zh][data-label-en]").forEach((node) => {
+            node.setAttribute("aria-label", node.getAttribute(isEnglish ? "data-label-en" : "data-label-zh") || "");
+        });
+    }
+    window.addEventListener("lang-change", syncMenuLabels);
+    document.addEventListener("swup:contentReplaced", syncMenuLabels);
+    syncMenuLabels();
 
     // 当前页高亮 + 含当前页的父级自动展开（Swup 切页后重扫）
     document.addEventListener("astro:page-load", () => {
