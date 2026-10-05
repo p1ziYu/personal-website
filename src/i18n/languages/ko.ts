@@ -477,6 +477,10 @@ export const ko: Translation = {
 	[Key.today]: "오늘",
 
 	// Site Info
+	[Key.siteInfoLocal]: "Local",
+	[Key.siteInfoLocalDev]: "Local Dev",
+	[Key.siteInfoUnknown]: "unknown",
+	[Key.siteInfoUnknownCi]: "Unknown CI",
 	[Key.siteInfo]: "사이트 정보",
 	[Key.siteInfoBuildTime]: "빌드 시각",
 	[Key.siteInfoBuildPlatform]: "빌드 플랫폼",
