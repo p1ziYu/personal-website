@@ -1,9 +1,19 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const title = "最后一次扫描 · 条形码的黄昏与 Sunrise 2027";
-const description =
-	"交互式对比经典 1D UPC-A 条形码与新一代 GS1 Digital Link 二维码：实时生成条码、收银台激光扫码模拟、Sunrise 2027 倒计时与零售演进史。";
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } = Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "The Last Scan · Dusk of the Barcode & Sunrise 2027"
+	: "最后一次扫描 · 条形码的黄昏与 Sunrise 2027";
+const description = isEn
+	? "Interactive duel between classic 1D UPC-A barcodes and next-gen GS1 Digital Link 2D codes: live barcode generation, laser checkout simulator, Sunrise 2027 countdown, and retail evolution history."
+	: "交互式对比经典 1D UPC-A 条形码与新一代 GS1 Digital Link 二维码：实时生成条码、收银台激光扫码模拟、Sunrise 2027 倒计时与零售演进史。";
 ---
 
 <MainGridLayout title={title} description={description}>
@@ -22,20 +32,30 @@ const description =
 						RETAIL MILESTONE · SUNRISE 2027
 					</div>
 					<div class="text-xs font-mono text-zinc-300">
-						HN 热议 · 2026-10-03
+						<span class="lang-zh">HN 热议 · 2026-10-03</span>
+						<span class="lang-en">Trending on HN · 2026-10-03</span>
 					</div>
 				</div>
 
 				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-3">
-					最后一次扫描
+					<span class="lang-zh">最后一次扫描</span>
+					<span class="lang-en">The Last Scan</span>
 				</h1>
 				<p class="text-lg sm:text-xl font-medium text-red-400/90 mb-4 tracking-wide font-mono">
-					条形码的黄昏 / Sunrise 2027
+					<span class="lang-zh">条形码的黄昏 / Sunrise 2027</span>
+					<span class="lang-en">Dusk of the Barcode / Sunrise 2027</span>
 				</p>
 				<p class="text-sm sm:text-base text-zinc-300/80 max-w-3xl leading-relaxed mb-8">
-					2026 年 10 月 3 日，Hacker News 首页热榜讨论《条形码即将走向黄昏》（Barcodes are about to go extinct）：全球零售业迎来 GS1“Sunrise 2027（2027 黎明日）”大转折。
-					到 2027 年底，全球超市收银 POS 系统将全面普及具备读取 2D 条码（GS1 Digital Link 二维码 / GS1 DataMatrix）的能力。
-					50 年来在收银台此起彼伏的“哔”声，正在迎来半个世纪以来最大的信息维度跃迁。
+					<span class="lang-zh">
+						2026 年 10 月 3 日，Hacker News 首页热榜讨论《条形码即将走向黄昏》（Barcodes are about to go extinct）：全球零售业迎来 GS1“Sunrise 2027（2027 黎明日）”大转折。
+						到 2027 年底，全球超市收银 POS 系统将全面普及具备读取 2D 条码（GS1 Digital Link 二维码 / GS1 DataMatrix）的能力。
+						50 年来在收银台此起彼伏的“哔”声，正在迎来半个世纪以来最大的信息维度跃迁。
+					</span>
+					<span class="lang-en">
+						On October 3, 2026, the Hacker News front page sparked an impassioned debate on "Barcodes are about to go extinct": global retail is racing toward GS1's watershed "Sunrise 2027" milestone.
+						By the end of 2027, supermarket checkout POS scanners worldwide will be upgraded to decode 2D barcodes (GS1 Digital Link QR codes / GS1 DataMatrix).
+						The iconic checkout "beep" that has echoed across cash registers for over 50 years is about to make its biggest leap in informational dimension in half a century.
+					</span>
 				</p>
 
 				<!-- 7-Segment LED Countdown Display -->
@@ -43,7 +63,8 @@ const description =
 					<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
 						<div class="flex items-center gap-2">
 							<span class="text-xs font-mono uppercase tracking-widest text-zinc-300">
-								距离 Sunrise 2027 终局节点（2028-01-01 00:00:00）剩余
+								<span class="lang-zh">距离 Sunrise 2027 终局节点（2028-01-01 00:00:00）剩余</span>
+								<span class="lang-en">Time remaining until Sunrise 2027 full transition (2028-01-01 00:00:00):</span>
 							</span>
 						</div>
 						<div class="text-[11px] font-mono text-red-400/80 bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/50">
@@ -57,7 +78,10 @@ const description =
 							<div class="countdown-digit-wrap flex justify-center items-center gap-1 sm:gap-2 text-red-500 font-mono text-2xl sm:text-4xl md:text-5xl font-black drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]" id="led-days">
 								000
 							</div>
-							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">天 (Days)</span>
+							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">
+								<span class="lang-zh">天 (Days)</span>
+								<span class="lang-en">Days</span>
+							</span>
 						</div>
 
 						<!-- HOURS -->
@@ -65,7 +89,10 @@ const description =
 							<div class="countdown-digit-wrap flex justify-center items-center gap-1 sm:gap-2 text-red-500 font-mono text-2xl sm:text-4xl md:text-5xl font-black drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]" id="led-hours">
 								00
 							</div>
-							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">时 (Hours)</span>
+							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">
+								<span class="lang-zh">时 (Hours)</span>
+								<span class="lang-en">Hours</span>
+							</span>
 						</div>
 
 						<!-- MINUTES -->
@@ -73,7 +100,10 @@ const description =
 							<div class="countdown-digit-wrap flex justify-center items-center gap-1 sm:gap-2 text-red-500 font-mono text-2xl sm:text-4xl md:text-5xl font-black drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]" id="led-minutes">
 								00
 							</div>
-							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">分 (Minutes)</span>
+							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">
+								<span class="lang-zh">分 (Minutes)</span>
+								<span class="lang-en">Minutes</span>
+							</span>
 						</div>
 
 						<!-- SECONDS -->
@@ -81,7 +111,10 @@ const description =
 							<div class="countdown-digit-wrap flex justify-center items-center gap-1 sm:gap-2 text-red-500 font-mono text-2xl sm:text-4xl md:text-5xl font-black drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]" id="led-seconds">
 								00
 							</div>
-							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">秒 (Seconds)</span>
+							<span class="mt-2 text-[10px] sm:text-xs font-mono uppercase tracking-wider text-zinc-300">
+								<span class="lang-zh">秒 (Seconds)</span>
+								<span class="lang-en">Seconds</span>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -92,23 +125,29 @@ const description =
 				<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
 					<div>
 						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
-							<span class="text-red-500 font-mono text-xl">01/</span> 条码对决 (Barcode Duel)
+							<span class="text-red-500 font-mono text-xl">01/</span>
+							<span class="lang-zh">条码对决 (Barcode Duel)</span>
+							<span class="lang-en">Barcode Duel</span>
 						</h2>
 						<p class="text-xs sm:text-sm text-zinc-300 mt-1">
-							纯原生 Canvas 绘制经典 1D UPC-A 条形码与 GS1 2D 数字链接二维码，实时比较信息编码密度。
+							<span class="lang-zh">纯原生 Canvas 绘制经典 1D UPC-A 条形码与 GS1 2D 数字链接二维码，实时比较信息编码密度。</span>
+							<span class="lang-en">Pure native Canvas rendering comparing classic 1D UPC-A linear barcodes with GS1 2D Digital Link QR codes in real time.</span>
 						</p>
 					</div>
 
 					<!-- Presets picker -->
 					<div class="flex flex-wrap gap-2 text-xs font-mono">
 						<button id="btn-preset-wrigley" class="px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:text-white transition active:scale-95 text-zinc-300">
-							🍬 1974 箭牌口香糖
+							<span class="lang-zh">🍬 1974 箭牌口香糖</span>
+							<span class="lang-en">🍬 1974 Wrigley's Gum</span>
 						</button>
 						<button id="btn-preset-default" class="px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:text-white transition active:scale-95 text-zinc-300">
-							📦 标准 GTIN-12
+							<span class="lang-zh">📦 标准 GTIN-12</span>
+							<span class="lang-en">📦 Standard GTIN-12</span>
 						</button>
 						<button id="btn-preset-beverage" class="px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:text-white transition active:scale-95 text-zinc-300">
-							🥤 经典罐装可乐
+							<span class="lang-zh">🥤 经典罐装可乐</span>
+							<span class="lang-en">🥤 Classic Coke Can</span>
 						</button>
 					</div>
 				</div>
@@ -117,7 +156,8 @@ const description =
 				<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-zinc-950/60 p-4 sm:p-5 rounded-2xl border border-zinc-800/80">
 					<div class="md:col-span-2">
 						<label for="input-gtin" class="block text-xs font-mono uppercase tracking-wider text-zinc-300 mb-1.5">
-							GTIN-12 / UPC 代码 (输入 11 位自动计算第 12 位校验码)
+							<span class="lang-zh">GTIN-12 / UPC 代码 (输入 11 位自动计算第 12 位校验码)</span>
+							<span class="lang-en">GTIN-12 / UPC Code (11 digits auto-completes 12th check digit)</span>
 						</label>
 						<div class="relative">
 							<input
@@ -126,17 +166,19 @@ const description =
 								maxlength="12"
 								value="012345678905"
 								class="w-full bg-black/80 border border-zinc-700 rounded-xl px-3.5 py-2.5 font-mono text-base text-zinc-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition"
-								placeholder="例如: 012345678905"
+								placeholder="012345678905"
 							/>
 							<span id="gtin-validation" class="absolute right-3 top-2.5 text-xs font-mono text-emerald-400">
-								校验有效
+								<span class="lang-zh">校验有效</span>
+								<span class="lang-en">Valid Checksum</span>
 							</span>
 						</div>
 					</div>
 
 					<div>
 						<label for="input-batch" class="block text-xs font-mono uppercase tracking-wider text-zinc-300 mb-1.5">
-							生产批次 / Lot (AI 10)
+							<span class="lang-zh">生产批次 / Lot (AI 10)</span>
+							<span class="lang-en">Batch / Lot Number (AI 10)</span>
 						</label>
 						<input
 							id="input-batch"
@@ -144,13 +186,14 @@ const description =
 							maxlength="20"
 							value="BATCH7"
 							class="w-full bg-black/80 border border-zinc-700 rounded-xl px-3.5 py-2.5 font-mono text-base text-zinc-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition"
-							placeholder="例如: BATCH7"
+							placeholder="BATCH7"
 						/>
 					</div>
 
 					<div>
 						<label for="input-expiry" class="block text-xs font-mono uppercase tracking-wider text-zinc-300 mb-1.5">
-							到期日 / Expiry (AI 17, YYMMDD)
+							<span class="lang-zh">到期日 / Expiry (AI 17, YYMMDD)</span>
+							<span class="lang-en">Expiry Date (AI 17, YYMMDD)</span>
 						</label>
 						<input
 							id="input-expiry"
@@ -158,7 +201,7 @@ const description =
 							maxlength="6"
 							value="271231"
 							class="w-full bg-black/80 border border-zinc-700 rounded-xl px-3.5 py-2.5 font-mono text-base text-zinc-100 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition"
-							placeholder="例如: 271231 (2027-12-31)"
+							placeholder="271231 (2027-12-31)"
 						/>
 					</div>
 				</div>
@@ -171,8 +214,14 @@ const description =
 					<!-- LEFT CARD: 1D UPC-A -->
 					<div class="flex flex-col items-center justify-between p-5 rounded-xl bg-[#0e1422] border border-zinc-800/80 relative">
 						<div class="w-full flex items-center justify-between text-xs font-mono pb-3 mb-3 border-b border-zinc-800">
-							<span class="text-zinc-300 font-semibold">1D 传统线性条形码 (UPC-A)</span>
-							<span class="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[10px]">1974 年代标准</span>
+							<span class="text-zinc-300 font-semibold">
+								<span class="lang-zh">1D 传统线性条形码 (UPC-A)</span>
+								<span class="lang-en">1D Classic Linear Barcode (UPC-A)</span>
+							</span>
+							<span class="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[10px]">
+								<span class="lang-zh">1974 年代标准</span>
+								<span class="lang-en">1974 Legacy Standard</span>
+							</span>
 						</div>
 
 						<!-- Canvas Container -->
@@ -182,16 +231,34 @@ const description =
 
 						<div class="w-full mt-3 text-xs font-mono space-y-1 text-zinc-300">
 							<div class="flex justify-between">
-								<span>编码容量:</span>
-								<span class="text-zinc-200">仅 12 个纯数字</span>
+								<span>
+									<span class="lang-zh">编码容量:</span>
+									<span class="lang-en">Data Capacity:</span>
+								</span>
+								<span class="text-zinc-200">
+									<span class="lang-zh">仅 12 个纯数字</span>
+									<span class="lang-en">Strictly 12 digits</span>
+								</span>
 							</div>
 							<div class="flex justify-between">
-								<span>容错纠错:</span>
-								<span class="text-amber-400">无 (破损即无法读取)</span>
+								<span>
+									<span class="lang-zh">容错纠错:</span>
+									<span class="lang-en">Error Correction:</span>
+								</span>
+								<span class="text-amber-400">
+									<span class="lang-zh">无 (破损即无法读取)</span>
+									<span class="lang-en">None (Scratches cause read failure)</span>
+								</span>
 							</div>
 							<div class="flex justify-between">
-								<span>手机相机支持:</span>
-								<span class="text-red-400">否 (需专用激光扫码枪)</span>
+								<span>
+									<span class="lang-zh">手机相机支持:</span>
+									<span class="lang-en">Smartphone Camera:</span>
+								</span>
+								<span class="text-red-400">
+									<span class="lang-zh">否 (需专用激光扫码枪)</span>
+									<span class="lang-en">No (Requires laser scanner)</span>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -199,8 +266,14 @@ const description =
 					<!-- RIGHT CARD: 2D GS1 Digital Link -->
 					<div class="flex flex-col items-center justify-between p-5 rounded-xl bg-[#0e1422] border border-zinc-800/80 relative">
 						<div class="w-full flex items-center justify-between text-xs font-mono pb-3 mb-3 border-b border-zinc-800">
-							<span class="text-red-400 font-semibold">2D GS1 Digital Link (二维码)</span>
-							<span class="px-2 py-0.5 rounded bg-red-950/60 border border-red-800/50 text-red-400 text-[10px]">Sunrise 2027 规范</span>
+							<span class="text-red-400 font-semibold">
+								<span class="lang-zh">2D GS1 Digital Link (二维码)</span>
+								<span class="lang-en">2D GS1 Digital Link (QR Code)</span>
+							</span>
+							<span class="px-2 py-0.5 rounded bg-red-950/60 border border-red-800/50 text-red-400 text-[10px]">
+								<span class="lang-zh">Sunrise 2027 规范</span>
+								<span class="lang-en">Sunrise 2027 Standard</span>
+							</span>
 						</div>
 
 						<!-- Canvas Container -->
@@ -210,16 +283,34 @@ const description =
 
 						<div class="w-full mt-3 text-xs font-mono space-y-1 text-zinc-300">
 							<div class="flex justify-between">
-								<span>编码容量:</span>
-								<span class="text-emerald-400">达数千字节 (URL + 结构化参数)</span>
+								<span>
+									<span class="lang-zh">编码容量:</span>
+									<span class="lang-en">Data Capacity:</span>
+								</span>
+								<span class="text-emerald-400">
+									<span class="lang-zh">达数千字节 (URL + 结构化参数)</span>
+									<span class="lang-en">Kilobytes (URL + structured data)</span>
+								</span>
 							</div>
 							<div class="flex justify-between">
-								<span>容错纠错:</span>
-								<span class="text-emerald-400">Reed-Solomon (最高 30% 遮挡自愈)</span>
+								<span>
+									<span class="lang-zh">容错纠错:</span>
+									<span class="lang-en">Error Correction:</span>
+								</span>
+								<span class="text-emerald-400">
+									<span class="lang-zh">Reed-Solomon (最高 30% 遮挡自愈)</span>
+									<span class="lang-en">Reed-Solomon (Recovers up to 30% damage)</span>
+								</span>
 							</div>
 							<div class="flex justify-between">
-								<span>手机相机支持:</span>
-								<span class="text-emerald-400">是 (普通手机原生相机秒开网页)</span>
+								<span>
+									<span class="lang-zh">手机相机支持:</span>
+									<span class="lang-en">Smartphone Camera:</span>
+								</span>
+								<span class="text-emerald-400">
+									<span class="lang-zh">是 (普通手机原生相机秒开网页)</span>
+									<span class="lang-en">Yes (Native camera scans directly)</span>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -234,7 +325,8 @@ const description =
 						</span>
 					</div>
 					<button id="btn-copy-url" class="px-3 py-1 rounded-lg bg-zinc-900 border border-zinc-700 hover:border-red-500 hover:text-white transition active:scale-95 text-zinc-300 whitespace-nowrap">
-						复制 URL
+						<span class="lang-zh">复制 URL</span>
+						<span class="lang-en">Copy URL</span>
 					</button>
 				</div>
 			</section>
@@ -244,10 +336,13 @@ const description =
 				<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
 					<div>
 						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
-							<span class="text-red-500 font-mono text-xl">02/</span> 收银台模拟 (Checkout Simulator)
+							<span class="text-red-500 font-mono text-xl">02/</span>
+							<span class="lang-zh">收银台模拟 (Checkout Simulator)</span>
+							<span class="lang-en">Checkout Simulator</span>
 						</h2>
 						<p class="text-xs sm:text-sm text-zinc-300 mt-1">
-							模拟收银员扫描：触发激光线扫描动画、伴随经典的 WebAudio 高频结账“哔”声，对比两张收银终端小票。
+							<span class="lang-zh">模拟收银员扫描：触发激光线扫描动画、伴随经典的 WebAudio 高频结账“哔”声，对比两张收银终端小票。</span>
+							<span class="lang-en">Simulate the cashier scan: trigger an animated laser beam with classic high-frequency WebAudio checkout "beep", comparing both POS terminal receipts.</span>
 						</p>
 					</div>
 
@@ -256,7 +351,10 @@ const description =
 						class="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(239,68,68,0.5)] transition flex items-center gap-2"
 					>
 						<span class="text-lg">⚡</span>
-						<span>立即扫描 (Scan Both)</span>
+						<span>
+							<span class="lang-zh">立即扫描 (Scan Both)</span>
+							<span class="lang-en">Scan Both Now</span>
+						</span>
 					</button>
 				</div>
 
@@ -265,54 +363,92 @@ const description =
 					<!-- 1D Receipt -->
 					<div class="thermal-receipt bg-zinc-950 p-5 rounded-2xl border border-zinc-800 font-mono text-xs text-zinc-300 relative">
 						<div class="text-center pb-3 mb-3 border-b border-dashed border-zinc-700">
-							<div class="text-sm font-bold text-zinc-100">--- 1D 收银 POS 终端 ---</div>
+							<div class="text-sm font-bold text-zinc-100">
+								<span class="lang-zh">--- 1D 收银 POS 终端 ---</span>
+								<span class="lang-en">--- 1D POS TERMINAL ---</span>
+							</div>
 							<div class="text-[10px] text-zinc-400 mt-0.5">LEGACY LINEAR UPC SCANNER</div>
 						</div>
 
 						<div class="space-y-2 py-2">
-							<div class="text-zinc-300">读取模式: 光学反光电平变化</div>
+							<div class="text-zinc-300">
+								<span class="lang-zh">读取模式: 光学反光电平变化</span>
+								<span class="lang-en">Read Mode: Optical reflectance pulses</span>
+							</div>
 							<div class="p-2.5 rounded-lg bg-zinc-900/90 border border-zinc-800 text-zinc-200">
 								<span class="text-zinc-400">GTIN: </span>
 								<span id="receipt-1d-gtin" class="font-bold text-white">012345678905</span>
 								<span class="text-amber-400 block mt-1 text-[11px]">
-									就这些。12 个数字，没有更多信息。
+									<span class="lang-zh">就这些。12 个数字，没有更多信息。</span>
+									<span class="lang-en">That's it. 12 digits, zero additional data.</span>
 								</span>
 							</div>
 
 							<div class="space-y-1.5 pt-2 text-[11px] text-zinc-300">
 								<div class="flex justify-between border-b border-zinc-800/60 pb-1">
-									<span>生产批次 (Lot):</span>
-									<span class="text-red-400">❌ 条形码内未包含</span>
+									<span>
+										<span class="lang-zh">生产批次 (Lot):</span>
+										<span class="lang-en">Batch / Lot:</span>
+									</span>
+									<span class="text-red-400">
+										<span class="lang-zh">❌ 条形码内未包含</span>
+										<span class="lang-en">❌ Not encoded in barcode</span>
+									</span>
 								</div>
 								<div class="flex justify-between border-b border-zinc-800/60 pb-1">
-									<span>过期时间 (Expiry):</span>
-									<span class="text-red-400">❌ 无法判断是否变质</span>
+									<span>
+										<span class="lang-zh">过期时间 (Expiry):</span>
+										<span class="lang-en">Expiry Date:</span>
+									</span>
+									<span class="text-red-400">
+										<span class="lang-zh">❌ 无法判断是否变质</span>
+										<span class="lang-en">❌ Cannot verify freshness</span>
+									</span>
 								</div>
 								<div class="flex justify-between border-b border-zinc-800/60 pb-1">
-									<span>单件溯源 (Serial):</span>
-									<span class="text-red-400">❌ 无法防伪召回</span>
+									<span>
+										<span class="lang-zh">单件溯源 (Serial):</span>
+										<span class="lang-en">Serial Trace:</span>
+									</span>
+									<span class="text-red-400">
+										<span class="lang-zh">❌ 无法防伪召回</span>
+										<span class="lang-en">❌ No unit-level recall support</span>
+									</span>
 								</div>
 								<div class="flex justify-between pb-1">
-									<span>网络依赖:</span>
-									<span class="text-amber-400">⚠️ 依赖后端数据库脱机即瘫痪</span>
+									<span>
+										<span class="lang-zh">网络依赖:</span>
+										<span class="lang-en">Network:</span>
+									</span>
+									<span class="text-amber-400">
+										<span class="lang-zh">⚠️ 依赖后端数据库脱机即瘫痪</span>
+										<span class="lang-en">⚠️ Offline POS paralyzed without DB</span>
+									</span>
 								</div>
 							</div>
 						</div>
 
 						<div class="mt-4 pt-3 border-t border-dashed border-zinc-700 text-[10px] text-zinc-400 text-center">
-							- 收银台无法拦截过期食品，无法提供产地信息 -
+							<span class="lang-zh">- 收银台无法拦截过期食品，无法提供产地信息 -</span>
+							<span class="lang-en">- POS cannot block expired goods or provide origin details -</span>
 						</div>
 					</div>
 
 					<!-- 2D Receipt -->
 					<div class="thermal-receipt bg-zinc-950 p-5 rounded-2xl border border-red-500/30 font-mono text-xs text-zinc-300 relative shadow-[0_0_15px_rgba(239,68,68,0.1)]">
 						<div class="text-center pb-3 mb-3 border-b border-dashed border-red-900/60">
-							<div class="text-sm font-bold text-red-400">--- GS1 2D 数字链接终端 ---</div>
+							<div class="text-sm font-bold text-red-400">
+								<span class="lang-zh">--- GS1 2D 数字链接终端 ---</span>
+								<span class="lang-en">--- GS1 2D DIGITAL LINK TERMINAL ---</span>
+							</div>
 							<div class="text-[10px] text-zinc-400 mt-0.5">SUNRISE 2027 SMART POS</div>
 						</div>
 
 						<div class="space-y-2 py-2">
-							<div class="text-zinc-300">读取模式: 图像解析 GS1 语法解构</div>
+							<div class="text-zinc-300">
+								<span class="lang-zh">读取模式: 图像解析 GS1 语法解构</span>
+								<span class="lang-en">Read Mode: Optical 2D image GS1 syntax parsing</span>
+							</div>
 
 							<div class="p-2.5 rounded-lg bg-zinc-900/90 border border-zinc-800 space-y-1 text-[11px]">
 								<div class="flex justify-between">
@@ -320,19 +456,31 @@ const description =
 									<span id="receipt-2d-gtin" class="font-bold text-white">00012345678905</span>
 								</div>
 								<div class="flex justify-between">
-									<span class="text-zinc-400">(10) 生产批次:</span>
+									<span class="text-zinc-400">
+										<span class="lang-zh">(10) 生产批次:</span>
+										<span class="lang-en">(10) Batch / Lot:</span>
+									</span>
 									<span id="receipt-2d-batch" class="text-emerald-400 font-bold">BATCH7</span>
 								</div>
 								<div class="flex justify-between">
-									<span class="text-zinc-400">(17) 有效期:</span>
+									<span class="text-zinc-400">
+										<span class="lang-zh">(17) 有效期:</span>
+										<span class="lang-en">(17) Expiry:</span>
+									</span>
 									<span id="receipt-2d-expiry" class="text-emerald-400 font-bold">2027-12-31</span>
 								</div>
 								<div class="flex justify-between">
-									<span class="text-zinc-400">(21) 序列号:</span>
+									<span class="text-zinc-400">
+										<span class="lang-zh">(21) 序列号:</span>
+										<span class="lang-en">(21) Serial:</span>
+									</span>
 									<span id="receipt-2d-serial" class="text-zinc-200">SN123</span>
 								</div>
 								<div class="pt-1 border-t border-zinc-800 text-[10px] text-zinc-300 truncate">
-									<span>产品链接: </span>
+									<span>
+										<span class="lang-zh">产品链接: </span>
+										<span class="lang-en">Product Link: </span>
+									</span>
 									<a id="receipt-2d-link" href="#" target="_blank" rel="noopener" class="text-red-400 hover:underline">
 										https://id.gs1.org/...
 									</a>
@@ -341,22 +489,41 @@ const description =
 
 							<div class="space-y-1.5 pt-2 text-[11px] text-zinc-300">
 								<div class="flex justify-between border-b border-zinc-800/60 pb-1">
-									<span>收银台防呆:</span>
-									<span class="text-emerald-400">✅ 自动识别并禁止结算过期商品</span>
+									<span>
+										<span class="lang-zh">收银台防呆:</span>
+										<span class="lang-en">POS Interlock:</span>
+									</span>
+									<span class="text-emerald-400">
+										<span class="lang-zh">✅ 自动识别并禁止结算过期商品</span>
+										<span class="lang-en">✅ Automatically blocks checkout of expired food</span>
+									</span>
 								</div>
 								<div class="flex justify-between border-b border-zinc-800/60 pb-1">
-									<span>精准召回:</span>
-									<span class="text-emerald-400">✅ 精确定位至具体批次，免全线下架</span>
+									<span>
+										<span class="lang-zh">精准召回:</span>
+										<span class="lang-en">Precision Recall:</span>
+									</span>
+									<span class="text-emerald-400">
+										<span class="lang-zh">✅ 精确定位至具体批次，免全线下架</span>
+										<span class="lang-en">✅ Targets exact batch without full-line recalls</span>
+									</span>
 								</div>
 								<div class="flex justify-between pb-1">
-									<span>消费者交互:</span>
-									<span class="text-emerald-400">✅ 原生手机相机扫码即可获取配料溯源</span>
+									<span>
+										<span class="lang-zh">消费者交互:</span>
+										<span class="lang-en">Consumer Touchpoint:</span>
+									</span>
+									<span class="text-emerald-400">
+										<span class="lang-zh">✅ 原生手机相机扫码即可获取配料溯源</span>
+										<span class="lang-en">✅ Camera scan shows allergens, recipes & origin</span>
+									</span>
 								</div>
 							</div>
 						</div>
 
 						<div class="mt-4 pt-3 border-t border-dashed border-red-900/60 text-[10px] text-emerald-300 text-center">
-							- 一码多用：收银机结算 + 供应链溯源 + 消费者触达 -
+							<span class="lang-zh">- 一码多用：收银机结算 + 供应链溯源 + 消费者触达 -</span>
+							<span class="lang-en">- One Code to Rule Them All: Checkout + Traceability + Consumer Engagement -</span>
 						</div>
 					</div>
 				</div>
@@ -365,10 +532,13 @@ const description =
 			<!-- TIMELINE STRIP SECTION -->
 			<section class="relative z-10 mb-10 pb-10 border-b border-zinc-800/80">
 				<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2 mb-2">
-					<span class="text-red-500 font-mono text-xl">03/</span> 演进编年史 (Timeline Strip)
+					<span class="text-red-500 font-mono text-xl">03/</span>
+					<span class="lang-zh">演进编年史 (Timeline Strip)</span>
+					<span class="lang-en">Evolution Chronology</span>
 				</h2>
 				<p class="text-xs sm:text-sm text-zinc-300 mb-8">
-					从俄亥俄州超市的第一声“哔”，到遍布全球 100 亿次日常扫描，再到 2D 二维时代的黎明。
+					<span class="lang-zh">从俄亥俄州超市的第一声“哔”，到遍布全球 100 亿次日常扫描，再到 2D 二维时代的黎明。</span>
+					<span class="lang-en">From the first beep in an Ohio grocery aisle to 10 billion daily scans worldwide, and into the dawn of the 2D era.</span>
 				</p>
 
 				<!-- Horizontal Timeline -->
@@ -386,14 +556,22 @@ const description =
 								<span class="w-3 h-3 rounded-full bg-zinc-500 group-hover:bg-zinc-400 transition"></span>
 							</div>
 							<h3 class="text-base font-bold text-white mb-1.5">
-								第一声“哔”· Wrigley 口香糖
+								<span class="lang-zh">第一声“哔”· Wrigley 口香糖</span>
+								<span class="lang-en">The First "Beep" · Wrigley's Gum</span>
 							</h3>
 							<p class="text-xs text-zinc-300 leading-relaxed mb-3">
-								在俄亥俄州特洛伊市 Marsh 超市，收银员 Sharon Buchanan 扫描了一包 67 美分的 Wrigley's 箭牌 Juicy Fruit 口香糖。
-								这是人类历史上第一件被条形码结算的商业商品。
+								<span class="lang-zh">
+									在俄亥俄州特洛伊市 Marsh 超市，收银员 Sharon Buchanan 扫描了一包 67 美分的 Wrigley's 箭牌 Juicy Fruit 口香糖。
+									这是人类历史上第一件被条形码结算的商业商品。
+								</span>
+								<span class="lang-en">
+									At Marsh Supermarket in Troy, Ohio, cashier Sharon Buchanan scanned a 67-cent pack of Wrigley's Juicy Fruit chewing gum.
+									It was the first commercial item scanned by a barcode in human history.
+								</span>
 							</p>
 							<div class="text-[11px] font-mono text-zinc-400">
-								📍 该包口香糖与 NCR 扫描仪现藏于史密森尼美国国家历史博物馆
+								<span class="lang-zh">📍 该包口香糖与 NCR 扫描仪现藏于史密森尼美国国家历史博物馆</span>
+								<span class="lang-en">📍 The original pack and NCR scanner reside at the Smithsonian National Museum of American History</span>
 							</div>
 						</div>
 
@@ -401,19 +579,28 @@ const description =
 						<div class="timeline-card group bg-zinc-950/80 border border-zinc-800 hover:border-zinc-600 rounded-2xl p-5 transition duration-300">
 							<div class="flex items-center justify-between mb-3">
 								<span class="px-2.5 py-1 rounded bg-zinc-900 text-zinc-300 font-mono text-xs font-bold border border-zinc-800">
-									2024 年
+									<span class="lang-zh">2024 年</span>
+									<span class="lang-en">Year 2024</span>
 								</span>
 								<span class="w-3 h-3 rounded-full bg-red-500/60 group-hover:bg-red-400 transition"></span>
 							</div>
 							<h3 class="text-base font-bold text-white mb-1.5">
-								UPC 50 周年 · 商业经济基石
+								<span class="lang-zh">UPC 50 周年 · 商业经济基石</span>
+								<span class="lang-en">50 Years of UPC · Bedrock of Modern Commerce</span>
 							</h3>
 							<p class="text-xs text-zinc-300 leading-relaxed mb-3">
-								条形码诞生整 50 年，全球每天被扫描超过 100 亿次。
-								它被 BBC 评为“塑造现代经济的 50 大发明之一”，支撑起了整个人类现代超市零售与跨国供应链物流运转。
+								<span class="lang-zh">
+									条形码诞生整 50 年，全球每天被扫描超过 100 亿次。
+									它被 BBC 评为“塑造现代经济的 50 大发明之一”，支撑起了整个人类现代超市零售与跨国供应链物流运转。
+								</span>
+								<span class="lang-en">
+									Celebrating its 50th anniversary, barcodes are scanned over 10 billion times every single day.
+									Named by the BBC as one of the 50 inventions that shaped the modern economy, it powers global retail and supply chains.
+								</span>
 							</p>
 							<div class="text-[11px] font-mono text-zinc-400">
-								📊 日均 100 亿+ 次扫描，成为商业世界最通用的语言
+								<span class="lang-zh">📊 日均 100 亿+ 次扫描，成为商业世界最通用的语言</span>
+								<span class="lang-en">📊 10+ billion daily scans: the universal lingua franca of global commerce</span>
 							</div>
 						</div>
 
@@ -421,19 +608,28 @@ const description =
 						<div class="timeline-card group bg-red-950/20 border border-red-500/40 hover:border-red-500 rounded-2xl p-5 transition duration-300 shadow-[0_0_20px_rgba(239,68,68,0.1)]">
 							<div class="flex items-center justify-between mb-3">
 								<span class="px-2.5 py-1 rounded bg-red-950/80 text-red-300 font-mono text-xs font-bold border border-red-800/80">
-									2027 年底 · Sunrise 2027
+									<span class="lang-zh">2027 年底 · Sunrise 2027</span>
+									<span class="lang-en">Late 2027 · Sunrise 2027</span>
 								</span>
 								<span class="w-3 h-3 rounded-full bg-red-500 animate-ping"></span>
 							</div>
 							<h3 class="text-base font-bold text-white mb-1.5">
-								Sunrise 2027 · 二维条码黎明
+								<span class="lang-zh">Sunrise 2027 · 二维条码黎明</span>
+								<span class="lang-en">Sunrise 2027 · Dawn of the 2D Barcode</span>
 							</h3>
 							<p class="text-xs text-zinc-300 leading-relaxed mb-3">
-								国际物品编码组织（GS1）设定的全球零售转型里程碑：全球零售商 POS 系统全面具备扫描 2D 二维条码（GS1 Digital Link）的能力。
-								从此条码兼具收银机结算与普通消费者手机扫码交互。
+								<span class="lang-zh">
+									国际物品编码组织（GS1）设定的全球零售转型里程碑：全球零售商 POS 系统全面具备扫描 2D 二维条码（GS1 Digital Link）的能力。
+									从此条码兼具收银机结算与普通消费者手机扫码交互。
+								</span>
+								<span class="lang-en">
+									The global retail transition milestone established by GS1: retailer POS systems worldwide will decode 2D barcodes (GS1 Digital Link).
+									A single code will finally serve both cash register checkout and consumer smartphone interaction.
+								</span>
 							</p>
 							<div class="text-[11px] font-mono text-red-400">
-								🚀 开启“一码到底”与产品全生命周期数字透明时代
+								<span class="lang-zh">🚀 开启“一码到底”与产品全生命周期数字透明时代</span>
+								<span class="lang-en">🚀 Ushering in an era of end-to-end digital transparency across product lifecycles</span>
 							</div>
 						</div>
 					</div>
@@ -443,63 +639,101 @@ const description =
 			<!-- COMMON MISCONCEPTIONS SECTION -->
 			<section class="relative z-10 mb-8 pb-8">
 				<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2 mb-2">
-					<span class="text-red-500 font-mono text-xl">04/</span> 常见误解与关键真相 (FAQ)
+					<span class="text-red-500 font-mono text-xl">04/</span>
+					<span class="lang-zh">常见误解与关键真相 (FAQ)</span>
+					<span class="lang-en">Common Myths & Key Facts</span>
 				</h2>
 				<p class="text-xs sm:text-sm text-zinc-300 mb-6">
-					厘清 Sunrise 2027 转型中的误读：是能力的升级，而不是强行的禁令。
+					<span class="lang-zh">厘清 Sunrise 2027 转型中的误读：是能力的升级，而不是强行的禁令。</span>
+					<span class="lang-en">Clearing up confusion around Sunrise 2027: a capability upgrade, not an outright ban.</span>
 				</p>
 
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 					<!-- Card 1 -->
 					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
 						<div>
-							<div class="text-red-400 font-mono text-xs font-bold mb-2">误解 01</div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">
+								<span class="lang-zh">误解 01</span>
+								<span class="lang-en">Myth 01</span>
+							</div>
 							<h3 class="text-base font-bold text-white mb-2">
-								2027 年一维条码会被禁用吗？
+								<span class="lang-zh">2027 年一维条码会被禁用吗？</span>
+								<span class="lang-en">Will 1D linear barcodes be banned in 2027?</span>
 							</h3>
 							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
-								<strong class="text-emerald-400 font-semibold">不会。</strong> 1D 线性条形码将继续工作。
-								GS1 官方明确表示：“只要仍有场景需要，一维条码就会一直与二维码长期共存（coexist with 2D for as long as there are uses for them）”。
-								Sunrise 2027 是针对全球收银终端设备“能够识读 2D 码”的技术能力里程碑，并非消灭一维码的强制法令。
+								<span class="lang-zh">
+									<strong class="text-emerald-400 font-semibold">不会。</strong> 1D 线性条形码将继续工作。
+									GS1 官方明确表示：“只要仍有场景需要，一维条码就会一直与二维码长期共存（coexist with 2D for as long as there are uses for them）”。
+									Sunrise 2027 是针对全球收银终端设备“能够识读 2D 码”的技术能力里程碑，并非消灭一维码的强制法令。
+								</span>
+								<span class="lang-en">
+									<strong class="text-emerald-400 font-semibold">No.</strong> 1D linear barcodes will continue to work.
+									GS1 explicitly states that 1D barcodes will "coexist with 2D for as long as there are uses for them."
+									Sunrise 2027 is a technical capability milestone ensuring POS scanners can read 2D codes, not a draconian mandate outlawing 1D.
+								</span>
 							</p>
 						</div>
 						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
-							核心定性：能力里程碑，非禁用禁令
+							<span class="lang-zh">核心定性：能力里程碑，非禁用禁令</span>
+							<span class="lang-en">Takeaway: A capability milestone, not a ban</span>
 						</div>
 					</div>
 
 					<!-- Card 2 -->
 					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
 						<div>
-							<div class="text-red-400 font-mono text-xs font-bold mb-2">误解 02</div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">
+								<span class="lang-zh">误解 02</span>
+								<span class="lang-en">Myth 02</span>
+							</div>
 							<h3 class="text-base font-bold text-white mb-2">
-								商品包装上只能印一种条码？
+								<span class="lang-zh">商品包装上只能印一种条码？</span>
+								<span class="lang-en">Can packaging only feature a single barcode?</span>
 							</h3>
 							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
-								<strong class="text-emerald-400 font-semibold">过渡期可同时印两种。</strong>
-								在供应链与收银系统完全完成双向过渡之前，品牌商常采用“双码并行”设计：保留经典 1D 条码以兼容未升级的老旧扫描设备，同时并排印制 GS1 2D 二维码供新型收银枪和消费者手机读取。
+								<span class="lang-zh">
+									<strong class="text-emerald-400 font-semibold">过渡期可同时印两种。</strong>
+									在供应链与收银系统完全完成双向过渡之前，品牌商常采用“双码并行”设计：保留经典 1D 条码以兼容未升级的老旧扫描设备，同时并排印制 GS1 2D 二维码供新型收银枪和消费者手机读取。
+								</span>
+								<span class="lang-en">
+									<strong class="text-emerald-400 font-semibold">Dual-marking is standard during transition.</strong>
+									Until supply chains and retailers fully modernize, brands frequently print both side-by-side: a legacy 1D barcode for older scanners, alongside a GS1 2D code for updated POS cameras and shoppers' phones.
+								</span>
 							</p>
 						</div>
 						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
-							过渡策略：一维保兼容，二维迎未来
+							<span class="lang-zh">过渡策略：一维保兼容，二维迎未来</span>
+							<span class="lang-en">Strategy: 1D for backwards compatibility, 2D for the future</span>
 						</div>
 					</div>
 
 					<!-- Card 3 -->
 					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
 						<div>
-							<div class="text-red-400 font-mono text-xs font-bold mb-2">误解 03</div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">
+								<span class="lang-zh">误解 03</span>
+								<span class="lang-en">Myth 03</span>
+							</div>
 							<h3 class="text-base font-bold text-white mb-2">
-								手机能直接扫 GS1 二维码吗？
+								<span class="lang-zh">手机能直接扫 GS1 二维码吗？</span>
+								<span class="lang-en">Can smartphones scan GS1 2D codes natively?</span>
 							</h3>
 							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
-								<strong class="text-emerald-400 font-semibold">它是标准 URL，直接打开。</strong>
-								GS1 Digital Link 本质上是一个标准 Web URL（如 <code class="text-red-300">https://id.gs1.org/01/...</code>）。
-								任何一台现代智能手机的原生相机都能直接扫描并跳转网页；而具有 GS1 解码能力的专业收银枪则能精准截取其中的 GTIN 和批次属性。
+								<span class="lang-zh">
+									<strong class="text-emerald-400 font-semibold">它是标准 URL，直接打开。</strong>
+									GS1 Digital Link 本质上是一个标准 Web URL（如 <code class="text-red-300">https://id.gs1.org/01/...</code>）。
+									任何一台现代智能手机的原生相机都能直接扫描并跳转网页；而具有 GS1 解码能力的专业收银枪则能精准截取其中的 GTIN 和批次属性。
+								</span>
+								<span class="lang-en">
+									<strong class="text-emerald-400 font-semibold">Yes, it's a standard web URL.</strong>
+									A GS1 Digital Link is fundamentally a standard Web URL (e.g. <code class="text-red-300">https://id.gs1.org/01/...</code>).
+									Any smartphone camera scans and opens it directly in a browser, while GS1-compliant retail scanners parse out GTIN and batch attributes for checkout.
+								</span>
 							</p>
 						</div>
 						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
-							双重身份：普通网页 URL + 供应链结构化数据
+							<span class="lang-zh">双重身份：普通网页 URL + 供应链结构化数据</span>
+							<span class="lang-en">Dual identity: Web URL for people, structured data for POS</span>
 						</div>
 					</div>
 				</div>
@@ -509,12 +743,19 @@ const description =
 					<div class="flex items-center gap-3">
 						<span class="text-3xl font-black font-mono text-red-400">79%</span>
 						<p class="text-xs text-zinc-300">
-							<strong>GS1 US 2025 官方消费者调查数据：</strong>
-							79% 的消费者更倾向于购买带有可扫描二维码以获取产地溯源、致敏原、说明书等附加信息的商品。
+							<span class="lang-zh">
+								<strong>GS1 US 2025 官方消费者调查数据：</strong>
+								79% 的消费者更倾向于购买带有可扫描二维码以获取产地溯源、致敏原、说明书等附加信息的商品。
+							</span>
+							<span class="lang-en">
+								<strong>GS1 US 2025 Consumer Survey Data:</strong>
+								79% of consumers prefer purchasing products with scannable QR codes providing transparency on ingredients, origins, and recyclability.
+							</span>
 						</p>
 					</div>
 					<div class="text-[11px] font-mono text-zinc-300">
-						数据来源: GS1 US 2025 Consumer Survey
+						<span class="lang-zh">数据来源: GS1 US 2025 Consumer Survey</span>
+						<span class="lang-en">Source: GS1 US 2025 Consumer Survey</span>
 					</div>
 				</div>
 			</section>
@@ -522,7 +763,8 @@ const description =
 			<!-- FOOTER -->
 			<hr class="my-6 border-zinc-800" />
 			<blockquote class="text-xs opacity-50 border-l-2 border-red-500/40 pl-3 py-1 my-4 italic">
-				本文由 AI 生成。
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
 			</blockquote>
 		</div>
 	</div>
@@ -623,6 +865,11 @@ const description =
 			return (10 - (total % 10)) % 10;
 		}
 
+		const isEn = () =>
+			document.documentElement.lang === "en" ||
+			location.pathname.startsWith("/en") ||
+			document.documentElement.getAttribute("data-lang") === "en";
+
 		// Draw 1D UPC-A on canvas
 		function drawUpcaToCanvas(canvas: HTMLCanvasElement, gtin12: string): boolean {
 			const ctx = canvas.getContext("2d");
@@ -650,7 +897,11 @@ const description =
 				ctx.fillStyle = "#ef4444";
 				ctx.font = "12px monospace";
 				ctx.textAlign = "center";
-				ctx.fillText("GTIN 格式无效 (需 12 位纯数字)", displayW / 2, displayH / 2);
+				ctx.fillText(
+					isEn() ? "Invalid GTIN format (12 numeric digits required)" : "GTIN 格式无效 (需 12 位纯数字)",
+					displayW / 2,
+					displayH / 2
+				);
 				ctx.restore();
 				return false;
 			}
@@ -795,7 +1046,7 @@ const description =
 
 			// Format expiry YYMMDD to readable date
 			function formatExpiryDate(yymmdd: string): string {
-				if (!/^\d{6}$/.test(yymmdd)) return yymmdd || "未指定";
+				if (!/^\d{6}$/.test(yymmdd)) return yymmdd || (isEn() ? "Unspecified" : "未指定");
 				const yy = yymmdd.slice(0, 2);
 				const mm = yymmdd.slice(2, 4);
 				const dd = yymmdd.slice(4, 6);
@@ -833,14 +1084,16 @@ const description =
 						const expectedCheck = computeUpcCheckDigit(rawGtin.slice(0, 11));
 						const actualCheck = Number.parseInt(rawGtin[11], 10);
 						if (expectedCheck === actualCheck) {
-							gtinValidation.textContent = "校验码有效 ✓";
+							gtinValidation.textContent = isEn() ? "Valid Checksum ✓" : "校验码有效 ✓";
 							gtinValidation.className = "absolute right-3 top-2.5 text-xs font-mono text-emerald-400";
 						} else {
-							gtinValidation.textContent = `建议校验位: ${expectedCheck}`;
+							gtinValidation.textContent = isEn() ? `Expected Check: ${expectedCheck}` : `建议校验位: ${expectedCheck}`;
 							gtinValidation.className = "absolute right-3 top-2.5 text-xs font-mono text-amber-400";
 						}
 					} else {
-						gtinValidation.textContent = `请输入 12 位纯数字 (${rawGtin.length}/12)`;
+						gtinValidation.textContent = isEn()
+							? `Enter 12 numeric digits (${rawGtin.length}/12)`
+							: `请输入 12 位纯数字 (${rawGtin.length}/12)`;
 						gtinValidation.className = "absolute right-3 top-2.5 text-xs font-mono text-red-400";
 					}
 				}
@@ -871,7 +1124,7 @@ const description =
 				const gtin14 = rawGtin.padStart(14, "0");
 				if (receipt1dGtin) receipt1dGtin.textContent = rawGtin;
 				if (receipt2dGtin) receipt2dGtin.textContent = gtin14;
-				if (receipt2dBatch) receipt2dBatch.textContent = batch || "未指定";
+				if (receipt2dBatch) receipt2dBatch.textContent = batch || (isEn() ? "Unspecified" : "未指定");
 				if (receipt2dExpiry) receipt2dExpiry.textContent = `${formatExpiryDate(expiry)} (${expiry})`;
 				if (receipt2dSerial) receipt2dSerial.textContent = serial;
 				if (receipt2dLink) {
@@ -916,12 +1169,12 @@ const description =
 				if (!url) return;
 				try {
 					await navigator.clipboard.writeText(url);
-					btnCopyUrl.textContent = "已复制 ✓";
+					btnCopyUrl.textContent = isEn() ? "Copied ✓" : "已复制 ✓";
 					setTimeout(() => {
-						btnCopyUrl.textContent = "复制 URL";
+						btnCopyUrl.textContent = isEn() ? "Copy URL" : "复制 URL";
 					}, 2000);
 				} catch (_e) {
-					btnCopyUrl.textContent = "复制失败";
+					btnCopyUrl.textContent = isEn() ? "Copy failed" : "复制失败";
 				}
 			});
 
@@ -973,6 +1226,10 @@ const description =
 			}
 			updateCountdown();
 			countdownInterval = window.setInterval(updateCountdown, 1000);
+
+			window.addEventListener("lang-change", () => {
+				updateBarcodes();
+			});
 
 			// Initial render
 			updateBarcodes();
