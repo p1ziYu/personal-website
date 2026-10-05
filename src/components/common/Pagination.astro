@@ -48,14 +48,17 @@ if (r < page.lastPage - 2) pages.push(HIDDEN);
 if (r === page.lastPage - 2) pages.push(page.lastPage - 1);
 if (r < page.lastPage) pages.push(page.lastPage);
 
+const isEn = Astro.url.pathname.startsWith("/en");
+
 const getPageUrl = (p: number) => {
-	if (p === 1) return "/";
-	return `/${p}/`;
+	const base = isEn ? "/en" : "";
+	if (p === 1) return base ? `${base}/` : "/";
+	return `${base}/${p}/`;
 };
 
 // 传给 PageJump island 的跳转模板。函数没法跨 island 边界传，只能给字符串
-const jumpHrefTemplate = url("/{page}/");
-const jumpHrefFirst = url("/");
+const jumpHrefTemplate = url(isEn ? "/en/{page}/" : "/{page}/");
+const jumpHrefFirst = url(isEn ? "/en/" : "/");
 ---
 
 <div class:list={[className, "pagination-wrapper flex flex-col gap-4 items-center"]} style={style}>
