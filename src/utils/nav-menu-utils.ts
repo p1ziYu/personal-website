@@ -3,7 +3,7 @@ import type { NavBarLink } from "@/types/navBarConfig";
 import { resolveNavbarLinks } from "@/utils/navbar-i18n";
 
 /** 解析导航栏链接：按 siteConfig.pages 过滤 + i18n 名称解析。Navbar 与 NavMenuPanel 共用。 */
-export function resolveNavMenuLinks(): NavBarLink[] {
+export function resolveNavMenuLinks(lang?: string): NavBarLink[] {
 	const pages = siteConfig.pages;
 
 	function isPageEnabled(link: NavBarLink): boolean {
@@ -27,5 +27,6 @@ export function resolveNavMenuLinks(): NavBarLink[] {
 		navBarConfig.links
 			.map(filterLinks)
 			.filter((link): link is NavBarLink => link !== null),
+		lang,
 	);
 }
