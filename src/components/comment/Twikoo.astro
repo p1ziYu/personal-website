@@ -34,10 +34,15 @@ const config = {
 
   // 动态创建配置对象
   function createTwikooConfig() {
+    // Follow the page language: Twikoo renders its own UI strings (nickname/email/placeholder/send)
+    // Pathname-based detection is robust across Swup navigations (html lang attr may not update).
+    var p = window.location.pathname;
+    var isEn = p === "/en" || p === "/en/" || p.indexOf("/en/") === 0;
     return {
       ...config,
       path: getCurrentPath(),
       el: "#tcomment",
+      lang: isEn ? "en" : "zh-CN",
     };
   }
 
