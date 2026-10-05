@@ -71,8 +71,8 @@ export function getFileDirFromPath(filePath: string): string {
 	return filePath.replace(/^src\//, "").replace(/\/[^/]+$/, "");
 }
 
-export function getSearchUrl(query: string): string {
-	return url(`/search/?q=${encodeURIComponent(query.trim())}`);
+export function getSearchUrl(query: string, lang?: string): string {
+	return url(`${lang === "en" ? "/en" : ""}/search/?q=${encodeURIComponent(query.trim())}`);
 }
 
 // 生成 canonical URL：仅对客户端筛选路由（/archive/ 与 /search/）剥离查询串，
