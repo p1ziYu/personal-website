@@ -29,7 +29,7 @@ const isCollapsed = collapseThreshold ? tags.length > collapseThreshold : false;
 <WidgetLayout name={i18n(I18nKey.tags, uiLang)} showTitle={showTitle} id="tags" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT} useExpandedButtonSpacing={true} moreUrl={url(uiLang === "en" ? "/en/tags/" : "/tags/")} class={className} style={style}>
     <div class="tags-container">
         {tags.map(t => (
-            <ButtonTag href={getTagUrl(t.name, uiLang)} label={`View all posts with the ${taxonomyDisplayName(t.name.trim(), uiLang)} tag`}>
+            <ButtonTag href={getTagUrl(t.name, uiLang)} label={i18n(I18nKey.tagPostsLabel, uiLang).replace("{name}", taxonomyDisplayName(t.name.trim(), uiLang))}>
                 {taxonomyDisplayName(t.name.trim(), uiLang)}
             </ButtonTag>
         ))}
