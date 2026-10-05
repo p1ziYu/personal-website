@@ -238,7 +238,7 @@ const i18nDataStr = JSON.stringify(i18nData);
 							<Icon name="material-symbols:volume-up-rounded" class="icon-vol-high text-sm" aria-hidden="true" />
 							<Icon name="material-symbols:volume-off-rounded" class="icon-vol-mute text-sm hidden" aria-hidden="true" />
 						</button>
-						<div class="vol-container h-1 w-14 bg-neutral-300/60 dark:bg-neutral-600/40 rounded-full cursor-pointer relative" role="slider" aria-label={i18n(I18nKey.musicVolume, uiLang)} aria-valuemin="0" aria-valuemax="100" aria-valuenow="70">
+						<div class="vol-container h-1 w-14 bg-neutral-300/60 dark:bg-neutral-600/40 rounded-full cursor-pointer relative" role="slider" tabindex="0" aria-label={i18n(I18nKey.musicVolume, uiLang)} aria-valuemin="0" aria-valuemax="100" aria-valuenow="70">
 							<div class="vol-bar absolute left-0 top-0 h-full bg-(--primary) rounded-full w-[70%]"></div>
 						</div>
 					</div>
@@ -251,6 +251,7 @@ const i18nDataStr = JSON.stringify(i18nData);
 			<div
 				class="progress-container relative w-full h-1 bg-neutral-300/60 dark:bg-neutral-600/40 rounded-full cursor-pointer touch-none group"
 				role="slider"
+				tabindex="0"
 				aria-label={i18n(I18nKey.musicProgress, uiLang)}
 				aria-valuemin="0"
 				aria-valuemax="100"
@@ -574,6 +575,9 @@ const i18nDataStr = JSON.stringify(i18nData);
 			e.stopPropagation();
 			setCollapsedState(false);
 		});
+		btnExpandText.addEventListener("keydown", function (e) {
+			if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setCollapsedState(false); }
+		});
 	}
 
 	// ── Music Manager Integration ────────────────────────────
@@ -870,8 +874,19 @@ const i18nDataStr = JSON.stringify(i18nData);
 
 		itemEl.dataset.index = idx;
 		itemEl.setAttribute("role", "option");
+		itemEl.tabIndex = 0;
 		itemEl.setAttribute("aria-label", track.name + " - " + track.artist);
 		itemEl.onclick = function () { if (mgr) mgr.playTrackByIndex(idx); };
+		itemEl.onkeydown = function (e) {
+			if (e.key === "Enter" || e.key === " ") { e.preventDefault(); itemEl.click(); return; }
+			if (!["ArrowUp", "ArrowDown", "Home", "End"].includes(e.key)) return;
+			e.preventDefault();
+			var target = e.key === "Home" ? 0 : e.key === "End" ? vs.playlist.length - 1 : idx + (e.key === "ArrowDown" ? 1 : -1);
+			target = Math.max(0, Math.min(vs.playlist.length - 1, target));
+			ui.playlistContainer.scrollTop = target * ITEM_H;
+			vsCommitRange();
+			if (vs.renderedEls[target]) vs.renderedEls[target].focus();
+		};
 
 		itemEl.style.position = "absolute";
 		itemEl.style.left = "0";
@@ -1174,6 +1189,7 @@ const i18nDataStr = JSON.stringify(i18nData);
 	});
 
 	window.addEventListener("fm:lyrics", function (e) {
+		local.lyricsStatus = e.detail.status;
 		renderLyricsUI(e.detail.lyrics, e.detail.status);
 	});
 
@@ -1199,6 +1215,12 @@ const i18nDataStr = JSON.stringify(i18nData);
 	if (ui.btnMute) ui.btnMute.addEventListener("click", function () { if (mgr) mgr.toggleMute(); });
 
 	if (ui.volContainer) {
+		ui.volContainer.addEventListener("keydown", function (e) {
+			if (!mgr || !["ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp", "Home", "End"].includes(e.key)) return;
+			e.preventDefault();
+			var volume = mgr.getState().volume;
+			mgr.setVolume(e.key === "Home" ? 0 : e.key === "End" ? 1 : volume + (["ArrowRight", "ArrowUp"].includes(e.key) ? 0.05 : -0.05));
+		});
 		ui.volContainer.addEventListener("click", function (e) {
 			var rect = ui.volContainer.getBoundingClientRect();
 			var x = e.clientX - rect.left;
@@ -1208,6 +1230,12 @@ const i18nDataStr = JSON.stringify(i18nData);
 	}
 
 	if (ui.progressContainer) {
+		ui.progressContainer.addEventListener("keydown", function (e) {
+			if (!mgr || !["ArrowLeft", "ArrowDown", "ArrowRight", "ArrowUp", "Home", "End"].includes(e.key)) return;
+			e.preventDefault();
+			var progress = mgr.getState().progress / 100;
+			mgr.seek(e.key === "Home" ? 0 : e.key === "End" ? 1 : progress + (["ArrowRight", "ArrowUp"].includes(e.key) ? 0.05 : -0.05));
+		});
 		ui.progressContainer.addEventListener("click", function (e) {
 			var rect = ui.progressContainer.getBoundingClientRect();
 			var clickX = e.clientX - rect.left;
@@ -1356,7 +1384,14 @@ const i18nDataStr = JSON.stringify(i18nData);
 			h.title = d.drag;
 		});
 
+		player.setAttribute("aria-label", d.music);
+		player.querySelectorAll(".playlist-container").forEach(function (el) { el.setAttribute("aria-label", d.playlist); });
+		player.querySelectorAll(".lrc-container").forEach(function (el) { el.setAttribute("aria-label", d.lyrics); });
+		player.querySelectorAll(".vol-container").forEach(function (el) { el.setAttribute("aria-label", d.volume); });
+		player.querySelectorAll(".progress-container").forEach(function (el) { el.setAttribute("aria-label", d.progress); });
 		var s = mgr ? mgr.getState() : null;
+		player.querySelectorAll(".music-cover, .music-cover-mini").forEach(function (el) { el.alt = s && s.track && s.track.pic ? s.track.name + " - " + s.track.artist : d.noCover; });
+		if (s) { renderLyricsUI(s.lyrics, local.lyricsStatus || (s.lyrics.length ? "loaded" : "none")); updateLrcHighlight(s.currentLrcIndex); }
 		if (!s || !s.track) {
 			if (ui.title) ui.title.innerText = d.music;
 			if (ui.titleMini) ui.titleMini.innerText = d.music;
