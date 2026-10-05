@@ -1,5 +1,7 @@
 <script lang="ts">
 import { onMount } from "svelte";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 
 interface Tab {
 	id: string;
@@ -48,7 +50,7 @@ function clickTab(tabId: string) {
 
 <div class="border-b border-(--line-divider) mb-3">
   <div class="overflow-x-auto" data-tab-scroll-container>
-    <nav class="flex min-w-max space-x-8" aria-label="Tabs">
+    <nav class="flex min-w-max space-x-8" aria-label={i18n(I18nKey.tabNavigation)}>
       {#each tabs as tab}
         <button
           class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200 {tab.id === activeTab
