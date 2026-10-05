@@ -19,10 +19,13 @@ if (!siteConfig.pages.projects) {
 	return Astro.redirect("/404/");
 }
 
-const title = i18n(I18nKey.projects);
-const description = i18n(I18nKey.projectsDescription);
+const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
+const lang = isEn ? "en" : "zh_CN";
 
-const projects = await getSortedProjects();
+const title = i18n(I18nKey.projects, lang);
+const description = i18n(I18nKey.projectsDescription, lang);
+
+const projects = await getSortedProjects(lang);
 const projectMeta = projects.map((p) => ({
 	id: removeFileExtension(p.id),
 	title: p.data.title,
@@ -37,7 +40,7 @@ const projectMeta = projects.map((p) => ({
 
 // 筛选：显示全部已知状态（带图标）
 const statusFilters = PROJECT_STATUS_KEYS.map((key) => {
-	const meta = getProjectStatusMeta(key);
+	const meta = getProjectStatusMeta(key, lang);
 	return { key, label: meta.label, icon: meta.icon };
 });
 ---
@@ -70,7 +73,7 @@ const statusFilters = PROJECT_STATUS_KEYS.map((key) => {
 				<input
 					type="text"
 					data-search
-					placeholder={i18n(I18nKey.projectSearch)}
+					placeholder={i18n(I18nKey.projectSearch, lang)}
 					class="w-full pl-10 pr-4 py-2 rounded-xl border border-(--line-divider) bg-transparent text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 focus:border-(--primary) focus:ring-1 focus:ring-(--primary) outline-none transition-all duration-200 text-sm"
 				/>
 			</div>
@@ -80,7 +83,7 @@ const statusFilters = PROJECT_STATUS_KEYS.map((key) => {
 					class="category-pill px-3 py-1.5 rounded-full text-sm font-medium transition-colors duration-200"
 					data-active
 				>
-					{i18n(I18nKey.all)}
+					{i18n(I18nKey.all, lang)}
 				</button>
 				{statusFilters.map((s) => (
 					<button
@@ -115,14 +118,14 @@ const statusFilters = PROJECT_STATUS_KEYS.map((key) => {
 		) : (
 			<div class="card-base flex flex-col items-center justify-center py-16 text-neutral-400 dark:text-neutral-500">
 				<Icon name="material-symbols:rocket-launch" class="text-6xl mb-4 opacity-50" />
-				<p class="text-lg">{i18n(I18nKey.projectEmpty)}</p>
+				<p class="text-lg">{i18n(I18nKey.projectEmpty, lang)}</p>
 			</div>
 		)}
 
 		<!-- 筛选无结果空态 -->
 		<div class="projects-empty hidden flex-col items-center justify-center py-12 text-neutral-400 dark:text-neutral-500">
 			<Icon name="material-symbols:search-off-rounded" class="text-4xl mb-3" />
-			<div class="text-sm">{i18n(I18nKey.searchNoResults)}</div>
+			<div class="text-sm">{i18n(I18nKey.searchNoResults, lang)}</div>
 		</div>
 	</section>
 
