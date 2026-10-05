@@ -1,9 +1,19 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const title = "最小的三角形 · Heilbronn 问题游乐场";
-const description =
-	"在正方形里放 n 个点，怎么放才能让任意三点组成的三角形都不太“瘦”？1950 年 Hans Heilbronn 极值几何问题交互式模拟、实时退火算法优化与已知世界纪录。";
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } = Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "The Smallest Triangle · Heilbronn Problem Playground"
+	: "最小的三角形 · Heilbronn 问题游乐场";
+const description = isEn
+	? "Place n points in a unit square such that the smallest triangle has maximum area. Hans Heilbronn's 1950 extremal geometry problem with interactive simulation, real-time simulated annealing optimization, and known world records."
+	: "在正方形里放 n 个点，怎么放才能让任意三点组成的三角形都不太“瘦”？1950 年 Hans Heilbronn 极值几何问题交互式模拟、实时退火算法优化与已知世界纪录。";
 ---
 
 <MainGridLayout title={title} description={description}>
@@ -22,18 +32,26 @@ const description =
 						EXTREMAL GEOMETRY · HEILBRONN PROBLEM
 					</div>
 					<div class="text-xs font-mono text-zinc-300">
-						HN 热议 · 2026-10-04
+						<span class="lang-zh">HN 热议 · 2026-10-04</span>
+						<span class="lang-en">Trending on HN · 2026-10-04</span>
 					</div>
 				</div>
 
 				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-3">
-					最小的三角形
+					<span class="lang-zh">最小的三角形</span>
+					<span class="lang-en">The Smallest Triangle</span>
 				</h1>
 				<p class="text-lg sm:text-xl font-medium text-red-400/90 mb-4 tracking-wide font-mono">
-					Heilbronn 问题 · 点的布局游乐场
+					<span class="lang-zh">Heilbronn 问题 · 点的布局游乐场</span>
+					<span class="lang-en">Heilbronn Problem · Point Configuration Playground</span>
 				</p>
 				<p class="text-sm sm:text-base text-zinc-300/80 max-w-3xl leading-relaxed mb-8">
-					在正方形里放 n 个点，怎么放才能让任意三点组成的三角形都不太"瘦"？1950 年 Hans Heilbronn 提出的问题：最大化所有三点组合中面积最小的那个三角形。n 增大时答案以什么速度衰减，至今仍是未解之谜。
+					<span class="lang-zh">
+						在正方形里放 n 个点，怎么放才能让任意三点组成的三角形都不太"瘦"？1950 年 Hans Heilbronn 提出的问题：最大化所有三点组合中面积最小的那个三角形。n 增大时答案以什么速度衰减，至今仍是未解之谜。
+					</span>
+					<span class="lang-en">
+						How should you place n points inside a unit square so no three points form an excessively "skinny" triangle? Posed by Hans Heilbronn in 1950: maximize the area of the smallest triangle among all triples. The exact rate of decay as n grows remains an unsolved mystery in mathematics.
+					</span>
 				</p>
 
 				<!-- Stats Dashboard Display -->
@@ -41,7 +59,8 @@ const description =
 					<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
 						<div class="flex items-center gap-2">
 							<span class="text-xs font-mono uppercase tracking-widest text-zinc-300">
-								实时几何指标 · REAL-TIME TRIANGLE METRICS
+								<span class="lang-zh">实时几何指标 · REAL-TIME TRIANGLE METRICS</span>
+								<span class="lang-en">Real-Time Triangle Metrics</span>
 							</span>
 						</div>
 						<div id="status-indicator" class="text-[11px] font-mono text-red-400/80 bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/50">
@@ -55,7 +74,10 @@ const description =
 							<div id="stat-min-area" class="stat-digit font-mono text-3xl sm:text-4xl font-black text-red-500 drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]">
 								0.0000
 							</div>
-							<span class="mt-2 text-xs font-mono text-zinc-300">当前最小三角形面积</span>
+							<span class="mt-2 text-xs font-mono text-zinc-300">
+								<span class="lang-zh">当前最小三角形面积</span>
+								<span class="lang-en">Current Min Triangle Area</span>
+							</span>
 							<span class="text-[10px] font-mono text-zinc-400">min Area(Δ)</span>
 						</div>
 
@@ -64,7 +86,10 @@ const description =
 							<div id="stat-session-best" class="stat-digit font-mono text-3xl sm:text-4xl font-black text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.7)]">
 								0.0000
 							</div>
-							<span class="mt-2 text-xs font-mono text-zinc-300">本次会话最优</span>
+							<span class="mt-2 text-xs font-mono text-zinc-300">
+								<span class="lang-zh">本次会话最优</span>
+								<span class="lang-en">Session Best</span>
+							</span>
 							<span class="text-[10px] font-mono text-zinc-400">Session Best</span>
 						</div>
 
@@ -73,20 +98,33 @@ const description =
 							<div id="stat-total-triangles" class="stat-digit font-mono text-3xl sm:text-4xl font-black text-white">
 								56
 							</div>
-							<span class="mt-2 text-xs font-mono text-zinc-300">三角形总数</span>
-							<span class="text-[10px] font-mono text-zinc-400">C(n, 3) 组合数</span>
+							<span class="mt-2 text-xs font-mono text-zinc-300">
+								<span class="lang-zh">三角形总数</span>
+								<span class="lang-en">Total Triangles</span>
+							</span>
+							<span class="text-[10px] font-mono text-zinc-400">
+								<span class="lang-zh">C(n, 3) 组合数</span>
+								<span class="lang-en">C(n, 3) Combinations</span>
+							</span>
 						</div>
 					</div>
 
 					<!-- Benchmark Comparison Note -->
 					<div class="mt-4 pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between text-xs font-mono text-zinc-300 px-2 gap-2">
 						<div class="flex items-center gap-2">
-							<span class="text-zinc-400">当前点数数学已知最优纪录:</span>
+							<span class="text-zinc-400">
+								<span class="lang-zh">当前点数数学已知最优纪录:</span>
+								<span class="lang-en">Known Mathematical Record:</span>
+							</span>
 							<span id="stat-known-best" class="text-red-400 font-bold">0.0724</span>
-							<span id="stat-known-tag" class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300">已证明最优</span>
+							<span id="stat-known-tag" class="text-[10px] px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300">
+								<span class="lang-zh">已证明最优</span>
+								<span class="lang-en">Proven Optimal</span>
+							</span>
 						</div>
 						<div class="text-[11px] text-zinc-400">
-							单位正方形 Area = 1.0000
+							<span class="lang-zh">单位正方形 Area = 1.0000</span>
+							<span class="lang-en">Unit Square Area = 1.0000</span>
 						</div>
 					</div>
 				</div>
@@ -97,17 +135,22 @@ const description =
 				<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
 					<div>
 						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
-							<span class="text-red-500 font-mono text-xl">01/</span> 交互游乐场 (Interactive Arena)
+							<span class="text-red-500 font-mono text-xl">01/</span>
+							<span class="lang-zh">交互游乐场 (Interactive Arena)</span>
+							<span class="lang-en">Interactive Arena</span>
 						</h2>
 						<p class="text-xs sm:text-sm text-zinc-300 mt-1">
-							在单位正方形中自由拖拽点，或启动模拟退火算法让点阵自主寻优。瓶颈最小三角形将以脉冲红光突出显示。
+							<span class="lang-zh">在单位正方形中自由拖拽点，或启动模拟退火算法让点阵自主寻优。瓶颈最小三角形将以脉冲红光突出显示。</span>
+							<span class="lang-en">Drag points freely inside the unit square, or activate simulated annealing to let the constellation optimize autonomously. The bottleneck triangle pulses with red glow.</span>
 						</p>
 					</div>
-
 					<!-- Secondary helpers -->
 					<div class="flex flex-wrap gap-2 text-xs font-mono">
 						<button id="btn-load-best" class="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 hover:border-emerald-500/60 hover:text-white transition active:scale-95 text-zinc-300 flex items-center gap-1.5">
-							<span>⭐ 载入会话最优</span>
+							<span>
+								<span class="lang-zh">⭐ 载入会话最优</span>
+								<span class="lang-en">⭐ Load Session Best</span>
+							</span>
 						</button>
 					</div>
 				</div>
@@ -129,10 +172,14 @@ const description =
 						<div class="w-full max-w-[500px] mt-3 px-2 flex items-center justify-between text-xs font-mono text-zinc-300">
 							<div class="flex items-center gap-1.5">
 								<span class="inline-block w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
-								<span>红色高亮：当前瓶颈最小三角形</span>
+								<span>
+									<span class="lang-zh">红色高亮：当前瓶颈最小三角形</span>
+									<span class="lang-en">Red highlight: Bottleneck minimal triangle</span>
+								</span>
 							</div>
 							<div class="text-[11px] text-zinc-400">
-								支持鼠标与触屏多点拖拽
+								<span class="lang-zh">支持鼠标与触屏多点拖拽</span>
+								<span class="lang-en">Mouse and touch drag supported</span>
 							</div>
 						</div>
 					</div>
@@ -143,7 +190,8 @@ const description =
 						<div class="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800">
 							<div class="flex items-center justify-between mb-3">
 								<label for="slider-n" class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold">
-									点数配置 (Point Count n)
+									<span class="lang-zh">点数配置 (Point Count n)</span>
+									<span class="lang-en">Point Count (n)</span>
 								</label>
 								<div class="flex items-center gap-2">
 									<span class="text-xs font-mono text-zinc-400">n =</span>
@@ -162,21 +210,25 @@ const description =
 							/>
 
 							<div class="flex justify-between text-[10px] font-mono text-zinc-400 mt-2">
-								<span>n = 3 (初阶)</span>
-								<span>n = 8 (推荐)</span>
-								<span>n = 16 (组合爆炸)</span>
+								<span>n = 3 (<span class="lang-zh">初阶</span><span class="lang-en">Basic</span>)</span>
+								<span>n = 8 (<span class="lang-zh">推荐</span><span class="lang-en">Rec</span>)</span>
+								<span>n = 16 (<span class="lang-zh">爆炸</span><span class="lang-en">Max</span>)</span>
 							</div>
 
 							<div class="mt-4 p-2.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-[11px] font-mono text-zinc-300 flex justify-between items-center">
-								<span>当前组合空间 C(n, 3):</span>
-								<span id="calc-comb-text" class="text-white font-bold">56 个三元组</span>
+								<span>
+									<span class="lang-zh">当前组合空间 C(n, 3):</span>
+									<span class="lang-en">Combination Space C(n, 3):</span>
+								</span>
+								<span id="calc-comb-text" class="text-white font-bold">56 triples</span>
 							</div>
 						</div>
 
 						<!-- Action Buttons Card -->
 						<div class="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex flex-col gap-3">
 							<span class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold mb-1">
-								优化与布局动作
+								<span class="lang-zh">优化与布局动作</span>
+								<span class="lang-en">Optimization & Layout Actions</span>
 							</span>
 
 							<!-- Toggle Annealing Button -->
@@ -194,7 +246,10 @@ const description =
 									id="btn-random"
 									class="py-2.5 px-3 rounded-xl bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:text-white transition active:scale-95 text-xs font-mono font-semibold text-zinc-200 flex items-center justify-center gap-1.5"
 								>
-									<span>🎲 随机撒点</span>
+									<span>
+										<span class="lang-zh">🎲 随机撒点</span>
+										<span class="lang-en">🎲 Randomize</span>
+									</span>
 								</button>
 
 								<!-- Reset Circular Button -->
@@ -202,7 +257,10 @@ const description =
 									id="btn-reset"
 									class="py-2.5 px-3 rounded-xl bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:text-white transition active:scale-95 text-xs font-mono font-semibold text-zinc-200 flex items-center justify-center gap-1.5"
 								>
-									<span>🔄 重置 (圆周)</span>
+									<span>
+										<span class="lang-zh">🔄 重置 (圆周)</span>
+										<span class="lang-en">🔄 Reset (Circle)</span>
+									</span>
 								</button>
 							</div>
 
@@ -219,19 +277,29 @@ const description =
 						<!-- Legend Card -->
 						<div class="p-4 rounded-2xl bg-zinc-950/60 border border-zinc-800/80 text-xs font-mono space-y-2 text-zinc-300">
 							<div class="text-[11px] uppercase tracking-wider text-zinc-300 font-semibold mb-1">
-								图例与交互说明
+								<span class="lang-zh">图例与交互说明</span>
+								<span class="lang-en">Legend & Interaction</span>
 							</div>
 							<div class="flex items-center gap-2">
 								<span class="w-3 h-3 rounded-full bg-red-500 border border-white"></span>
-								<span>红色顶点：瓶颈最小三角形角点</span>
+								<span>
+									<span class="lang-zh">红色顶点：瓶颈最小三角形角点</span>
+									<span class="lang-en">Red vertices: Vertices of bottleneck triangle</span>
+								</span>
 							</div>
 							<div class="flex items-center gap-2">
 								<span class="w-2.5 h-2.5 rounded-full bg-zinc-300 border border-zinc-700"></span>
-								<span>灰色顶点：普通散点（均可拖拽调整）</span>
+								<span>
+									<span class="lang-zh">灰色顶点：普通散点（均可拖拽调整）</span>
+									<span class="lang-en">Gray vertices: Freely draggable points</span>
+								</span>
 							</div>
 							<div class="flex items-center gap-2">
 								<span class="w-3 h-3 border border-red-500/60 bg-red-500/20"></span>
-								<span>红色半透明区：面积最小的瓶颈三角形（若并列则全亮）</span>
+								<span>
+									<span class="lang-zh">红色半透明区：面积最小的瓶颈三角形（若并列则全亮）</span>
+									<span class="lang-en">Red shaded area: Minimum area triangle(s)</span>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -241,58 +309,91 @@ const description =
 			<!-- WHY IS IT SO HARD SECTION -->
 			<section class="relative z-10 mb-10 pb-10 border-b border-zinc-800/80">
 				<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2 mb-2">
-					<span class="text-red-500 font-mono text-xl">02/</span> 为什么这么难 (Why It's So Hard)
+					<span class="text-red-500 font-mono text-xl">02/</span>
+					<span class="lang-zh">为什么这么难 (Why It's So Hard)</span>
+					<span class="lang-en">Why It's So Hard</span>
 				</h2>
 				<p class="text-xs sm:text-sm text-zinc-300 mb-6">
-					看似简单的几何摆放，背后是极值几何与组合优化领域的“硬骨头”。
+					<span class="lang-zh">看似简单的几何摆放，背后是极值几何与组合优化领域的“硬骨头”。</span>
+					<span class="lang-en">What seems like simple point-scattering is one of the hardest nuts to crack in extremal geometry and combinatorial optimization.</span>
 				</p>
 
 				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 					<!-- Bullet Card 1 -->
 					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
 						<div>
-							<div class="text-red-400 font-mono text-xs font-bold mb-2">挑战 01</div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">
+								<span class="lang-zh">挑战 01</span>
+								<span class="lang-en">Challenge 01</span>
+							</div>
 							<h3 class="text-base font-bold text-white mb-2">
-								组合爆炸 (Combinatorial Explosion)
+								<span class="lang-zh">组合爆炸 (Combinatorial Explosion)</span>
+								<span class="lang-en">Combinatorial Explosion</span>
 							</h3>
 							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
-								每帧要检查 <span class="text-red-400 font-mono">C(n, 3)</span> 个三角形；当 n 从 8 增长至 16 时，三角形总数从 56 激增至 560。随着点数增加，需全局比对的三元子集呈现三次幂级数膨胀。
+								<span class="lang-zh">
+									每帧要检查 <span class="text-red-400 font-mono">C(n, 3)</span> 个三角形；当 n 从 8 增长至 16 时，三角形总数从 56 激增至 560。随着点数增加，需全局比对的三元子集呈现三次幂级数膨胀。
+								</span>
+								<span class="lang-en">
+									Every frame must evaluate <span class="text-red-400 font-mono">C(n, 3)</span> triangles; as n grows from 8 to 16, combinations surge from 56 to 560. The computational complexity explodes cubically with point count.
+								</span>
 							</p>
 						</div>
 						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
-							瓶颈判定：任意三点接近共线即归零
+							<span class="lang-zh">瓶颈判定：任意三点接近共线即归零</span>
+							<span class="lang-en">Bottleneck: Any three near-collinear points collapse area to zero</span>
 						</div>
 					</div>
 
 					<!-- Bullet Card 2 -->
 					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
 						<div>
-							<div class="text-red-400 font-mono text-xs font-bold mb-2">挑战 02</div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">
+								<span class="lang-zh">挑战 02</span>
+								<span class="lang-en">Challenge 02</span>
+							</div>
 							<h3 class="text-base font-bold text-white mb-2">
-								优化景观布满局部最优 (Rough Landscape)
+								<span class="lang-zh">优化景观布满局部最优 (Rough Landscape)</span>
+								<span class="lang-en">Deceptive Optimization Landscape</span>
 							</h3>
 							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
-								优化景观布满局部最优，贪心很容易卡住；目标函数由 <code class="text-red-300 font-mono">min</code> 算子定义，导数不连续且极度陡峭，微小的局部移动往往导致其他无关三点突变为新的瓶颈。
+								<span class="lang-zh">
+									优化景观布满局部最优，贪心很容易卡住；目标函数由 <code class="text-red-300 font-mono">min</code> 算子定义，导数不连续且极度陡峭，微小的局部移动往往导致其他无关三点突变为新的瓶颈。
+								</span>
+								<span class="lang-en">
+									The objective landscape is riddled with local optima where greedy algorithms get hopelessly trapped. Because the objective uses the <code class="text-red-300 font-mono">min</code> operator, derivatives are non-smooth and discontinuous.
+								</span>
 							</p>
 						</div>
 						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
-							算法机制：以 5% 概率接受劣解跳出陷阱
+							<span class="lang-zh">算法机制：以 5% 概率接受劣解跳出陷阱</span>
+							<span class="lang-en">Mechanism: 5% chance of accepting worse states to escape local minima</span>
 						</div>
 					</div>
 
 					<!-- Bullet Card 3 -->
 					<div class="bg-zinc-950/70 border border-zinc-800/80 rounded-2xl p-5 flex flex-col justify-between">
 						<div>
-							<div class="text-red-400 font-mono text-xs font-bold mb-2">挑战 03</div>
+							<div class="text-red-400 font-mono text-xs font-bold mb-2">
+								<span class="lang-zh">挑战 03</span>
+								<span class="lang-en">Challenge 03</span>
+							</div>
 							<h3 class="text-base font-bold text-white mb-2">
-								极小已知边界 (Sparse Exact Solutions)
+								<span class="lang-zh">极小已知边界 (Sparse Exact Solutions)</span>
+								<span class="lang-en">Few Exact Analytical Solutions</span>
 							</h3>
 							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
-								精确最优解只在很小的 n 已知（正方形 n=9 的最优性 2026 年才被证明），更大的 n 全靠计算机搜索不断刷新纪录。理论渐近衰减阶至今仍未被完全闭合。
+								<span class="lang-zh">
+									精确最优解只在很小的 n 已知（正方形 n=9 的最优性 2026 年才被证明），更大的 n 全靠计算机搜索不断刷新纪录。理论渐近衰减阶至今仍未被完全闭合。
+								</span>
+								<span class="lang-en">
+									Exact optimal solutions are proven for only a handful of small n (n=9 was strictly proven only in 2026!). Larger n rely entirely on distributed heuristic searches.
+								</span>
 							</p>
 						</div>
 						<div class="pt-3 border-t border-zinc-800/60 text-[11px] font-mono text-zinc-400">
-							数学前沿：n=9 刚于 2026 得到严格证明
+							<span class="lang-zh">数学前沿：n=9 刚于 2026 得到严格证明</span>
+							<span class="lang-en">Frontier: n=9 rigorously proven only in 2026</span>
 						</div>
 					</div>
 				</div>
@@ -301,10 +402,13 @@ const description =
 			<!-- CREDIT & BENCHMARK SECTION -->
 			<section class="relative z-10 mb-8 pb-8">
 				<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2 mb-2">
-					<span class="text-red-500 font-mono text-xl">03/</span> 灵感来源与参考纪录 (Credits & Benchmark)
+					<span class="text-red-500 font-mono text-xl">03/</span>
+					<span class="lang-zh">灵感来源与参考纪录 (Credits & Benchmark)</span>
+					<span class="lang-en">Credits & Benchmarks</span>
 				</h2>
 				<p class="text-xs sm:text-sm text-zinc-300 mb-6">
-					站在数学家与分布式计算探索者的肩膀上。
+					<span class="lang-zh">站在数学家与分布式计算探索者的肩膀上。</span>
+					<span class="lang-en">Standing on the shoulders of mathematicians and distributed computation pioneers.</span>
 				</p>
 
 				<!-- Benchmark Table + External Link Card -->
@@ -312,68 +416,134 @@ const description =
 					<!-- Leaderboard Card -->
 					<div class="lg:col-span-2 p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800">
 						<div class="text-xs font-mono uppercase tracking-wider text-zinc-300 font-semibold mb-3 flex items-center justify-between">
-							<span>单位正方形已知数学最优解一览表 (n = 3 ~ 10)</span>
-							<span class="text-red-400 text-[11px]">Δ 标记表示严格证明</span>
+							<span>
+								<span class="lang-zh">单位正方形已知数学最优解一览表 (n = 3 ~ 10)</span>
+								<span class="lang-en">Known Mathematical Optimal Solutions in Unit Square (n = 3 ~ 10)</span>
+							</span>
+							<span class="text-red-400 text-[11px]">
+								<span class="lang-zh">Δ 标记表示严格证明</span>
+								<span class="lang-en">Δ denotes rigorous proof</span>
+							</span>
 						</div>
 
 						<div class="overflow-x-auto">
 							<table class="w-full text-xs font-mono text-left">
 								<thead>
 									<tr class="border-b border-zinc-800 text-zinc-400">
-										<th class="py-2 px-3">点数 n</th>
-										<th class="py-2 px-3">最小面积 Δ(n)</th>
-										<th class="py-2 px-3">状态</th>
-										<th class="py-2 px-3">几何构型特征</th>
+										<th class="py-2 px-3">
+											<span class="lang-zh">点数 n</span>
+											<span class="lang-en">Points n</span>
+										</th>
+										<th class="py-2 px-3">
+											<span class="lang-zh">最小面积 Δ(n)</span>
+											<span class="lang-en">Min Area Δ(n)</span>
+										</th>
+										<th class="py-2 px-3">
+											<span class="lang-zh">状态</span>
+											<span class="lang-en">Status</span>
+										</th>
+										<th class="py-2 px-3">
+											<span class="lang-zh">几何构型特征</span>
+											<span class="lang-en">Geometry Configuration</span>
+										</th>
 									</tr>
 								</thead>
 								<tbody class="divide-y divide-zinc-800/60 text-zinc-300">
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 3</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.500000</td>
-										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
-										<td class="py-2 px-3 text-zinc-400">正方形任意 3 个角点</td>
+										<td class="py-2 px-3 text-emerald-400">
+											<span class="lang-zh">严格最优 Δ</span>
+											<span class="lang-en">Proven Optimal Δ</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">正方形任意 3 个角点</span>
+											<span class="lang-en">Any 3 corners of unit square</span>
+										</td>
 									</tr>
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 4</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.500000</td>
-										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
-										<td class="py-2 px-3 text-zinc-400">正方形 4 个角点</td>
+										<td class="py-2 px-3 text-emerald-400">
+											<span class="lang-zh">严格最优 Δ</span>
+											<span class="lang-en">Proven Optimal Δ</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">正方形 4 个角点</span>
+											<span class="lang-en">4 corners of unit square</span>
+										</td>
 									</tr>
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 5</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.192450</td>
-										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
-										<td class="py-2 px-3 text-zinc-400">凸五边形变体</td>
+										<td class="py-2 px-3 text-emerald-400">
+											<span class="lang-zh">严格最优 Δ</span>
+											<span class="lang-en">Proven Optimal Δ</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">凸五边形变体</span>
+											<span class="lang-en">Convex pentagon variation</span>
+										</td>
 									</tr>
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 6</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.125000</td>
-										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
-										<td class="py-2 px-3 text-zinc-400">1/8 面积对称布局</td>
+										<td class="py-2 px-3 text-emerald-400">
+											<span class="lang-zh">严格最优 Δ</span>
+											<span class="lang-en">Proven Optimal Δ</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">1/8 面积对称布局</span>
+											<span class="lang-en">1/8 area symmetric layout</span>
+										</td>
 									</tr>
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 7</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.083859</td>
-										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
-										<td class="py-2 px-3 text-zinc-400">多边界吸附点</td>
+										<td class="py-2 px-3 text-emerald-400">
+											<span class="lang-zh">严格最优 Δ</span>
+											<span class="lang-en">Proven Optimal Δ</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">多边界吸附点</span>
+											<span class="lang-en">Boundary-adhering points</span>
+										</td>
 									</tr>
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 8</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.072376</td>
-										<td class="py-2 px-3 text-emerald-400">严格最优 Δ</td>
-										<td class="py-2 px-3 text-zinc-400">非均匀环形分散</td>
+										<td class="py-2 px-3 text-emerald-400">
+											<span class="lang-zh">严格最优 Δ</span>
+											<span class="lang-en">Proven Optimal Δ</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">非均匀环形分散</span>
+											<span class="lang-en">Non-uniform annular dispersion</span>
+										</td>
 									</tr>
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 9</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.054876</td>
-										<td class="py-2 px-3 text-emerald-400">严格最优 Δ (2026)</td>
-										<td class="py-2 px-3 text-zinc-400">2026 最新严格数学证明</td>
+										<td class="py-2 px-3 text-emerald-400">
+											<span class="lang-zh">严格最优 Δ (2026)</span>
+											<span class="lang-en">Proven Optimal Δ (2026)</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">2026 最新严格数学证明</span>
+											<span class="lang-en">Strictly proven in 2026</span>
+										</td>
 									</tr>
 									<tr class="hover:bg-zinc-900/50">
 										<td class="py-2 px-3 font-bold text-white">n = 10</td>
 										<td class="py-2 px-3 text-red-400 font-bold">0.046537</td>
-										<td class="py-2 px-3 text-amber-400">计算机搜索纪录</td>
-										<td class="py-2 px-3 text-zinc-400">记录保持中</td>
+										<td class="py-2 px-3 text-amber-400">
+											<span class="lang-zh">计算机搜索纪录</span>
+											<span class="lang-en">Search Record</span>
+										</td>
+										<td class="py-2 px-3 text-zinc-400">
+											<span class="lang-zh">记录保持中</span>
+											<span class="lang-en">Standing record</span>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -385,10 +555,16 @@ const description =
 						<div>
 							<div class="text-red-400 font-mono text-xs font-bold mb-2">COMMUNITY & SOURCE</div>
 							<h3 class="text-base font-bold text-white mb-2">
-								Tej Stead 纪录榜与讨论
+								<span class="lang-zh">Tej Stead 纪录榜与讨论</span>
+								<span class="lang-en">Tej Stead Benchmark & Records</span>
 							</h3>
 							<p class="text-xs text-zinc-300/80 leading-relaxed mb-4">
-								灵感来自 2026-10-04 Hacker News 首页讨论。已知最优布局与纪录榜见 Tej Stead 的 Heilbronn 跟踪项目，提供各凸多边形下高精度坐标集与验证工具。
+								<span class="lang-zh">
+									灵感来自 2026-10-04 Hacker News 首页讨论。已知最优布局与纪录榜见 Tej Stead 的 Heilbronn 跟踪项目，提供各凸多边形下高精度坐标集与验证工具。
+								</span>
+								<span class="lang-en">
+									Inspired by the October 4, 2026 Hacker News front-page discussion. For global records and verified coordinates across convex hulls, see Tej Stead's Heilbronn tracking project.
+								</span>
 							</p>
 						</div>
 
@@ -399,7 +575,10 @@ const description =
 								rel="noopener noreferrer"
 								class="inline-flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-red-500/60 text-zinc-200 hover:text-white transition font-mono text-xs font-semibold"
 							>
-								<span>访问 Tej Stead 纪录榜</span>
+								<span>
+									<span class="lang-zh">访问 Tej Stead 纪录榜</span>
+									<span class="lang-en">Visit Tej Stead Benchmark</span>
+								</span>
 								<span class="text-red-400">↗</span>
 							</a>
 							<div class="text-[11px] font-mono text-zinc-400 text-center">
@@ -413,7 +592,8 @@ const description =
 			<!-- FOOTER -->
 			<hr class="my-6 border-zinc-800" />
 			<blockquote class="text-xs opacity-50 border-l-2 border-red-500/40 pl-3 py-1 my-4 italic">
-				<em>本文由 AI 生成。</em>
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
 			</blockquote>
 		</div>
 	</div>
@@ -430,22 +610,27 @@ const description =
 		// Vanilla JavaScript (No TypeScript-only syntax in client bundle)
 		// ==========================================
 
+		const isEn = () =>
+			document.documentElement.lang === "en" ||
+			location.pathname.startsWith("/en") ||
+			document.documentElement.getAttribute("data-lang") === "en";
+
 		// Benchmark values for unit square
 		const BENCHMARK_MAP = {
-			3: { val: 0.5000, tag: "严格最优 Δ", proven: true },
-			4: { val: 0.5000, tag: "严格最优 Δ", proven: true },
-			5: { val: 0.1925, tag: "严格最优 Δ", proven: true },
-			6: { val: 0.1250, tag: "严格最优 Δ", proven: true },
-			7: { val: 0.0839, tag: "严格最优 Δ", proven: true },
-			8: { val: 0.0724, tag: "严格最优 Δ", proven: true },
-			9: { val: 0.0549, tag: "严格最优 Δ (2026)", proven: true },
-			10: { val: 0.0465, tag: "搜索纪录", proven: false },
-			11: { val: 0.0381, tag: "搜索纪录", proven: false },
-			12: { val: 0.0336, tag: "搜索纪录", proven: false },
-			13: { val: 0.0292, tag: "搜索纪录", proven: false },
-			14: { val: 0.0261, tag: "搜索纪录", proven: false },
-			15: { val: 0.0233, tag: "搜索纪录", proven: false },
-			16: { val: 0.0210, tag: "搜索纪录", proven: false }
+			3: { val: 0.5000, tag: "严格最优 Δ", tag_en: "Proven Optimal Δ", proven: true },
+			4: { val: 0.5000, tag: "严格最优 Δ", tag_en: "Proven Optimal Δ", proven: true },
+			5: { val: 0.1925, tag: "严格最优 Δ", tag_en: "Proven Optimal Δ", proven: true },
+			6: { val: 0.1250, tag: "严格最优 Δ", tag_en: "Proven Optimal Δ", proven: true },
+			7: { val: 0.0839, tag: "严格最优 Δ", tag_en: "Proven Optimal Δ", proven: true },
+			8: { val: 0.0724, tag: "严格最优 Δ", tag_en: "Proven Optimal Δ", proven: true },
+			9: { val: 0.0549, tag: "严格最优 Δ (2026)", tag_en: "Proven Optimal Δ (2026)", proven: true },
+			10: { val: 0.0465, tag: "搜索纪录", tag_en: "Search Record", proven: false },
+			11: { val: 0.0381, tag: "搜索纪录", tag_en: "Search Record", proven: false },
+			12: { val: 0.0336, tag: "搜索纪录", tag_en: "Search Record", proven: false },
+			13: { val: 0.0292, tag: "搜索纪录", tag_en: "Search Record", proven: false },
+			14: { val: 0.0261, tag: "搜索纪录", tag_en: "Search Record", proven: false },
+			15: { val: 0.0233, tag: "搜索纪录", tag_en: "Search Record", proven: false },
+			16: { val: 0.0210, tag: "搜索纪录", tag_en: "Search Record", proven: false }
 		};
 
 		// Lifecycle state
@@ -624,13 +809,13 @@ const description =
 
 				const totalComb = combinations3(currentN);
 				if (statTotalTriangles) statTotalTriangles.textContent = String(totalComb);
-				if (calcCombText) calcCombText.textContent = totalComb + " 个三元组";
+				if (calcCombText) calcCombText.textContent = totalComb + (isEn() ? " triples" : " 个三元组");
 
 				const bench = BENCHMARK_MAP[currentN];
 				if (bench) {
 					if (statKnownBest) statKnownBest.textContent = bench.val.toFixed(4);
 					if (statKnownTag) {
-						statKnownTag.textContent = bench.tag;
+						statKnownTag.textContent = isEn() ? bench.tag_en : bench.tag;
 						statKnownTag.className = bench.proven
 							? "text-[10px] px-1.5 py-0.5 rounded bg-emerald-950/60 border border-emerald-800 text-emerald-300"
 							: "text-[10px] px-1.5 py-0.5 rounded bg-amber-950/60 border border-amber-800 text-amber-300";
@@ -643,20 +828,20 @@ const description =
 				if (!btnAnneal || !annealBtnText || !annealIcon || !annealLiveDot || !annealRateText) return;
 				if (isAnnealing) {
 					btnAnneal.className = "w-full py-3.5 px-4 rounded-xl bg-amber-600 hover:bg-amber-500 active:scale-95 text-white font-mono font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(217,119,6,0.6)] transition flex items-center justify-center gap-2.5 animate-pulse";
-					annealBtnText.textContent = "停止优化 (Pause Annealing)";
+					annealBtnText.textContent = isEn() ? "Pause Annealing" : "停止优化 (Pause Annealing)";
 					annealIcon.textContent = "⏸️";
 					annealLiveDot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-ping";
-					annealRateText.textContent = "正在模拟退火搜索中 (~30 步/秒)";
+					annealRateText.textContent = isEn() ? "Annealing search active (~30 moves/s)" : "正在模拟退火搜索中 (~30 步/秒)";
 					if (statusIndicator) {
 						statusIndicator.textContent = "ANNEALING SEARCHING";
 						statusIndicator.className = "text-[11px] font-mono text-amber-400 bg-amber-950/60 px-2.5 py-0.5 rounded border border-amber-900/80";
 					}
 				} else {
 					btnAnneal.className = "w-full py-3.5 px-4 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(239,68,68,0.4)] transition flex items-center justify-center gap-2.5";
-					annealBtnText.textContent = "退火优化 (Simulated Annealing)";
+					annealBtnText.textContent = isEn() ? "Simulated Annealing" : "退火优化 (Simulated Annealing)";
 					annealIcon.textContent = "🔥";
 					annealLiveDot.className = "w-2 h-2 rounded-full bg-zinc-500";
-					annealRateText.textContent = "退火引擎已就绪 (~30 步/秒)";
+					annealRateText.textContent = isEn() ? "Annealing engine ready (~30 moves/s)" : "退火引擎已就绪 (~30 步/秒)";
 					if (statusIndicator) {
 						statusIndicator.textContent = "INTERACTIVE READY";
 						statusIndicator.className = "text-[11px] font-mono text-red-400/80 bg-red-950/40 px-2.5 py-0.5 rounded border border-red-900/50";
@@ -913,7 +1098,7 @@ const description =
 					}
 
 					if (annealStepsCounter) {
-						annealStepsCounter.textContent = annealStepCount + " 次尝试";
+						annealStepsCounter.textContent = annealStepCount + (isEn() ? " attempts" : " 次尝试");
 					}
 				}
 			}
@@ -1061,18 +1246,23 @@ const description =
 					const bestPts = sessionBestPointsPerN[currentN];
 					if (bestPts && bestPts.length === currentN) {
 						points = bestPts.map(function(p) { return { u: p.u, v: p.v }; });
-						btnLoadBest.textContent = "已恢复最优 ✓";
+						btnLoadBest.textContent = isEn() ? "Restored Best ✓" : "已恢复最优 ✓";
 						setTimeout(function() {
-							btnLoadBest.textContent = "⭐ 载入会话最优";
+							btnLoadBest.textContent = isEn() ? "⭐ Load Session Best" : "⭐ 载入会话最优";
 						}, 1500);
 					} else {
-						btnLoadBest.textContent = "当前已是最优";
+						btnLoadBest.textContent = isEn() ? "Already at Best" : "当前已是最优";
 						setTimeout(function() {
-							btnLoadBest.textContent = "⭐ 载入会话最优";
+							btnLoadBest.textContent = isEn() ? "⭐ Load Session Best" : "⭐ 载入会话最优";
 						}, 1200);
 					}
 				});
 			}
+
+			window.addEventListener("lang-change", function() {
+				updateMetricsUI(evaluateLayout(points));
+				updateAnnealingButtonState();
+			});
 		}
 
 		// Initial start and Astro page transition support
