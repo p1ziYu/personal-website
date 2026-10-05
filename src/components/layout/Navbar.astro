@@ -211,7 +211,7 @@ const logoVariants = await Promise.all(
                     client:load
                 />
                 {musicPlayerConfig.showInNavbar && (
-                    <button aria-label={i18n(I18nKey.music)} aria-controls="music-nav-panel" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="music-player-switch">
+                    <button aria-label={i18n(I18nKey.music)} aria-controls="music-nav-panel" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" data-label-zh={i18n(I18nKey.music, "zh_CN")} data-label-en={i18n(I18nKey.music, "en")} id="music-player-switch">
                         <Icon name="material-symbols:music-note-rounded" class="text-[1.25rem]"></Icon>
                     </button>
                 )}
@@ -219,7 +219,7 @@ const logoVariants = await Promise.all(
                     <button
                         aria-label={i18n(I18nKey.videoPlay)}
 						class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90 hidden md:flex"
-                        id="bg-player-toggle"
+                        data-label-zh={i18n(I18nKey.videoPlay, "zh_CN")} data-label-en={i18n(I18nKey.videoPlay, "en")} id="bg-player-toggle"
                         data-i18n-play={i18n(I18nKey.videoPlay)}
                         data-i18n-pause={i18n(I18nKey.videoPause)}
                     >
@@ -228,14 +228,14 @@ const logoVariants = await Promise.all(
                     </button>
                 )}
                 {hasDisplaySettings && (
-                        <button aria-label="Display Settings" aria-controls="display-setting" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="display-settings-switch">
+                        <button aria-label={i18n(I18nKey.displaySettings, isEn ? "en" : "zh_CN")} aria-controls="display-setting" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" data-label-zh={i18n(I18nKey.displaySettings, "zh_CN")} data-label-en={i18n(I18nKey.displaySettings, "en")} id="display-settings-switch">
                             <Icon name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
                         </button>
                 )}
                 <LanguageSwitch client:load initialIsEn={isEn} initialHasEn={hasEnVersion}></LanguageSwitch>
                 {/* @ts-ignore */}
                 <LightDarkSwitch client:load lang={isEn ? "en" : "zh_CN"}></LightDarkSwitch>
-                <button aria-label="Menu" aria-controls="nav-menu-panel" aria-expanded="false" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 lg:hidden!" id="nav-menu-switch">
+                <button aria-label={i18n(I18nKey.navigationMenu, isEn ? "en" : "zh_CN")} aria-controls="nav-menu-panel" aria-expanded="false" name={i18n(I18nKey.navigationMenu, isEn ? "en" : "zh_CN")} class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 lg:hidden!" data-label-zh={i18n(I18nKey.navigationMenu, "zh_CN")} data-label-en={i18n(I18nKey.navigationMenu, "en")} id="nav-menu-switch">
                     <Icon name="material-symbols:menu-rounded" class="text-[1.25rem]"></Icon>
                 </button>
             </div>
@@ -248,6 +248,22 @@ const logoVariants = await Promise.all(
         {isDisplaySettingsEnabled && <DisplaySettings client:load lang={isEn ? "en" : "zh_CN"}></DisplaySettings>}
     </div>
 </div>
+
+<script is:inline>
+  function syncNavbarLabels() {
+    const isEnglish = location.pathname === "/en" || location.pathname.startsWith("/en/");
+    document.querySelectorAll("#navbar [data-label-zh][data-label-en]").forEach((node) => {
+      const label = node.getAttribute(isEnglish ? "data-label-en" : "data-label-zh");
+      if (label) {
+        node.setAttribute("aria-label", label);
+        if (node.hasAttribute("name")) node.setAttribute("name", label);
+      }
+    });
+  }
+  syncNavbarLabels();
+  document.addEventListener("swup:contentReplaced", syncNavbarLabels);
+  window.addEventListener("lang-change", syncNavbarLabels);
+</script>
 
 <script>
 function loadButtonScript() {
