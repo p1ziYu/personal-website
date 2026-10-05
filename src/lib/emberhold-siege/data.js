@@ -5,6 +5,7 @@ export const HEIGHT = 576;
 export const TOWERS = {
 	arrow: {
 		name: "箭塔",
+		name_en: "Arrow Tower",
 		icon: "➶",
 		color: "#d5c48b",
 		cost: 65,
@@ -13,9 +14,11 @@ export const TOWERS = {
 		interval: [0.64, 0.53, 0.43],
 		upgrades: [80, 135],
 		description: "迅捷连射，优先攻击最接近核心的敌人。",
+		description_en: "Rapid volleys, prioritizing enemies closest to the core.",
 	},
 	cannon: {
 		name: "炮塔",
+		name_en: "Cannon",
 		icon: "◉",
 		color: "#f19a66",
 		cost: 110,
@@ -24,9 +27,11 @@ export const TOWERS = {
 		interval: [1.9, 1.7, 1.5],
 		upgrades: [125, 190],
 		description: "爆炸波及周围敌人，克制虫群与密集队列。",
+		description_en: "Area-of-effect blasts that decimate swarms and dense lines.",
 	},
 	frost: {
 		name: "寒冰塔",
+		name_en: "Frost Spire",
 		icon: "❄",
 		color: "#80d7eb",
 		cost: 95,
@@ -35,9 +40,11 @@ export const TOWERS = {
 		interval: [1.15, 1, 0.85],
 		upgrades: [110, 170],
 		description: "冰环同时击中范围内敌军，减速 40% / 48% / 56%。",
+		description_en: "Radial frost pulses slowing all nearby enemies by 40% / 48% / 56%.",
 	},
 	sniper: {
 		name: "狙击塔",
+		name_en: "Sniper Tower",
 		icon: "⌖",
 		color: "#c4a2f3",
 		cost: 155,
@@ -46,9 +53,11 @@ export const TOWERS = {
 		interval: [3.3, 3, 2.7],
 		upgrades: [175, 260],
 		description: "超远距离精准穿甲，护盾伤害额外提高 50%。",
+		description_en: "Extreme-range piercing rounds dealing +50% bonus damage to shields.",
 	},
 	mint: {
 		name: "金矿塔",
+		name_en: "Gold Mine",
 		icon: "◇",
 		color: "#ecc15e",
 		cost: 100,
@@ -58,11 +67,13 @@ export const TOWERS = {
 		income: [14, 23, 36],
 		upgrades: [120, 180],
 		description: "战斗中定时产出金币。尽早投资，积累后期优势。",
+		description_en: "Produces gold periodically in combat. Invest early to build an advantage.",
 	},
 };
 export const ENEMIES = {
 	grunt: {
 		name: "灰烬兵",
+		name_en: "Ashen Grunt",
 		hp: 55,
 		speed: 39,
 		gold: 9,
@@ -71,6 +82,7 @@ export const ENEMIES = {
 	},
 	runner: {
 		name: "疾行兽",
+		name_en: "Sprinter Beast",
 		hp: 39,
 		speed: 72,
 		gold: 10,
@@ -79,6 +91,7 @@ export const ENEMIES = {
 	},
 	tank: {
 		name: "重甲卫",
+		name_en: "Armored Juggernaut",
 		hp: 185,
 		speed: 26,
 		gold: 20,
@@ -87,6 +100,7 @@ export const ENEMIES = {
 	},
 	swarm: {
 		name: "蚀火虫",
+		name_en: "Blight Crawler",
 		hp: 25,
 		speed: 53,
 		gold: 5,
@@ -95,6 +109,7 @@ export const ENEMIES = {
 	},
 	healer: {
 		name: "祈火者",
+		name_en: "Pyre Cleric",
 		hp: 105,
 		speed: 34,
 		gold: 19,
@@ -103,6 +118,7 @@ export const ENEMIES = {
 	},
 	shield: {
 		name: "盾焰卫",
+		name_en: "Flame Sentinel",
 		hp: 120,
 		speed: 37,
 		gold: 18,
@@ -112,6 +128,7 @@ export const ENEMIES = {
 	},
 	boss: {
 		name: "余烬领主",
+		name_en: "Ember Lord",
 		hp: 1700,
 		speed: 22,
 		gold: 150,
@@ -216,8 +233,26 @@ const names = [
 	"最后的长夜",
 	"余烬之王",
 ];
+const names_en = [
+	"Mist Walkers",
+	"Fleet Shadows",
+	"The Swarm Stirs",
+	"Iron March",
+	"The First Lord",
+	"Azure Barrier",
+	"Pyre Invocation",
+	"Three-Pronged Blitz",
+	"Steel Torrent",
+	"Forge Tyrant",
+	"Gale Siege",
+	"Chitin Symphony",
+	"The Undying Legion",
+	"The Final Night",
+	"Lord of Embers",
+];
 export const WAVES = formations.map((composition, i) => ({
 	name: names[i],
+	name_en: names_en[i],
 	composition,
 	hp: 1 + i * 0.145,
 	speed: 1 + i * 0.018,
@@ -233,6 +268,16 @@ export const WAVES = formations.map((composition, i) => ({
 					: i % 5 === 4
 						? "领主来袭：漏防损失 5 点核心耐久"
 						: "守住三条进攻路线",
+	modifier_en:
+		i === 7
+			? "Blitz: Movement speed +15%"
+			: i === 11
+				? "Swarm: Spawn interval reduced by 25%"
+				: i === 13
+					? "Bulwark: Shield capacity +35%"
+					: i % 5 === 4
+						? "Lord Approaches: Leaking costs 5 Core Health"
+						: "Hold the three invasion routes",
 }));
 export function waveQueue(index) {
 	const counts = { ...WAVES[index].composition };
