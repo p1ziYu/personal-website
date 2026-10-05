@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 
 export interface Props {
 	playerUrl: string | string[];
@@ -13,10 +13,11 @@ const { playerUrl, playerMode = "order" } = Astro.props;
 const urls = Array.isArray(playerUrl) ? playerUrl : [playerUrl];
 const hasMultiple = urls.length > 1;
 const urlsJson = JSON.stringify(urls);
+const uiLang = getLangFromPath(Astro.url.pathname);
 
-const tPrev = i18n(I18nKey.videoPrev);
-const tNext = i18n(I18nKey.videoNext);
-const tLoadError = i18n(I18nKey.videoLoadError);
+const tPrev = i18n(I18nKey.videoPrev, uiLang);
+const tNext = i18n(I18nKey.videoNext, uiLang);
+const tLoadError = i18n(I18nKey.videoLoadError, uiLang);
 ---
 
 {
