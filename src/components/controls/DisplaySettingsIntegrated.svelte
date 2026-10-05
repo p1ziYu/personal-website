@@ -236,19 +236,19 @@ let visibleTabs = $derived.by(() => {
 		tabs.push({
 			key: "appearance",
 			icon: "material-symbols:palette",
-			label: i18n(I18nKey.settingsTabAppearance),
+			label: i18n(I18nKey.settingsTabAppearance, uiLang),
 		});
 	if (hasWallpaperTab)
 		tabs.push({
 			key: "wallpaper",
 			icon: "material-symbols:wallpaper",
-			label: i18n(I18nKey.settingsTabWallpaper),
+			label: i18n(I18nKey.settingsTabWallpaper, uiLang),
 		});
 	if (hasEffectsTab)
 		tabs.push({
 			key: "effects",
 			icon: "mdi:flower-poppy",
-			label: i18n(I18nKey.settingsTabEffects),
+			label: i18n(I18nKey.settingsTabEffects, uiLang),
 		});
 	return tabs;
 });
@@ -280,9 +280,9 @@ let overlaySliderItems = $derived<OverlaySliderItem[]>([
 		// 全屏壁纸模式不需要背景透明度，隐藏该滑块（仍显示模糊与卡片透明度）
 		enabled:
 			isOverlayOpacitySwitchable && wallpaperMode !== WALLPAPER_FULLSCREEN,
-		label: i18n(I18nKey.overlayOpacity),
+		label: i18n(I18nKey.overlayOpacity, uiLang),
 		displayValue: `${Math.round(overlayOpacity * 100)}%`,
-		ariaLabel: i18n(I18nKey.overlayOpacity),
+		ariaLabel: i18n(I18nKey.overlayOpacity, uiLang),
 		min: 20,
 		max: 100,
 		step: 1,
@@ -297,9 +297,9 @@ let overlaySliderItems = $derived<OverlaySliderItem[]>([
 		enabled:
 			isOverlayBlurSwitchable &&
 			!(wallpaperMode === WALLPAPER_FULLSCREEN && !isFullscreenBlurRampEnabled),
-		label: i18n(I18nKey.overlayBlur),
+		label: i18n(I18nKey.overlayBlur, uiLang),
 		displayValue: `${overlayBlur.toFixed(1)}px`,
-		ariaLabel: i18n(I18nKey.overlayBlur),
+		ariaLabel: i18n(I18nKey.overlayBlur, uiLang),
 		min: 0,
 		max: 20,
 		step: 0.5,
@@ -311,9 +311,9 @@ let overlaySliderItems = $derived<OverlaySliderItem[]>([
 	{
 		key: "cardOpacity",
 		enabled: isOverlayCardOpacitySwitchable,
-		label: i18n(I18nKey.overlayCardOpacity),
+		label: i18n(I18nKey.overlayCardOpacity, uiLang),
 		displayValue: `${Math.round(overlayCardOpacity * 100)}%`,
-		ariaLabel: i18n(I18nKey.overlayCardOpacity),
+		ariaLabel: i18n(I18nKey.overlayCardOpacity, uiLang),
 		min: 20,
 		max: 100,
 		step: 1,
@@ -697,7 +697,7 @@ $effect(() => {
 		<div class="">
 			<div class="section-title">
 				{i18n(I18nKey.themeColor, uiLang)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={hue === defaultHue} class:pointer-events-none={hue === defaultHue}
 						disabled={hue === defaultHue} aria-hidden={hue === defaultHue ? "true" : undefined} onclick={resetHue}>
 					<div class="text-(--btn-content)">
@@ -721,7 +721,7 @@ $effect(() => {
 		<div class="">
 			<div class="section-title">
 				{i18n(I18nKey.postListLayout, uiLang)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={currentLayout === effectiveDefaultLayout} class:pointer-events-none={currentLayout === effectiveDefaultLayout}
 						disabled={currentLayout === effectiveDefaultLayout} aria-hidden={currentLayout === effectiveDefaultLayout ? "true" : undefined} onclick={resetLayout}>
 					<div class="text-(--btn-content)">
@@ -766,8 +766,8 @@ $effect(() => {
 		{#if isCardBorderSwitchable || isCardFollowThemeSwitchable}
 		<div>
 			<div class="section-title">
-				{i18n(I18nKey.cardSettings)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				{i18n(I18nKey.cardSettings, uiLang)}
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={cardSettingsIsDefault} class:pointer-events-none={cardSettingsIsDefault}
 						disabled={cardSettingsIsDefault} aria-hidden={cardSettingsIsDefault ? "true" : undefined} onclick={resetCardSettings}>
 					<div class="text-(--btn-content)">
@@ -783,7 +783,7 @@ $effect(() => {
 					onclick={toggleCardBorderEnabled}
 				>
 					<Icon icon="material-symbols:border-outer-rounded" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-sm flex-1">{i18n(I18nKey.cardBorder)}</span>
+					<span class="text-sm flex-1">{i18n(I18nKey.cardBorder, uiLang)}</span>
 					<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
 						 class:bg-(--primary)={cardBorderEnabled}
 						 class:bg-(--btn-regular-bg-active)={!cardBorderEnabled}>
@@ -800,7 +800,7 @@ $effect(() => {
 					onclick={toggleCardFollowThemeEnabled}
 				>
 					<Icon icon="material-symbols:palette" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-sm flex-1">{i18n(I18nKey.cardFollowTheme)}</span>
+					<span class="text-sm flex-1">{i18n(I18nKey.cardFollowTheme, uiLang)}</span>
 					<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
 						 class:bg-(--primary)={cardFollowThemeEnabled}
 						 class:bg-(--btn-regular-bg-active)={!cardFollowThemeEnabled}>
@@ -821,8 +821,8 @@ $effect(() => {
 		{#if isWallpaperSwitchable}
 		<div>
 			<div class="section-title">
-				{i18n(I18nKey.wallpaperMode)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				{i18n(I18nKey.wallpaperMode, uiLang)}
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={wallpaperMode === defaultWallpaperMode} class:pointer-events-none={wallpaperMode === defaultWallpaperMode}
 						disabled={wallpaperMode === defaultWallpaperMode} aria-hidden={wallpaperMode === defaultWallpaperMode ? "true" : undefined} onclick={resetWallpaperMode}>
 					<div class="text-(--btn-content)">
@@ -838,7 +838,7 @@ $effect(() => {
 					onclick={() => switchWallpaperMode(WALLPAPER_BANNER)}
 				>
 					<Icon icon="material-symbols:image-outline" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperBannerMode)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperBannerMode, uiLang)}</span>
 				</button>
 				<button
 					class="btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
@@ -847,7 +847,7 @@ $effect(() => {
 					onclick={() => switchWallpaperMode(WALLPAPER_FULLSCREEN)}
 				>
 					<Icon icon="material-symbols:wallpaper" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperFullscreenMode)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperFullscreenMode, uiLang)}</span>
 				</button>
 				<button
 					class="btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
@@ -856,7 +856,7 @@ $effect(() => {
 					onclick={() => switchWallpaperMode(WALLPAPER_OVERLAY)}
 				>
 					<Icon icon="material-symbols:full-coverage-outline-rounded" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperOverlayMode)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperOverlayMode, uiLang)}</span>
 				</button>
 				<button
 					class="btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
@@ -865,7 +865,7 @@ $effect(() => {
 					onclick={() => switchWallpaperMode(WALLPAPER_NONE)}
 				>
 					<Icon icon="material-symbols:hide-image-outline" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperNoneMode)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.wallpaperNoneMode, uiLang)}</span>
 				</button>
 			</div>
 		</div>
@@ -875,8 +875,8 @@ $effect(() => {
 		{#if isFullscreenLayoutSwitchable}
 		<div>
 			<div class="section-title">
-				{i18n(I18nKey.fullscreenLayout)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				{i18n(I18nKey.fullscreenLayout, uiLang)}
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={fullscreenLayout === defaultFullscreenLayout} class:pointer-events-none={fullscreenLayout === defaultFullscreenLayout}
 						disabled={fullscreenLayout === defaultFullscreenLayout} aria-hidden={fullscreenLayout === defaultFullscreenLayout ? "true" : undefined} onclick={resetFullscreenLayout}>
 					<div class="text-(--btn-content)">
@@ -892,7 +892,7 @@ $effect(() => {
 					onclick={() => switchFullscreenLayout("classic")}
 				>
 					<Icon icon="material-symbols:view-day-outline" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-xs font-medium">{i18n(I18nKey.fullscreenClassicLayout)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.fullscreenClassicLayout, uiLang)}</span>
 				</button>
 				<button
 					class="btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
@@ -901,7 +901,7 @@ $effect(() => {
 					onclick={() => switchFullscreenLayout("hero")}
 				>
 					<Icon icon="material-symbols:desktop-landscape-outline-rounded" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-xs font-medium">{i18n(I18nKey.fullscreenHeroLayout)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.fullscreenHeroLayout, uiLang)}</span>
 				</button>
 			</div>
 		</div>
@@ -911,8 +911,8 @@ $effect(() => {
 		{#if (wallpaperMode === WALLPAPER_OVERLAY || (wallpaperMode === WALLPAPER_FULLSCREEN && fullscreenLayout === "hero")) && hasOverlaySettings && hasVisibleOverlaySlider}
 		<div class="">
 			<div class="section-title">
-				{i18n(I18nKey.overlaySettings)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				{i18n(I18nKey.overlaySettings, uiLang)}
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={overlaySettingsIsDefault} class:pointer-events-none={overlaySettingsIsDefault}
 						disabled={overlaySettingsIsDefault} aria-hidden={overlaySettingsIsDefault ? "true" : undefined} onclick={resetOverlaySettings}>
 					<div class="text-(--btn-content)">
@@ -949,8 +949,8 @@ $effect(() => {
 		{#if (wallpaperMode === WALLPAPER_BANNER || wallpaperMode === WALLPAPER_FULLSCREEN) && hasBannerSettings}
 		<div class="">
 			<div class="section-title">
-				{i18n(I18nKey.wallpaperSettings)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				{i18n(I18nKey.wallpaperSettings, uiLang)}
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={bannerSettingsIsDefault} class:pointer-events-none={bannerSettingsIsDefault}
 						disabled={bannerSettingsIsDefault} aria-hidden={bannerSettingsIsDefault ? "true" : undefined} onclick={resetBannerSettings}>
 					<div class="text-(--btn-content)">
@@ -967,7 +967,7 @@ $effect(() => {
 					onclick={toggleBannerTitleEnabled}
 				>
 					<Icon icon="material-symbols:titlecase-rounded" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-sm flex-1">{i18n(I18nKey.wallpaperTitle)}</span>
+					<span class="text-sm flex-1">{i18n(I18nKey.wallpaperTitle, uiLang)}</span>
 					<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
 						 class:bg-(--primary)={bannerTitleEnabled}
 						 class:bg-(--btn-regular-bg-active)={!bannerTitleEnabled}>
@@ -985,7 +985,7 @@ $effect(() => {
 					onclick={toggleBannerCarouselEnabled}
 				>
 					<Icon icon="material-symbols:view-carousel-outline" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-sm flex-1">{i18n(I18nKey.wallpaperCarousel)}</span>
+					<span class="text-sm flex-1">{i18n(I18nKey.wallpaperCarousel, uiLang)}</span>
 					<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
 						 class:bg-(--primary)={bannerCarouselEnabled}
 						 class:bg-(--btn-regular-bg-active)={!bannerCarouselEnabled}>
@@ -1003,7 +1003,7 @@ $effect(() => {
 					onclick={toggleWavesEnabled}
 				>
 					<Icon icon="material-symbols:airwave-rounded" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-sm flex-1">{i18n(I18nKey.wavesAnimation)}</span>
+					<span class="text-sm flex-1">{i18n(I18nKey.wavesAnimation, uiLang)}</span>
 					<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
 						 class:bg-(--primary)={wavesEnabled}
 						 class:bg-(--btn-regular-bg-active)={!wavesEnabled}>
@@ -1021,7 +1021,7 @@ $effect(() => {
 					onclick={toggleGradientEnabled}
 				>
 					<Icon icon="material-symbols:gradient" class="text-[1.25rem] shrink-0"></Icon>
-					<span class="text-sm flex-1">{i18n(I18nKey.gradientTransition)}</span>
+					<span class="text-sm flex-1">{i18n(I18nKey.gradientTransition, uiLang)}</span>
 					<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
 						 class:bg-(--primary)={gradientEnabled}
 						 class:bg-(--btn-regular-bg-active)={!gradientEnabled}>
@@ -1041,8 +1041,8 @@ $effect(() => {
 		{#if isSakuraSwitchable}
 		<div class="">
 			<div class="section-title">
-				{i18n(I18nKey.effectsSettings)}
-				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
+				{i18n(I18nKey.effectsSettings, uiLang)}
+				<button aria-label={i18n(I18nKey.resetToDefault, uiLang)} class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={sakuraEnabled === defaultSakuraEnabled} class:pointer-events-none={sakuraEnabled === defaultSakuraEnabled}
 						disabled={sakuraEnabled === defaultSakuraEnabled} aria-hidden={sakuraEnabled === defaultSakuraEnabled ? "true" : undefined}
 						onclick={() => { sakuraEnabled = defaultSakuraEnabled; setSakuraEnabled(defaultSakuraEnabled); }}>
@@ -1057,7 +1057,7 @@ $effect(() => {
 				onclick={toggleSakuraEnabled}
 			>
 				<Icon icon="mdi:flower-poppy" class="text-[1.25rem] shrink-0"></Icon>
-				<span class="text-sm flex-1">{i18n(I18nKey.sakuraEffect)}</span>
+				<span class="text-sm flex-1">{i18n(I18nKey.sakuraEffect, uiLang)}</span>
 				<div class="w-10 h-5 rounded-full transition-all duration-200 relative"
 					 class:bg-(--primary)={sakuraEnabled}
 					 class:bg-(--btn-regular-bg-active)={!sakuraEnabled}>
