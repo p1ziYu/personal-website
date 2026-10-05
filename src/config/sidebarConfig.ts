@@ -13,12 +13,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 			showOnPostPage: true,
 		},
 		{
-			type: "music",
-			enable: true,
-			position: "top",
-			showOnPostPage: true,
-		},
-		{
 			type: "categories",
 			enable: true,
 			position: "top",
@@ -60,11 +54,6 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 		},
 	],
 	mobileBottomComponents: [
-		{
-			type: "music",
-			enable: true,
-			showOnPostPage: false,
-		},
 		{
 			type: "categories",
 			enable: true,
