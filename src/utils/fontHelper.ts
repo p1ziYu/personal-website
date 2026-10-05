@@ -4,6 +4,7 @@
  * 提供字体配置相关的共享逻辑，用于 astro.config.mjs 和 scripts/subset-fonts.ts。
  */
 
+import type { CssVariable } from "astro:assets";
 import type { FontSelectionConfig } from "../types/fontConfig";
 
 /**
@@ -18,8 +19,8 @@ import type { FontSelectionConfig } from "../types/fontConfig";
  */
 export function collectUsedFontCssVars(
 	config: FontSelectionConfig,
-): Set<string> {
-	const used = new Set<string>();
+): Set<CssVariable> {
+	const used = new Set<CssVariable>();
 
 	const sel = config.selected;
 	if (Array.isArray(sel)) {
