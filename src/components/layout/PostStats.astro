@@ -26,6 +26,7 @@ const {
 	className = "",
 } = Astro.props;
 
+const lang = Astro.url.pathname.startsWith("/en/") ? "en" : undefined;
 const hasPublished = showPublished;
 const hasWords = showWords && typeof words === "number";
 const hasMinutes = showReadingTime && typeof minutes === "number";
@@ -45,7 +46,7 @@ const iconClass = "text-sm";
         </div>
       )}
       <span class={textClass}>
-        {!showIcons && `${i18n(I18nKey.publishedAt)} `}{formatDateToYYYYMMDD(published)}
+        {!showIcons && `${i18n(I18nKey.publishedAt, lang)} `}{formatDateToYYYYMMDD(published)}
       </span>
     </div>
   )}
@@ -60,7 +61,7 @@ const iconClass = "text-sm";
         </div>
       )}
       <span class={textClass}>
-        {words} {i18n(words === 1 ? I18nKey.wordCount : I18nKey.wordsCount)}
+        {words} {i18n(words === 1 ? I18nKey.wordCount : I18nKey.wordsCount, lang)}
       </span>
     </div>
   )}
@@ -75,7 +76,7 @@ const iconClass = "text-sm";
         </div>
       )}
       <span class={textClass}>
-        {minutes} {i18n(minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount)}
+        {minutes} {i18n(minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount, lang)}
       </span>
     </div>
   )}
