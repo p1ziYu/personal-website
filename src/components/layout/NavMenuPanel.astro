@@ -3,6 +3,7 @@ import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/config";
 import type { NavBarLink } from "@/types/config";
 import { resolveNavbarNameBoth } from "@/utils/navbar-i18n";
+import { hasEnglishVersion, isEnPath } from "@/utils/route-manifest";
 import { url } from "@/utils/url-utils";
 
 interface Props {
@@ -12,11 +13,16 @@ interface Props {
 
 const processedLinks = Astro.props.links;
 const navTitle = siteConfig.navbar.title || siteConfig.title;
-const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
+const isEn = Astro.props.lang === "en" || isEnPath(Astro.url.pathname);
 
 const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
 	if (external) return targetUrl;
-	if (isEn && targetUrl.startsWith("/") && !targetUrl.startsWith("/en")) {
+	if (
+		isEn &&
+		targetUrl.startsWith("/") &&
+		!isEnPath(targetUrl) &&
+		hasEnglishVersion(targetUrl)
+	) {
 		return url(targetUrl === "/" ? "/en/" : `/en${targetUrl}`);
 	}
 	return url(targetUrl);
@@ -337,6 +343,26 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
 </style>
 
 <script>
+    import { hasEnglishVersion, isEnPath } from "@/utils/route-manifest";
+
+    function syncMobileLangBtn() {
+        const btn = document.getElementById("mobile-lang-toggle");
+        if (!btn) return;
+        const isCurrentlyEn = isEnPath(location.pathname);
+        const canSwitch = isCurrentlyEn || hasEnglishVersion(location.pathname);
+        if (!canSwitch) {
+            btn.setAttribute("disabled", "true");
+            btn.setAttribute("aria-disabled", "true");
+            btn.setAttribute("title", "English version not available for this page");
+            btn.classList.add("opacity-40", "cursor-not-allowed");
+        } else {
+            btn.removeAttribute("disabled");
+            btn.removeAttribute("aria-disabled");
+            btn.removeAttribute("title");
+            btn.classList.remove("opacity-40", "cursor-not-allowed");
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
         const mobileDropdowns = document.querySelectorAll("[data-mobile-dropdown]");
         mobileDropdowns.forEach((dropdown) => {
@@ -354,11 +380,18 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
             });
         });
         markActiveNav();
+        syncMobileLangBtn();
     });
 
     // 当前页高亮 + 含当前页的父级自动展开（Swup 切页后重扫）
-    document.addEventListener("astro:page-load", markActiveNav);
-    document.addEventListener("swup:contentReplaced", markActiveNav);
+    document.addEventListener("astro:page-load", () => {
+        markActiveNav();
+        syncMobileLangBtn();
+    });
+    document.addEventListener("swup:contentReplaced", () => {
+        markActiveNav();
+        syncMobileLangBtn();
+    });
 
     // 遮罩点击 / 关闭按钮 / 语言切换：文档级委托监听，跨 Swup 替换也有效
     document.addEventListener("click", (e) => {
@@ -367,8 +400,11 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
             document.getElementById("nav-menu-panel")?.classList.add("float-panel-closed");
         }
         if (t instanceof Element && t.closest("#mobile-lang-toggle")) {
-            const isCurrentlyEn = location.pathname.startsWith("/en/") || location.pathname === "/en";
+            const isCurrentlyEn = isEnPath(location.pathname);
             const newIsEn = !isCurrentlyEn;
+            if (newIsEn && !hasEnglishVersion(location.pathname)) {
+                return;
+            }
             localStorage.setItem("site-lang", newIsEn ? "en" : "zh_CN");
             let target = location.pathname;
             if (newIsEn) {
