@@ -33,6 +33,7 @@ import {
 import { defaultFavicons } from "@/constants/icon";
 import type { Favicon } from "@/types/config";
 import { isHomePage } from "@/utils/layout-utils";
+import { hasEnglishVersion, isEnPath } from "@/utils/route-manifest";
 import { getAuthorAvatarUrl, getSiteLogo } from "@/utils/schema-image";
 import { buildSiteGraph, toAbsoluteUrl } from "@/utils/schema-utils";
 import { getOgLocale } from "@/utils/site-config-utils";
@@ -114,7 +115,7 @@ const favicons: Favicon[] =
 const appleTouchIcon =
 	favicons.find((f) => f.src.toLowerCase().endsWith(".png")) ?? favicons[0];
 
-const isEn = lang === "en" || Astro.url.pathname.startsWith("/en");
+const isEn = lang === "en" || isEnPath(Astro.url.pathname);
 if (!lang) {
 	lang = isEn ? "en" : `${siteConfig.lang}`;
 }
@@ -125,7 +126,8 @@ const dataLang = isEn ? "en" : "zh";
 const avatarUrl = await getAuthorAvatarUrl();
 // 作者个人页（/about/）绝对 URL，作为 Person.url
 const aboutUrl =
-	toAbsoluteUrl(isEn ? "/en/about/" : "/about/", siteConfig.site_url) ?? siteConfig.site_url;
+	toAbsoluteUrl(isEn ? "/en/about/" : "/about/", siteConfig.site_url) ??
+	siteConfig.site_url;
 // 站点 publisher logo（Organization.logo），用于首页 @graph 的 Organization 节点
 const siteLogo = await getSiteLogo();
 
@@ -133,8 +135,16 @@ const siteLogo = await getSiteLogo();
 const canonicalUrl = getCanonicalUrl(Astro.url);
 const rawPathname = Astro.url.pathname;
 const cleanPathname = rawPathname.replace(/^\/en(\/|$)/, "/");
-const zhAlternateUrl = toAbsoluteUrl(cleanPathname, siteConfig.site_url) ?? `${siteConfig.site_url}${cleanPathname}`;
-const enAlternateUrl = toAbsoluteUrl(`/en${cleanPathname === "/" ? "/" : cleanPathname}`, siteConfig.site_url) ?? `${siteConfig.site_url}/en${cleanPathname === "/" ? "/" : cleanPathname}`;
+const hasEnVersion = hasEnglishVersion(cleanPathname);
+const zhAlternateUrl =
+	toAbsoluteUrl(cleanPathname, siteConfig.site_url) ??
+	`${siteConfig.site_url}${cleanPathname}`;
+const enAlternateUrl =
+	toAbsoluteUrl(
+		`/en${cleanPathname === "/" ? "/" : cleanPathname}`,
+		siteConfig.site_url,
+	) ??
+	`${siteConfig.site_url}/en${cleanPathname === "/" ? "/" : cleanPathname}`;
 
 // OG 图片：文章走生成图/封面，非文章页回退到站点 logo
 let ogImageUrl: string | undefined;
@@ -205,8 +215,9 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
     }
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="zh-CN" href={zhAlternateUrl} />
-    <link rel="alternate" hreflang="en" href={enAlternateUrl} />
+    {hasEnVersion && <link rel="alternate" hreflang="en" href={enAlternateUrl} />}
     <link rel="alternate" hreflang="x-default" href={zhAlternateUrl} />
+    {hasEnVersion && (
     <script is:inline>
       (function() {
         try {
@@ -219,6 +230,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
         } catch (e) {}
       })();
     </script>
+    )}
     <meta property="og:site_name" content={siteConfig.title} />
     <meta property="og:locale" content={getOgLocale(lang)} />
     <meta property="og:url" content={canonicalUrl} />
@@ -602,23 +614,24 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 
 <script>
   import { initLayout } from "@/utils/layout-init";
+  import { hasEnglishVersion, isEnPath } from "@/utils/route-manifest";
   initLayout();
 
   function handleEnLinks() {
-    if (!location.pathname.startsWith('/en')) return;
+    if (!isEnPath(location.pathname)) return;
     document.querySelectorAll('a[href^="/"]').forEach((el) => {
       const a = el as HTMLAnchorElement;
       const href = a.getAttribute('href');
       if (
         href &&
         href.startsWith('/') &&
-        !href.startsWith('/en/') &&
-        href !== '/en' &&
+        !isEnPath(href) &&
         !href.startsWith('//') &&
         !href.startsWith('/assets') &&
         !href.startsWith('/favicon') &&
         !href.startsWith('/api') &&
-        !href.includes('.')
+        !href.includes('.') &&
+        hasEnglishVersion(href)
       ) {
         a.setAttribute('href', href === '/' ? '/en/' : '/en' + href);
       }
