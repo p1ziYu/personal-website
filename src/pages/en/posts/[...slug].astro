@@ -141,8 +141,10 @@ if (entry.data.category) {
 	breadcrumbItems.push({
 		name: entry.data.category,
 		url:
-			toAbsoluteUrl(getCategoryUrl(entry.data.category, "en"), siteConfig.site_url) ??
-			siteConfig.site_url,
+			toAbsoluteUrl(
+				getCategoryUrl(entry.data.category, "en"),
+				siteConfig.site_url,
+			) ?? siteConfig.site_url,
 	});
 }
 breadcrumbItems.push({ name: entry.data.title, url: Astro.url.toString() });
@@ -476,7 +478,7 @@ const seriesData = await getSeriesPosts(entry);
                       {
                         showSponsorButton && (
                           <a
-                            href={url("/en/sponsor/")}
+                            href={url("/sponsor/")}
                             class="inline-flex items-center gap-2 px-6 py-3 bg-(--primary) text-white dark:text-black/70 rounded-lg font-medium hover:bg-(--primary)/80 hover:scale-105 active:scale-95 transition-all whitespace-nowrap"
                           >
                             <span>{i18n(I18nKey.sponsor, "en")}</span>
@@ -565,7 +567,7 @@ const seriesData = await getSeriesPosts(entry);
                       {
                         showSponsorButton && (
                           <a
-                            href={url("/en/sponsor/")}
+                            href={url("/sponsor/")}
                             class="inline-flex items-center gap-2 px-6 py-3 bg-(--primary) text-white dark:text-black/70 rounded-lg font-medium hover:bg-(--primary)/80 hover:scale-105 active:scale-95 transition-all whitespace-nowrap"
                           >
                             <span>{i18n(I18nKey.sponsor, "en")}</span>
