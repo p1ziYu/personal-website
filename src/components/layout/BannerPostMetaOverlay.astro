@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import type { BannerPostMeta } from "@/utils/banner-visibility-utils";
 import { formatDateToYYYYMMDD } from "@/utils/date-utils";
 
@@ -18,6 +18,7 @@ const {
 	bannerDescriptionWidth,
 	bannerPostMeta,
 } = Astro.props;
+const uiLang = getLangFromPath(Astro.url.pathname);
 ---
 {showBannerPostMeta && bannerPostMeta && (
     <div class="banner-post-meta-overlay absolute inset-0 z-20 hidden lg:flex items-center justify-center pointer-events-none">
@@ -53,13 +54,13 @@ const {
                     <div class="banner-post-meta-list flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-white/90 text-sm md:text-base">
                         <span class="inline-flex items-center gap-1.5">
                             <Icon name="material-symbols:calendar-month-outline-rounded" class="text-[1.05em]" />
-                            <span>{i18n(I18nKey.publishedAt)} {formatDateToYYYYMMDD(bannerPostMeta.published)}</span>
+                            <span>{i18n(I18nKey.publishedAt, uiLang)} {formatDateToYYYYMMDD(bannerPostMeta.published)}</span>
                         </span>
                         {bannerPostMeta.updated &&
                             bannerPostMeta.updated.getTime() !== bannerPostMeta.published.getTime() && (
                                 <span class="inline-flex items-center gap-1.5">
                                     <Icon name="material-symbols:update-rounded" class="text-[1.05em]" />
-                                    <span>{i18n(I18nKey.updatedAt)} {formatDateToYYYYMMDD(bannerPostMeta.updated)}</span>
+                                    <span>{i18n(I18nKey.updatedAt, uiLang)} {formatDateToYYYYMMDD(bannerPostMeta.updated)}</span>
                                 </span>
                             )}
                         {typeof bannerPostMeta.words === "number" && (
@@ -74,7 +75,7 @@ const {
                             <span class="inline-flex items-center gap-1.5">
                                 <Icon name="material-symbols:schedule-outline-rounded" class="text-[1.05em]" />
                                 <span>
-                                    {bannerPostMeta.minutes} {i18n(bannerPostMeta.minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount)} · {i18n(I18nKey.readTime)}
+                                    {bannerPostMeta.minutes} {i18n(bannerPostMeta.minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount, uiLang)} · {i18n(I18nKey.readTime, uiLang)}
                                 </span>
                             </span>
                         )}
