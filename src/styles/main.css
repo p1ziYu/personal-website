@@ -681,3 +681,13 @@ html {
 .pagination-info {
   @apply text-sm text-(--text-secondary) text-center mb-2;
 }
+
+/* 双语切换显隐规则 */
+html:not([lang="en"]):not([data-lang="en"]) .lang-en {
+  display: none !important;
+}
+html[lang="en"] .lang-zh,
+html[data-lang="en"] .lang-zh {
+  display: none !important;
+}
+
