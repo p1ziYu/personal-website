@@ -1,3 +1,5 @@
+import type { CssVariable } from "astro:assets";
+
 /** 内置字体提供商名称 */
 export type BuiltinFontProvider =
 	| "google"
@@ -20,6 +22,8 @@ export interface CustomFontProvider {
 	config?: Record<string, unknown>;
 }
 
+type FontCssVariable = `--${string}`;
+
 /**
  * 字体定义（Astro Font API 配置项）
  *
@@ -30,7 +34,7 @@ export type FontDefinition = {
 	/** 字体名称 */
 	name: string;
 	/** 对应的 CSS 变量名（如 "--font-inter"） */
-	cssVariable: string;
+	cssVariable: FontCssVariable;
 	/** 字体提供商（内置名称或自定义 provider 对象） */
 	provider: BuiltinFontProvider | CustomFontProvider;
 	/** 字重列表 */
@@ -62,20 +66,20 @@ export type FontSelectionConfig = {
 	 * 填写 fontConfig.ts fonts 中定义的 cssVariable 值。
 	 * 使用 "system" 表示系统字体（不加载任何自定义字体）。
 	 */
-	selected: string | string[];
+	selected: CssVariable | "system" | (CssVariable | "system")[];
 	/** 各区域独立字体 CSS 变量名（留空则使用全局 selected 字体） */
-	bannerTitleFont?: string;
-	bannerSubtitleFont?: string;
-	navbarTitleFont?: string;
+	bannerTitleFont?: CssVariable | "";
+	bannerSubtitleFont?: CssVariable | "";
+	navbarTitleFont?: CssVariable | "";
 	/** 代码块字体 CSS 变量名（用于代码高亮和等宽字体场景） */
-	codeFont?: string;
+	codeFont?: CssVariable | "";
 	/**
 	 * 本地字体子集化配置（构建时由 scripts/subset-fonts.ts 处理）
 	 * key 为 fonts 数组中对应的 cssVariable，value 为子集化选项。
 	 * 仅对 fontProviders.local() 的字体有效。
 	 */
 	subsetFonts?: Record<
-		string,
+		FontCssVariable,
 		{
 			/** 额外包含的字符（覆盖评论、Bangumi 等动态内容） */
 			extraChars?: string;
