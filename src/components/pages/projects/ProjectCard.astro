@@ -18,7 +18,6 @@ interface Props {
 }
 
 const {
-	id,
 	title,
 	description,
 	image,
@@ -29,10 +28,13 @@ const {
 	link = [],
 } = Astro.props;
 
-const primaryUrl = link.length > 0 ? link[0].value : "/projects/";
+const isEn = Astro.url.pathname.startsWith("/en");
+const lang = isEn ? "en" : "zh_CN";
+
+const primaryUrl = link.length > 0 ? link[0].value : (isEn ? "/en/projects/" : "/projects/");
 
 // 状态元数据（标准 key → 本地化 + 配色）
-const statusMeta = status ? getProjectStatusMeta(status) : null;
+const statusMeta = status ? getProjectStatusMeta(status, lang) : null;
 
 // 标签：只显示前 N 个，超出折叠成 +N
 const maxTags = 2;
