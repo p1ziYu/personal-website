@@ -14,7 +14,7 @@ Then began the inevitable rabbit hole: *which TLD do we pick?*
 
 First came the budget bargain bin: `.top`, `.us`, `.win`.
 
-`.top` is managed under Chinese registries and demands real-name verification. Hard pass. `.us` requires US nexus requirements and strips away WHOIS privacy by design. Pass. `.win` has an abysmal reputation as a spammer haven. Double pass.
+`.top` is managed under Chinese registries and demands real-name verification. Hard pass. `.us` requires a qualifying connection to the United States and strips away WHOIS privacy by design. Pass. `.win` has an abysmal reputation as a spammer haven. Double pass.
 
 Next, I scoped out the promotional lures: `.online` teased a tempting $0.99 for year one, but the renewal leaped to $39. A 39x markup after twelve months? Pure bait-and-switch robbery. Pass.
 
