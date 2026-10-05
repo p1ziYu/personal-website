@@ -1,7 +1,7 @@
 ---
 import FloatingButton from "@/components/common/FloatingButton.astro";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import { url } from "@/utils/url-utils";
 ---
 
@@ -9,31 +9,33 @@ import { url } from "@/utils/url-utils";
 <FloatingButton
   id="back-to-home-btn"
   icon="material-symbols:home-outline-rounded"
-  ariaLabel={i18n(I18nKey.home)}
+  ariaLabel={i18n(I18nKey.home, getLangFromPath(Astro.url.pathname))}
   onclick="backToHome()"
   class="hide"
 />
 
 
 
-<script is:raw is:inline define:vars={{ homeUrl: url("/")}}>
+<script is:raw is:inline define:vars={{ homeUrlZh: url("/"), homeUrlEn: url("/en/") }}>
   window.backToHome = function() {
-    const url = homeUrl;
-    if (window.swup) {
-      window.swup.navigate(url);
-    } else {
-      window.location.href = url;
-    }
+    const path = window.location.pathname;
+    const destination = path === "/en" || path.startsWith("/en/") ? homeUrlEn : homeUrlZh;
+    if (window.swup) window.swup.navigate(destination);
+    else window.location.href = destination;
   };
 </script>
 
-<script is:inline define:vars={{ homeUrl: url("/") }}>
+<script is:inline define:vars={{ homeUrlZh: url("/"), homeUrlEn: url("/en/"), labelZh: i18n(I18nKey.home, "zh_CN"), labelEn: i18n(I18nKey.home, "en") }}>
   function updateBackToHomeVisibility() {
     const btn = document.getElementById("back-to-home-btn");
     if (!btn) return;
 
     const path = window.location.pathname.replace(/\/$/, "") || "/";
-    const homePath = homeUrl.replace(/\/$/, "") || "/";
+    const isEn = path === "/en" || path.startsWith("/en/");
+    const homePath = (isEn ? homeUrlEn : homeUrlZh).replace(/\/$/, "") || "/";
+    const label = isEn ? labelEn : labelZh;
+    btn.title = label;
+    btn.querySelector("button")?.setAttribute("aria-label", label);
     if (path === homePath) {
       btn.classList.add("hide");
     } else {
@@ -50,5 +52,6 @@ import { url } from "@/utils/url-utils";
     // Re-check on view transitions or swup navigation
     document.addEventListener("astro:page-load", updateBackToHomeVisibility);
     document.addEventListener("swup:contentReplaced", updateBackToHomeVisibility);
+    window.addEventListener("lang-change", updateBackToHomeVisibility);
   }
 </script>
