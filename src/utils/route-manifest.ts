@@ -13,6 +13,8 @@ export const ENGLISH_STATIC_ROUTES: ReadonlySet<string> = new Set<string>([
 	"/guestbook/",
 	"/search/",
 	"/projects/",
+	"/support/",
+	"/rss/",
 ]);
 
 export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
