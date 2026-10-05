@@ -6,10 +6,12 @@ import ci from "ci-info";
 import WidgetLayout from "@/components/common/WidgetLayout.astro";
 import { licenseConfig, siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import type { WidgetComponentConfig } from "@/types/config";
 import { detectBuildPlatform } from "@/utils/build-platform";
 import { formatDateI18nWithTime } from "@/utils/date-utils";
+
+const uiLang = getLangFromPath(Astro.url.pathname);
 
 interface Props {
 	class?: string;
@@ -52,7 +54,9 @@ if (pnpmMatch) {
 }
 
 // 构建时间
-const buildTime = formatDateI18nWithTime(new Date());
+const buildTime = uiLang === "en"
+	? new Date().toLocaleString("en-US", { timeZone: siteConfig.timezone })
+	: formatDateI18nWithTime(new Date());
 
 // 构建平台检测（使用 ci-info 自动识别 CI 环境）
 const unknownBuildPlatform =
@@ -95,18 +99,18 @@ const licenseName = licenseConfig.enable ? licenseConfig.name : "None";
 const mainItems = [
 	{
 		icon: "material-symbols:cloud-outline",
-		label: i18n(I18nKey.siteInfoBuildPlatform),
+		label: i18n(I18nKey.siteInfoBuildPlatform, uiLang),
 		value: buildPlatform,
 	},
 	{
 		icon: "mdi:clover",
-		label: i18n(I18nKey.siteInfoBlogVersion),
+		label: i18n(I18nKey.siteInfoBlogVersion, uiLang),
 		value: `Firefly v${blogVersion}`,
 		href: "https://github.com/CuteLeaf/Firefly",
 	},
 	{
 		icon: "material-symbols:copyright-outline",
-		label: i18n(I18nKey.siteInfoLicense),
+		label: i18n(I18nKey.siteInfoLicense, uiLang),
 		value: licenseName,
 	},
 ];
@@ -121,7 +125,7 @@ const detailItems: {
 }[] = [
 	{
 		icon: "material-symbols:language",
-		label: i18n(I18nKey.siteInfoDomain),
+		label: i18n(I18nKey.siteInfoDomain, uiLang),
 		value: siteDomain,
 		fullWidth: true,
 	},
@@ -132,28 +136,28 @@ const detailItems: {
 	},
 	{
 		icon: "material-symbols:rocket-launch-outline",
-		label: i18n(I18nKey.siteInfoAstroVersion),
+		label: i18n(I18nKey.siteInfoAstroVersion, uiLang),
 		value: `v${astroVersion}`,
 	},
 	{
 		icon: "fa7-brands:node-js",
-		label: i18n(I18nKey.siteInfoNodeVersion),
+		label: i18n(I18nKey.siteInfoNodeVersion, uiLang),
 		value: nodeVersion,
 	},
 	{
 		icon: "simple-icons:pnpm",
-		label: i18n(I18nKey.siteInfoPnpmVersion),
+		label: i18n(I18nKey.siteInfoPnpmVersion, uiLang),
 		value: pnpmVersion,
 	},
 	{
 		icon: "material-symbols:build-outline",
-		label: i18n(I18nKey.siteInfoBuildTime),
+		label: i18n(I18nKey.siteInfoBuildTime, uiLang),
 		value: buildTime,
 		fullWidth: true,
 	},
 	{
 		icon: "material-symbols:computer-outline",
-		label: i18n(I18nKey.siteInfoSystem),
+		label: i18n(I18nKey.siteInfoSystem, uiLang),
 		value: systemInfo,
 		fullWidth: true,
 	},
@@ -161,7 +165,7 @@ const detailItems: {
 ---
 
 <WidgetLayout
-  name={i18n(I18nKey.siteInfo)}
+  name={i18n(I18nKey.siteInfo, uiLang)}
   showTitle={showTitle}
   id="site-info"
   class={className}
@@ -206,8 +210,8 @@ const detailItems: {
 
     {/* 可折叠区域（格子布局） */}
     <site-info-collapse
-      data-expand-text={i18n(I18nKey.siteInfoExpand)}
-      data-collapse-text={i18n(I18nKey.siteInfoCollapse)}
+      data-expand-text={i18n(I18nKey.siteInfoExpand, uiLang)}
+      data-collapse-text={i18n(I18nKey.siteInfoCollapse, uiLang)}
     >
       <div class="site-info-detail overflow-hidden collapsed">
         <div class="grid grid-cols-2 gap-2">
