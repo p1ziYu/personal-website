@@ -33,19 +33,63 @@ const NAVBAR_DEFAULT_NAMES: Record<string, I18nKey> = {
 	关于我: I18nKey.about,
 };
 
-export function resolveNavbarName(name: string): string {
+const NAVBAR_EN_MAP: Record<string, string> = {
+	文章: "Articles",
+	社交: "Social",
+	我的: "My",
+	关于: "About",
+	链接: "Links",
+	主页: "Home",
+	归档: "Archive",
+	分类: "Categories",
+	标签: "Tags",
+	系列: "Series",
+	友链: "Friends",
+	留言: "Guestbook",
+	动态: "Moments",
+	项目: "Projects",
+	像素墙: "Pixel Wall",
+	相册: "Gallery",
+	书签导航: "Bookmarks",
+	哔哩哔哩: "Bilibili",
+	追番: "Anime",
+	番组计划: "Bangumi",
+	打赏: "Sponsor",
+	支持本站: "Support",
+	关于我: "About Me",
+	"RSS 订阅": "RSS",
+	AniList: "AniList",
+};
+
+export function resolveNavbarName(name: string, lang?: string): string {
+	if (lang === "en") {
+		if (NAVBAR_EN_MAP[name]) return NAVBAR_EN_MAP[name];
+		const key = NAVBAR_DEFAULT_NAMES[name];
+		return key ? i18n(key, "en") : name;
+	}
 	const key = NAVBAR_DEFAULT_NAMES[name];
-	return key ? i18n(key) : name;
+	return key ? i18n(key, lang) : name;
 }
 
-export function resolveNavbarLinks(links: NavBarLink[]): NavBarLink[] {
+export function resolveNavbarNameBoth(name: string): { zh: string; en: string } {
+	const key = NAVBAR_DEFAULT_NAMES[name];
+	const zh = key ? i18n(key, "zh_CN") : name;
+	const en = NAVBAR_EN_MAP[name] || (key ? i18n(key, "en") : name);
+	return { zh, en };
+}
+
+export function resolveNavbarLinks(links: NavBarLink[], lang?: string): NavBarLink[] {
 	return links.map((link) => {
 		const resolved: NavBarLink = {
 			...link,
-			name: resolveNavbarName(link.name),
+			name: resolveNavbarName(link.name, lang),
+			url:
+				lang === "en" && !link.external && link.url.startsWith("/") && !link.url.startsWith("/en")
+					? (link.url === "/" ? "/en/" : `/en${link.url}`)
+					: link.url,
 		};
 		if (link.children) {
-			resolved.children = resolveNavbarLinks(link.children);
+			resolved.children = resolveNavbarLinks(link.children, lang);
 		}
 		return resolved;
 	});
