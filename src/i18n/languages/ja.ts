@@ -69,6 +69,11 @@ export const ja: Translation = {
 	[Key.musicCover]: "カバー",
 	[Key.musicNoCover]: "カバーなし",
 	[Key.musicAudioPlayer]: "オーディオプレーヤー",
+	[Key.musicCollapse]: "プレーヤーを折りたたむ",
+	[Key.musicExpand]: "プレーヤーを展開",
+	[Key.musicDrag]: "ドラッグして移動",
+	[Key.musicMute]: "ミュート",
+	[Key.musicUnmute]: "ミュート解除",
 
 	// お知らせ
 	[Key.announcement]: "お知らせ",
