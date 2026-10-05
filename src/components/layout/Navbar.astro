@@ -207,6 +207,7 @@ const logoVariants = await Promise.all(
             <div class="flex col-start-3 justify-self-end">
                 <!--<SearchPanel client:load>-->
                 <Search
+                    lang={isEn ? "en" : undefined}
                     client:load
                 />
                 {musicPlayerConfig.showInNavbar && (
