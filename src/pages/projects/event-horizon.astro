@@ -1,21 +1,33 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const title = "事件视界 · 黑洞粒子游乐场";
-const description =
-	"上千颗粒子围着黑洞打转，拖出星轨：移动鼠标搅动粒子流，点击画布扔临时黑洞，一发冲击波把内圈全部甩飞。灵感来自 Threads 上的 Event horizon 粒子玩具。";
+const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
+
+const title = isEn ? "Event Horizon · Black Hole Particle Sandbox" : "事件视界 · 黑洞粒子游乐场";
+const description = isEn
+	? "Thousands of stars swirl into an accretion disk. Stir particle streams with your cursor, click to spawn temporary black holes, and blast shockwaves into the void. Inspired by the Threads viral particle toy."
+	: "上千颗粒子围着黑洞打转，拖出星轨：移动鼠标搅动粒子流，点击画布扔临时黑洞，一发冲击波把内圈全部甩飞。灵感来自 Threads 上的 Event horizon 粒子玩具。";
 ---
 
 <MainGridLayout title={title} description={description}>
 	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
 		<div class="card-base z-10 px-9 py-6 relative w-full">
-			<h1 class="text-2xl font-bold mb-2">事件视界</h1>
+			<h1 class="text-2xl font-bold mb-2">
+				<span class="lang-zh">事件视界</span>
+				<span class="lang-en">Event Horizon</span>
+			</h1>
 			<p class="text-sm opacity-70 mb-1">
-				上千颗粒子围着黑洞打转，拖尾拉出星轨。灵感来自 Threads 上 @cat_ronin 分享的
-				"Event horizon" 粒子玩具，我做了个可玩的网页版：你也可以亲手往里面扔黑洞。
+				<span class="lang-zh">
+					上千颗粒子围着黑洞打转，拖尾拉出星轨。灵感来自 Threads 上 @cat_ronin 分享的
+					"Event horizon" 粒子玩具，我做了个可玩的网页版：你也可以亲手往里面扔黑洞。
+				</span>
+				<span class="lang-en">
+					Thousands of celestial particles orbit a gravitational singularity, dragging radiant trails. Inspired by the viral "Event horizon" particle toy by @cat_ronin on Threads, I built this web playground where you can launch black holes into the cosmic dance yourself.
+				</span>
 			</p>
 			<p class="text-sm opacity-70 mb-4">
-				玩法：移动鼠标搅动粒子流；点击画布放一个临时黑洞（持续 6 秒）；冲击波把内圈粒子全部甩飞。
+				<span class="lang-zh">玩法：移动鼠标搅动粒子流；点击画布放一个临时黑洞（持续 6 秒）；冲击波把内圈粒子全部甩飞。</span>
+				<span class="lang-en">How to play: Move cursor to stir stellar streams; click canvas to drop a 6-second temporary singularity; detonate shockwaves to scatter the inner disk.</span>
 			</p>
 
 			<div class="relative rounded-xl overflow-hidden bg-black">
@@ -25,50 +37,92 @@ const description =
 					style="height: min(62vh, 560px); min-height: 380px;"
 				></canvas>
 				<div class="absolute top-2 left-3 text-xs text-white/70 font-mono pointer-events-none">
-					被吞噬 <span id="eh-eaten" class="text-white">0</span>
+					<span class="lang-zh">被吞噬 </span><span class="lang-en">Devoured </span><span id="eh-eaten" class="text-white">0</span>
 					<span class="mx-1 opacity-40">·</span>
 					<span id="eh-fps" class="text-white">--</span> fps
 				</div>
 				<div class="absolute top-2 right-3 text-xs text-white/50 pointer-events-none hidden sm:block">
-					点击画布 = 扔临时黑洞
+					<span class="lang-zh">点击画布 = 扔临时黑洞</span>
+					<span class="lang-en">Click canvas = Spawn temporary black hole</span>
 				</div>
 			</div>
 
 			<div class="grid sm:grid-cols-3 gap-4 mt-5">
 				<label class="block text-sm">
-					<span class="flex justify-between mb-1"><span class="opacity-70">引力强度</span><span id="eh-g-val" class="font-mono opacity-80">9000</span></span>
+					<span class="flex justify-between mb-1">
+						<span class="opacity-70">
+							<span class="lang-zh">引力强度</span>
+							<span class="lang-en">Gravitational Pull</span>
+						</span>
+						<span id="eh-g-val" class="font-mono opacity-80">9000</span>
+					</span>
 					<input id="eh-g" type="range" min="3000" max="18000" step="500" value="9000" class="w-full accent-[var(--primary)]" />
 				</label>
 				<label class="block text-sm">
-					<span class="flex justify-between mb-1"><span class="opacity-70">粒子数量</span><span id="eh-n-val" class="font-mono opacity-80">1200</span></span>
+					<span class="flex justify-between mb-1">
+						<span class="opacity-70">
+							<span class="lang-zh">粒子数量</span>
+							<span class="lang-en">Particle Count</span>
+						</span>
+						<span id="eh-n-val" class="font-mono opacity-80">1200</span>
+					</span>
 					<input id="eh-n" type="range" min="200" max="2500" step="100" value="1200" class="w-full accent-[var(--primary)]" />
 				</label>
 				<label class="block text-sm">
-					<span class="flex justify-between mb-1"><span class="opacity-70">拖尾长度</span><span id="eh-t-val" class="font-mono opacity-80">0.22</span></span>
+					<span class="flex justify-between mb-1">
+						<span class="opacity-70">
+							<span class="lang-zh">拖尾长度</span>
+							<span class="lang-en">Trail Length</span>
+						</span>
+						<span id="eh-t-val" class="font-mono opacity-80">0.22</span>
+					</span>
 					<input id="eh-t" type="range" min="0.05" max="0.5" step="0.01" value="0.22" class="w-full accent-[var(--primary)]" />
 				</label>
 			</div>
 
 			<div class="flex flex-wrap items-center gap-2 mt-4">
-				<span class="text-sm opacity-70 mr-1">配色</span>
-				<button data-eh-theme="268" class="eh-theme px-3 py-1.5 rounded-xl text-sm font-medium border border-black/15 dark:border-white/15 bg-[var(--primary)] text-white">紫</button>
-				<button data-eh-theme="188" class="eh-theme px-3 py-1.5 rounded-xl text-sm font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5">青</button>
-				<button data-eh-theme="18" class="eh-theme px-3 py-1.5 rounded-xl text-sm font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5">焰</button>
+				<span class="text-sm opacity-70 mr-1">
+					<span class="lang-zh">配色</span>
+					<span class="lang-en">Palette</span>
+				</span>
+				<button data-eh-theme="268" class="eh-theme px-3 py-1.5 rounded-xl text-sm font-medium border border-black/15 dark:border-white/15 bg-[var(--primary)] text-white">
+					<span class="lang-zh">紫</span><span class="lang-en">Violet</span>
+				</button>
+				<button data-eh-theme="188" class="eh-theme px-3 py-1.5 rounded-xl text-sm font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5">
+					<span class="lang-zh">青</span><span class="lang-en">Cyan</span>
+				</button>
+				<button data-eh-theme="18" class="eh-theme px-3 py-1.5 rounded-xl text-sm font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5">
+					<span class="lang-zh">焰</span><span class="lang-en">Amber</span>
+				</button>
 				<span class="mx-1 opacity-30">|</span>
-				<button id="eh-shock" class="px-4 py-1.5 rounded-xl bg-[var(--primary)] text-white text-sm font-medium hover:opacity-90 active:scale-95 transition">💥 冲击波</button>
-				<button id="eh-pause" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">⏸ 暂停</button>
-				<button id="eh-reset" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">↺ 重置</button>
+				<button id="eh-shock" class="px-4 py-1.5 rounded-xl bg-[var(--primary)] text-white text-sm font-medium hover:opacity-90 active:scale-95 transition">
+					<span class="lang-zh">💥 冲击波</span>
+					<span class="lang-en">💥 Shockwave</span>
+				</button>
+				<button id="eh-pause" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">
+					<span class="lang-zh">⏸ 暂停</span>
+					<span class="lang-en">⏸ Pause</span>
+				</button>
+				<button id="eh-reset" class="px-4 py-1.5 rounded-xl border border-black/15 dark:border-white/15 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition">
+					<span class="lang-zh">↺ 重置</span>
+					<span class="lang-en">↺ Reset</span>
+				</button>
 			</div>
 
 			<hr class="my-6 border-black/10 dark:border-white/10" />
 			<p class="text-xs opacity-50">
-				实现：Canvas 2D + 简单牛顿引力，粒子进视界半径就被吞噬并在外圈重生；
-				冲击波给全场粒子一个径向脉冲。手机上也可以点按游玩。本页面由 AI 生成。
+				<span class="lang-zh">
+					实现：Canvas 2D + 简单牛顿引力，粒子进视界半径就被吞噬并在外圈重生；
+					冲击波给全场粒子一个径向脉冲。手机上也可以点按游玩。本页面由 AI 生成。
+				</span>
+				<span class="lang-en">
+					Implementation: Canvas 2D + Newtonian gravity. Particles entering the event horizon are devoured and respawn in the outer halo. Shockwaves deliver a radial momentum pulse. Tap-friendly on mobile. Generated by AI.
+				</span>
 			</p>
 		</div>
 	</div>
 
-	<script>
+	<script is:inline>
 		(() => {
 			const canvas = document.getElementById("eh-canvas");
 			const ctx = canvas.getContext("2d");
@@ -308,11 +362,12 @@ const description =
 				});
 			});
 
-			document.getElementById("eh-shock").addEventListener("click", shockwave);
+			document.getElementById("eh-shock")?.addEventListener("click", shockwave);
 			const pauseBtn = document.getElementById("eh-pause");
-			pauseBtn.addEventListener("click", () => {
+			pauseBtn?.addEventListener("click", () => {
 				running = !running;
-				pauseBtn.textContent = running ? "⏸ 暂停" : "▶ 继续";
+				const isEn = document.documentElement.lang === "en" || document.documentElement.getAttribute("data-lang") === "en" || location.pathname.startsWith("/en");
+				pauseBtn.textContent = running ? (isEn ? "⏸ Pause" : "⏸ 暂停") : (isEn ? "▶ Resume" : "▶ 继续");
 				last = performance.now();
 			});
 			document.getElementById("eh-reset").addEventListener("click", () => {
