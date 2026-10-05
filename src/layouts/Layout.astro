@@ -101,13 +101,16 @@ const navbarPanelBlur = Math.max(
 	NAVBAR_PANEL_MIN_BLUR,
 );
 
+const isEn = lang === "en" || isEnPath(Astro.url.pathname);
+const brandTitle = isEn ? "P1ziyu’s Space" : siteConfig.title;
+const brandDescription = isEn ? "P1ziyu’s personal space. What you love is how you live." : siteConfig.description;
 let pageTitle: string;
 if (title) {
-	pageTitle = `${title} - ${siteConfig.title}`;
+	pageTitle = `${title} - ${brandTitle}`;
 } else {
 	pageTitle = siteConfig.subtitle
-		? `${siteConfig.title} - ${siteConfig.subtitle}`
-		: siteConfig.title;
+		? `${brandTitle} - ${isEn ? "What you love is how you live." : siteConfig.subtitle}`
+		: brandTitle;
 }
 
 const favicons: Favicon[] =
@@ -116,7 +119,6 @@ const favicons: Favicon[] =
 const appleTouchIcon =
 	favicons.find((f) => f.src.toLowerCase().endsWith(".png")) ?? favicons[0];
 
-const isEn = lang === "en" || isEnPath(Astro.url.pathname);
 if (!lang) {
 	lang = isEn ? "en" : `${siteConfig.lang}`;
 }
@@ -207,7 +209,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
     <title>{pageTitle}</title>
     <meta
       name="description"
-      content={description || siteConfig.description || pageTitle}
+      content={description || brandDescription || pageTitle}
     />
     {
       siteConfig.keywords && siteConfig.keywords.length > 0 && (
@@ -219,12 +221,12 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
     {hasEnVersion && <link rel="alternate" hreflang="en" href={enAlternateUrl} />}
     <link rel="alternate" hreflang="x-default" href={zhAlternateUrl} />
     {hasEnVersion && (
-    <script is:inline>
+    <script is:inline define:vars={{ hasEnVersion }}>
       (function() {
         try {
           var saved = localStorage.getItem('site-lang');
           var p = window.location.pathname;
-          if (saved === 'en' && !p.startsWith('/en/') && p !== '/en' && !p.includes('.')) {
+          if (saved === 'en' && hasEnVersion && !p.startsWith('/en/') && p !== '/en' && !p.includes('.')) {
             var target = '/en' + (p.startsWith('/') ? p : '/' + p) + window.location.search + window.location.hash;
             window.location.replace(target);
           }
@@ -232,13 +234,13 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
       })();
     </script>
     )}
-    <meta property="og:site_name" content={siteConfig.title} />
+    <meta property="og:site_name" content={brandTitle} />
     <meta property="og:locale" content={getOgLocale(lang)} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />
     <meta
       property="og:description"
-      content={description || siteConfig.description || pageTitle}
+      content={description || brandDescription || pageTitle}
     />
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
     {ogImageUrl && ogImageWidth && <meta property="og:image:width" content={String(ogImageWidth)} />}
@@ -259,7 +261,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
     <meta name="twitter:title" content={pageTitle} />
     <meta
       name="twitter:description"
-      content={description || siteConfig.description || pageTitle}
+      content={description || brandDescription || pageTitle}
     />
 
     {
