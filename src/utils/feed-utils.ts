@@ -5,7 +5,7 @@ import { getContainerRenderer as getMDXRenderer } from "@astrojs/mdx/container-r
 import { getContainerRenderer as getSvelteRenderer } from "@astrojs/svelte/container-renderer";
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
-import { url } from "@utils/url-utils";
+import { getPostUrlBySlug } from "@utils/url-utils";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import sanitizeHtml from "sanitize-html";
 
@@ -102,7 +102,7 @@ export async function renderFeedEntries(
 	const container = await AstroContainer.create({ renderers });
 	const entries: FeedEntry[] = [];
 	for (const post of posts) {
-		const link = url(`/posts/${post.id}/`);
+		const link = getPostUrlBySlug(post.id, post.data.lang);
 		const updated = post.data.updated ?? post.data.published;
 		const base: Omit<FeedEntry, "content" | "isPasswordProtected"> = {
 			post,
@@ -115,7 +115,7 @@ export async function renderFeedEntries(
 		if (post.data.password) {
 			entries.push({
 				...base,
-				content: includeContent ? i18n(I18nKey.passwordProtectedRss) : "",
+				content: includeContent ? i18n(I18nKey.passwordProtectedRss, post.data.lang) : "",
 				isPasswordProtected: true,
 			});
 			continue;
