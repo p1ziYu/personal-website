@@ -6,7 +6,7 @@ import {
 	WALLPAPER_OVERLAY,
 } from "@constants/constants";
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { getLangFromPath, i18n } from "@i18n/translation";
 import {
 	getDefaultBannerCarouselEnabled,
 	getDefaultBannerTitleEnabled,
@@ -48,6 +48,15 @@ import {
 	setWavesEnabled,
 } from "@utils/setting-utils";
 import { onMount } from "svelte";
+let { lang }: { lang?: string } = $props();
+let uiLang = $state(lang);
+onMount(() => {
+	const updateLang = () => { uiLang = getLangFromPath(window.location.pathname); };
+	updateLang();
+	document.addEventListener("swup:contentReplaced", updateLang);
+	window.addEventListener("lang-change", updateLang);
+	return () => { document.removeEventListener("swup:contentReplaced", updateLang); window.removeEventListener("lang-change", updateLang); };
+});
 import Icon from "@/components/common/Icon.svelte";
 import {
 	backgroundWallpaper,
@@ -687,7 +696,7 @@ $effect(() => {
 		{#if showThemeColor}
 		<div class="">
 			<div class="section-title">
-				{i18n(I18nKey.themeColor)}
+				{i18n(I18nKey.themeColor, uiLang)}
 				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={hue === defaultHue} class:pointer-events-none={hue === defaultHue}
 						disabled={hue === defaultHue} aria-hidden={hue === defaultHue ? "true" : undefined} onclick={resetHue}>
@@ -701,7 +710,7 @@ $effect(() => {
 				</div>
 			</div>
 			<div class="hue-slider-shell w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded-md select-none">
-				<input aria-label={i18n(I18nKey.themeColor)} type="range" min="0" max="360" bind:value={hue}
+				<input aria-label={i18n(I18nKey.themeColor, uiLang)} type="range" min="0" max="360" bind:value={hue}
 					   class="slider" id="colorSlider" step="5" style="width: 100%">
 			</div>
 		</div>
@@ -711,7 +720,7 @@ $effect(() => {
 		{#if allowLayoutSwitch}
 		<div class="">
 			<div class="section-title">
-				{i18n(I18nKey.postListLayout)}
+				{i18n(I18nKey.postListLayout, uiLang)}
 				<button aria-label="Reset to Default" class="btn-regular rounded-md active:scale-90"
 						class:opacity-0={currentLayout === effectiveDefaultLayout} class:pointer-events-none={currentLayout === effectiveDefaultLayout}
 						disabled={currentLayout === effectiveDefaultLayout} aria-hidden={currentLayout === effectiveDefaultLayout ? "true" : undefined} onclick={resetLayout}>
@@ -722,32 +731,32 @@ $effect(() => {
 			</div>
 			<div class="flex gap-2">
 				<button
-					aria-label={i18n(I18nKey.postListLayoutList)}
+					aria-label={i18n(I18nKey.postListLayoutList, uiLang)}
 					class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
 					class:opacity-60={currentLayout !== 'list'}
 					class:bg-(--btn-regular-bg-hover)={currentLayout === 'list'}
 					disabled={isSwitching}
 					onclick={switchLayout}
-					title={i18n(I18nKey.postListLayoutList)}
+					title={i18n(I18nKey.postListLayoutList, uiLang)}
 				>
 					<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
 						<path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
 					</svg>
-					<span class="text-xs font-medium">{i18n(I18nKey.postListLayoutList)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.postListLayoutList, uiLang)}</span>
 				</button>
 				<button
-					aria-label={i18n(I18nKey.postListLayoutGrid)}
+					aria-label={i18n(I18nKey.postListLayoutGrid, uiLang)}
 					class="flex-1 btn-regular rounded-md py-2 px-3 flex items-center justify-center gap-2 active:scale-95 transition-all relative overflow-hidden"
 					class:opacity-60={currentLayout !== 'grid'}
 					class:bg-(--btn-regular-bg-hover)={currentLayout === 'grid'}
 					disabled={isSwitching}
 					onclick={switchLayout}
-					title={i18n(I18nKey.postListLayoutGrid)}
+					title={i18n(I18nKey.postListLayoutGrid, uiLang)}
 				>
 					<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
 						<path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
 					</svg>
-					<span class="text-xs font-medium">{i18n(I18nKey.postListLayoutGrid)}</span>
+					<span class="text-xs font-medium">{i18n(I18nKey.postListLayoutGrid, uiLang)}</span>
 				</button>
 			</div>
 		</div>
