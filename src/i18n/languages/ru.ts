@@ -481,6 +481,10 @@ export const ru: Translation = {
 	[Key.today]: "Сегодня",
 
 	// Информация о сайте
+	[Key.siteInfoLocal]: "Local",
+	[Key.siteInfoLocalDev]: "Local Dev",
+	[Key.siteInfoUnknown]: "unknown",
+	[Key.siteInfoUnknownCi]: "Unknown CI",
 	[Key.siteInfo]: "Информация о сайте",
 	[Key.siteInfoBuildTime]: "Время сборки",
 	[Key.siteInfoBuildPlatform]: "Платформа сборки",
