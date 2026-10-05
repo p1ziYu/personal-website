@@ -1,4 +1,5 @@
 ---
+import { canonicalTaxonomyName, taxonomyDisplayName } from "@/i18n/taxonomy";
 import { siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
@@ -57,6 +58,11 @@ const i18nStrings = {
 const tagsBaseUrl = url(isEn ? "/en/tags/" : "/tags/");
 const categoriesBaseUrl = url(isEn ? "/en/categories/" : "/categories/");
 const foldOnFilter = collapseAllButFirst;
+const taxonomyLabels = Object.fromEntries(posts.flatMap(post =>
+	[post.data.category, ...post.data.tags].filter((name): name is string => Boolean(name)).flatMap(name =>
+		[name, canonicalTaxonomyName(name)].map(key => [key, taxonomyDisplayName(name, isEn ? "en" : undefined)]),
+	),
+));
 ---
 
 <archive-panel
@@ -114,8 +120,9 @@ const foldOnFilter = collapseAllButFirst;
               href={getPostUrlBySlug(post.id, isEn ? "en" : undefined)}
               aria-label={post.data.title}
               class="archive-post group btn-plain block! h-10 w-full rounded-lg hover:text-[initial]"
-              data-tags={JSON.stringify(post.data.tags || [])}
+              data-tags={JSON.stringify([...new Set((post.data.tags || []).flatMap(t => [t, canonicalTaxonomyName(t)]))])}
               data-category={post.data.category || ""}
+              data-category-canonical={canonicalTaxonomyName(post.data.category || "")}
             >
               <div class="flex flex-row justify-start items-center h-full">
                 {/* date */}
@@ -141,7 +148,7 @@ const foldOnFilter = collapseAllButFirst;
                                  bg-[oklch(0.95_0.025_var(--hue))] dark:bg-[oklch(0.25_0.025_var(--hue))]
                                  text-(--primary) group-hover:bg-(--primary) group-hover:text-white!
                                  transition-colors">
-                      {post.data.category}
+                      {taxonomyDisplayName(post.data.category, isEn ? "en" : undefined)}
                     </span>
                   )}
                   <span class="truncate">{post.data.title}</span>
@@ -170,7 +177,7 @@ const foldOnFilter = collapseAllButFirst;
   }
 </style>
 
-<script is:inline define:vars={{ i18nStrings, tagsBaseUrl, categoriesBaseUrl }}>
+<script is:inline define:vars={{ i18nStrings, tagsBaseUrl, categoriesBaseUrl, taxonomyLabels }}>
   class ArchivePanel extends HTMLElement {
     constructor() {
       super();
@@ -221,7 +228,7 @@ const foldOnFilter = collapseAllButFirst;
             match = match && rowTags.some((t) => tags.includes(t));
           }
           if (categories.length > 0) {
-            match = match && !!rowCategory && categories.includes(rowCategory);
+            match = match && !!rowCategory && (categories.includes(rowCategory) || categories.includes(row.dataset.categoryCanonical));
           }
           if (uncategorized) {
             match = match && !rowCategory;
@@ -295,7 +302,7 @@ const foldOnFilter = collapseAllButFirst;
 
       const fmtValues = (f) => {
         const prefix = f.isTag ? "#" : "";
-        return f.values.map((v) => `${prefix}${v}`).join(" / ");
+        return f.values.map((v) => `${prefix}${taxonomyLabels[v] || v}`).join(" / ");
       };
 
       if (linkEl) {
@@ -329,11 +336,11 @@ const foldOnFilter = collapseAllButFirst;
 
       let newTitle = "";
       if (categories.length > 0) {
-        newTitle = categories.join(" / ");
+        newTitle = categories.map(c => taxonomyLabels[c] || c).join(" / ");
       } else if (uncategorized) {
         newTitle = i18nStrings.uncategorized;
       } else if (tags.length > 0) {
-        newTitle = tags.map((t) => `#${t}`).join(" / ");
+        newTitle = tags.map((t) => `#${taxonomyLabels[t] || t}`).join(" / ");
       }
       // 直接设置（自定义元素在解析阶段升级、首帧前执行），避免默认标题闪烁
       if (newTitle && bannerTitle.textContent !== newTitle) {
