@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import type { PostForList } from "@/utils/content-utils";
 import { getPostUrlBySlug } from "@/utils/url-utils";
 
@@ -12,6 +12,7 @@ interface Props {
 }
 
 const { seriesName, posts, currentPostId } = Astro.props;
+const uiLang = getLangFromPath(Astro.url.pathname);
 ---
 
 {
@@ -24,7 +25,7 @@ const { seriesName, posts, currentPostId } = Astro.props;
       >
         <Icon name="material-symbols:format-list-bulleted" aria-hidden="true" class="shrink-0 text-lg text-(--primary)" />
         <span class="font-bold text-base text-black/80 dark:text-white/80 transition group-hover:text-(--primary)">
-          {i18n(I18nKey.seriesPartOf)}：{seriesName}
+          {i18n(I18nKey.seriesPartOf, uiLang)}：{seriesName}
         </span>
         <span class="ml-auto shrink-0 text-xs px-2 py-0.5 rounded-full bg-(--btn-regular-bg) text-(--btn-content) transition">
           {posts.length}
@@ -39,7 +40,7 @@ const { seriesName, posts, currentPostId } = Astro.props;
       <div class="series-nav-content overflow-hidden max-h-0 transition-[max-height,opacity] duration-300 ease-in-out">
         <ol class="flex flex-col mt-1">
           {posts.map((post, idx) => {
-            const part = i18n(I18nKey.seriesPart).replace("{n}", String(idx + 1));
+            const part = i18n(I18nKey.seriesPart, uiLang).replace("{n}", String(idx + 1));
             const isCurrent = !!currentPostId && post.id === currentPostId;
             const rowClass = [
               "group flex items-center gap-3 px-3 py-1.5 rounded-lg transition-all",
@@ -59,7 +60,7 @@ const { seriesName, posts, currentPostId } = Astro.props;
                   title={part}
                   class="ml-auto shrink-0 text-xs px-1.5 py-0.5 rounded-sm bg-(--enter-btn-bg) text-(--primary)"
                 >
-                  {i18n(I18nKey.seriesThisArticle)}
+                  {i18n(I18nKey.seriesThisArticle, uiLang)}
                 </span>
               </li>
             ) : (
