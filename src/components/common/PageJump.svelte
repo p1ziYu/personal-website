@@ -18,6 +18,7 @@ interface Props {
 	 */
 	hrefTemplate?: string;
 	hrefFirst?: string;
+	lang?: string;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
 	onJump,
 	hrefTemplate,
 	hrefFirst,
+	lang,
 }: Props = $props();
 
 let isOpen = $state(false);
@@ -36,7 +38,7 @@ let inputEl: HTMLInputElement | undefined = $state();
 // 输入框宽度按最大页码的位数写死，避免展开/收起时卡片宽度跳动
 const digits = $derived(String(lastPage).length);
 
-const label = i18n(I18nKey.paginationJump);
+const label = i18n(I18nKey.paginationJump, lang);
 
 $effect(() => {
 	if (isOpen) {
