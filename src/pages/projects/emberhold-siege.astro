@@ -1,82 +1,83 @@
 ---
-const title = "余烬防线 · 守住最后一束火光";
+const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
+const title = isEn ? "Emberhold Siege · Hold the Last Flame" : "余烬防线 · 守住最后一束火光";
 ---
 <!doctype html>
-<html lang="zh-CN">
+<html lang={isEn ? "en" : "zh-CN"}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="余烬防线：三路围城、五种防御塔、十五波攻势。无需下载，在浏览器里守护最后的余烬。" />
+		<meta name="description" content={isEn ? "Emberhold Siege: Three converging paths, five defensive towers, fifteen waves. Defend the embers in your browser." : "余烬防线：三路围城、五种防御塔、十五波攻势。无需下载，在浏览器里守护最后的余烬。"} />
 		<meta name="theme-color" content="#111b1a" />
 		<title>{title}</title>
 	</head>
 	<body>
 		<main id="emberhold">
 			<header class="masthead">
-				<a class="back" href="/projects/" aria-label="返回项目列表">← <span>返回项目</span></a>
-				<div class="wordmark"><span class="sigil">✧</span><div><h1>余烬防线</h1><p>守住最后一束火光</p></div></div>
-				<div class="edition"><span class="live-dot"></span> 独立战术塔防 <span class="edition-number">／ 第零一号</span></div>
+				<a class="back" href={isEn ? "/en/projects/" : "/projects/"} aria-label={isEn ? "Return to Projects" : "返回项目列表"}>← <span>{isEn ? "Back to Projects" : "返回项目"}</span></a>
+				<div class="wordmark"><span class="sigil">✧</span><div><h1>{isEn ? "Emberhold" : "余烬防线"}</h1><p>{isEn ? "Hold the Last Flame" : "守住最后一束火光"}</p></div></div>
+				<div class="edition"><span class="live-dot"></span> {isEn ? "Tactical Tower Defense" : "独立战术塔防"} <span class="edition-number">{isEn ? "／ No. 01" : "／ 第零一号"}</span></div>
 			</header>
-			<section class="command-bar" aria-label="战局状态">
-				<div class="resource"><span class="resource-icon gold">◇</span><div><small>可用金币</small><strong id="gold">300</strong></div></div>
-				<div class="resource"><span class="resource-icon heart">♡</span><div><small>核心耐久</small><strong><span id="lives">20</span><em> / 20</em></strong></div></div>
-				<div class="resource"><span class="resource-icon wave">≋</span><div><small>当前波次</small><strong><span id="wave">00</span><em> / 15</em></strong></div></div>
-				<div class="resource score-resource"><span class="resource-icon gold">✧</span><div><small>守望得分</small><strong id="score">0</strong></div></div>
+			<section class="command-bar" aria-label={isEn ? "Command Bar" : "战局状态"}>
+				<div class="resource"><span class="resource-icon gold">◇</span><div><small>{isEn ? "Available Gold" : "可用金币"}</small><strong id="gold">300</strong></div></div>
+				<div class="resource"><span class="resource-icon heart">♡</span><div><small>{isEn ? "Core Health" : "核心耐久"}</small><strong><span id="lives">20</span><em> / 20</em></strong></div></div>
+				<div class="resource"><span class="resource-icon wave">≋</span><div><small>{isEn ? "Current Wave" : "当前波次"}</small><strong><span id="wave">00</span><em> / 15</em></strong></div></div>
+				<div class="resource score-resource"><span class="resource-icon gold">✧</span><div><small>{isEn ? "Watch Score" : "守望得分"}</small><strong id="score">0</strong></div></div>
 				<div class="toolbar">
-					<button id="pause" aria-label="暂停游戏">Ⅱ <span>暂停</span></button>
-					<button id="speed" aria-label="切换游戏速度">1×</button>
-					<button id="mute" aria-label="切换静音" aria-pressed="false">♪ <span>音效开</span></button>
-					<button id="restart" aria-label="重新开始游戏">↻</button>
+					<button id="pause" aria-label={isEn ? "Pause game" : "暂停游戏"}>Ⅱ <span>{isEn ? "Pause" : "暂停"}</span></button>
+					<button id="speed" aria-label={isEn ? "Toggle speed" : "切换游戏速度"}>1×</button>
+					<button id="mute" aria-label={isEn ? "Toggle mute" : "切换静音"} aria-pressed="false">♪ <span>{isEn ? "Sound On" : "音效开"}</span></button>
+					<button id="restart" aria-label={isEn ? "Restart game" : "重新开始游戏"}>↻</button>
 				</div>
 			</section>
 			<div class="game-layout">
-				<section class="battlefield" aria-label="战场">
-					<div class="map-heading"><span><i></i> 灰烬边境 <b>／ 三岔隘口</b></span><span id="phase-label">等待指挥</span></div>
+				<section class="battlefield" aria-label={isEn ? "Battlefield" : "战场"}>
+					<div class="map-heading"><span><i></i> {isEn ? "Ashen Frontier" : "灰烬边境"} <b>{isEn ? "／ Three-Way Pass" : "／ 三岔隘口"}</b></span><span id="phase-label">{isEn ? "Awaiting Orders" : "等待指挥"}</span></div>
 					<div class="canvas-wrap">
-						<canvas id="battle-canvas" width="768" height="576" tabindex="0" aria-label="16 列 12 行战场。方向键移动地块，回车选择；右侧选择塔型并建造。">浏览器需要支持画布才能运行游戏。</canvas>
+						<canvas id="battle-canvas" width="768" height="576" tabindex="0" aria-label={isEn ? "16x12 grid battlefield. Arrow keys move cursor, Enter confirms; right panel selects tower type." : "16 列 12 行战场。方向键移动地块，回车选择；右侧选择塔型并建造。"}>{isEn ? "Your browser must support HTML5 Canvas to run this game." : "浏览器需要支持画布才能运行游戏。"}</canvas>
 						<div id="overlay" class="overlay">
 							<div class="intro-card">
-								<div class="overline">三路围城 · 一线生机</div>
+								<div class="overline">{isEn ? "Three Paths Besieged · One Ray of Hope" : "三路围城 · 一线生机"}</div>
 								<div class="intro-symbol">✧</div>
-								<h2 id="overlay-title">长夜将至<br /><span>余烬不灭。</span></h2>
-								<p id="overlay-description">敌军正从雾中逼近。筑起防线，<br />让这座要塞的最后一束火光继续燃烧。</p>
-								<div id="instructions" class="instructions"><span><b>01</b> 点击草地，部署防御塔</span><span><b>02</b> 升级火力，守住三条道路</span><span><b>03</b> 撑过十五波，守住余烬核心</span></div>
+								<h2 id="overlay-title">{isEn ? <Fragment>The Long Night Approaches<br /><span>The Embers Endure.</span></Fragment> : <Fragment>长夜将至<br /><span>余烬不灭。</span></Fragment>}</h2>
+								<p id="overlay-description">{isEn ? <Fragment>The horde closes through the mist. Rally your defense<br />and keep the sanctuary's last flame burning.</Fragment> : <Fragment>敌军正从雾中逼近。筑起防线，<br />让这座要塞的最后一束火光继续燃烧。</Fragment>}</p>
+								<div id="instructions" class="instructions">{isEn ? <Fragment><span><b>01</b> Tap grass plots to deploy towers</span><span><b>02</b> Upgrade firepower to hold 3 paths</span><span><b>03</b> Survive 15 waves to protect the core</span></Fragment> : <Fragment><span><b>01</b> 点击草地，部署防御塔</span><span><b>02</b> 升级火力，守住三条道路</span><span><b>03</b> 撑过十五波，守住余烬核心</span></Fragment>}</div>
 								<div id="result-stats" class="result-stats" hidden></div>
-								<button id="begin" class="primary">点燃烽火 <span>→</span></button>
-								<p class="intro-foot" id="overlay-foot">初始 300 金币 · 20 点耐久 · 无需联网</p>
+								<button id="begin" class="primary">{isEn ? "Ignite the Beacon" : "点燃烽火"} <span>→</span></button>
+								<p class="intro-foot" id="overlay-foot">{isEn ? "Initial 300 Gold · 20 Core Health · Zero Downloads" : "初始 300 金币 · 20 点耐久 · 无需联网"}</p>
 							</div>
 						</div>
-						<div id="pause-overlay" class="pause-overlay" hidden><div><span>Ⅱ</span><h2>烽火暂歇</h2><p>战局已暂停，准备好后继续。</p><button id="resume" class="primary">继续防守 →</button></div></div>
+						<div id="pause-overlay" class="pause-overlay" hidden><div><span>Ⅱ</span><h2>{isEn ? "Firebreak Rest" : "烽火暂歇"}</h2><p>{isEn ? "Battle is paused. Resume when ready." : "战局已暂停，准备好后继续。"}</p><button id="resume" class="primary">{isEn ? "Resume Defense →" : "继续防守 →"}</button></div></div>
 					</div>
-					<div class="map-footer"><span><i class="legend-road"></i> 敌军路线 <i class="legend-build"></i> 可建造地块 <i class="legend-core"></i> 余烬核心</span><span>16 × 12</span></div>
+					<div class="map-footer"><span><i class="legend-road"></i> {isEn ? "Enemy Route" : "敌军路线"} <i class="legend-build"></i> {isEn ? "Buildable Plot" : "可建造地块"} <i class="legend-core"></i> {isEn ? "Ember Core" : "余烬核心"}</span><span>16 × 12</span></div>
 				</section>
 				<aside class="sidebar">
 					<section class="panel wave-panel">
-						<div class="section-label"><span>攻势情报</span><span id="next-index">01 / 15</span></div>
-						<h2 id="wave-name">雾中来客</h2><p class="muted" id="modifier">守住三条进攻路线</p>
+						<div class="section-label"><span>{isEn ? "Wave Intel" : "攻势情报"}</span><span id="next-index">01 / 15</span></div>
+						<h2 id="wave-name">{isEn ? "Mist Walkers" : "雾中来客"}</h2><p class="muted" id="modifier">{isEn ? "Hold the three invasion routes" : "守住三条进攻路线"}</p>
 						<div id="composition" class="composition"></div>
 						<div class="wave-progress"><div id="wave-progress-fill"></div></div>
-						<div class="wave-meta"><span id="wave-status">部署你的第一道防线</span><span id="wave-bonus">奖励 +40</span></div>
-						<button id="send-wave" class="primary" disabled>开始下一波 <span>→</span></button>
+						<div class="wave-meta"><span id="wave-status">{isEn ? "Deploy your first defensive line" : "部署你的第一道防线"}</span><span id="wave-bonus">{isEn ? "Bonus +40" : "奖励 +40"}</span></div>
+						<button id="send-wave" class="primary" disabled>{isEn ? "Start Next Wave" : "开始下一波"} <span>→</span></button>
 					</section>
 					<section class="panel arsenal">
-						<div class="section-label"><span>防御工事</span><span>五种战术 · 三级进阶</span></div>
+						<div class="section-label"><span>{isEn ? "Arsenal" : "防御工事"}</span><span>{isEn ? "5 Tactics · 3 Tiers" : "五种战术 · 三级进阶"}</span></div>
 						<div id="tower-palette" class="tower-palette"></div>
 						<div class="selection-panel" id="selection-panel">
-							<div class="selection-title"><strong id="selection-name">箭塔</strong><span id="selection-level">快速 · 单体</span></div>
-							<p id="tower-description">迅捷连射，优先攻击最接近核心的敌人。</p>
+							<div class="selection-title"><strong id="selection-name">{isEn ? "Arrow Tower" : "箭塔"}</strong><span id="selection-level">{isEn ? "Rapid · Single Target" : "快速 · 单体"}</span></div>
+							<p id="tower-description">{isEn ? "Rapid volleys, prioritizing enemies closest to the core." : "迅捷连射，优先攻击最接近核心的敌人。"}</p>
 							<div class="tower-stats" id="tower-stats"></div>
-							<button id="build-tower" class="build-button" disabled>点击地图选择建造位置</button>
-							<div id="tower-actions" class="tower-actions" hidden><button id="upgrade" class="build-button">升级</button><button id="sell" class="sell-button">出售</button></div>
+							<button id="build-tower" class="build-button" disabled>{isEn ? "Click map to select build spot" : "点击地图选择建造位置"}</button>
+							<div id="tower-actions" class="tower-actions" hidden><button id="upgrade" class="build-button">{isEn ? "Upgrade" : "升级"}</button><button id="sell" class="sell-button">{isEn ? "Sell" : "出售"}</button></div>
 						</div>
 					</section>
-					<div class="field-note"><span>✦ 指挥官手记</span><p id="tip">交汇处部署炮塔与寒冰塔，让密集敌军寸步难行。</p></div>
+					<div class="field-note"><span>✦ {isEn ? "Commander's Field Note" : "指挥官手记"}</span><p id="tip">{isEn ? "Deploy Cannons and Frost Spires at intersections to halt dense swarms." : "交汇处部署炮塔与寒冰塔，让密集敌军寸步难行。"}</p></div>
 				</aside>
 			</div>
-			<div class="dispatch"><span class="dispatch-label">战场通讯</span><p id="notice" role="status" aria-live="polite">点击空地，建立你的第一座防御塔。</p><span class="kills">击破 <b id="kills">0</b></span></div>
-			<footer class="bottom"><span>一簇余烬，也能照亮长夜。</span><div><span>最佳得分 <b id="best-score">0</b></span><span>最佳防守 <b id="best-wave">0</b> 波</span><button id="help">作战指南</button></div></footer>
-			<details class="manual" id="manual"><summary>作战指南与敌军图鉴</summary><div class="manual-grid"><section><h3>建造与调度</h3><p>点击草地，选择塔型后确认建造；点击已有塔可升级或出售。出售返还累计投入的 70%。准备阶段可跳过倒计时。金矿仅在战斗中产出，暂停时全部计时冻结。</p><p>方向键移动选中地块，回车选定，空格暂停，数字 1—5 选择塔型，Esc 取消选择。手机上点选地块后，在下方工事面板确认建造。</p></section><section><h3>知己知彼</h3><p>疾行兽速度快，重甲卫血量高；蚀火虫成群出现，祈火者会周期治疗附近敌军。盾焰卫先消耗护盾，狙击塔对护盾造成额外伤害。</p><p>第 5、10、15 波出现领主，漏防扣除 5 点耐久，普通敌人扣除 1 点。第三波起北侧入口加入进攻。后期有急袭、虫潮与铁壁攻势。</p></section><section><h3>守望者的荣誉</h3><p>最终得分 = 守住波数 × 1000 + 击破数 × 10 + 剩余耐久 × 50。最佳得分与完整守住的波数保存在本机。</p><p id="achievements">本局成就：尚未解锁</p></section></div></details>
-			<dialog id="restart-dialog"><h2>重新点燃烽火？</h2><p>当前战局将重置，历史最佳纪录会保留。</p><div><button id="cancel-restart">继续本局</button><button id="confirm-restart" class="primary">重新开始</button></div></dialog>
+			<div class="dispatch"><span class="dispatch-label">{isEn ? "Field Dispatch" : "战场通讯"}</span><p id="notice" role="status" aria-live="polite">{isEn ? "Tap open ground to build your first defensive tower." : "点击空地，建立你的第一座防御塔。"}</p><span class="kills">{isEn ? "Kills " : "击破 "}<b id="kills">0</b></span></div>
+			<footer class="bottom"><span>{isEn ? "Even a dying ember can pierce the longest night." : "一簇余烬，也能照亮长夜。"}</span><div><span>{isEn ? "Best Score " : "最佳得分 "}<b id="best-score">0</b></span><span>{isEn ? "Best Wave " : "最佳防守 "}<b id="best-wave">0</b> {isEn ? "waves" : "波"}</span><button id="help">{isEn ? "Field Manual" : "作战指南"}</button></div></footer>
+			<details class="manual" id="manual"><summary>{isEn ? "Field Manual & Bestiary" : "作战指南与敌军图鉴"}</summary><div class="manual-grid">{isEn ? <Fragment><section><h3>Construction & Tactics</h3><p>Click grass plots, pick a tower type, and confirm construction; click placed towers to upgrade or sell. Selling refunds 70% of total invested gold. Preparation phase countdowns can be skipped. Gold mines produce income only during battle waves.</p><p>Arrow keys move cursor, Enter confirms, Space pauses, keys 1-5 select towers, Esc cancels. On mobile, tap ground then confirm construction in the arsenal panel.</p></section><section><h3>Know Thy Enemy</h3><p>Sprinter Beasts run fast; Armored Juggernauts boast massive health; Blight Crawlers attack in dense swarms; Pyre Clerics periodically heal nearby units. Flame Sentinels have durable shields—Snipers deal bonus shield damage.</p><p>Ember Lords arrive on waves 5, 10, and 15. Leaking a boss costs 5 health, normal enemies cost 1. Northern pass opens on wave 3.</p></section><section><h3>Watcher's Honor</h3><p>Final Score = Waves Defended × 1000 + Kills × 10 + Remaining Health × 50. High scores and records saved locally.</p><p id="achievements">Session Achievements: None unlocked</p></section></Fragment> : <Fragment><section><h3>建造与调度</h3><p>点击草地，选择塔型后确认建造；点击已有塔可升级或出售。出售返还累计投入的 70%。准备阶段可跳过倒计时。金矿仅在战斗中产出，暂停时全部计时冻结。</p><p>方向键移动选中地块，回车选定，空格暂停，数字 1—5 选择塔型，Esc 取消选择。手机上点选地块后，在下方工事面板确认建造。</p></section><section><h3>知己知彼</h3><p>疾行兽速度快，重甲卫血量高；蚀火虫成群出现，祈火者会周期治疗附近敌军。盾焰卫先消耗护盾，狙击塔对护盾造成额外伤害。</p><p>第 5、10、15 波出现领主，漏防扣除 5 点耐久，普通敌人扣除 1 点。第三波起北侧入口加入进攻。后期有急袭、虫潮与铁壁攻势。</p></section><section><h3>守望者的荣誉</h3><p>最终得分 = 守住波数 × 1000 + 击破数 × 10 + 剩余耐久 × 50。最佳得分与完整守住的波数保存在本机。</p><p id="achievements">本局成就：尚未解锁</p></section></Fragment>}</div></details>
+			<dialog id="restart-dialog"><h2>{isEn ? "Relight the Beacon?" : "重新点燃烽火？"}</h2><p>{isEn ? "Current battle will reset, but high scores will be preserved." : "当前战局将重置，历史最佳纪录会保留。"}</p><div><button id="cancel-restart">{isEn ? "Resume Current" : "继续本局"}</button><button id="confirm-restart" class="primary">{isEn ? "Restart" : "重新开始"}</button></div></dialog>
 		</main>
 		<script>
 			import { mount } from "@/lib/emberhold-siege/ui.js";
