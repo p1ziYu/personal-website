@@ -123,11 +123,11 @@ export const en: Translation = {
 	[Key.tagsCount]: "tags",
 	[Key.noData]: "No data yet",
 
-	[Key.themeColor]: "Theme Color",
+	[Key.themeColor]: "Theme hue",
 
 	[Key.lightMode]: "Light",
 	[Key.darkMode]: "Dark",
-	[Key.systemMode]: "System",
+	[Key.systemMode]: "Follow system",
 
 	[Key.more]: "More",
 	[Key.collapse]: "Collapse",
@@ -421,7 +421,7 @@ export const en: Translation = {
 	[Key.cardFollowTheme]: "Card Follow Theme Color",
 
 	// Post List Layout
-	[Key.postListLayout]: "Post List Layout",
+	[Key.postListLayout]: "Article layout",
 	[Key.postListLayoutList]: "List",
 	[Key.postListLayoutGrid]: "Grid",
 
@@ -541,7 +541,7 @@ export const en: Translation = {
 
 	// Immersive Reading
 	[Key.immersiveReading]: "Immersive Reading",
-	[Key.enterImmersiveReading]: "Enter Immersive Reading",
+	[Key.enterImmersiveReading]: "Start focused reading",
 	[Key.exitImmersiveReading]: "Exit Immersive Reading",
 	[Key.tocExpand]: "Expand directory",
 	[Key.tocCollapse]: "Collapse directory",
