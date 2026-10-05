@@ -53,7 +53,7 @@ function getLocalSubsetFonts(): LocalSubsetFont[] {
 	const result: LocalSubsetFont[] = [];
 	for (const [cssVar, opts] of subsetEntries) {
 		// 跳过未被使用的字体，避免生成无用的子集文件
-		if (!used.has(cssVar)) {
+		if (!used.has(cssVar as import("astro:assets").CssVariable)) {
 			console.log(
 				`   ⏭ Skipping '${cssVar}' — not referenced in selected or any font region.`,
 			);
