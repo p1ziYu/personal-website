@@ -69,6 +69,11 @@ export const ru: Translation = {
 	[Key.musicCover]: "Обложка",
 	[Key.musicNoCover]: "Нет обложки",
 	[Key.musicAudioPlayer]: "Аудиоплеер",
+	[Key.musicCollapse]: "Свернуть плеер",
+	[Key.musicExpand]: "Развернуть плеер",
+	[Key.musicDrag]: "Перетащить",
+	[Key.musicMute]: "Отключить звук",
+	[Key.musicUnmute]: "Включить звук",
 
 	// Объявление
 	[Key.announcement]: "Объявление",
