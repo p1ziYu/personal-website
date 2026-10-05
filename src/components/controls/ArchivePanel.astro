@@ -5,9 +5,16 @@ import { i18n } from "@/i18n/translation";
 import { getSortedPostsList } from "@/utils/content-utils";
 import { getPostUrlBySlug, url } from "@/utils/url-utils";
 
+interface Props {
+	lang?: string;
+}
+
+const { lang } = Astro.props;
+const isEn = lang === "en" || Astro.url.pathname.startsWith("/en");
+
 // 归档列表：全量按年分组，服务端渲染。筛选（?tag=/?category=/?uncategorized）
 // 与年份折叠由客户端脚本处理——数据本身在构建期已全部就绪。
-const sortedPostsList = await getSortedPostsList();
+const sortedPostsList = await getSortedPostsList(isEn ? "en" : undefined);
 
 // 严格按发布时间倒序（不受置顶影响），镜像原 Svelte 版行为
 const posts = sortedPostsList
@@ -41,14 +48,14 @@ function formatTag(tagList: string[]) {
 
 // 传给客户端脚本的 i18n 文案与配置
 const i18nStrings = {
-	categories: i18n(I18nKey.categories),
-	tags: i18n(I18nKey.tags),
-	uncategorized: i18n(I18nKey.uncategorized),
-	postCount: i18n(I18nKey.postCount),
-	postsCount: i18n(I18nKey.postsCount),
+	categories: i18n(I18nKey.categories, isEn ? "en" : undefined),
+	tags: i18n(I18nKey.tags, isEn ? "en" : undefined),
+	uncategorized: i18n(I18nKey.uncategorized, isEn ? "en" : undefined),
+	postCount: i18n(I18nKey.postCount, isEn ? "en" : undefined),
+	postsCount: i18n(I18nKey.postsCount, isEn ? "en" : undefined),
 };
-const tagsBaseUrl = url("/tags/");
-const categoriesBaseUrl = url("/categories/");
+const tagsBaseUrl = url(isEn ? "/en/tags/" : "/tags/");
+const categoriesBaseUrl = url(isEn ? "/en/categories/" : "/categories/");
 const foldOnFilter = collapseAllButFirst;
 ---
 
@@ -92,7 +99,7 @@ const foldOnFilter = collapseAllButFirst;
                       group-hover/yr:text-(--primary)">
             <span class="archive-year-count">{group.posts.length}</span>
             {" "}
-            <span class="archive-year-count-label">{i18n(group.posts.length === 1 ? I18nKey.postCount : I18nKey.postsCount)}</span>
+            <span class="archive-year-count-label">{i18n(group.posts.length === 1 ? I18nKey.postCount : I18nKey.postsCount, isEn ? "en" : undefined)}</span>
             <span class="archive-arrow" style={collapsed ? "transform: rotate(-90deg)" : ""}>
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                 <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
@@ -104,7 +111,7 @@ const foldOnFilter = collapseAllButFirst;
         <div class="archive-year-content" hidden={collapsed}>
           {group.posts.map((post) => (
             <a
-              href={getPostUrlBySlug(post.id)}
+              href={getPostUrlBySlug(post.id, isEn ? "en" : undefined)}
               aria-label={post.data.title}
               class="archive-post group btn-plain block! h-10 w-full rounded-lg hover:text-[initial]"
               data-tags={JSON.stringify(post.data.tags || [])}
