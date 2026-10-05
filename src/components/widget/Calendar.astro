@@ -1,11 +1,12 @@
 ---
 import { Icon } from "astro-icon/components";
 import WidgetLayout from "@/components/common/WidgetLayout.astro";
-import { siteConfig } from "@/config/siteConfig";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import type { WidgetComponentConfig } from "@/types/config";
 import { url } from "@/utils/url-utils";
+
+const uiLang = getLangFromPath(Astro.url.pathname);
 
 interface Props {
 	class?: string;
@@ -20,45 +21,45 @@ const showTitle = widgetConfig?.showTitle !== false;
 
 // 月份名称（使用 i18n）
 const monthNames = [
-	i18n(I18nKey.calendarJanuary),
-	i18n(I18nKey.calendarFebruary),
-	i18n(I18nKey.calendarMarch),
-	i18n(I18nKey.calendarApril),
-	i18n(I18nKey.calendarMay),
-	i18n(I18nKey.calendarJune),
-	i18n(I18nKey.calendarJuly),
-	i18n(I18nKey.calendarAugust),
-	i18n(I18nKey.calendarSeptember),
-	i18n(I18nKey.calendarOctober),
-	i18n(I18nKey.calendarNovember),
-	i18n(I18nKey.calendarDecember),
+	i18n(I18nKey.calendarJanuary, uiLang),
+	i18n(I18nKey.calendarFebruary, uiLang),
+	i18n(I18nKey.calendarMarch, uiLang),
+	i18n(I18nKey.calendarApril, uiLang),
+	i18n(I18nKey.calendarMay, uiLang),
+	i18n(I18nKey.calendarJune, uiLang),
+	i18n(I18nKey.calendarJuly, uiLang),
+	i18n(I18nKey.calendarAugust, uiLang),
+	i18n(I18nKey.calendarSeptember, uiLang),
+	i18n(I18nKey.calendarOctober, uiLang),
+	i18n(I18nKey.calendarNovember, uiLang),
+	i18n(I18nKey.calendarDecember, uiLang),
 ];
 
 // 星期名称（简写，使用 i18n）
 const weekDays = [
-	i18n(I18nKey.calendarSunday),
-	i18n(I18nKey.calendarMonday),
-	i18n(I18nKey.calendarTuesday),
-	i18n(I18nKey.calendarWednesday),
-	i18n(I18nKey.calendarThursday),
-	i18n(I18nKey.calendarFriday),
-	i18n(I18nKey.calendarSaturday),
+	i18n(I18nKey.calendarSunday, uiLang),
+	i18n(I18nKey.calendarMonday, uiLang),
+	i18n(I18nKey.calendarTuesday, uiLang),
+	i18n(I18nKey.calendarWednesday, uiLang),
+	i18n(I18nKey.calendarThursday, uiLang),
+	i18n(I18nKey.calendarFriday, uiLang),
+	i18n(I18nKey.calendarSaturday, uiLang),
 ];
 
 // 年份文本
-const yearText = i18n(I18nKey.year);
+const yearText = i18n(I18nKey.year, uiLang);
 
 // 热力图周数文本模板
-const heatmapWeekTemplate = i18n(I18nKey.calendarHeatmapWeek);
+const heatmapWeekTemplate = i18n(I18nKey.calendarHeatmapWeek, uiLang);
 
 // 获取当前语言
-const currentLang = siteConfig.lang || "en";
+const currentLang = uiLang;
 
-const calendarDataUrl = url("/api/allPostMeta.json");
+const calendarDataUrl = url(uiLang === "en" ? "/en/api/allPostMeta.json" : "/api/allPostMeta.json");
 const postUrlPrefix = url("/posts/");
 ---
 
-<WidgetLayout name={i18n(I18nKey.calendar)} showTitle={showTitle} id="calendar-widget" class={className} style={style}>
+<WidgetLayout name={i18n(I18nKey.calendar, uiLang)} showTitle={showTitle} id="calendar-widget" class={className} style={style}>
   <div class="calendar-container">
     <div class="flex justify-between items-center mb-2">
         <button id="prev-month-btn" class="btn-plain rounded-lg w-8 h-8 flex items-center justify-center hover:bg-(--btn-plain-bg-hover) transition-colors" aria-label="Previous Month">
@@ -121,7 +122,7 @@ const postUrlPrefix = url("/posts/");
   </div>
 </WidgetLayout>
 
-<script is:inline data-swup-ignore-script define:vars={{ monthNames, weekDays, yearText, currentLang, calendarDataUrl, postUrlPrefix, heatmapWeekTemplate }}>
+<script is:inline define:vars={{ monthNames, weekDays, yearText, currentLang, calendarDataUrl, postUrlPrefix, heatmapWeekTemplate }}>
   // State variables
   let displayYear = new Date().getFullYear();
   let displayMonth = new Date().getMonth();
@@ -133,12 +134,13 @@ const postUrlPrefix = url("/posts/");
   async function fetchData() {
     try {
       // 使用缓存避免 swup 导航时重复请求
-      if (window.__allPostMetaCache) {
-        allPostsData = window.__allPostMetaCache;
+      if (window.__postMetaByUrl && window.__postMetaByUrl[calendarDataUrl]) {
+        allPostsData = window.__postMetaByUrl[calendarDataUrl];
       } else {
         const response = await fetch(calendarDataUrl);
         allPostsData = await response.json();
-        window.__allPostMetaCache = allPostsData;
+        window.__postMetaByUrl = window.__postMetaByUrl || {};
+        window.__postMetaByUrl[calendarDataUrl] = allPostsData;
       }
       
       // Reconstruct postDateMap and availableYears
@@ -150,7 +152,7 @@ const postUrlPrefix = url("/posts/");
         if (!postDateMap[dateKey]) {
           postDateMap[dateKey] = [];
         }
-        postDateMap[dateKey].push({ id: post.id, title: post.title, published: post.published });
+        postDateMap[dateKey].push({ id: post.id, url: post.url, title: post.title, published: post.published });
         yearsSet.add(date.getFullYear());
       });
       
@@ -475,7 +477,7 @@ const postUrlPrefix = url("/posts/");
         const date = new Date(post.published);
         const dateStr = `${date.getMonth() + 1}-${date.getDate()}`;
         return `
-        <a href="${postUrlPrefix}${post.id}/" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
+        <a href="${post.url || postUrlPrefix + post.id + "/"}" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
           <span class="truncate">${post.title}</span>
           <span class="text-xs text-neutral-500 dark:text-neutral-400 ml-2 whitespace-nowrap">${dateStr}</span>
         </a>
@@ -535,7 +537,7 @@ const postUrlPrefix = url("/posts/");
             const date = new Date(post.published);
             const dateStr = `${date.getMonth() + 1}-${date.getDate()}`;
             return `
-            <a href="${postUrlPrefix}${post.id}/" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
+            <a href="${post.url || postUrlPrefix + post.id + "/"}" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
               <span class="truncate">${post.title}</span>
               <span class="text-xs text-neutral-500 dark:text-neutral-400 ml-2 whitespace-nowrap">${dateStr}</span>
             </a>
@@ -608,12 +610,12 @@ const postUrlPrefix = url("/posts/");
   initCalendar();
 
   // 防止 Swup 切页重跑脚本时重复注册监听器（此脚本的 data-swup-ignore-script 在 define:vars 构建时可能丢失）
-  if (!window.__calendarInit) {
-    window.__calendarInit = true;
+  if (window.__calendarCleanup) window.__calendarCleanup();
+  {
     // 页面切换时重新渲染
-    document.addEventListener("swup:contentReplaced", () => {
-      setTimeout(initCalendar, 100);
-    });
+    const onReplace = () => setTimeout(initCalendar, 100);
+    document.addEventListener("swup:contentReplaced", onReplace);
+    window.__calendarCleanup = () => document.removeEventListener("swup:contentReplaced", onReplace);
   }
 </script>
 
