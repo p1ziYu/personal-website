@@ -463,6 +463,10 @@ enum I18nKey {
 	today = "today",
 
 	// 站点信息
+	siteInfoLocal = "siteInfoLocal",
+	siteInfoLocalDev = "siteInfoLocalDev",
+	siteInfoUnknown = "siteInfoUnknown",
+	siteInfoUnknownCi = "siteInfoUnknownCi",
 	siteInfo = "siteInfo",
 	siteInfoBuildTime = "siteInfoBuildTime",
 	siteInfoBuildPlatform = "siteInfoBuildPlatform",
