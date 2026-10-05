@@ -469,6 +469,10 @@ export const zh_CN: Translation = {
 	[Key.today]: "今天",
 
 	// 站点信息
+	[Key.siteInfoLocal]: "本地",
+	[Key.siteInfoLocalDev]: "本地开发",
+	[Key.siteInfoUnknown]: "未知",
+	[Key.siteInfoUnknownCi]: "未知 CI",
 	[Key.siteInfo]: "站点信息",
 	[Key.siteInfoBuildTime]: "构建时间",
 	[Key.siteInfoBuildPlatform]: "构建平台",
