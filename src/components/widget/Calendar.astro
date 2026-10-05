@@ -462,6 +462,20 @@ const postUrlPrefix = url("/posts/");
     });
   }
   
+  function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, char => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[char]));
+  }
+
+  function safePostHref(post) {
+    const href = post.url || postUrlPrefix + post.id + "/";
+    try {
+      const parsed = new URL(href, window.location.origin);
+      return /^https?:$/.test(parsed.protocol) ? escapeHtml(href) : "#";
+    } catch {
+      return "#";
+    }
+  }
+
   // 显示当月所有文章
   function showMonthlyPosts(currentMonthPosts) {
     const postsWrapper = document.getElementById('calendar-posts');
@@ -477,8 +491,8 @@ const postUrlPrefix = url("/posts/");
         const date = new Date(post.published);
         const dateStr = `${date.getMonth() + 1}-${date.getDate()}`;
         return `
-        <a href="${post.url || postUrlPrefix + post.id + "/"}" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
-          <span class="truncate">${post.title}</span>
+        <a href="${safePostHref(post)}" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
+          <span class="truncate">${escapeHtml(post.title)}</span>
           <span class="text-xs text-neutral-500 dark:text-neutral-400 ml-2 whitespace-nowrap">${dateStr}</span>
         </a>
       `}).join('');
@@ -537,8 +551,8 @@ const postUrlPrefix = url("/posts/");
             const date = new Date(post.published);
             const dateStr = `${date.getMonth() + 1}-${date.getDate()}`;
             return `
-            <a href="${post.url || postUrlPrefix + post.id + "/"}" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
-              <span class="truncate">${post.title}</span>
+            <a href="${safePostHref(post)}" class="flex justify-between items-center text-sm text-neutral-700 dark:text-neutral-300 hover:text-(--primary) dark:hover:text-(--primary) transition-colors px-2 py-1 rounded-sm hover:bg-(--btn-plain-bg-hover)">
+              <span class="truncate">${escapeHtml(post.title)}</span>
               <span class="text-xs text-neutral-500 dark:text-neutral-400 ml-2 whitespace-nowrap">${dateStr}</span>
             </a>
           `}).join('');
