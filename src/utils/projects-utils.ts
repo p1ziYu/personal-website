@@ -118,7 +118,10 @@ const NEUTRAL_COVER_CLASS =
 /**
  * 解析项目状态：标准 key 返回本地化文案 + 配色 + 图标；未知字符串原样显示（中性灰）。
  */
-export function getProjectStatusMeta(status: string): {
+export function getProjectStatusMeta(
+	status: string,
+	lang?: string,
+): {
 	label: string;
 	icon: string;
 	className: string;
@@ -143,7 +146,7 @@ export function getProjectStatusMeta(status: string): {
 			known: false,
 		};
 	return {
-		label: i18n(meta.key),
+		label: i18n(meta.key, lang),
 		icon: meta.icon,
 		className: meta.className,
 		coverClassName: meta.coverClassName,
