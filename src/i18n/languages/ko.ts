@@ -2,6 +2,13 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const ko: Translation = {
+	[Key.language]: "Language",
+	[Key.navigationMenu]: "탐색 메뉴",
+	[Key.tabNavigation]: "탭",
+	[Key.closeMenu]: "메뉴 닫기",
+	[Key.switchToEnglish]: "영어로 전환",
+	[Key.switchToChinese]: "중국어로 전환",
+	[Key.englishUnavailable]: "이 페이지는 영어 버전이 없습니다",
 	[Key.home]: "홈",
 	[Key.about]: "소개",
 	[Key.archive]: "아카이브",
@@ -96,6 +103,18 @@ export const ko: Translation = {
 	[Key.booknavEmpty]: "북마크가 없습니다.",
 
 	// 프로젝트 쇼케이스
+	// Project initial UI text
+	[Key.kineticMemeNote]: "≈ 23,034 slaps (matches the meme!)",
+	[Key.kineticEnergyNote]: "Kinetic energy / slap: 12.48 J (0.4kg hand)",
+	[Key.kineticTimeInitial]: "3 hours 12 minutes",
+	[Key.kineticTimeNote]: "Continuous slapping at 2 slaps/sec",
+	[Key.kineticTemperatureNote]: "Heated from 4°C to target 75°C",
+	[Key.kineticToastInitial]: "Warm-up complete!",
+	[Key.kineticStatusInitial]: "Chilled Raw",
+	[Key.annealingActionInitial]: "Simulated Annealing",
+	[Key.annealingStatusInitial]: "Annealing engine ready (~30 moves/s)",
+	[Key.annealingStepsInitial]: "0 attempts",
+
 	[Key.projects]: "프로젝트",
 	[Key.projectsDescription]: "제가 개발한 프로젝트입니다",
 	[Key.projectDetails]: "자세히 보기",
@@ -495,6 +514,18 @@ export const ko: Translation = {
 	[Key.calendarHeatmapWeek]: "{month}의 {week}주차, 게시글 {count}개",
 	[Key.advertisement]: "광고",
 
+	[Key.profileAvatar]: "illustrated avatar",
+	[Key.displaySettings]: "Display settings",
+	[Key.resetToDefault]: "Reset to default",
+	[Key.calendarPreviousMonth]: "Previous month",
+	[Key.calendarNextMonth]: "Next month",
+	[Key.calendarBackToToday]: "Back to today",
+	[Key.backToTop]: "Back to top",
+	[Key.scrollToComments]: "Scroll to comments",
+	[Key.mobileBackgroundImage]: "Mobile background image of the blog",
+	[Key.desktopBackgroundImage]: "Desktop background image of the blog",
+	[Key.tagPostsLabel]: "View all posts with the {name} tag",
+	[Key.categoryPostsLabel]: "View all posts in the {name} category",
 	[Key.shareArticle]: "공유",
 	[Key.generatingPoster]: "포스터 생성 중...",
 	[Key.copied]: "복사됨",
