@@ -148,8 +148,17 @@ function registerSwupHooks(): void {
 		}
 
 		// 更新首页状态（body.is-home 驱动 CSS --content-top 等）
+		const targetUrlPath = (() => {
+			try {
+				return new URL(visit.to.url, window.location.href).pathname;
+			} catch {
+				return visit.to.url;
+			}
+		})();
+		const isHomePage =
+			pathsEqual(targetUrlPath, url("/")) ||
+			pathsEqual(targetUrlPath, url("/en/"));
 		const bodyElement = document.querySelector("body") as HTMLElement;
-		const isHomePage = pathsEqual(visit.to.url, url("/"));
 		const wasHome = bodyElement.classList.contains("is-home");
 		const contentPanel = document.querySelector(
 			".content-panel",
