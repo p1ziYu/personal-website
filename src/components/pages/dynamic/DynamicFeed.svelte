@@ -118,6 +118,32 @@ function populateYears() {
 	}
 }
 
+function sanitizeDynamicHtml(html: string): DocumentFragment {
+	const parsed = new DOMParser().parseFromString(html, "text/html");
+	const allowed = new Set(["A", "P", "BR", "STRONG", "EM", "B", "I", "S", "DEL", "CODE", "PRE", "BLOCKQUOTE", "UL", "OL", "LI", "H1", "H2", "H3", "H4", "H5", "H6", "HR"]);
+	for (const element of Array.from(parsed.body.querySelectorAll("*"))) {
+		if (!allowed.has(element.tagName)) {
+			element.replaceWith(document.createTextNode(element.textContent || ""));
+			continue;
+		}
+		const href = element.tagName === "A" ? element.getAttribute("href") : null;
+		for (const attribute of Array.from(element.attributes)) element.removeAttribute(attribute.name);
+		if (href) {
+			try {
+				const safeUrl = new URL(href, window.location.href);
+				if (/^(https?:|mailto:)$/.test(safeUrl.protocol)) {
+					element.setAttribute("href", safeUrl.href);
+					element.setAttribute("rel", "noopener noreferrer");
+					element.setAttribute("target", "_blank");
+				}
+			} catch { /* Invalid links remain plain text. */ }
+		}
+	}
+	const fragment = document.createDocumentFragment();
+	while (parsed.body.firstChild) fragment.append(parsed.body.firstChild);
+	return fragment;
+}
+
 function createItem(entry: DynamicData) {
 	if (!template) return null;
 	const fragment = template.content.cloneNode(true) as DocumentFragment;
@@ -201,7 +227,7 @@ function createItem(entry: DynamicData) {
 	const content = root.querySelector<HTMLElement>("[data-dynamic-content]");
 	if (content) {
 		content.id = `${anchorId}-content`;
-		content.innerHTML = entry.html;
+		content.append(sanitizeDynamicHtml(entry.html));
 		for (const image of entry.images) {
 			const element = document.createElement("img");
 			element.src = image.src;
