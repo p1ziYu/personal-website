@@ -332,7 +332,8 @@ html[data-wallpaper-mode="fullscreen"] #navbar[data-is-home="true"][data-transpa
 html[data-wallpaper-mode="fullscreen"] #navbar[data-is-home="true"][data-transparent-mode="semifull"]:not(.scrolled) #display-settings-switch,
 html[data-wallpaper-mode="fullscreen"] #navbar[data-is-home="true"][data-transparent-mode="semifull"]:not(.scrolled) #scheme-switch,
 html[data-wallpaper-mode="fullscreen"] #navbar[data-is-home="true"][data-transparent-mode="semifull"]:not(.scrolled) #search-switch,
-html[data-wallpaper-mode="fullscreen"] #navbar[data-is-home="true"][data-transparent-mode="semifull"]:not(.scrolled) #nav-menu-switch {
+html[data-wallpaper-mode="fullscreen"] #navbar[data-is-home="true"][data-transparent-mode="semifull"]:not(.scrolled) #nav-menu-switch,
+html[data-wallpaper-mode="fullscreen"] #navbar[data-is-home="true"][data-transparent-mode="semifull"]:not(.scrolled) #language-switch {
     color: #fff !important;
     text-shadow: 0 2px 10px rgb(0 0 0 / 65%);
 }
