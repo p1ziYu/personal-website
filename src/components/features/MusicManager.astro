@@ -1,8 +1,10 @@
 ---
 import { musicPlayerConfig } from "@/config/musicConfig";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import { url } from "@/utils/url-utils";
+
+const uiLang = getLangFromPath(Astro.url.pathname);
 
 const config = musicPlayerConfig;
 
@@ -37,22 +39,22 @@ const managerConfigStr = JSON.stringify({
 	showLyrics: config.showLyrics ?? true,
 	autoplay: config.autoplay ?? false,
 	i18n: {
-		noPlaying: i18n(I18nKey.musicNoPlaying),
-		lyrics: i18n(I18nKey.musicLyrics),
-		volume: i18n(I18nKey.musicVolume),
-		playMode: i18n(I18nKey.musicPlayMode),
-		prev: i18n(I18nKey.musicPrev),
-		next: i18n(I18nKey.musicNext),
-		playlist: i18n(I18nKey.musicPlaylist),
-		noLyrics: i18n(I18nKey.musicNoLyrics),
-		loadingLyrics: i18n(I18nKey.musicLoadingLyrics),
-		failedLyrics: i18n(I18nKey.musicFailedLyrics),
-		noSongs: i18n(I18nKey.musicNoSongs),
-		error: i18n(I18nKey.musicError),
-		play: i18n(I18nKey.musicPlay),
-		pause: i18n(I18nKey.musicPause),
-		progress: i18n(I18nKey.musicProgress),
-		noCover: i18n(I18nKey.musicNoCover),
+		noPlaying: i18n(I18nKey.musicNoPlaying, uiLang),
+		lyrics: i18n(I18nKey.musicLyrics, uiLang),
+		volume: i18n(I18nKey.musicVolume, uiLang),
+		playMode: i18n(I18nKey.musicPlayMode, uiLang),
+		prev: i18n(I18nKey.musicPrev, uiLang),
+		next: i18n(I18nKey.musicNext, uiLang),
+		playlist: i18n(I18nKey.musicPlaylist, uiLang),
+		noLyrics: i18n(I18nKey.musicNoLyrics, uiLang),
+		loadingLyrics: i18n(I18nKey.musicLoadingLyrics, uiLang),
+		failedLyrics: i18n(I18nKey.musicFailedLyrics, uiLang),
+		noSongs: i18n(I18nKey.musicNoSongs, uiLang),
+		error: i18n(I18nKey.musicError, uiLang),
+		play: i18n(I18nKey.musicPlay, uiLang),
+		pause: i18n(I18nKey.musicPause, uiLang),
+		progress: i18n(I18nKey.musicProgress, uiLang),
+		noCover: i18n(I18nKey.musicNoCover, uiLang),
 	},
 });
 ---
