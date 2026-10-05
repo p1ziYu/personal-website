@@ -3,7 +3,7 @@ import type { MarkdownHeading } from "astro";
 import FloatingButton from "@/components/common/FloatingButton.astro";
 import { siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import "@/styles/toc.css";
 import { computeTocItems } from "@/utils/toc-shared";
 
@@ -21,6 +21,7 @@ const tocPosition = immersiveConfig?.tocPosition ?? "left";
 
 // 加密文章不在服务端渲染目录（避免标题泄露），交由客户端解密后生成
 const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
+const uiLang = getLangFromPath(Astro.url.pathname);
 ---
 
 {
@@ -31,7 +32,7 @@ const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
         id="immersive-toc-toggle-btn"
         icon="material-symbols:format-list-bulleted"
         toggleIcon="material-symbols:close"
-        ariaLabel={i18n(I18nKey.immersiveReading)}
+        ariaLabel={i18n(I18nKey.immersiveReading, uiLang)}
         onclick="window.toggleImmersiveTOC()"
         class="hide"
       />
@@ -39,11 +40,11 @@ const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
       <!-- 常驻目录栏：桌面/移动一致，默认展开（类 PDF） -->
       <div id="immersive-toc" class="immersive-toc" data-position={tocPosition}>
         <div class="immersive-toc-header">
-          <span class="immersive-toc-title">{i18n(I18nKey.tableOfContents)}</span>
+          <span class="immersive-toc-title">{i18n(I18nKey.tableOfContents, uiLang)}</span>
           <button
             class="immersive-toc-toggle"
             type="button"
-            aria-label={i18n(I18nKey.immersiveReading)}
+            aria-label={i18n(I18nKey.immersiveReading, uiLang)}
             onclick="window.toggleImmersiveTOC()"
           >
             ×
@@ -92,7 +93,7 @@ const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
             )}
             {!encrypted && items.length === 0 && (
               <div class="text-center py-8 text-gray-500 dark:text-gray-400">
-                <p>{i18n(I18nKey.tocEmpty)}</p>
+                <p>{i18n(I18nKey.tocEmpty, uiLang)}</p>
               </div>
             )}
             {/* 加密文章：留空，客户端解密后由 TOCManager 填充 */}
