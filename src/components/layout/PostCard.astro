@@ -5,6 +5,8 @@ import { Icon } from "astro-icon/components";
 import CoverImage from "@/components/common/CoverImage.astro";
 import PostMetadata from "@/components/layout/PostMeta.astro";
 import PostStats from "@/components/layout/PostStats.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import { siteConfig } from "@/config";
 import { getApiUrlList, processCoverImageSync } from "@/utils/image-utils";
 import { getFileDirFromPath, getTagUrl } from "@/utils/url-utils";
@@ -184,7 +186,7 @@ const minutes = remarkPluginFrontmatter.minutes;
         {bottomTags.map((tag) => (
           <a
             href={getTagUrl(tag)}
-            aria-label={`View all posts with the ${tag.trim()} tag`}
+            aria-label={i18n(I18nKey.tagPostsLabel, getLangFromPath(Astro.url.pathname)).replace("{name}", tag.trim())}
             class:list={[
               "transition text-xs font-medium",
               bottomTagsAsText
