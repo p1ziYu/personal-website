@@ -2,6 +2,13 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const en: Translation = {
+	[Key.language]: "Language",
+	[Key.navigationMenu]: "Navigation menu",
+	[Key.tabNavigation]: "Tabs",
+	[Key.closeMenu]: "Close menu",
+	[Key.switchToEnglish]: "Switch to English",
+	[Key.switchToChinese]: "Switch to Chinese",
+	[Key.englishUnavailable]: "English version not available for this page",
 	[Key.home]: "Home",
 	[Key.about]: "About",
 	[Key.archive]: "Archive",
@@ -95,6 +102,18 @@ export const en: Translation = {
 		"A curated collection of useful sites, organized by category.",
 	[Key.searchBooknav]: "Search bookmarks...",
 	[Key.booknavEmpty]: "No bookmarks yet.",
+
+	// Project initial UI text
+	[Key.kineticMemeNote]: "≈ 23,034 slaps (matches the meme!)",
+	[Key.kineticEnergyNote]: "Kinetic energy / slap: 12.48 J (0.4kg hand)",
+	[Key.kineticTimeInitial]: "3 hours 12 minutes",
+	[Key.kineticTimeNote]: "Continuous slapping at 2 slaps/sec",
+	[Key.kineticTemperatureNote]: "Heated from 4°C to target 75°C",
+	[Key.kineticToastInitial]: "Warm-up complete!",
+	[Key.kineticStatusInitial]: "Chilled Raw",
+	[Key.annealingActionInitial]: "Simulated Annealing",
+	[Key.annealingStatusInitial]: "Annealing engine ready (~30 moves/s)",
+	[Key.annealingStepsInitial]: "0 attempts",
 
 	// Project showcase
 	[Key.projects]: "Projects",
@@ -498,6 +517,18 @@ export const en: Translation = {
 	[Key.calendarHeatmapWeek]: "Week {week} of {month}, {count} posts",
 	[Key.advertisement]: "Advertisement",
 
+	[Key.profileAvatar]: "illustrated avatar",
+	[Key.displaySettings]: "Display settings",
+	[Key.resetToDefault]: "Reset to default",
+	[Key.calendarPreviousMonth]: "Previous month",
+	[Key.calendarNextMonth]: "Next month",
+	[Key.calendarBackToToday]: "Back to today",
+	[Key.backToTop]: "Back to top",
+	[Key.scrollToComments]: "Scroll to comments",
+	[Key.mobileBackgroundImage]: "Mobile background image of the blog",
+	[Key.desktopBackgroundImage]: "Desktop background image of the blog",
+	[Key.tagPostsLabel]: "View all posts with the {name} tag",
+	[Key.categoryPostsLabel]: "View all posts in the {name} category",
 	[Key.shareArticle]: "Share",
 	[Key.generatingPoster]: "Generating Poster...",
 	[Key.copied]: "Copied",
