@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import type { NavBarLink } from "@/types/config";
 import { resolveNavbarNameBoth } from "@/utils/navbar-i18n";
 import { hasEnglishVersion, isEnPath } from "@/utils/route-manifest";
@@ -32,13 +34,13 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
     <!-- 遮罩（scrim）：点击关闭 -->
     <div class="mobile-menu-scrim" aria-hidden="true"></div>
     <!-- 抽屉：MD3 侧边导航，右侧滑入，占满整高，内部滚动 -->
-    <aside class="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label="导航菜单">
+    <aside class="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label={i18n(I18nKey.navigationMenu, isEn ? "en" : undefined)}>
         <header class="mobile-menu-header">
             <span class="mobile-menu-title">
                 <span class="lang-zh">{navTitle}</span>
                 <span class="lang-en">p1ziYu's Space</span>
             </span>
-            <button type="button" class="mobile-menu-close" aria-label="关闭菜单">
+            <button type="button" class="mobile-menu-close" aria-label={i18n(I18nKey.closeMenu, isEn ? "en" : undefined)}>
                 <Icon name="material-symbols:close-rounded" class="text-[1.5rem]" />
             </button>
         </header>
@@ -119,7 +121,7 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
         <div class="px-5 py-4 border-t border-black/10 dark:border-white/10 mt-auto flex items-center justify-between">
             <span class="text-xs opacity-60">
                 <span class="lang-zh">语言 / Language</span>
-                <span class="lang-en">Language / 语言</span>
+                <span class="lang-en">{i18n(I18nKey.language, "en")}</span>
             </span>
             <button
                 type="button"
