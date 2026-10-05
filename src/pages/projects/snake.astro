@@ -1,11 +1,12 @@
 ---
+const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
 ---
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang={isEn ? "en" : "zh-CN"}>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>贪吃蛇</title>
+<title>{isEn ? "Retro Snake" : "贪吃蛇"}</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body { background:#0b1020; color:#e8ecf8; font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; overflow:hidden; }
@@ -32,15 +33,15 @@
 </style>
 </head>
 <body>
-  <h1>贪吃蛇</h1>
-  <div class="sub">经典重制 · 越吃越快</div>
-  <div class="scorebar"><span>分数 <b id="score">0</b></span><span>最高 <b id="best">0</b></span></div>
+  <h1>{isEn ? "Retro Snake" : "贪吃蛇"}</h1>
+  <div class="sub">{isEn ? "Classic Remake · Faster With Every Bite" : "经典重制 · 越吃越快"}</div>
+  <div class="scorebar"><span>{isEn ? "Score " : "分数 "}<b id="score">0</b></span><span>{isEn ? "Best " : "最高 "}<b id="best">0</b></span></div>
   <div class="wrap">
     <canvas id="cv" width="400" height="400"></canvas>
     <div class="overlay" id="ov">
-      <h2 id="ovTitle">贪吃蛇</h2>
-      <p id="ovMsg">点击开始，吃掉所有食物！</p>
-      <button class="btn" id="startBtn">开始游戏</button>
+      <h2 id="ovTitle">{isEn ? "Retro Snake" : "贪吃蛇"}</h2>
+      <p id="ovMsg">{isEn ? "Click Start to feast on everything!" : "点击开始，吃掉所有食物！"}</p>
+      <button class="btn" id="startBtn">{isEn ? "Start Game" : "开始游戏"}</button>
     </div>
   </div>
   <div class="controls">
@@ -50,14 +51,15 @@
       <span class="empty"></span><button data-d="down2" style="visibility:hidden"></button><span class="empty"></span>
     </div>
     <div class="sidebtns">
-      <button id="pauseBtn">⏸ 暂停</button>
-      <button id="restartBtn">↻ 重开</button>
+      <button id="pauseBtn">{isEn ? "⏸ Pause" : "⏸ 暂停"}</button>
+      <button id="restartBtn">{isEn ? "↻ Restart" : "↻ 重开"}</button>
     </div>
   </div>
-  <div class="hint">桌面：方向键 / WASD 移动，空格暂停<br>手机：滑动屏幕或点方向键</div>
+  <div class="hint">{isEn ? <Fragment>Desktop: Arrow keys / WASD to move, Space to pause<br />Mobile: Swipe screen or tap D-pad</Fragment> : <Fragment>桌面：方向键 / WASD 移动，空格暂停<br />手机：滑动屏幕或点方向键</Fragment>}</div>
 <script is:inline>
 (function(){
   var cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+  var isEn = document.documentElement.lang === 'en' || location.pathname.startsWith('/en');
   var N=20, CELL=400/N;
   var snake, dir, nextDir, food, score, best=+(localStorage.getItem('snake-best')||0);
   var timer=null, speed=140, running=false, paused=false;
@@ -91,13 +93,14 @@
   function restartTimer(){ if(timer)clearInterval(timer); timer=setInterval(function(){ if(!paused) step(); },speed); }
   function start(){ place(); running=true; paused=false;
     document.getElementById('ov').classList.add('hidden');
-    document.getElementById('pauseBtn').textContent='⏸ 暂停'; draw(); restartTimer(); }
+    document.getElementById('pauseBtn').textContent=isEn ? '⏸ Pause' : '⏸ 暂停'; draw(); restartTimer(); }
   function gameOver(){ running=false; clearInterval(timer);
-    document.getElementById('ovTitle').textContent='游戏结束';
-    document.getElementById('ovMsg').textContent='本局得分 '+score+' 分，再来一局？';
+    document.getElementById('ovTitle').textContent=isEn ? 'Game Over' : '游戏结束';
+    document.getElementById('ovMsg').textContent=isEn ? ('Score: '+score+'. Try again?') : ('本局得分 '+score+' 分，再来一局？');
+    document.getElementById('startBtn').textContent=isEn ? 'Play Again' : '再来一局';
     document.getElementById('ov').classList.remove('hidden'); }
   function togglePause(){ if(!running)return; paused=!paused;
-    document.getElementById('pauseBtn').textContent=paused?'▶ 继续':'⏸ 暂停'; }
+    document.getElementById('pauseBtn').textContent=paused?(isEn ? '▶ Resume' : '▶ 继续'):(isEn ? '⏸ Pause' : '⏸ 暂停'); }
   function setDir(x,y){ if(!running||paused)return;
     if(x===-dir.x&&y===-dir.y)return; nextDir={x:x,y:y}; }
 
