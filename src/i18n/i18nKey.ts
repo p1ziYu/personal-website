@@ -92,6 +92,11 @@ enum I18nKey {
 	musicCover = "musicCover",
 	musicNoCover = "musicNoCover",
 	musicAudioPlayer = "musicAudioPlayer",
+	musicCollapse = "musicCollapse",
+	musicExpand = "musicExpand",
+	musicDrag = "musicDrag",
+	musicMute = "musicMute",
+	musicUnmute = "musicUnmute",
 
 	themeColor = "themeColor",
 
