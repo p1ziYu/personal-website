@@ -51,6 +51,7 @@ const managerConfigStr = JSON.stringify({
 		failedLyrics: i18n(I18nKey.musicFailedLyrics, uiLang),
 		noSongs: i18n(I18nKey.musicNoSongs, uiLang),
 		error: i18n(I18nKey.musicError, uiLang),
+		allFailed: uiLang === "en" ? "Unable to play any track." : "所有歌曲均无法播放。",
 		play: i18n(I18nKey.musicPlay, uiLang),
 		pause: i18n(I18nKey.musicPause, uiLang),
 		progress: i18n(I18nKey.musicProgress, uiLang),
@@ -196,7 +197,7 @@ const managerConfigStr = JSON.stringify({
     }
 
     // ── Lyrics ───────────────────────────────────────────────
-    function loadLyrics(track) {
+    function loadLyrics(track, ver) {
         state.lyrics = [];
         state.currentLrcIndex = -1;
 
@@ -214,10 +215,12 @@ const managerConfigStr = JSON.stringify({
             fetch(track.lrc)
                 .then(function (r) { return r.text(); })
                 .then(function (text) {
+                    if (ver !== loadVersion) return;
                     state.lyrics = parseLRC(text);
                     emit('fm:lyrics', { lyrics: state.lyrics, status: 'loaded' });
                 })
                 .catch(function () {
+                    if (ver !== loadVersion) return;
                     state.lyrics = [];
                     emit('fm:lyrics', { lyrics: [], status: 'failed' });
                 });
@@ -230,6 +233,7 @@ const managerConfigStr = JSON.stringify({
     var currentTrackUrls = [];
     var currentTrackUrlIndex = 0;
     var errorSkipTimeout = null;
+    var failedTrackCount = 0;
 
     function tryPlayCurrentTrackUrl(autoPlay, ver) {
         if (ver !== loadVersion) return;
@@ -241,6 +245,7 @@ const managerConfigStr = JSON.stringify({
                 if (ver !== loadVersion) return; // stale, discard
                 state.isPlaying = true;
                 state.error = null;
+                failedTrackCount = 0;
                 emit('fm:play-state', { isPlaying: true });
             }).catch(function (e) {
                 if (ver !== loadVersion) return; // stale, discard
@@ -254,7 +259,8 @@ const managerConfigStr = JSON.stringify({
     }
 
     // ── Track loading ────────────────────────────────────────
-    function loadTrack(index, autoPlay) {
+    function loadTrack(index, autoPlay, fromError) {
+        if (!fromError) failedTrackCount = 0;
         if (index < 0 || index >= state.playlist.length) return;
         state.currentIndex = index;
         var track = state.playlist[index];
@@ -282,7 +288,7 @@ const managerConfigStr = JSON.stringify({
             });
         }
 
-        loadLyrics(track);
+        loadLyrics(track, ver);
 
         emit('fm:track', { index: index, track: track, autoPlay: !!autoPlay });
 
@@ -306,19 +312,19 @@ const managerConfigStr = JSON.stringify({
         }
     }
 
-    function playNext(auto) {
-        if (state.playMode === 1 && auto) {
+    function playNext(auto, fromError) {
+        if (state.playMode === 1 && auto && !fromError) {
             audio.currentTime = 0;
             audio.play();
             return;
         }
         var nextIndex;
-        if (state.playMode === 2) {
+        if (state.playMode === 2 && !fromError) {
             nextIndex = Math.floor(Math.random() * state.playlist.length);
         } else {
             nextIndex = (state.currentIndex + 1) % state.playlist.length;
         }
-        loadTrack(nextIndex, true);
+        loadTrack(nextIndex, true, fromError);
     }
 
     function playPrev() {
@@ -426,13 +432,23 @@ const managerConfigStr = JSON.stringify({
             console.warn('Playback failed, trying fallback URL: ' + currentTrackUrls[currentTrackUrlIndex]);
             tryPlayCurrentTrackUrl(true, ver);
         } else {
-            state.error = 'Audio playback error';
-            emit('fm:error', { message: '播放失败，即将自动跳过...' });
+            failedTrackCount++;
+            var exhausted = failedTrackCount >= state.playlist.length;
+            state.error = exhausted ? config.i18n.allFailed : config.i18n.error;
+            emit('fm:error', { message: exhausted ? config.i18n.allFailed : (config.i18n.error + ' — ' + config.i18n.next) });
+            if (exhausted) {
+                if (errorSkipTimeout) clearTimeout(errorSkipTimeout);
+                errorSkipTimeout = null;
+                audio.pause();
+                state.isPlaying = false;
+                emit('fm:play-state', { isPlaying: false });
+                return;
+            }
 
             if (errorSkipTimeout) clearTimeout(errorSkipTimeout);
             errorSkipTimeout = setTimeout(function () {
                 if (ver === loadVersion) {
-                    playNext(true);
+                    playNext(true, true);
                 }
             }, 2000);
         }
