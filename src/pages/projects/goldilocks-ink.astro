@@ -1,9 +1,19 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const title = "金发姑娘的墨水 · 数据墨水实验室";
-const description =
-	"爱德华·塔夫特（Edward Tufte）数据墨水比交互实验室：擦除图表垃圾，寻找刚刚好的 Goldilocks 甜点位。真实像素采样计算实时墨水比，体验三只熊预设与橡皮擦模式。";
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } = Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "The Goldilocks Ink · Data-Ink Ratio Laboratory"
+	: "金发姑娘的墨水 · 数据墨水实验室";
+const description = isEn
+	? "Edward Tufte Data-Ink Ratio interactive laboratory: erase chartjunk to find the 'just right' Goldilocks sweet spot. Real-time canvas pixel sampling, Three Bears presets, and interactive eraser mode."
+	: "爱德华·塔夫特（Edward Tufte）数据墨水比交互实验室：擦除图表垃圾，寻找刚刚好的 Goldilocks 甜点位。真实像素采样计算实时墨水比，体验三只熊预设与橡皮擦模式。";
 ---
 
 <MainGridLayout title={title} description={description}>
@@ -15,12 +25,25 @@ const description =
 					<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--primary)] text-white">Daily Lab</span>
 					<span class="text-xs opacity-60 font-mono">Tufte Data-Ink Ratio · 1983</span>
 				</div>
-				<h1 class="text-2xl sm:text-3xl font-bold mb-3 tracking-tight">金发姑娘的墨水 · 数据墨水实验室</h1>
+				<h1 class="text-2xl sm:text-3xl font-bold mb-3 tracking-tight">
+					<span class="lang-zh">金发姑娘的墨水 · 数据墨水实验室</span>
+					<span class="lang-en">The Goldilocks Ink · Data-Ink Ratio Lab</span>
+				</h1>
 				<p class="text-sm opacity-80 leading-relaxed mb-1.5">
-					1983 年，爱德华·塔夫特（Edward Tufte）在《定量信息的可视化展示》中提出「数据墨水比」（Data-Ink Ratio = 数据墨水 / 全部墨水），主张删除一切与数据无关的「图表垃圾」（Chartjunk）。
+					<span class="lang-zh">
+						1983 年，爱德华·塔夫特（Edward Tufte）在《定量信息的可视化展示》中提出「数据墨水比」（Data-Ink Ratio = 数据墨水 / 全部墨水），主张删除一切与数据无关的「图表垃圾」（Chartjunk）。
+					</span>
+					<span class="lang-en">
+						In 1983, Edward Tufte introduced the concept of the Data-Ink Ratio (Data-Ink / Total Ink) in "The Visual Display of Quantitative Information", advocating for the ruthless elimination of non-data "chartjunk".
+					</span>
 				</p>
 				<p class="text-sm opacity-70 leading-relaxed">
-					今天我们要探索的交互命题是：在图表彻底丧失可读性之前，你究竟能擦掉多少墨水？最好的图表绝非墨水比达到 1.0 的极端极简，而是处在刚刚好的 Goldilocks 黄金甜点位。
+					<span class="lang-zh">
+						今天我们要探索的交互命题是：在图表彻底丧失可读性之前，你究竟能擦掉多少墨水？最好的图表绝非墨水比达到 1.0 的极端极简，而是处在刚刚好的 Goldilocks 黄金甜点位。
+					</span>
+					<span class="lang-en">
+						The interactive question we explore today: how much ink can you erase before a chart loses legibility entirely? The best charts are never the extreme 1.00 minimalist voids devoid of axes—they dwell in the "just right" Goldilocks sweet spot.
+					</span>
 				</p>
 			</div>
 
@@ -28,27 +51,33 @@ const description =
 			<div class="flex flex-wrap items-center justify-between gap-3 p-3.5 mb-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
 				<!-- 三只熊预设 -->
 				<div class="flex flex-wrap items-center gap-2">
-					<span class="text-xs font-medium opacity-60 mr-1">三只熊预设:</span>
+					<span class="text-xs font-medium opacity-60 mr-1">
+						<span class="lang-zh">三只熊预设:</span>
+						<span class="lang-en">Three Bears Presets:</span>
+					</span>
 					<button
 						id="preset-junky"
 						type="button"
 						class="preset-btn px-3 py-1.5 rounded-xl text-xs font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
 					>
-						🐻 太浓 (Junky)
+						<span class="lang-zh">🐻 太浓 (Junky)</span>
+						<span class="lang-en">🐻 Too Heavy (Junky)</span>
 					</button>
 					<button
 						id="preset-goldilocks"
 						type="button"
 						class="preset-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-[var(--primary)] text-white shadow-sm active:scale-95 transition"
 					>
-						👧 刚刚好 (Goldilocks)
+						<span class="lang-zh">👧 刚刚好 (Goldilocks)</span>
+						<span class="lang-en">👧 Just Right (Goldilocks)</span>
 					</button>
 					<button
 						id="preset-bare"
 						type="button"
 						class="preset-btn px-3 py-1.5 rounded-xl text-xs font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
 					>
-						🐻 太淡 (Too Bare)
+						<span class="lang-zh">🐻 太淡 (Too Bare)</span>
+						<span class="lang-en">🐻 Too Bare (Minimal)</span>
 					</button>
 				</div>
 
@@ -61,8 +90,14 @@ const description =
 						aria-pressed="false"
 					>
 						<span class="text-sm">🧽</span>
-						<span>橡皮擦模式:</span>
-						<span id="eraser-status" class="font-bold">关闭</span>
+						<span>
+							<span class="lang-zh">橡皮擦模式:</span>
+							<span class="lang-en">Eraser Mode:</span>
+						</span>
+						<span id="eraser-status" class="font-bold">
+							<span class="lang-zh">关闭</span>
+							<span class="lang-en">OFF</span>
+						</span>
 					</button>
 				</div>
 			</div>
@@ -72,9 +107,13 @@ const description =
 				<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
 					<div>
 						<div class="flex items-baseline gap-3">
-							<span class="text-xs font-semibold uppercase tracking-wider opacity-60">真实数据墨水比</span>
+							<span class="text-xs font-semibold uppercase tracking-wider opacity-60">
+								<span class="lang-zh">真实数据墨水比</span>
+								<span class="lang-en">Honest Data-Ink Ratio</span>
+							</span>
 							<span id="meter-zone-badge" class="px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-								刚刚好 (甜点区)
+								<span class="lang-zh">刚刚好 (甜点区)</span>
+								<span class="lang-en">Just Right (Sweet Spot)</span>
 							</span>
 						</div>
 						<div class="flex items-baseline gap-2 mt-1">
@@ -88,9 +127,20 @@ const description =
 					</div>
 
 					<div class="text-xs font-mono opacity-70 sm:text-right space-y-0.5">
-						<div>数据墨水: <span id="data-ink-px" class="font-semibold text-black dark:text-white">--</span> px</div>
-						<div>全部墨水: <span id="total-ink-px" class="font-semibold text-black dark:text-white">--</span> px</div>
-						<div class="text-[11px] opacity-50">双离屏画布逐像素采样 · 真实非拟合</div>
+						<div>
+							<span class="lang-zh">数据墨水: </span>
+							<span class="lang-en">Data Ink: </span>
+							<span id="data-ink-px" class="font-semibold text-black dark:text-white">--</span> px
+						</div>
+						<div>
+							<span class="lang-zh">全部墨水: </span>
+							<span class="lang-en">Total Ink: </span>
+							<span id="total-ink-px" class="font-semibold text-black dark:text-white">--</span> px
+						</div>
+						<div class="text-[11px] opacity-50">
+							<span class="lang-zh">双离屏画布逐像素采样 · 真实非拟合</span>
+							<span class="lang-en">Dual offscreen pixel-sampling · Real measurements</span>
+						</div>
 					</div>
 				</div>
 
@@ -115,11 +165,11 @@ const description =
 
 					<!-- 刻度标签与区间说明 -->
 					<div class="flex justify-between text-[11px] font-mono opacity-50 mt-2 px-1">
-						<span>0.0 (纯垃圾)</span>
-						<span>0.50 (太浓)</span>
-						<span class="text-emerald-500 font-medium">0.85~0.93 (Goldilocks 甜点位)</span>
-						<span>0.95 (过度擦除)</span>
-						<span>1.0 (纯数据/失去坐标)</span>
+						<span>0.0 (<span class="lang-zh">纯垃圾</span><span class="lang-en">Junk</span>)</span>
+						<span>0.50 (<span class="lang-zh">太浓</span><span class="lang-en">Heavy</span>)</span>
+						<span class="text-emerald-500 font-medium">0.85~0.93 (<span class="lang-zh">Goldilocks 甜点位</span><span class="lang-en">Sweet Spot</span>)</span>
+						<span>0.95 (<span class="lang-zh">过度擦除</span><span class="lang-en">Over-erased</span>)</span>
+						<span>1.0 (<span class="lang-zh">纯数据</span><span class="lang-en">Bare</span>)</span>
 					</div>
 				</div>
 			</div>
@@ -137,7 +187,8 @@ const description =
 					id="eraser-toast"
 					class="absolute top-3 left-3 text-xs bg-amber-500/20 text-amber-200 border border-amber-500/40 backdrop-blur-md px-3 py-1.5 rounded-xl pointer-events-none transition-all duration-200 opacity-0 transform -translate-y-1"
 				>
-					🧽 橡皮擦激活：点击图表中的多余图层（网格、图例、装饰、背景色块等）直接擦除！
+					<span class="lang-zh">🧽 橡皮擦激活：点击图表中的多余图层（网格、图例、装饰、背景色块等）直接擦除！</span>
+					<span class="lang-en">🧽 Eraser Active: Click unnecessary elements on the chart (grid, legend, badge, background) to wipe them away!</span>
 				</div>
 
 				<!-- 动态悬停擦除提示框 -->
@@ -145,7 +196,8 @@ const description =
 					id="eraser-hover-tip"
 					class="absolute pointer-events-none hidden text-xs font-mono px-2.5 py-1 rounded-lg bg-black/85 text-amber-300 border border-amber-500/40 shadow-xl backdrop-blur-sm z-20"
 				>
-					点击擦除
+					<span class="lang-zh">点击擦除</span>
+					<span class="lang-en">Click to erase</span>
 				</div>
 			</div>
 
@@ -153,8 +205,14 @@ const description =
 			<div class="p-4 sm:p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-6">
 				<div class="flex items-center justify-between mb-3.5">
 					<h3 class="text-sm font-bold flex items-center gap-2">
-						<span>🎨 独立墨水图层控制</span>
-						<span class="text-xs font-normal opacity-60">勾选切换图层，实时统计像素</span>
+						<span>
+							<span class="lang-zh">🎨 独立墨水图层控制</span>
+							<span class="lang-en">🎨 Independent Ink Layer Controls</span>
+						</span>
+						<span class="text-xs font-normal opacity-60">
+							<span class="lang-zh">勾选切换图层，实时统计像素</span>
+							<span class="lang-en">Toggle layers to watch live pixel counters adapt</span>
+						</span>
 					</h3>
 					<span class="text-xs font-mono opacity-50">10 Layers</span>
 				</div>
@@ -164,8 +222,18 @@ const description =
 					<label class="flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 cursor-not-allowed opacity-90 select-none">
 						<input type="checkbox" id="layer-bars" checked disabled class="accent-[var(--primary)] rounded cursor-not-allowed" />
 						<div class="leading-tight">
-							<div class="font-semibold flex items-center gap-1">数据柱 <span class="text-[10px] text-emerald-600 dark:text-emerald-400">🔒核心</span></div>
-							<div class="text-[10px] opacity-50">纯数据墨水</div>
+							<div class="font-semibold flex items-center gap-1">
+								<span class="lang-zh">数据柱</span>
+								<span class="lang-en">Data Bars</span>
+								<span class="text-[10px] text-emerald-600 dark:text-emerald-400">
+									<span class="lang-zh">🔒核心</span>
+									<span class="lang-en">🔒Core</span>
+								</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">纯数据墨水</span>
+								<span class="lang-en">Pure Data Ink</span>
+							</div>
 						</div>
 					</label>
 
@@ -173,8 +241,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-grid" class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">网格线</div>
-							<div class="text-[10px] opacity-50">横向虚线背景</div>
+							<div class="font-semibold">
+								<span class="lang-zh">网格线</span>
+								<span class="lang-en">Gridlines</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">横向虚线背景</span>
+								<span class="lang-en">Horizontal dashed</span>
+							</div>
 						</div>
 					</label>
 
@@ -182,8 +256,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-axes" checked class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">坐标轴线</div>
-							<div class="text-[10px] opacity-50">X / Y 实线轴</div>
+							<div class="font-semibold">
+								<span class="lang-zh">坐标轴线</span>
+								<span class="lang-en">Axis Lines</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">X / Y 实线轴</span>
+								<span class="lang-en">Solid X / Y axes</span>
+							</div>
 						</div>
 					</label>
 
@@ -191,8 +271,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-ticks" checked class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">刻度标签</div>
-							<div class="text-[10px] opacity-50">周一~下周一及数值</div>
+							<div class="font-semibold">
+								<span class="lang-zh">刻度标签</span>
+								<span class="lang-en">Tick Labels</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">周一~下周一及数值</span>
+								<span class="lang-en">Mon-Sun & values</span>
+							</div>
 						</div>
 					</label>
 
@@ -200,8 +286,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-outline" class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">柱子描边</div>
-							<div class="text-[10px] opacity-50">粗重亮色轮廓</div>
+							<div class="font-semibold">
+								<span class="lang-zh">柱子描边</span>
+								<span class="lang-en">Bar Outline</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">粗重亮色轮廓</span>
+								<span class="lang-en">Heavy bright borders</span>
+							</div>
 						</div>
 					</label>
 
@@ -209,8 +301,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-gradient" class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">渐变填充</div>
-							<div class="text-[10px] opacity-50">高光反光质感</div>
+							<div class="font-semibold">
+								<span class="lang-zh">渐变填充</span>
+								<span class="lang-en">Gradients</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">高光反光质感</span>
+								<span class="lang-en">Glossy 3D shine</span>
+							</div>
 						</div>
 					</label>
 
@@ -218,8 +316,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-dataLabels" checked class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">数据标签</div>
-							<div class="text-[10px] opacity-50">柱顶精确数值</div>
+							<div class="font-semibold">
+								<span class="lang-zh">数据标签</span>
+								<span class="lang-en">Data Labels</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">柱顶精确数值</span>
+								<span class="lang-en">Exact top values</span>
+							</div>
 						</div>
 					</label>
 
@@ -227,8 +331,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-zebra" class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">背景色块</div>
-							<div class="text-[10px] opacity-50">斑马相间条纹</div>
+							<div class="font-semibold">
+								<span class="lang-zh">背景色块</span>
+								<span class="lang-en">Zebra Bands</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">斑马相间条纹</span>
+								<span class="lang-en">Alternating stripes</span>
+							</div>
 						</div>
 					</label>
 
@@ -236,8 +346,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-legend" class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">图例框</div>
-							<div class="text-[10px] opacity-50">右上角单指标图例</div>
+							<div class="font-semibold">
+								<span class="lang-zh">图例框</span>
+								<span class="lang-en">Legend Box</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">右上角单指标图例</span>
+								<span class="lang-en">Top-right legend box</span>
+							</div>
 						</div>
 					</label>
 
@@ -245,8 +361,14 @@ const description =
 					<label class="layer-item flex items-center gap-2 p-2.5 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer select-none transition">
 						<input type="checkbox" id="layer-decor" class="layer-toggle accent-[var(--primary)] rounded cursor-pointer" />
 						<div class="leading-tight">
-							<div class="font-semibold">装饰挂件</div>
-							<div class="text-[10px] opacity-50">左上徽章与折线</div>
+							<div class="font-semibold">
+								<span class="lang-zh">装饰挂件</span>
+								<span class="lang-en">Decorative Badge</span>
+							</div>
+							<div class="text-[10px] opacity-50">
+								<span class="lang-zh">左上徽章与折线</span>
+								<span class="lang-en">Corner star & badge</span>
+							</div>
 						</div>
 					</label>
 				</div>
@@ -257,10 +379,12 @@ const description =
 				<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
 					<div>
 						<h3 class="text-sm font-bold flex items-center gap-2">
-							<span>🔍 可读性自检：最高的那根柱子数值是多少？</span>
+							<span class="lang-zh">🔍 可读性自检：最高的那根柱子数值是多少？</span>
+							<span class="lang-en">🔍 Readability Check: What is the value of the tallest bar?</span>
 						</h3>
 						<p class="text-xs opacity-60 mt-0.5">
-							请尝试仅凭上方当前图表中的信息作答，检验过度擦除对读图体验的影响。
+							<span class="lang-zh">请尝试仅凭上方当前图表中的信息作答，检验过度擦除对读图体验的影响。</span>
+							<span class="lang-en">Try answering using only the current chart above to test how over-erasing harms legibility.</span>
 						</p>
 					</div>
 
@@ -290,27 +414,34 @@ const description =
 				</div>
 
 				<div id="quiz-feedback" class="text-xs p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 transition leading-relaxed">
-					👆 点击上方选项测试答题。如果当前处于「太淡」模式，看看会发生什么。
+					<span class="lang-zh">👆 点击上方选项测试答题。如果当前处于「太淡」模式，看看会发生什么。</span>
+					<span class="lang-en">👆 Click an option above to test your reading. Try in "Too Bare" mode to see what happens.</span>
 				</div>
 			</div>
 
 			<!-- 三只熊 Explainer 卡片区 -->
 			<div class="mb-8">
 				<h2 class="text-lg font-bold mb-4 flex items-center gap-2">
-					<span>🐻 三只熊的故事：图表设计的三个境界</span>
+					<span class="lang-zh">🐻 三只熊的故事：图表设计的三个境界</span>
+					<span class="lang-en">🐻 The Three Bears: Three Realms of Chart Design</span>
 				</h2>
 				<div class="grid sm:grid-cols-3 gap-4">
 					<!-- 卡片 1: 太浓 -->
 					<div class="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
 						<div>
 							<div class="text-2xl mb-2">🐻</div>
-							<div class="font-bold text-sm mb-1 text-rose-500">太浓 (Junky)</div>
+							<div class="font-bold text-sm mb-1 text-rose-500">
+								<span class="lang-zh">太浓 (Junky)</span>
+								<span class="lang-en">Too Heavy (Junky)</span>
+							</div>
 							<p class="text-xs font-medium opacity-90 leading-relaxed mb-2">
-								图表垃圾堆积如山，纯装饰墨水掩盖了核心数据信号。
+								<span class="lang-zh">图表垃圾堆积如山，纯装饰墨水掩盖了核心数据信号。</span>
+								<span class="lang-en">Piles of chartjunk: decorative ink drowns out the core data signal.</span>
 							</p>
 						</div>
 						<p class="text-[11px] opacity-60 leading-normal">
-							斑马条纹、厚重渐变与花哨挂件大量吞噬墨水，制造强烈的视觉噪音，读者需要费力在垃圾堆里寻找数据。
+							<span class="lang-zh">斑马条纹、厚重渐变与花哨挂件大量吞噬墨水，制造强烈的视觉噪音，读者需要费力在垃圾堆里寻找数据。</span>
+							<span class="lang-en">Zebra stripes, heavy gradients, and gimmicky badges gobble up ink, generating severe visual noise. Readers must dig through clutter to find data.</span>
 						</p>
 					</div>
 
@@ -318,13 +449,18 @@ const description =
 					<div class="p-4 rounded-2xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex flex-col justify-between">
 						<div>
 							<div class="text-2xl mb-2">👧</div>
-							<div class="font-bold text-sm mb-1 text-[var(--primary)]">刚刚好 (Goldilocks)</div>
+							<div class="font-bold text-sm mb-1 text-[var(--primary)]">
+								<span class="lang-zh">刚刚好 (Goldilocks)</span>
+								<span class="lang-en">Just Right (Goldilocks)</span>
+							</div>
 							<p class="text-xs font-medium opacity-90 leading-relaxed mb-2">
-								去粗取精的甜点位：去除冗余杂质，保留必要信标。
+								<span class="lang-zh">去粗取精的甜点位：去除冗余杂质，保留必要信标。</span>
+								<span class="lang-en">The sweet spot: prune the fluff, keep essential navigational beacons.</span>
 							</p>
 						</div>
 						<p class="text-[11px] opacity-60 leading-normal">
-							保留清晰轴线、刻度与数值标签，剔除所有纯装饰物。数据墨水比处在黄金平衡点，读者一秒即能精确读数。
+							<span class="lang-zh">保留清晰轴线、刻度与数值标签，剔除所有纯装饰物。数据墨水比处在黄金平衡点，读者一秒即能精确读数。</span>
+							<span class="lang-en">Clean axes, ticks, and data labels remain while decorative bloat is purged. The data-ink ratio hits the golden mean—instant, effortless readability.</span>
 						</p>
 					</div>
 
@@ -332,13 +468,18 @@ const description =
 					<div class="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
 						<div>
 							<div class="text-2xl mb-2">🐻</div>
-							<div class="font-bold text-sm mb-1 text-amber-500">太淡 (Too Bare)</div>
+							<div class="font-bold text-sm mb-1 text-amber-500">
+								<span class="lang-zh">太淡 (Too Bare)</span>
+								<span class="lang-en">Too Bare (Over-erased)</span>
+							</div>
 							<p class="text-xs font-medium opacity-90 leading-relaxed mb-2">
-								极端极简主义摧毁可读性：最大墨水比 ≠ 最好图表。
+								<span class="lang-zh">极端极简主义摧毁可读性：最大墨水比 ≠ 最好图表。</span>
+								<span class="lang-en">Extreme minimalism kills legibility: max ink ratio ≠ best chart.</span>
 							</p>
 						</div>
 						<p class="text-[11px] opacity-60 leading-normal">
-							为了追求理论上极限的 1.0 墨水比而擦掉轴线与刻度，图表退化为不可读的谜题。没有参照系，读者只能盲猜。
+							<span class="lang-zh">为了追求理论上极限的 1.0 墨水比而擦掉轴线与刻度，图表退化为不可读的谜题。没有参照系，读者只能盲猜。</span>
+							<span class="lang-en">Erasing axes and ticks just to chase a theoretical 1.0 ink ratio reduces the chart to an unsolved riddle. With zero reference frame, readers are left guessing.</span>
 						</p>
 					</div>
 				</div>
@@ -348,8 +489,14 @@ const description =
 
 			<!-- 底部版权说明 -->
 			<div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs opacity-60">
-				<div>灵感来源：Edward Tufte (1983) · Hacker News 前页 "Demystifying Tufte's data-ink ratio" (scienceux.org)</div>
-				<div>本页面由 AI 生成。</div>
+				<div>
+					<span class="lang-zh">灵感来源：Edward Tufte (1983) · Hacker News 前页 "Demystifying Tufte's data-ink ratio" (scienceux.org)</span>
+					<span class="lang-en">Inspired by: Edward Tufte (1983) · Hacker News front page "Demystifying Tufte's data-ink ratio" (scienceux.org)</span>
+				</div>
+				<div>
+					<span class="lang-zh">本页面由 AI 生成。</span>
+					<span class="lang-en">Generated by AI.</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -383,11 +530,17 @@ const description =
 		interface HoverTarget {
 			layer: LayerKey;
 			name: string;
+			name_en: string;
 			rect: [number, number, number, number] | null;
 			locked?: boolean;
 		}
 
 		function initGoldilocksLab() {
+			const isEn = () =>
+				document.documentElement.lang === "en" ||
+				location.pathname.startsWith("/en") ||
+				document.documentElement.getAttribute("data-lang") === "en";
+
 			const canvas = document.getElementById("ink-canvas") as HTMLCanvasElement;
 			if (!canvas) return;
 			const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
@@ -430,14 +583,14 @@ const description =
 
 			// 8 个合成数据点 (数值介于 20~90 之间)
 			const DATA = [
-				{ label: "周一", val: 42 },
-				{ label: "周二", val: 68 },
-				{ label: "周三", val: 35 },
-				{ label: "周四", val: 88 }, // 最高柱子
-				{ label: "周五", val: 54 },
-				{ label: "周六", val: 76 },
-				{ label: "周日", val: 61 },
-				{ label: "下周一", val: 48 },
+				{ label: "周一", label_en: "Mon", val: 42 },
+				{ label: "周二", label_en: "Tue", val: 68 },
+				{ label: "周三", label_en: "Wed", val: 35 },
+				{ label: "周四", label_en: "Thu", val: 88 }, // 最高柱子
+				{ label: "周五", label_en: "Fri", val: 54 },
+				{ label: "周六", label_en: "Sat", val: 76 },
+				{ label: "周日", label_en: "Sun", val: 61 },
+				{ label: "下周一", label_en: "Next Mon", val: 48 },
 			];
 			const MAX_VAL = 100;
 			const BG_HEX = "#0d1117";
@@ -630,7 +783,7 @@ const description =
 					targetCtx.textBaseline = "top";
 					for (let i = 0; i < DATA.length; i++) {
 						const bx = plotX + i * slotW + slotW / 2;
-						targetCtx.fillText(DATA[i].label, bx, plotY + plotH + 12);
+						targetCtx.fillText(isEn() ? DATA[i].label_en : DATA[i].label, bx, plotY + plotH + 12);
 					}
 					targetCtx.restore();
 				}
@@ -702,11 +855,11 @@ const description =
 					targetCtx.fillStyle = "#ffffff";
 					targetCtx.textAlign = "left";
 					targetCtx.textBaseline = "top";
-					targetCtx.fillText("活跃指数指标", legX + 32, legY + 11);
+					targetCtx.fillText(isEn() ? "Activity Index" : "活跃指数指标", legX + 32, legY + 11);
 
 					targetCtx.font = "10px system-ui, -apple-system, sans-serif";
 					targetCtx.fillStyle = "rgba(255, 255, 255, 0.6)";
-					targetCtx.fillText("单位: pts · N=8", legX + 32, legY + 26);
+					targetCtx.fillText(isEn() ? "Unit: pts · N=8" : "单位: pts · N=8", legX + 32, legY + 26);
 					targetCtx.restore();
 				}
 
@@ -732,7 +885,7 @@ const description =
 
 					targetCtx.font = "bold 11px system-ui, -apple-system, sans-serif";
 					targetCtx.fillStyle = "#fef08a";
-					targetCtx.fillText("业务态势核心监控", decX + 30, decY + 17);
+					targetCtx.fillText(isEn() ? "Operations Pulse" : "业务态势核心监控", decX + 30, decY + 17);
 
 					targetCtx.strokeStyle = "#38bdf8";
 					targetCtx.lineWidth = 1.5;
@@ -813,15 +966,15 @@ const description =
 				meterNeedle.style.left = `${percent}%`;
 
 				if (percent < 50) {
-					meterZoneBadge.textContent = "太浓 (垃圾过多)";
+					meterZoneBadge.textContent = isEn() ? "Too Heavy (Clutter)" : "太浓 (垃圾过多)";
 					meterZoneBadge.className =
 						"px-2 py-0.5 rounded-full text-xs font-medium bg-rose-500/20 text-rose-500 border border-rose-500/30";
 				} else if (percent > 95) {
-					meterZoneBadge.textContent = "太淡 (可读性受损)";
+					meterZoneBadge.textContent = isEn() ? "Too Bare (Unreadable)" : "太淡 (可读性受损)";
 					meterZoneBadge.className =
 						"px-2 py-0.5 rounded-full text-xs font-medium bg-amber-500/20 text-amber-500 border border-amber-500/30";
 				} else {
-					meterZoneBadge.textContent = "刚刚好 (甜点区)";
+					meterZoneBadge.textContent = isEn() ? "Just Right (Sweet Spot)" : "刚刚好 (甜点区)";
 					meterZoneBadge.className =
 						"px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-500 border border-emerald-500/30";
 				}
@@ -875,7 +1028,9 @@ const description =
 			// 自检问答渲染
 			function renderQuizFeedback() {
 				if (!selectedQuizAnswer) {
-					quizFeedback.innerHTML = "👆 请点击上方选项测试当前图表的可读性。";
+					quizFeedback.innerHTML = isEn()
+						? "👆 Click an option above to test chart legibility under the current settings."
+						: "👆 请点击上方选项测试当前图表的可读性。";
 					quizFeedback.className =
 						"text-xs p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 transition leading-relaxed";
 					return;
@@ -884,16 +1039,24 @@ const description =
 				const isBareState = !layers.ticks && !layers.dataLabels;
 
 				if (isBareState) {
-					quizFeedback.innerHTML = `<span class="font-bold text-amber-500">⚠️ 没有刻度标签，你答对了吗？这就是过度擦除的代价。</span><br/>当前图表既没有 Y 轴刻度，也没有数据标签——你只能凭感觉瞎猜！数据墨水比虽然达到了 1.00，但图表已经完全丧失了量化传递信息的核心功能。最高墨水比 ≠ 最好图表。`;
+					quizFeedback.innerHTML = isEn()
+						? `<span class="font-bold text-amber-500">⚠️ No tick labels or values — did you guess right? That is the price of over-erasure.</span><br/>With no Y-axis ticks and no top data labels, you're purely guessing! The data-ink ratio reached 1.00, but the chart completely lost its primary duty: communicating quantities. Maximum data-ink ratio ≠ best chart.`
+						: `<span class="font-bold text-amber-500">⚠️ 没有刻度标签，你答对了吗？这就是过度擦除的代价。</span><br/>当前图表既没有 Y 轴刻度，也没有数据标签——你只能凭感觉瞎猜！数据墨水比虽然达到了 1.00，但图表已经完全丧失了量化传递信息的核心功能。最高墨水比 ≠ 最好图表。`;
 					quizFeedback.className =
 						"text-xs p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-600 dark:text-amber-300 transition leading-relaxed";
 				} else {
 					if (selectedQuizAnswer === "88") {
-						quizFeedback.innerHTML = `<span class="font-bold text-emerald-600 dark:text-emerald-400">✅ 回答正确！最高柱子是周四（88）。</span><br/>由于图表保留了${layers.ticks && layers.dataLabels ? "纵轴刻度与柱顶数据标签" : layers.ticks ? "纵轴刻度" : "柱顶数据标签"}，读者能一眼获知准确读数。这就是 Goldilocks 甜点位的价值：剔除噪音，保留必要信标。`;
+						const beaconsZh = layers.ticks && layers.dataLabels ? "纵轴刻度与柱顶数据标签" : layers.ticks ? "纵轴刻度" : "柱顶数据标签";
+						const beaconsEn = layers.ticks && layers.dataLabels ? "both axis ticks and data labels" : layers.ticks ? "axis ticks" : "bar labels";
+						quizFeedback.innerHTML = isEn()
+							? `<span class="font-bold text-emerald-600 dark:text-emerald-400">✅ Spot on! The tallest bar is Thursday (88).</span><br/>Because the chart preserved ${beaconsEn}, readers can instantly read the exact value. That's the essence of the Goldilocks zone: strip clutter, keep navigational beacons.`
+							: `<span class="font-bold text-emerald-600 dark:text-emerald-400">✅ 回答正确！最高柱子是周四（88）。</span><br/>由于图表保留了${beaconsZh}，读者能一眼获知准确读数。这就是 Goldilocks 甜点位的价值：剔除噪音，保留必要信标。`;
 						quizFeedback.className =
 							"text-xs p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-600 dark:text-emerald-300 transition leading-relaxed";
 					} else {
-						quizFeedback.innerHTML = `<span class="font-bold text-rose-500">❌ 回答错误！你选了 ${selectedQuizAnswer}，最高柱子实际是 88（周四）。</span><br/>在有刻度/标签的辅助下，你可以通过对照读出正确数值。请重新观察图表尝试。`;
+						quizFeedback.innerHTML = isEn()
+							? `<span class="font-bold text-rose-500">❌ Incorrect! You picked ${selectedQuizAnswer}, but the tallest bar is 88 (Thursday).</span><br/>With ticks and labels enabled, you can read the exact value directly. Take another look!`
+							: `<span class="font-bold text-rose-500">❌ 回答错误！你选了 ${selectedQuizAnswer}，最高柱子实际是 88（周四）。</span><br/>在有刻度/标签的辅助下，你可以通过对照读出正确数值。请重新观察图表尝试。`;
 						quizFeedback.className =
 							"text-xs p-3 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-600 dark:text-rose-300 transition leading-relaxed";
 					}
@@ -981,12 +1144,12 @@ const description =
 
 				// 1. 装饰挂件区域
 				if (layers.decor && mx >= 18 && mx <= 233 && my >= 14 && my <= 62) {
-					return { layer: "decor", name: "装饰挂件", rect: [18, 14, 215, 48] };
+					return { layer: "decor", name: "装饰挂件", name_en: "Decorative Badge", rect: [18, 14, 215, 48] };
 				}
 
 				// 2. 图例区域
 				if (layers.legend && mx >= OFF_W - 185 && mx <= OFF_W - 20 && my >= 16 && my <= 62) {
-					return { layer: "legend", name: "图例框", rect: [OFF_W - 185, 16, 165, 46] };
+					return { layer: "legend", name: "图例框", name_en: "Legend Box", rect: [OFF_W - 185, 16, 165, 46] };
 				}
 
 				// 3. 数据标签区域
@@ -996,7 +1159,7 @@ const description =
 						const bh = (DATA[i].val / MAX_VAL) * plotH;
 						const by = plotY + plotH - bh;
 						if (mx >= bx - 8 && mx <= bx + barW + 8 && my >= by - 26 && my <= by + 2) {
-							return { layer: "dataLabels", name: "数据标签", rect: [plotX, plotY - 26, plotW, 30] };
+							return { layer: "dataLabels", name: "数据标签", name_en: "Data Labels", rect: [plotX, plotY - 26, plotW, 30] };
 						}
 					}
 				}
@@ -1008,22 +1171,22 @@ const description =
 					const by = plotY + plotH - bh;
 					if (mx >= bx && mx <= bx + barW && my >= by && my <= by + bh) {
 						if (layers.outline) {
-							return { layer: "outline", name: "柱子描边", rect: [bx - 2, by - 2, barW + 4, bh + 4] };
+							return { layer: "outline", name: "柱子描边", name_en: "Bar Outline", rect: [bx - 2, by - 2, barW + 4, bh + 4] };
 						}
 						if (layers.gradient) {
-							return { layer: "gradient", name: "渐变高光", rect: [bx, by, barW, bh] };
+							return { layer: "gradient", name: "渐变高光", name_en: "Gradients", rect: [bx, by, barW, bh] };
 						}
-						return { layer: "bars", name: "数据柱 (不可擦除)", rect: null, locked: true };
+						return { layer: "bars", name: "数据柱 (不可擦除)", name_en: "Data Bars (Protected)", rect: null, locked: true };
 					}
 				}
 
 				// 5. 刻度标签
 				if (layers.ticks) {
 					if (mx >= 5 && mx <= plotX && my >= plotY - 10 && my <= plotY + plotH + 10) {
-						return { layer: "ticks", name: "Y 轴刻度标签", rect: [10, plotY - 10, plotX - 10, plotH + 20] };
+						return { layer: "ticks", name: "Y 轴刻度标签", name_en: "Y-Axis Ticks", rect: [10, plotY - 10, plotX - 10, plotH + 20] };
 					}
 					if (mx >= plotX && mx <= plotX + plotW && my >= plotY + plotH + 5 && my <= OFF_H) {
-						return { layer: "ticks", name: "X 轴刻度标签", rect: [plotX, plotY + plotH + 5, plotW, 40] };
+						return { layer: "ticks", name: "X 轴刻度标签", name_en: "X-Axis Ticks", rect: [plotX, plotY + plotH + 5, plotW, 40] };
 					}
 				}
 
@@ -1032,17 +1195,17 @@ const description =
 					const onYAxis = Math.abs(mx - plotX) <= 8 && my >= plotY && my <= plotY + plotH;
 					const onXAxis = Math.abs(my - (plotY + plotH)) <= 8 && mx >= plotX && mx <= plotX + plotW;
 					if (onYAxis || onXAxis) {
-						return { layer: "axes", name: "坐标轴线", rect: [plotX - 4, plotY, plotW + 4, plotH + 4] };
+						return { layer: "axes", name: "坐标轴线", name_en: "Axis Lines", rect: [plotX - 4, plotY, plotW + 4, plotH + 4] };
 					}
 				}
 
 				// 7. 网格线 / 背景条纹
 				if (mx >= plotX && mx <= plotX + plotW && my >= plotY && my <= plotY + plotH) {
 					if (layers.grid) {
-						return { layer: "grid", name: "网格线", rect: [plotX, plotY, plotW, plotH] };
+						return { layer: "grid", name: "网格线", name_en: "Gridlines", rect: [plotX, plotY, plotW, plotH] };
 					}
 					if (layers.zebra) {
-						return { layer: "zebra", name: "背景色块", rect: [plotX, plotY, plotW, plotH] };
+						return { layer: "zebra", name: "背景色块", name_en: "Zebra Bands", rect: [plotX, plotY, plotW, plotH] };
 					}
 				}
 
@@ -1071,13 +1234,13 @@ const description =
 
 				if (hit && !hit.locked) {
 					canvas.style.cursor = "pointer";
-					hoverTip.textContent = `🧹 点击擦除: ${hit.name}`;
+					hoverTip.textContent = isEn() ? `🧹 Click to erase: ${hit.name_en}` : `🧹 点击擦除: ${hit.name}`;
 					hoverTip.style.left = `${Math.min(canvas.clientWidth - 140, Math.max(10, px + 12))}px`;
 					hoverTip.style.top = `${Math.min(canvas.clientHeight - 35, Math.max(10, py + 12))}px`;
 					hoverTip.classList.remove("hidden");
 				} else if (hit && hit.locked) {
 					canvas.style.cursor = "not-allowed";
-					hoverTip.textContent = "🔒 数据柱核心不可擦除";
+					hoverTip.textContent = isEn() ? "🔒 Core data bars cannot be erased" : "🔒 数据柱核心不可擦除";
 					hoverTip.style.left = `${Math.min(canvas.clientWidth - 160, Math.max(10, px + 12))}px`;
 					hoverTip.style.top = `${Math.min(canvas.clientHeight - 35, Math.max(10, py + 12))}px`;
 					hoverTip.classList.remove("hidden");
@@ -1100,24 +1263,24 @@ const description =
 				if (!hit) {
 					if (layers.grid) {
 						layers.grid = false;
-						spawnPuff(bx, by, "-网格线!");
+						spawnPuff(bx, by, isEn() ? "-Gridlines!" : "-网格线!");
 						updateUI();
 					} else if (layers.zebra) {
 						layers.zebra = false;
-						spawnPuff(bx, by, "-背景色块!");
+						spawnPuff(bx, by, isEn() ? "-Zebra Bands!" : "-背景色块!");
 						updateUI();
 					}
 					return;
 				}
 
 				if (hit.locked) {
-					spawnPuff(bx, by, "🔒核心数据不可擦除");
+					spawnPuff(bx, by, isEn() ? "🔒 Core bars protected" : "🔒核心数据不可擦除");
 					return;
 				}
 
 				if (layers[hit.layer]) {
 					layers[hit.layer] = false;
-					spawnPuff(bx, by, `-${hit.name}!`);
+					spawnPuff(bx, by, isEn() ? `-${hit.name_en}!` : `-${hit.name}!`);
 					updateUI();
 				}
 			});
@@ -1159,7 +1322,7 @@ const description =
 
 			eraserBtn.addEventListener("click", () => {
 				eraserMode = !eraserMode;
-				eraserStatus.textContent = eraserMode ? "已开启" : "关闭";
+				eraserStatus.textContent = eraserMode ? (isEn() ? "ON" : "已开启") : (isEn() ? "OFF" : "关闭");
 				eraserBtn.setAttribute("aria-pressed", String(eraserMode));
 
 				if (eraserMode) {
@@ -1175,6 +1338,11 @@ const description =
 					hoverTip.classList.add("hidden");
 					hoverInfo = null;
 				}
+			});
+
+			window.addEventListener("lang-change", () => {
+				eraserStatus.textContent = eraserMode ? (isEn() ? "ON" : "已开启") : (isEn() ? "OFF" : "关闭");
+				updateUI();
 			});
 
 			layerKeys.forEach((key) => {
