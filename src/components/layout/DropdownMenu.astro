@@ -5,12 +5,15 @@ import DropdownPanel from "@/components/common/DropdownPanel.astro";
 import type { NavBarLink } from "@/types/config";
 import { url } from "@/utils/url-utils";
 
+import { resolveNavbarNameBoth } from "@/utils/navbar-i18n";
+
 interface Props {
 	link: NavBarLink;
 	class?: string;
+	lang?: string;
 }
 
-const { link, class: className } = Astro.props;
+const { link, class: className, lang } = Astro.props;
 
 // 检查 link 是否存在
 if (!link) {
@@ -18,6 +21,16 @@ if (!link) {
 }
 
 const processedLink = link;
+const isEn = lang === "en" || Astro.url.pathname.startsWith("/en");
+const { zh: linkZh, en: linkEn } = resolveNavbarNameBoth(processedLink.name);
+
+const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
+	if (external) return targetUrl;
+	if (isEn && targetUrl.startsWith("/") && !targetUrl.startsWith("/en")) {
+		return url(targetUrl === "/" ? "/en/" : `/en${targetUrl}`);
+	}
+	return url(targetUrl);
+};
 
 const hasChildren = processedLink.children && processedLink.children.length > 0;
 ---
@@ -32,38 +45,45 @@ const hasChildren = processedLink.children && processedLink.children.length > 0;
 		>
 			<div class="flex items-center gap-1.5">
 				{processedLink.icon && <Icon name={processedLink.icon} class="text-[1.1rem] mr-1.5 navbar-icon" />}
-				{processedLink.name}
+				<span class="lang-zh">{linkZh}</span>
+				<span class="lang-en">{linkEn}</span>
 			</div>
 			<Icon name="material-symbols:keyboard-arrow-down-rounded" class="text-[1.2rem] transition-transform duration-200 dropdown-arrow absolute right-2.5 top-1/2 -translate-y-1/2" />
 		</button>
 		<div class="dropdown-menu" data-dropdown-menu>
 			<DropdownPanel class="dropdown-content">
-				{processedLink.children?.map((child, index) => (
-					<DropdownItem
-						href={child.external ? child.url : url(child.url)}
-						target={child.external ? "_blank" : undefined}
-						isLast={index === (processedLink.children?.length || 0) - 1}
-						class="dropdown-item focus-ring-inset h-10"
-					>
-						{child.icon && <Icon name={child.icon} class="text-[1.25rem] mr-3 navbar-icon" />}
-						<span>{child.name}</span>
-						{child.external && (
-							<Icon name="fa7-solid:arrow-up-right-from-square" class="text-[0.75rem] text-black/25 dark:text-white/25 ml-auto" />
-						)}
-					</DropdownItem>
-				))}
+				{processedLink.children?.map((child, index) => {
+					const { zh: childZh, en: childEn } = resolveNavbarNameBoth(child.name);
+					const childHref = getLocalizedUrl(child.url, child.external);
+					return (
+						<DropdownItem
+							href={childHref}
+							target={child.external ? "_blank" : undefined}
+							isLast={index === (processedLink.children?.length || 0) - 1}
+							class="dropdown-item focus-ring-inset h-10"
+						>
+							{child.icon && <Icon name={child.icon} class="text-[1.25rem] mr-3 navbar-icon" />}
+							<span class="lang-zh">{childZh}</span>
+							<span class="lang-en">{childEn}</span>
+							{child.external && (
+								<Icon name="fa7-solid:arrow-up-right-from-square" class="text-[0.75rem] text-black/25 dark:text-white/25 ml-auto" />
+							)}
+						</DropdownItem>
+					);
+				})}
 			</DropdownPanel>
 		</div>
 	) : (
 		<a 
-			aria-label={processedLink.name} 
-			href={processedLink.external ? processedLink.url : url(processedLink.url)} 
+			aria-label={isEn ? linkEn : linkZh} 
+			href={getLocalizedUrl(processedLink.url, processedLink.external)} 
 			target={processedLink.external ? "_blank" : null}
 			class="btn-plain scale-animation rounded-lg h-10 font-bold px-4 active:scale-95"
 		>
 			<div class="flex items-center gap-1.5">
 				{processedLink.icon && <Icon name={processedLink.icon} class="text-[1.1rem] mr-1.5 navbar-icon" />}
-				{processedLink.name}
+				<span class="lang-zh">{linkZh}</span>
+				<span class="lang-en">{linkEn}</span>
 				{processedLink.external && <Icon name="fa7-solid:arrow-up-right-from-square" class="text-[0.875rem] transition -translate-y-px ml-1 text-black/20 dark:text-white/20" />}
 			</div>
 		</a>
