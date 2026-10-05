@@ -1,5 +1,5 @@
 import { backgroundWallpaper } from "@/config";
-import { pathsEqual, url } from "@/utils/url-utils";
+import { isHomePage } from "@/utils/layout-utils";
 
 // 全屏壁纸模式：首页标题随滚动平滑上移并渐变消失（首屏完整显示，下滑淡出；壁纸保持 fixed）
 const TITLE_FADE_RATIO = 0.5; // 滚动到半个视口高度后标题完全淡出
@@ -46,7 +46,7 @@ export function updateFullscreenTitleParallax(): void {
 		return;
 	}
 	// 仅首页使用 hero 标题；非首页与 overlay 一致（无标题覆盖层）
-	if (!pathsEqual(window.location.pathname, url("/"))) {
+	if (!isHomePage(window.location.pathname)) {
 		setTitleParallaxStyle(overlay, "", "");
 		return;
 	}
@@ -76,7 +76,7 @@ function requestFullscreenTitleParallax(): void {
 // 处理运行时切换 / Swup 导航后 banner 渲染的覆盖层残留（内联 !important，不依赖 CSS 是否已刷新）
 export function syncFullscreenOverlays(): void {
 	const mode = document.documentElement.getAttribute("data-wallpaper-mode");
-	const isHome = pathsEqual(window.location.pathname, url("/"));
+	const isHome = isHomePage(window.location.pathname);
 	const overlays = document.querySelectorAll(
 		"#banner-overlay-container .banner-home-text-overlay, #banner-overlay-container .banner-page-title-overlay, #banner-overlay-container .banner-post-meta-overlay",
 	);
@@ -112,7 +112,7 @@ export function syncFullscreenBlur(): void {
 	}
 	// 读取当前生效的模糊配置（跟随设置面板滑块 / overlay.blur），已缓存，仅加载/滑块变化时重读
 	const safeMax = cachedMaxBlur ?? readMaxBlur(wrapper);
-	const isHome = pathsEqual(window.location.pathname, url("/"));
+	const isHome = isHomePage(window.location.pathname);
 	if (!isHome) {
 		setBlurIfChanged(wrapper, `${safeMax}px`);
 		return;
