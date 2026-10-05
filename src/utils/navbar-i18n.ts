@@ -1,6 +1,7 @@
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import type { NavBarLink } from "@/types/navBarConfig";
+import { hasEnglishVersion, isEnPath } from "./route-manifest";
 
 // 导航栏菜单名称的 i18n 解析
 // 思路：把「默认菜单名」映射到对应的 i18n key。
@@ -71,21 +72,33 @@ export function resolveNavbarName(name: string, lang?: string): string {
 	return key ? i18n(key, lang) : name;
 }
 
-export function resolveNavbarNameBoth(name: string): { zh: string; en: string } {
+export function resolveNavbarNameBoth(name: string): {
+	zh: string;
+	en: string;
+} {
 	const key = NAVBAR_DEFAULT_NAMES[name];
 	const zh = key ? i18n(key, "zh_CN") : name;
 	const en = NAVBAR_EN_MAP[name] || (key ? i18n(key, "en") : name);
 	return { zh, en };
 }
 
-export function resolveNavbarLinks(links: NavBarLink[], lang?: string): NavBarLink[] {
+export function resolveNavbarLinks(
+	links: NavBarLink[],
+	lang?: string,
+): NavBarLink[] {
 	return links.map((link) => {
 		const resolved: NavBarLink = {
 			...link,
 			name: resolveNavbarName(link.name, lang),
 			url:
-				lang === "en" && !link.external && link.url.startsWith("/") && !link.url.startsWith("/en")
-					? (link.url === "/" ? "/en/" : `/en${link.url}`)
+				lang === "en" &&
+				!link.external &&
+				link.url.startsWith("/") &&
+				!isEnPath(link.url) &&
+				hasEnglishVersion(link.url)
+					? link.url === "/"
+						? "/en/"
+						: `/en${link.url}`
 					: link.url,
 		};
 		if (link.children) {
