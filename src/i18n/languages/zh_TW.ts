@@ -2,6 +2,13 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const zh_TW: Translation = {
+	[Key.language]: "Language",
+	[Key.navigationMenu]: "導覽選單",
+	[Key.tabNavigation]: "分頁標籤",
+	[Key.closeMenu]: "關閉選單",
+	[Key.switchToEnglish]: "切換為英文",
+	[Key.switchToChinese]: "切換為中文",
+	[Key.englishUnavailable]: "此頁面沒有英文版",
 	[Key.home]: "首頁",
 	[Key.about]: "關於我",
 	[Key.archive]: "歸檔",
@@ -95,6 +102,18 @@ export const zh_TW: Translation = {
 	[Key.booknavEmpty]: "暫無書籤",
 
 	// 專案展示頁
+	// Project initial UI text
+	[Key.kineticMemeNote]: "≈ 23,034 slaps (matches the meme!)",
+	[Key.kineticEnergyNote]: "Kinetic energy / slap: 12.48 J (0.4kg hand)",
+	[Key.kineticTimeInitial]: "3 hours 12 minutes",
+	[Key.kineticTimeNote]: "Continuous slapping at 2 slaps/sec",
+	[Key.kineticTemperatureNote]: "Heated from 4°C to target 75°C",
+	[Key.kineticToastInitial]: "Warm-up complete!",
+	[Key.kineticStatusInitial]: "Chilled Raw",
+	[Key.annealingActionInitial]: "Simulated Annealing",
+	[Key.annealingStatusInitial]: "Annealing engine ready (~30 moves/s)",
+	[Key.annealingStepsInitial]: "0 attempts",
+
 	[Key.projects]: "專案",
 	[Key.projectsDescription]: "這裡展示我開發過的專案",
 	[Key.projectDetails]: "查看詳情",
@@ -489,6 +508,18 @@ export const zh_TW: Translation = {
 	[Key.calendarHeatmapWeek]: "{month}月第{week}週，{count}篇文章",
 	[Key.advertisement]: "廣告",
 
+	[Key.profileAvatar]: "illustrated avatar",
+	[Key.displaySettings]: "Display settings",
+	[Key.resetToDefault]: "Reset to default",
+	[Key.calendarPreviousMonth]: "Previous month",
+	[Key.calendarNextMonth]: "Next month",
+	[Key.calendarBackToToday]: "Back to today",
+	[Key.backToTop]: "Back to top",
+	[Key.scrollToComments]: "Scroll to comments",
+	[Key.mobileBackgroundImage]: "Mobile background image of the blog",
+	[Key.desktopBackgroundImage]: "Desktop background image of the blog",
+	[Key.tagPostsLabel]: "View all posts with the {name} tag",
+	[Key.categoryPostsLabel]: "View all posts in the {name} category",
 	[Key.shareArticle]: "分享",
 	[Key.generatingPoster]: "海報生成中...",
 	[Key.copied]: "已複製",
