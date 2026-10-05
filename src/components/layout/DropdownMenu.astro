@@ -3,9 +3,9 @@ import { Icon } from "astro-icon/components";
 import DropdownItem from "@/components/common/DropdownItem.astro";
 import DropdownPanel from "@/components/common/DropdownPanel.astro";
 import type { NavBarLink } from "@/types/config";
-import { url } from "@/utils/url-utils";
-
 import { resolveNavbarNameBoth } from "@/utils/navbar-i18n";
+import { hasEnglishVersion, isEnPath } from "@/utils/route-manifest";
+import { url } from "@/utils/url-utils";
 
 interface Props {
 	link: NavBarLink;
@@ -21,12 +21,17 @@ if (!link) {
 }
 
 const processedLink = link;
-const isEn = lang === "en" || Astro.url.pathname.startsWith("/en");
+const isEn = lang === "en" || isEnPath(Astro.url.pathname);
 const { zh: linkZh, en: linkEn } = resolveNavbarNameBoth(processedLink.name);
 
 const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
 	if (external) return targetUrl;
-	if (isEn && targetUrl.startsWith("/") && !targetUrl.startsWith("/en")) {
+	if (
+		isEn &&
+		targetUrl.startsWith("/") &&
+		!isEnPath(targetUrl) &&
+		hasEnglishVersion(targetUrl)
+	) {
 		return url(targetUrl === "/" ? "/en/" : `/en${targetUrl}`);
 	}
 	return url(targetUrl);
