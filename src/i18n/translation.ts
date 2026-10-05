@@ -32,8 +32,8 @@ export function getTranslation(lang: string): Translation {
 	return map[lang.toLowerCase()] || defaultTranslation;
 }
 
-export function i18n(key: I18nKey): string {
-	const lang = siteConfig.lang || "en";
+export function i18n(key: I18nKey, customLang?: string): string {
+	const lang = customLang || siteConfig.lang || "en";
 	const currentLang = getTranslation(lang);
 	const value = currentLang[key];
 
