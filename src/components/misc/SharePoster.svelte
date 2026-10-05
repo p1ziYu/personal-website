@@ -15,6 +15,7 @@ export let coverImage: string | null = null;
 export let coverImageSelector: string | null = null;
 export let url: string;
 export let siteTitle: string;
+export let lang: string | undefined = undefined;
 export let avatar: string | null = null;
 export let avatarSelector: string | null = null;
 
@@ -532,7 +533,7 @@ async function generatePoster() {
 		ctx.textBaseline = "top";
 		ctx.fillStyle = "#9ca3af";
 		ctx.font = `${12 * scale}px 'Roboto', sans-serif`;
-		ctx.fillText(i18n(I18nKey.author), authorTextX, textCenterY - 20 * scale);
+		ctx.fillText(i18n(I18nKey.author, lang), authorTextX, textCenterY - 20 * scale);
 
 		ctx.fillStyle = "#1f2937";
 		ctx.font = `700 ${20 * scale}px 'Roboto', sans-serif`;
@@ -572,7 +573,7 @@ async function generatePoster() {
 		ctx.fillStyle = "#9ca3af";
 		ctx.font = `${10 * scale}px 'Roboto', sans-serif`;
 		ctx.fillText(
-			fitText(ctx, i18n(I18nKey.scanToRead), qrSize),
+			fitText(ctx, i18n(I18nKey.scanToRead, lang), qrSize),
 			qrX + qrSize / 2,
 			footerY + qrSize + 6 * scale,
 		);
@@ -624,10 +625,10 @@ function portal(node: HTMLElement) {
 <button 
   class="btn-regular rounded-lg h-12 px-6 gap-2 hover:scale-105 active:scale-95 whitespace-nowrap"
   on:click={generatePoster}
-  aria-label="Generate Share Poster"
+  aria-label={i18n(I18nKey.shareArticle, lang)}
 >
   <Icon icon="material-symbols:share" />
-  <span>{i18n(I18nKey.shareArticle)}</span>
+  <span>{i18n(I18nKey.shareArticle, lang)}</span>
 </button>
 
 
@@ -645,7 +646,7 @@ function portal(node: HTMLElement) {
         {:else}
            <div class="flex flex-col items-center gap-3">
              <div class="w-8 h-8 border-2 border-gray-200 rounded-full animate-spin" style="border-top-color: {themeColor}"></div>
-             <span class="text-sm text-gray-500">{i18n(I18nKey.generatingPoster)}</span>
+             <span class="text-sm text-gray-500">{i18n(I18nKey.generatingPoster, lang)}</span>
            </div>
         {/if}
       </div>
@@ -657,10 +658,10 @@ function portal(node: HTMLElement) {
         >
           {#if copied}
             <Icon icon="material-symbols:check" />
-            <span>{i18n(I18nKey.copied)}</span>
+            <span>{i18n(I18nKey.copied, lang)}</span>
           {:else}
             <Icon icon="material-symbols:link" />
-            <span>{i18n(I18nKey.copyLink)}</span>
+            <span>{i18n(I18nKey.copyLink, lang)}</span>
           {/if}
         </button>
         <button 
@@ -670,7 +671,7 @@ function portal(node: HTMLElement) {
           disabled={!posterImage}
         >
           <Icon icon="material-symbols:download" />
-          {i18n(I18nKey.savePoster)}
+          {i18n(I18nKey.savePoster, lang)}
         </button>
       </div>
     </div>
