@@ -1,3 +1,4 @@
+import { isEnPath } from "@/utils/route-manifest";
 import { siteConfig } from "../config";
 import type I18nKey from "./i18nKey";
 import { en } from "./languages/en";
@@ -46,4 +47,9 @@ export function i18n(key: I18nKey, customLang?: string): string {
 	}
 
 	return value || defaultTranslation[key];
+}
+
+/** Resolve UI language per request; never mutate the site-wide default. */
+export function getLangFromPath(pathname: string): string {
+	return isEnPath(pathname) ? "en" : siteConfig.lang || "zh_CN";
 }
