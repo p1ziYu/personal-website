@@ -127,7 +127,7 @@ const lang = isEn ? "en" : undefined;
         <div class="flex flex-row flex-nowrap items-center">
           <a
             href={getCategoryUrl(category || "", lang)}
-            aria-label={`View all posts in the ${category || i18n(I18nKey.uncategorized, lang)} category`}
+            aria-label={i18n(I18nKey.categoryPostsLabel, lang).replace("{name}", category || i18n(I18nKey.uncategorized, lang))}
             class="link-lg transition text-50 text-sm font-medium
               hover:text-(--primary) dark:hover:text-(--primary) whitespace-nowrap"
           >
@@ -164,7 +164,7 @@ const lang = isEn ? "en" : undefined;
                 </div>
                 <a
                   href={getTagUrl(tag, lang)}
-                  aria-label={`View all posts with the ${tag.trim()} tag`}
+                  aria-label={i18n(I18nKey.tagPostsLabel, lang).replace("{name}", tag.trim())}
                   class="link-lg transition text-50 text-sm font-medium
                     hover:text-(--primary) dark:hover:text-(--primary) whitespace-nowrap"
                 >
