@@ -26,27 +26,27 @@ const showTitle = widgetConfig?.showTitle !== false;
 // ---- 构建时收集版本和环境信息 ----
 
 // 博客版本（从 package.json 读取）
-let blogVersion = "unknown";
+let blogVersion = i18n(I18nKey.siteInfoUnknown, uiLang);
 try {
 	const pkg = JSON.parse(
 		readFileSync(new URL("../../../package.json", import.meta.url), "utf-8"),
 	);
-	blogVersion = pkg.version || "Firefly unknown";
+	blogVersion = pkg.version || i18n(I18nKey.siteInfoUnknown, uiLang);
 } catch {}
 
 // Astro 版本（从已安装的 astro 包读取）
-let astroVersion = "unknown";
+let astroVersion = i18n(I18nKey.siteInfoUnknown, uiLang);
 try {
 	const require = createRequire(import.meta.url);
 	const astroPkg = require("astro/package.json");
-	astroVersion = astroPkg.version || "unknown";
+	astroVersion = astroPkg.version || i18n(I18nKey.siteInfoUnknown, uiLang);
 } catch {}
 
 // Node 版本
 const nodeVersion = process.version;
 
 // pnpm 版本（从 npm_config_user_agent 解析）
-let pnpmVersion = "unknown";
+let pnpmVersion = i18n(I18nKey.siteInfoUnknown, uiLang);
 const userAgent = process.env.npm_config_user_agent || "";
 const pnpmMatch = userAgent.match(/pnpm\/([\d.]+)/);
 if (pnpmMatch) {
@@ -60,14 +60,20 @@ const buildTime = uiLang === "en"
 
 // 构建平台检测（使用 ci-info 自动识别 CI 环境）
 const unknownBuildPlatform =
-	widgetConfig?.specificConfig?.siteInfo?.unknownBuildPlatform || "Unknown CI";
-const buildPlatform = detectBuildPlatform({
+	widgetConfig?.specificConfig?.siteInfo?.unknownBuildPlatform || i18n(I18nKey.siteInfoUnknownCi, uiLang);
+const detectedBuildPlatform = detectBuildPlatform({
 	env: process.env,
 	isCI: ci.isCI,
 	ciName: ci.name,
 	isDev: import.meta.env.DEV,
 	unknownBuildPlatform,
 });
+
+const buildPlatform = detectedBuildPlatform === "Local"
+	? i18n(I18nKey.siteInfoLocal, uiLang)
+	: detectedBuildPlatform === "Local Dev"
+		? i18n(I18nKey.siteInfoLocalDev, uiLang)
+		: detectedBuildPlatform;
 
 // 系统信息（平台 + 架构）
 const platformMap: Record<string, string> = {
@@ -89,7 +95,7 @@ const systemInfo = `${osName} / ${archName}`;
 // 站点域名（去掉协议前缀）
 const siteDomain = siteConfig.site_url
 	? siteConfig.site_url.replace(/^https?:\/\//, "").replace(/\/$/, "")
-	: "unknown";
+	: i18n(I18nKey.siteInfoUnknown, uiLang);
 
 // 文章许可
 const licenseName = licenseConfig.enable ? licenseConfig.name : "None";
