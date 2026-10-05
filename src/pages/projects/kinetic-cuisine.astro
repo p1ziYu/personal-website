@@ -1,9 +1,12 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const title = "动能厨房 · 拍熟一只鸡";
-const description =
-	"如果动能全部转化为内能，要拍多少巴掌才能把一只鸡拍熟？源自 23,034 掌拍熟一只鸡的经典物理迷因：在线计算动能烹饪，体验连环神掌与超音速一击！";
+const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
+
+const title = isEn ? "Kinetic Cuisine · Slap Cook a Chicken" : "动能厨房 · 拍熟一只鸡";
+const description = isEn
+	? "If kinetic energy turns 100% into internal heat, how many slaps does it take to cook a chicken? Inspired by the viral 23,034-slap meme: calculate kinetic thermodynamic cooking, tap into palm flurries, or calculate supersonic strikes!"
+	: "如果动能全部转化为内能，要拍多少巴掌才能把一只鸡拍熟？源自 23,034 掌拍熟一只鸡的经典物理迷因：在线计算动能烹饪，体验连环神掌与超音速一击！";
 ---
 
 <MainGridLayout title={title} description={description}>
@@ -12,14 +15,23 @@ const description =
 			<!-- Header -->
 			<header class="space-y-2 border-b border-black/10 dark:border-white/10 pb-5">
 				<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-					<span>🔥 热力学迷因实验室</span>
+					<span>🔥 <span class="lang-zh">热力学迷因实验室</span><span class="lang-en">Thermodynamic Meme Lab</span></span>
 					<span class="opacity-40">·</span>
 					<span>Kinetic Cuisine</span>
 				</div>
-				<h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">动能厨房 · 拍熟一只鸡</h1>
+				<h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+					<span class="lang-zh">动能厨房 · 拍熟一只鸡</span>
+					<span class="lang-en">Kinetic Cuisine · Slap Cook a Chicken</span>
+				</h1>
 				<p class="text-sm sm:text-base opacity-75 leading-relaxed">
-					“如果拍击的动能 100% 转化为内能，要拍多少巴掌才能把鸡拍熟？”
-					源自 Pubity 爆火迷因：拍熟一只整鸡需 <strong>23,034</strong> 掌（或以 <strong>3,726 mph</strong> 超音速一掌瞬熟）。这里我们用真实物理学公式带你算个清楚！
+					<span class="lang-zh">
+						“如果拍击的动能 100% 转化为内能，要拍多少巴掌才能把鸡拍熟？”
+						源自 Pubity 爆火迷因：拍熟一只整鸡需 <strong>23,034</strong> 掌（或以 <strong>3,726 mph</strong> 超音速一掌瞬熟）。这里我们用真实物理学公式带你算个清楚！
+					</span>
+					<span class="lang-en">
+						"If kinetic energy is 100% converted into internal thermal energy, how many slaps does it take to cook a chicken?"
+						Born from the legendary meme: roasting a whole chicken takes <strong>23,034</strong> slaps (or a single supersonic strike at <strong>3,726 mph</strong>). Let's calculate the real thermodynamic reality!
+					</span>
 				</p>
 			</header>
 
@@ -28,15 +40,20 @@ const description =
 				<div class="flex items-center justify-between">
 					<h2 class="text-lg font-bold flex items-center gap-2">
 						<span class="w-2 h-2 rounded-full bg-[var(--primary)]"></span>
-						食材与拍击参数
+						<span class="lang-zh">食材与拍击参数</span>
+						<span class="lang-en">Ingredients & Slap Parameters</span>
 					</h2>
-					<span class="text-xs opacity-50">基于真实比热容 Q = m·c·ΔT</span>
+					<span class="text-xs opacity-50">
+						<span class="lang-zh">基于真实比热容 Q = m·c·ΔT</span>
+						<span class="lang-en">Based on Specific Heat Q = m·c·ΔT</span>
+					</span>
 				</div>
 
 				<!-- Food Preset Selector -->
 				<div>
 					<label class="block text-xs font-semibold uppercase tracking-wider opacity-60 mb-2.5">
-						选择食材预设 (质量 · 熟成目标温)
+						<span class="lang-zh">选择食材预设 (质量 · 熟成目标温)</span>
+						<span class="lang-en">Select Food Preset (Mass · Target Internal Temp)</span>
 					</label>
 					<div id="food-presets" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
 						<!-- Injected by JS -->
@@ -48,24 +65,35 @@ const description =
 					<!-- Start Temp Toggle -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-center text-sm">
-							<span class="font-medium opacity-80">初始温度 (T₀)</span>
-							<span id="start-temp-badge" class="font-mono text-xs px-2 py-0.5 rounded bg-black/10 dark:bg-white/10 font-bold">4°C (冷藏)</span>
+							<span class="font-medium opacity-80">
+								<span class="lang-zh">初始温度 (T₀)</span>
+								<span class="lang-en">Initial Temp (T₀)</span>
+							</span>
+							<span id="start-temp-badge" class="font-mono text-xs px-2 py-0.5 rounded bg-black/10 dark:bg-white/10 font-bold">{isEn ? "4°C (Chilled)" : "4°C (冷藏)"}</span>
 						</div>
 						<div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5">
 							<button id="temp-fridge" type="button" class="py-1.5 text-xs font-medium rounded-lg transition active:scale-95 bg-[var(--primary)] text-white shadow-xs">
-								❄️ 冷藏 4°C
+								<span class="lang-zh">❄️ 冷藏 4°C</span>
+								<span class="lang-en">❄️ Chilled 4°C</span>
 							</button>
 							<button id="temp-room" type="button" class="py-1.5 text-xs font-medium rounded-lg transition active:scale-95 text-inherit opacity-70 hover:opacity-100">
-								🌡️ 常温 20°C
+								<span class="lang-zh">🌡️ 常温 20°C</span>
+								<span class="lang-en">🌡️ Room 20°C</span>
 							</button>
 						</div>
-						<p class="text-[11px] opacity-50 leading-tight">冷藏整鸡至熟温需升温 71°C</p>
+						<p class="text-[11px] opacity-50 leading-tight">
+							<span class="lang-zh">冷藏整鸡至熟温需升温 71°C</span>
+							<span class="lang-en">Chilled chicken requires +71°C to fully cook</span>
+						</p>
 					</div>
 
 					<!-- Slap Speed Slider -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-center text-sm">
-							<span class="font-medium opacity-80">单掌挥击速度 (v)</span>
+							<span class="font-medium opacity-80">
+								<span class="lang-zh">单掌挥击速度 (v)</span>
+								<span class="lang-en">Slap Velocity (v)</span>
+							</span>
 							<span class="font-mono text-xs font-bold text-[var(--primary)]" id="slap-speed-val">7.9 m/s</span>
 						</div>
 						<input
@@ -78,17 +106,20 @@ const description =
 							class="w-full accent-[var(--primary)] cursor-pointer"
 						/>
 						<div class="flex justify-between text-[11px] opacity-50 font-mono">
-							<span>3 m/s (微风拂面)</span>
+							<span>3 m/s <span class="lang-zh">(微风)</span><span class="lang-en">(Breeze)</span></span>
 							<span id="slap-speed-kmh">28.4 km/h</span>
-							<span>40 m/s (职业拳击)</span>
+							<span>40 m/s <span class="lang-zh">(拳击)</span><span class="lang-en">(Pro Boxer)</span></span>
 						</div>
 					</div>
 
 					<!-- Slap Rate Slider -->
 					<div class="space-y-2">
 						<div class="flex justify-between items-center text-sm">
-							<span class="font-medium opacity-80">拍击频率 (f)</span>
-							<span class="font-mono text-xs font-bold" id="slap-rate-val">2 掌/秒</span>
+							<span class="font-medium opacity-80">
+								<span class="lang-zh">拍击频率 (f)</span>
+								<span class="lang-en">Slap Cadence (f)</span>
+							</span>
+							<span class="font-mono text-xs font-bold" id="slap-rate-val">{isEn ? "2 slaps/s" : "2 掌/秒"}</span>
 						</div>
 						<input
 							id="slap-rate"
@@ -100,9 +131,9 @@ const description =
 							class="w-full accent-[var(--primary)] cursor-pointer"
 						/>
 						<div class="flex justify-between text-[11px] opacity-50 font-mono">
-							<span>1 掌/秒 (慢悠悠)</span>
-							<span>3 掌/秒 (无影手)</span>
-							<span>6 掌/秒 (电风扇)</span>
+							<span>1 <span class="lang-zh">掌/秒 (漫步)</span><span class="lang-en">slap/s (Casual)</span></span>
+							<span>3 <span class="lang-zh">掌/秒 (极速)</span><span class="lang-en">slaps/s (Flurry)</span></span>
+							<span>6 <span class="lang-zh">掌/秒 (风扇)</span><span class="lang-en">slaps/s (Fan)</span></span>
 						</div>
 					</div>
 				</div>
@@ -110,7 +141,10 @@ const description =
 				<!-- Live Computation Results Cards -->
 				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-amber-500/5 dark:bg-amber-400/5">
-						<div class="text-xs opacity-60 mb-1">所需拍击总次数</div>
+						<div class="text-xs opacity-60 mb-1">
+							<span class="lang-zh">所需拍击总次数</span>
+							<span class="lang-en">Total Slaps Required</span>
+						</div>
 						<div class="text-2xl sm:text-3xl font-black font-mono tracking-tight text-amber-600 dark:text-amber-400" id="res-slap-count">
 							23,038
 						</div>
@@ -120,7 +154,10 @@ const description =
 					</div>
 
 					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
-						<div class="text-xs opacity-60 mb-1">所需总热能 (Q)</div>
+						<div class="text-xs opacity-60 mb-1">
+							<span class="lang-zh">所需总热能 (Q)</span>
+							<span class="lang-en">Total Thermal Energy (Q)</span>
+						</div>
 						<div class="text-2xl font-bold font-mono" id="res-total-energy">
 							287.6 kJ
 						</div>
@@ -130,7 +167,10 @@ const description =
 					</div>
 
 					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
-						<div class="text-xs opacity-60 mb-1">持续拍熟耗时</div>
+						<div class="text-xs opacity-60 mb-1">
+							<span class="lang-zh">持续拍熟耗时</span>
+							<span class="lang-en">Time to Cook</span>
+						</div>
 						<div class="text-2xl font-bold font-mono" id="res-total-time">
 							3 小时 12 分
 						</div>
@@ -140,7 +180,10 @@ const description =
 					</div>
 
 					<div class="p-4 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.02]">
-						<div class="text-xs opacity-60 mb-1">熟成温差 (ΔT)</div>
+						<div class="text-xs opacity-60 mb-1">
+							<span class="lang-zh">熟成温差 (ΔT)</span>
+							<span class="lang-en">Cooking Delta (ΔT)</span>
+						</div>
 						<div class="text-2xl font-bold font-mono" id="res-delta-temp">
 							71.0 °C
 						</div>
@@ -156,10 +199,14 @@ const description =
 						<div class="space-y-1">
 							<div class="inline-flex items-center gap-1.5 text-xs font-bold text-purple-600 dark:text-purple-400">
 								<span>⚡</span>
-								<span>超音速「神之一掌」模式 (One-Slap Mode)</span>
+								<span>
+									<span class="lang-zh">超音速「神之一掌」模式</span>
+									<span class="lang-en">Hypersonic "One-Slap" Mode</span>
+								</span>
 							</div>
 							<p class="text-xs opacity-75 leading-relaxed max-w-xl">
-								如果想只用<strong>一掌</strong>将食材瞬间彻底拍熟（v = √(2·Q / m_hand)），这一掌的挥手速度必须达到：
+								<span class="lang-zh">如果想只用<strong>一掌</strong>将食材瞬间彻底拍熟（v = √(2·Q / m_hand)），这一掌的挥手速度必须达到：</span>
+								<span class="lang-en">To flash-cook the ingredient in a single godlike slap (v = √(2·Q / m_hand)), your hand must hit:</span>
 							</p>
 						</div>
 
@@ -181,8 +228,14 @@ const description =
 						</div>
 					</div>
 					<div class="mt-3 pt-3 border-t border-purple-500/15 flex items-center justify-between text-xs opacity-70">
-						<span>🔥 迷因传言值: <strong class="font-mono text-purple-600 dark:text-purple-300">3,726 mph</strong>（约 1,666 m/s / 4.9 马赫）</span>
-						<span class="hidden sm:inline text-[11px] opacity-60">此速度挥掌会在触碰瞬间将手和肉同时汽化</span>
+						<span>
+							<span class="lang-zh">🔥 迷因传言值: <strong class="font-mono text-purple-600 dark:text-purple-300">3,726 mph</strong>（约 1,666 m/s / 4.9 马赫）</span>
+							<span class="lang-en">🔥 Meme Legend: <strong class="font-mono text-purple-600 dark:text-purple-300">3,726 mph</strong> (~1,666 m/s / Mach 4.9)</span>
+						</span>
+						<span class="hidden sm:inline text-[11px] opacity-60">
+							<span class="lang-zh">此速度挥掌会在触碰瞬间将手和肉同时汽化</span>
+							<span class="lang-en">Hypersonic shock heating vaporizes hand and meat instantly</span>
+						</span>
 					</div>
 				</div>
 			</section>
@@ -192,9 +245,13 @@ const description =
 				<div class="flex items-center justify-between">
 					<h2 class="text-lg font-bold flex items-center gap-2">
 						<span class="w-2 h-2 rounded-full bg-amber-500"></span>
-						巴掌烹饪互动模拟器
+						<span class="lang-zh">巴掌烹饪互动模拟器</span>
+						<span class="lang-en">Interactive Slap Simulator</span>
 					</h2>
-					<span class="text-xs opacity-50">点击或敲击空格键开拍！</span>
+					<span class="text-xs opacity-50">
+						<span class="lang-zh">点击或敲击空格键开拍！</span>
+						<span class="lang-en">Click target or mash Spacebar to slap!</span>
+					</span>
 				</div>
 
 				<div class="relative rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-black/30 overflow-hidden p-6 sm:p-8 flex flex-col items-center justify-center min-h-[380px]">
@@ -258,8 +315,15 @@ const description =
 						</div>
 
 						<div class="flex justify-between items-center text-[11px] opacity-60 font-mono">
-							<span>已拍击: <strong id="sim-slap-count" class="font-bold text-inherit">0</strong> 掌</span>
-							<span>已注入动能: <span id="sim-energy-added">0.0</span> J</span>
+							<span>
+								<span class="lang-zh">已拍击: </span><span class="lang-en">Slaps: </span>
+								<strong id="sim-slap-count" class="font-bold text-inherit">0</strong>
+								<span class="lang-zh"> 掌</span>
+							</span>
+							<span>
+								<span class="lang-zh">已注入动能: </span><span class="lang-en">Energy: </span>
+								<span id="sim-energy-added">0.0</span> J
+							</span>
 						</div>
 					</div>
 
@@ -273,25 +337,30 @@ const description =
 							<svg viewBox="0 0 24 24" class="w-5 h-5 fill-current" aria-hidden="true">
 								<path d="M21 10.5a1.5 1.5 0 0 0-1.5-1.5h-4.2l.63-3.03.02-.21a1.49 1.49 0 0 0-.44-1.06L14.44 3.6 8.72 9.32c-.45.45-.72 1.07-.72 1.68V19a2 2 0 0 0 2 2h7c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.5M4 11H2v9h2c.55 0 1-.45 1-1v-7c0-.55-.45-1-1-1Z"/>
 							</svg>
-							<span>开拍！</span>
+							<span>
+								<span class="lang-zh">开拍！</span>
+								<span class="lang-en">SLAP!</span>
+							</span>
 						</button>
 
 						<button
 							id="btn-slap-10"
 							type="button"
 							class="px-4 py-3 rounded-2xl border border-black/15 dark:border-white/15 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
-							title="快速进行 10 次拍击"
+							title={isEn ? "10 rapid slaps" : "快速进行 10 次拍击"}
 						>
-							⚡ 十连掌
+							<span class="lang-zh">⚡ 十连掌</span>
+							<span class="lang-en">⚡ 10x Flurry</span>
 						</button>
 
 						<button
 							id="btn-slap-100"
 							type="button"
 							class="px-4 py-3 rounded-2xl border border-black/15 dark:border-white/15 text-xs font-semibold hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
-							title="百掌连环"
+							title={isEn ? "100 slap barrage" : "百掌连环"}
 						>
-							🔥 百掌轰击
+							<span class="lang-zh">🔥 百掌轰击</span>
+							<span class="lang-en">🔥 100x Barrage</span>
 						</button>
 
 						<button
@@ -299,7 +368,8 @@ const description =
 							type="button"
 							class="px-4 py-3 rounded-2xl border border-rose-500/20 text-rose-500 hover:bg-rose-500/10 text-xs font-semibold active:scale-95 transition"
 						>
-							↺ 重置当前
+							<span class="lang-zh">↺ 重置当前</span>
+							<span class="lang-en">↺ Reset</span>
 						</button>
 					</div>
 				</div>
@@ -309,28 +379,54 @@ const description =
 			<section class="p-6 rounded-2xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 space-y-3">
 				<h3 class="text-sm font-bold opacity-90 flex items-center gap-2">
 					<span>📐</span>
-					<span>物理考据与科学说明 (Physics Notes)</span>
+					<span>
+						<span class="lang-zh">物理考据与科学说明 (Physics Notes)</span>
+						<span class="lang-en">Thermodynamic Physics Notes & Calculations</span>
+					</span>
 				</h3>
 				<ul class="text-xs sm:text-sm opacity-75 space-y-2 leading-relaxed list-disc list-inside">
 					<li>
-						<strong>能量守恒与升温公式：</strong>所需加热总热量为 <code>Q = m · c · ΔT</code>（其中 m 为质量，c 为比热容，ΔT 为目标熟化温差）；单次挥掌击打产生的动能为 <code>E = ½ · m_hand · v²</code>（本计算假定单侧手掌与小臂联动有效挥击质量为 0.4 kg）。
+						<span class="lang-zh">
+							<strong>能量守恒与升温公式：</strong>所需加热总热量为 <code>Q = m · c · ΔT</code>（其中 m 为质量，c 为比热容，ΔT 为目标熟化温差）；单次挥掌击打产生的动能为 <code>E = ½ · m_hand · v²</code>（本计算假定单侧手掌与小臂联动有效挥击质量为 0.4 kg）。
+						</span>
+						<span class="lang-en">
+							<strong>Conservation of Energy & Heating Formula:</strong> Total heat required is <code>Q = m · c · ΔT</code> (mass m, specific heat c, cooking temperature rise ΔT). Kinetic energy per slap is <code>E = ½ · m_hand · v²</code> (effective hand/forearm mass taken as 0.4 kg).
+						</span>
 					</li>
 					<li>
-						<strong>完全无损理想假设：</strong>计算模型严格假定手掌的机械动能在击中肉质瞬间 <strong>100% 毫无损耗地转化为内能</strong>，且食材不向周围空气散发任何热量。但在真实物理世界中，绝大部分能量会转化为击打声波、机体反弹与震动。
+						<span class="lang-zh">
+							<strong>完全无损理想假设：</strong>计算模型严格假定手掌的机械动能在击中肉质瞬间 <strong>100% 毫无损耗地转化为内能</strong>，且食材不向周围空气散发任何热量。但在真实物理世界中，绝大部分能量会转化为击打声波、机体反弹与震动。
+						</span>
+						<span class="lang-en">
+							<strong>100% Lossless Ideal Hypothesis:</strong> The calculator assumes kinetic energy converts <strong>100% losslessly into internal heat</strong> with zero ambient dissipation. In reality, most energy disperses into sound waves, mechanical rebound, and acoustic shock.
+						</span>
 					</li>
 					<li>
-						<strong>真实人类实验（Parker Ormonde，2019）：</strong>物理爱好者 Parker Ormonde 曾制造过一台专用机械臂进行「拍鸡」实测。在连续挥拍约 <strong>135,000 次（耗时约 6.5 小时）</strong>后，整鸡核心温度仅攀升到约 <strong>55°C</strong>，随后拍击产生的热量与向室温散失的热量完全抵消达到热平衡，鸡肉不仅没熟，反而已被拍成肉泥。
+						<span class="lang-zh">
+							<strong>真实人类实验（Parker Ormonde，2019）：</strong>物理爱好者 Parker Ormonde 曾制造过一台专用机械臂进行「拍鸡」实测。在连续挥拍约 <strong>135,000 次（耗时约 6.5 小时）</strong>后，整鸡核心温度仅攀升到约 <strong>55°C</strong>，随后拍击产生的热量与向室温散失的热量完全抵消达到热平衡，鸡肉不仅没熟，反而已被拍成肉泥。
+						</span>
+						<span class="lang-en">
+							<strong>Real-World Mechanical Experiment (Parker Ormonde, 2019):</strong> Maker Parker Ormonde built a motorized slapping rig. After ~<strong>135,000 slaps across 6.5 hours</strong>, the chicken reached ~<strong>55°C</strong> before ambient heat dissipation equaled mechanical heat input. The bird never cooked, but turned into homogeneous paste.
+						</span>
 					</li>
 					<li>
-						<strong>超音速一掌的现实代价：</strong>若想以一掌瞬熟（约 2,682 ~ 3,726 mph），手掌需以超高马赫数划过空气。此极端速度下引发的绝热空气压缩激波温度高达数千度，在手掌触碰到鸡肉的前数微秒，空气阻力与激波高温就会将手掌和整鸡一并汽化炸裂。
+						<span class="lang-zh">
+							<strong>超音速一掌的现实代价：</strong>若想以一掌瞬熟（约 2,682 ~ 3,726 mph），手掌需以超高马赫数划过空气。此极端速度下引发的绝热空气压缩激波温度高达数千度，在手掌触碰到鸡肉的前数微秒，空气阻力与激波高温就会将手掌和整鸡一并汽化炸裂。
+						</span>
+						<span class="lang-en">
+							<strong>The Fatal Price of a Hypersonic Slap:</strong> To flash-cook in a single strike (~2,682–3,726 mph / Mach 3.5–4.9), adiabatic compression shockwaves would ignite air to thousands of degrees. Microseconds before contact, drag and shock plasma would vaporize both hand and chicken into ionized mist.
+						</span>
 					</li>
 				</ul>
 			</section>
 
 			<!-- Footer -->
 			<footer class="pt-4 border-t border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs opacity-50">
-				<span>© Kinetic Cuisine · 动能厨房实验项目</span>
-				<span>本页面由 AI 生成。</span>
+				<span>© Kinetic Cuisine · <span class="lang-zh">动能厨房实验项目</span><span class="lang-en">Kinetic Culinary Project</span></span>
+				<span>
+					<span class="lang-zh">本页面由 AI 生成。</span>
+					<span class="lang-en">Generated by AI.</span>
+				</span>
 			</footer>
 		</div>
 	</div>
@@ -388,13 +484,20 @@ const description =
 	<!-- Interactive Logic -->
 	<script is:inline>
 		(() => {
+			const isEn = () =>
+				document.documentElement.lang === "en" ||
+				location.pathname.startsWith("/en") ||
+				document.documentElement.getAttribute("data-lang") === "en";
+
 			// Food Definitions grounded in requested physics:
 			// c in kJ/(kg·K), mass in kg, targetTemp in °C
 			const FOOD_PRESETS = [
 				{
 					id: "whole-chicken",
 					name: "整鸡",
+					name_en: "Whole Chicken",
 					subtitle: "经典整鸡",
+					subtitle_en: "Classic Broiler",
 					mass: 1.5,
 					c: 2.7,
 					targetTemp: 75,
@@ -435,7 +538,9 @@ const description =
 				{
 					id: "chicken-breast",
 					name: "鸡胸肉",
+					name_en: "Chicken Breast",
 					subtitle: "高蛋白肉块",
+					subtitle_en: "Lean Protein Fillet",
 					mass: 0.25,
 					c: 2.7,
 					targetTemp: 75,
@@ -463,7 +568,9 @@ const description =
 				{
 					id: "steak",
 					name: "牛排",
+					name_en: "Sirloin Steak",
 					subtitle: "M9 极佳西冷",
+					subtitle_en: "Prime Cut Steak",
 					mass: 0.3,
 					c: 2.8,
 					targetTemp: 65,
@@ -495,7 +602,9 @@ const description =
 				{
 					id: "salmon",
 					name: "三文鱼",
+					name_en: "Salmon Fillet",
 					subtitle: "鲜嫩鱼腩",
+					subtitle_en: "Rich Omega-3 Belly",
 					mass: 0.2,
 					c: 3.0,
 					targetTemp: 63,
@@ -524,7 +633,9 @@ const description =
 				{
 					id: "potato",
 					name: "土豆",
+					name_en: "Russet Potato",
 					subtitle: "软糯黄心薯",
+					subtitle_en: "Starchy Yellow Russet",
 					mass: 0.25,
 					c: 3.4,
 					targetTemp: 95,
@@ -555,7 +666,9 @@ const description =
 				{
 					id: "egg",
 					name: "鸡蛋",
+					name_en: "Fresh Egg",
 					subtitle: "完美水煮蛋",
+					subtitle_en: "Soft-Boiled Egg",
 					mass: 0.06,
 					c: 3.2,
 					targetTemp: 70,
@@ -680,15 +793,15 @@ const description =
 			}
 
 			function formatTime(seconds) {
-				if (seconds < 60) return `${Math.round(seconds)} 秒`;
+				if (seconds < 60) return isEn() ? `${Math.round(seconds)}s` : `${Math.round(seconds)} 秒`;
 				if (seconds < 3600) {
 					const m = Math.floor(seconds / 60);
 					const s = Math.round(seconds % 60);
-					return `${m} 分 ${s} 秒`;
+					return isEn() ? `${m}m ${s}s` : `${m} 分 ${s} 秒`;
 				}
 				const h = Math.floor(seconds / 3600);
 				const m = Math.round((seconds % 3600) / 60);
-				return `${h} 小时 ${m} 分`;
+				return isEn() ? `${h}h ${m}m` : `${h} 小时 ${m} 分`;
 			}
 
 			function renderPresets() {
@@ -702,8 +815,9 @@ const description =
 							? "bg-[var(--primary)] text-white border-transparent shadow-sm"
 							: "border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 opacity-80"
 					}`;
+					const name = isEn() ? (food.name_en || food.name) : food.name;
 					btn.innerHTML = `
-						<div class="font-bold text-sm leading-snug">${food.name}</div>
+						<div class="font-bold text-sm leading-snug">${name}</div>
 						<div class="text-[11px] opacity-75 mt-1 font-mono">${food.mass} kg · ${food.targetTemp}°C</div>
 					`;
 					btn.addEventListener("click", () => {
@@ -713,6 +827,12 @@ const description =
 					});
 					foodPresetsContainer.appendChild(btn);
 				});
+			}
+
+			function updateTempBadges() {
+				startTempBadge.textContent = startTemp === 4
+					? (isEn() ? "4°C (Fridge)" : "4°C (冷藏)")
+					: (isEn() ? "20°C (Room Temp)" : "20°C (常温)");
 			}
 
 			function updateCalculations() {
@@ -731,20 +851,30 @@ const description =
 				// Live Results Update
 				resSlapCount.textContent = requiredSlaps.toLocaleString();
 				if (food.id === "whole-chicken" && startTemp === 4) {
-					resMemeNote.textContent = `≈ 23,034 掌（与迷因仅差 ${Math.abs(requiredSlaps - 23034)} 掌）`;
+					resMemeNote.textContent = isEn()
+						? `≈ 23,034 slaps (differs from meme by only ${Math.abs(requiredSlaps - 23034)} slaps)`
+						: `≈ 23,034 掌（与迷因仅差 ${Math.abs(requiredSlaps - 23034)} 掌）`;
 				} else {
-					resMemeNote.textContent = `按当前速度 (${slapSpeed.toFixed(1)} m/s) 计算`;
+					resMemeNote.textContent = isEn()
+						? `Calculated at current speed (${slapSpeed.toFixed(1)} m/s)`
+						: `按当前速度 (${slapSpeed.toFixed(1)} m/s) 计算`;
 				}
 
 				resTotalEnergy.textContent = `${eNeededKj.toFixed(1)} kJ`;
-				resEnergySub.textContent = `单掌动能: ${ePerSlapJoules.toFixed(2)} J (手重 ${HAND_MASS}kg)`;
+				resEnergySub.textContent = isEn()
+					? `Kinetic energy / slap: ${ePerSlapJoules.toFixed(2)} J (${HAND_MASS}kg hand)`
+					: `单掌动能: ${ePerSlapJoules.toFixed(2)} J (手重 ${HAND_MASS}kg)`;
 
 				const totalSeconds = requiredSlaps / slapRate;
 				resTotalTime.textContent = formatTime(totalSeconds);
-				resTimeSub.textContent = `按 ${slapRate} 掌/秒连续拍击`;
+				resTimeSub.textContent = isEn()
+					? `Continuous slapping at ${slapRate} slaps/sec`
+					: `按 ${slapRate} 掌/秒连续拍击`;
 
 				resDeltaTemp.textContent = `${deltaT.toFixed(1)} °C`;
-				resTempSub.textContent = `${startTemp}°C 升至 ${food.targetTemp}°C 熟透`;
+				resTempSub.textContent = isEn()
+					? `Heated from ${startTemp}°C to target ${food.targetTemp}°C`
+					: `${startTemp}°C 升至 ${food.targetTemp}°C 熟透`;
 
 				// One-Slap Calculation: v = sqrt(2 * E_needed / m_hand)
 				const oneSlapSpeedMs = Math.sqrt((2 * eNeededJoules) / HAND_MASS);
@@ -781,22 +911,24 @@ const description =
 
 				// Status badges and color shift
 				if (pct >= 100) {
-					cookStatusText.textContent = "外焦里嫩 · 大功告成！";
+					cookStatusText.textContent = isEn() ? "Crisp & Tender · Perfectly Cooked!" : "外焦里嫩 · 大功告成！";
 					statusIcon.textContent = "🍗";
 					steamContainer.style.opacity = "1";
 					foodSvgWrap.style.filter = "sepia(40%) saturate(140%) brightness(95%)";
 				} else if (pct >= 50) {
-					cookStatusText.textContent = "滋滋冒气 · 半熟状态";
+					cookStatusText.textContent = isEn() ? "Sizzling & Steaming · Halfway Done" : "滋滋冒气 · 半熟状态";
 					statusIcon.textContent = "🔥";
 					steamContainer.style.opacity = "0.85";
 					foodSvgWrap.style.filter = "sepia(25%) saturate(120%)";
 				} else if (pct >= 15) {
-					cookStatusText.textContent = "温热回暖 · 渐入佳境";
+					cookStatusText.textContent = isEn() ? "Warming Up · Getting There" : "温热回暖 · 渐入佳境";
 					statusIcon.textContent = "♨️";
 					steamContainer.style.opacity = "0.4";
 					foodSvgWrap.style.filter = "sepia(10%)";
 				} else {
-					cookStatusText.textContent = startTemp === 4 ? "冰凉生鲜" : "常温待烤";
+					cookStatusText.textContent = startTemp === 4
+						? (isEn() ? "Chilled Raw" : "冰凉生鲜")
+						: (isEn() ? "Room Temp Raw" : "常温待烤");
 					statusIcon.textContent = startTemp === 4 ? "❄️" : "🌡️";
 					steamContainer.style.opacity = "0";
 					foodSvgWrap.style.filter = "none";
@@ -829,7 +961,9 @@ const description =
 				// Floating slap indicator text
 				const floatEl = document.createElement("div");
 				floatEl.className = "float-text text-amber-500 dark:text-amber-400";
-				floatEl.textContent = count > 1 ? `+${count} 连击!` : `+1 啪!`;
+				floatEl.textContent = count > 1
+					? (isEn() ? `+${count} Combo!` : `+${count} 连击!`)
+					: (isEn() ? `+1 Slap!` : `+1 啪!`);
 				floatEl.style.left = `${50 + (Math.random() - 0.5) * 30}%`;
 				slapFloats.appendChild(floatEl);
 				setTimeout(() => floatEl.remove(), 650);
@@ -843,15 +977,15 @@ const description =
 
 			function checkMilestones(before, after, required) {
 				if (before < 10 && after >= 10) {
-					showToast("👋", "热身完毕！手掌开始微微发烫…");
+					showToast("👋", isEn() ? "Warm-up complete! Your palm is starting to tingle…" : "热身完毕！手掌开始微微发烫…");
 				} else if (before < 100 && after >= 100) {
-					showToast("🔥", "手酸了吗？温度刚升了一丁点，麒麟臂正在充能！");
+					showToast("🔥", isEn() ? "Forearms aching yet? Temp barely nudged, beast mode engaged!" : "手酸了吗？温度刚升了一丁点，麒麟臂正在充能！");
 				} else if (before < 1000 && after >= 1000) {
-					showToast("💪", "千掌达成！掌风呼啸，肉质感受到了热烈的诚意！");
+					showToast("💪", isEn() ? "1,000 slaps! Hurricane palm wind—the meat feels your burning passion!" : "千掌达成！掌风呼啸，肉质感受到了热烈的诚意！");
 				} else if (before < 10000 && after >= 10000) {
-					showToast("⚡", "万掌归宗！手掌可能快熟了，食材正在冲向全熟终点！");
+					showToast("⚡", isEn() ? "10,000 slaps! Your hand is medium-rare, but the food is almost done!" : "万掌归宗！手掌可能快熟了，食材正在冲向全熟终点！");
 				} else if (before < required && after >= required) {
-					showToast("🎉", "叮！不可思议！你真的亲手拍熟了它！物理学的奇迹！");
+					showToast("🎉", isEn() ? "Ding! Unbelievable! You actually slapped it cooked! A miracle of physics!" : "叮！不可思议！你真的亲手拍熟了它！物理学的奇迹！");
 				}
 			}
 
@@ -860,7 +994,7 @@ const description =
 				startTemp = 4;
 				tempFridgeBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 bg-[var(--primary)] text-white shadow-xs";
 				tempRoomBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 text-inherit opacity-70 hover:opacity-100";
-				startTempBadge.textContent = "4°C (冷藏)";
+				updateTempBadges();
 				updateCalculations();
 			});
 
@@ -868,7 +1002,7 @@ const description =
 				startTemp = 20;
 				tempRoomBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 bg-[var(--primary)] text-white shadow-xs";
 				tempFridgeBtn.className = "py-1.5 text-xs font-medium rounded-lg transition active:scale-95 text-inherit opacity-70 hover:opacity-100";
-				startTempBadge.textContent = "20°C (常温)";
+				updateTempBadges();
 				updateCalculations();
 			});
 
@@ -881,7 +1015,7 @@ const description =
 
 			slapRateInput.addEventListener("input", (e) => {
 				slapRate = parseInt(e.target.value, 10);
-				slapRateVal.textContent = `${slapRate} 掌/秒`;
+				slapRateVal.textContent = isEn() ? `${slapRate} slaps/s` : `${slapRate} 掌/秒`;
 				updateCalculations();
 			});
 
@@ -895,7 +1029,8 @@ const description =
 				const food = FOOD_PRESETS[currentFoodIndex];
 				setAccumulatedSlaps(food.id, 0);
 				updateCalculations();
-				showToast("↺", `已重置【${food.name}】的拍击计数`);
+				const foodName = isEn() ? (food.name_en || food.name) : food.name;
+				showToast("↺", isEn() ? `Slap count reset for [${foodName}]` : `已重置【${food.name}】的拍击计数`);
 			});
 
 			// Spacebar to slap
@@ -906,8 +1041,15 @@ const description =
 				}
 			});
 
+			window.addEventListener("lang-change", () => {
+				renderPresets();
+				updateTempBadges();
+				updateCalculations();
+			});
+
 			// Init
 			renderPresets();
+			updateTempBadges();
 			updateCalculations();
 		})();
 	</script>
