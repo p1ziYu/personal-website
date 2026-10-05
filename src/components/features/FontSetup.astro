@@ -8,7 +8,7 @@
  *
  * 字体的 fallback 由各字体定义中的 fallbacks 字段控制（Astro Font API 处理），
  */
-import { Font } from "astro:assets";
+import { Font, type CssVariable } from "astro:assets";
 import { fontConfig } from "@/config";
 import { collectUsedFontCssVars } from "@/utils/fontHelper";
 
@@ -16,7 +16,7 @@ import { collectUsedFontCssVars } from "@/utils/fontHelper";
 // enable=false 时返回空集，不会加载任何字体
 const allCssVars = fontConfig.enable
 	? collectUsedFontCssVars(fontConfig)
-	: new Set<string>();
+	: new Set<CssVariable>();
 
 // 统一解析 selected 为数组（用于后续 body font-family 和 preload 判断）
 const selectedIds: string[] =
@@ -63,7 +63,7 @@ const codeFontFamily = codeFontVar
 <!-- Astro Font API: 自动下载、缓存并生成优化的 @font-face -->
 {Array.from(allCssVars).map((cssVar) => (
   <Font
-    cssVariable={cssVar as any}
+    cssVariable={cssVar}
     preload={selectedFontVars.includes(cssVar)}
   />
 ))}
