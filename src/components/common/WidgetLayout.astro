@@ -1,7 +1,9 @@
 ---
 import { Icon } from "astro-icon/components";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
+
+const uiLang = getLangFromPath(Astro.url.pathname);
 
 interface Props {
 	id: string;
@@ -51,26 +53,26 @@ const className = Astro.props.class;
             <a
                 href={moreUrl}
                 class="btn-plain rounded-lg w-full h-9 flex items-center justify-center"
-                title={i18n(I18nKey.more)}
+                title={i18n(I18nKey.more, uiLang)}
             >
                 <div class="text-(--primary) flex items-center justify-center gap-2 -translate-x-2">
                     <Icon name="material-symbols:more-horiz" class="text-[1.75rem]" aria-hidden="true"></Icon>
-                    <span>{i18n(I18nKey.more)}</span>
+                    <span>{i18n(I18nKey.more, uiLang)}</span>
                 </div>
             </a>
         ) : (
             <button
                 class="btn-plain rounded-lg w-full h-9"
-                title={i18n(I18nKey.more)}
-                aria-label={i18n(I18nKey.more)}
-                data-show-more={i18n(I18nKey.more)}
-                data-show-less={i18n(I18nKey.collapse)}
+                title={i18n(I18nKey.more, uiLang)}
+                aria-label={i18n(I18nKey.more, uiLang)}
+                data-show-more={i18n(I18nKey.more, uiLang)}
+                data-show-less={i18n(I18nKey.collapse, uiLang)}
                 data-expanded="false"
             >
                 <div class="text-(--primary) flex items-center justify-center gap-2 -translate-x-2">
                     <Icon name="material-symbols:more-horiz" class="toggle-icon-more text-[1.75rem]" aria-hidden="true"></Icon>
                     <Icon name="material-symbols:keyboard-arrow-up-rounded" class="toggle-icon-less hidden text-[1.75rem]" aria-hidden="true"></Icon>
-                    <span class="toggle-text">{i18n(I18nKey.more)}</span>
+                    <span class="toggle-text">{i18n(I18nKey.more, uiLang)}</span>
                 </div>
             </button>
         )}
