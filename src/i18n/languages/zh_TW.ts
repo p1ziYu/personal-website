@@ -471,6 +471,10 @@ export const zh_TW: Translation = {
 	[Key.today]: "今天",
 
 	// 站點資訊
+	[Key.siteInfoLocal]: "Local",
+	[Key.siteInfoLocalDev]: "Local Dev",
+	[Key.siteInfoUnknown]: "unknown",
+	[Key.siteInfoUnknownCi]: "Unknown CI",
 	[Key.siteInfo]: "站點資訊",
 	[Key.siteInfoBuildTime]: "構建時間",
 	[Key.siteInfoBuildPlatform]: "構建平台",
