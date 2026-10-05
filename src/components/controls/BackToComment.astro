@@ -1,14 +1,30 @@
 ---
+import I18nKey from "@/i18n/i18nKey";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import FloatingButton from "@/components/common/FloatingButton.astro";
 ---
 
 <FloatingButton
   id="back-to-comment-btn"
   icon="mingcute:comment-line"
-  ariaLabel="Scroll to comments"
+  ariaLabel={i18n(I18nKey.scrollToComments, getLangFromPath(Astro.url.pathname))}
   onclick="scrollToCommentSection()"
   class="hide"
 />
+
+<script is:inline define:vars={{ labelZh: i18n(I18nKey.scrollToComments, "zh_CN"), labelEn: i18n(I18nKey.scrollToComments, "en") }}>
+  function updateFloatingLabel() {
+    const control = document.getElementById("back-to-comment-btn");
+    if (!control) return;
+    const path = window.location.pathname;
+    const label = path === "/en" || path.startsWith("/en/") ? labelEn : labelZh;
+    control.title = label;
+    control.querySelector("button")?.setAttribute("aria-label", label);
+  }
+  updateFloatingLabel();
+  document.addEventListener("swup:contentReplaced", updateFloatingLabel);
+  window.addEventListener("lang-change", updateFloatingLabel);
+</script>
 
 <script is:inline>
   window.scrollToCommentSection = function () {
