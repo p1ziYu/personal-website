@@ -477,6 +477,10 @@ export const ja: Translation = {
 	[Key.today]: "今日",
 
 	// サイト情報
+	[Key.siteInfoLocal]: "Local",
+	[Key.siteInfoLocalDev]: "Local Dev",
+	[Key.siteInfoUnknown]: "unknown",
+	[Key.siteInfoUnknownCi]: "Unknown CI",
 	[Key.siteInfo]: "サイト情報",
 	[Key.siteInfoBuildTime]: "ビルド日時",
 	[Key.siteInfoBuildPlatform]: "ビルドプラットフォーム",
