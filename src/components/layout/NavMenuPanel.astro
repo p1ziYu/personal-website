@@ -2,14 +2,25 @@
 import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/config";
 import type { NavBarLink } from "@/types/config";
+import { resolveNavbarNameBoth } from "@/utils/navbar-i18n";
 import { url } from "@/utils/url-utils";
 
 interface Props {
 	links: NavBarLink[];
+	lang?: string;
 }
 
 const processedLinks = Astro.props.links;
 const navTitle = siteConfig.navbar.title || siteConfig.title;
+const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
+
+const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
+	if (external) return targetUrl;
+	if (isEn && targetUrl.startsWith("/") && !targetUrl.startsWith("/en")) {
+		return url(targetUrl === "/" ? "/en/" : `/en${targetUrl}`);
+	}
+	return url(targetUrl);
+};
 ---
 <div id="nav-menu-panel" class:list={["float-panel-closed fixed inset-0 z-1100"]} data-floating-panel data-floating-panel-trigger="nav-menu-switch" data-floating-panel-scroll-lock inert aria-hidden="true">
     <!-- 遮罩（scrim）：点击关闭 -->
@@ -17,13 +28,18 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
     <!-- 抽屉：MD3 侧边导航，右侧滑入，占满整高，内部滚动 -->
     <aside class="mobile-menu-drawer" role="dialog" aria-modal="true" aria-label="导航菜单">
         <header class="mobile-menu-header">
-            <span class="mobile-menu-title">{navTitle}</span>
+            <span class="mobile-menu-title">
+                <span class="lang-zh">{navTitle}</span>
+                <span class="lang-en">p1ziYu's Space</span>
+            </span>
             <button type="button" class="mobile-menu-close" aria-label="关闭菜单">
                 <Icon name="material-symbols:close-rounded" class="text-[1.5rem]" />
             </button>
         </header>
         <nav class="mobile-menu-list">
-            {processedLinks.map((link, index) => (
+            {processedLinks.map((link, index) => {
+                const { zh: linkZh, en: linkEn } = resolveNavbarNameBoth(link.name);
+                return (
                 <div class="mobile-menu-item-root">
                     {link.children && link.children.length > 0 ? (
                         /* 有子菜单的项目：MD3 手风琴 */
@@ -36,39 +52,51 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                                 aria-controls={`mobile-submenu-${index}`}
                             >
 								{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" />}
-                                <span class="mobile-menu-item-label">{link.name}</span>
+                                <span class="mobile-menu-item-label">
+                                    <span class="lang-zh">{linkZh}</span>
+                                    <span class="lang-en">{linkEn}</span>
+                                </span>
                                 <Icon name="material-symbols:keyboard-arrow-down-rounded"
                                       class="mobile-menu-item-arrow"
                                 />
                             </button>
                             <div id={`mobile-submenu-${index}`} class="mobile-submenu" data-mobile-submenu inert aria-hidden="true">
-                                {link.children.map((child) => (
+                                {link.children.map((child) => {
+                                    const { zh: childZh, en: childEn } = resolveNavbarNameBoth(child.name);
+                                    const childHref = getLocalizedUrl(child.url, child.external);
+                                    return (
                                     <a
-                                        href={child.external ? child.url : url(child.url)}
+                                        href={childHref}
                                         class="mobile-menu-item"
-                                        data-nav-href={child.external ? undefined : url(child.url)}
+                                        data-nav-href={child.external ? undefined : childHref}
                                         target={child.external ? "_blank" : null}
                                     >
 										{child.icon && <Icon name={child.icon} class="mobile-menu-item-icon" />}
-                                        <span class="mobile-menu-item-label">{child.name}</span>
+                                        <span class="mobile-menu-item-label">
+                                            <span class="lang-zh">{childZh}</span>
+                                            <span class="lang-en">{childEn}</span>
+                                        </span>
                                         {child.external && <Icon
                                             name="fa7-solid:arrow-up-right-from-square"
                                             class="mobile-menu-item-external text-[0.9rem] shrink-0"
                                         />}
                                     </a>
-                                ))}
+                                )})}
                             </div>
                         </div>
                     ) : (
                         /* 普通链接项目 */
                         <a
-                            href={link.external ? link.url : url(link.url)}
+                            href={getLocalizedUrl(link.url, link.external)}
                             class="mobile-menu-item"
-                            data-nav-href={link.external ? undefined : url(link.url)}
+                            data-nav-href={link.external ? undefined : getLocalizedUrl(link.url, link.external)}
                             target={link.external ? "_blank" : null}
                         >
 							{link.icon && <Icon name={link.icon} class="mobile-menu-item-icon" />}
-                            <span class="mobile-menu-item-label">{link.name}</span>
+                            <span class="mobile-menu-item-label">
+                                <span class="lang-zh">{linkZh}</span>
+                                <span class="lang-en">{linkEn}</span>
+                            </span>
 							{!link.external && <Icon
                                 name="material-symbols:chevron-right-rounded"
                                 class="mobile-menu-item-arrow"
@@ -80,8 +108,23 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
                         </a>
                     )}
                 </div>
-            ))}
+            )})}
         </nav>
+        <div class="px-5 py-4 border-t border-black/10 dark:border-white/10 mt-auto flex items-center justify-between">
+            <span class="text-xs opacity-60">
+                <span class="lang-zh">语言 / Language</span>
+                <span class="lang-en">Language / 语言</span>
+            </span>
+            <button
+                type="button"
+                id="mobile-lang-toggle"
+                class="btn-plain scale-animation rounded-lg px-3 py-1.5 flex items-center gap-1.5 border border-black/15 dark:border-white/15 text-xs font-bold"
+            >
+                <Icon name="material-symbols:translate" class="text-base" />
+                <span class="lang-zh">English</span>
+                <span class="lang-en">中文</span>
+            </button>
+        </div>
     </aside>
 </div>
 
@@ -317,11 +360,33 @@ const navTitle = siteConfig.navbar.title || siteConfig.title;
     document.addEventListener("astro:page-load", markActiveNav);
     document.addEventListener("swup:contentReplaced", markActiveNav);
 
-    // 遮罩点击 / 关闭按钮：文档级委托监听，跨 Swup 替换也有效
+    // 遮罩点击 / 关闭按钮 / 语言切换：文档级委托监听，跨 Swup 替换也有效
     document.addEventListener("click", (e) => {
         const t = e.target;
         if (t instanceof Element && t.closest(".mobile-menu-scrim, .mobile-menu-close")) {
             document.getElementById("nav-menu-panel")?.classList.add("float-panel-closed");
+        }
+        if (t instanceof Element && t.closest("#mobile-lang-toggle")) {
+            const isCurrentlyEn = location.pathname.startsWith("/en/") || location.pathname === "/en";
+            const newIsEn = !isCurrentlyEn;
+            localStorage.setItem("site-lang", newIsEn ? "en" : "zh_CN");
+            let target = location.pathname;
+            if (newIsEn) {
+                target = "/en" + (target === "/" ? "/" : target);
+            } else {
+                target = target.replace(/^\/en/, "") || "/";
+            }
+            const fullTarget = target + location.search + location.hash;
+            document.documentElement.lang = newIsEn ? "en" : "zh-CN";
+            document.documentElement.setAttribute("data-lang", newIsEn ? "en" : "zh");
+            window.dispatchEvent(new CustomEvent("lang-change", { detail: { lang: newIsEn ? "en" : "zh_CN", isEn: newIsEn } }));
+            document.getElementById("nav-menu-panel")?.classList.add("float-panel-closed");
+            const win = window as any;
+            if (win.swup && typeof win.swup.navigate === "function") {
+                win.swup.navigate(fullTarget);
+            } else {
+                location.href = fullTarget;
+            }
         }
     });
 
