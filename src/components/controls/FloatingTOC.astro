@@ -3,7 +3,7 @@ import type { MarkdownHeading } from "astro";
 import FloatingButton from "@/components/common/FloatingButton.astro";
 import { sidebarLayoutConfig } from "@/config/sidebarConfig";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import "@/styles/toc.css";
 import { computeTocItems } from "@/utils/toc-shared";
 
@@ -20,6 +20,7 @@ const items = encrypted ? [] : computeTocItems(headings, { maxLevel: 3 });
 // 悬浮目录的显隐判断已改为直接量 DOM，见下方 script
 const hideSidebarOnPostPage =
 	sidebarLayoutConfig.hideSidebarOnPostPage === true;
+const uiLang = getLangFromPath(Astro.url.pathname);
 ---
 
 <!-- 悬浮TOC按钮 -->
@@ -28,7 +29,7 @@ const hideSidebarOnPostPage =
     id="floating-toc-btn"
     icon="material-symbols:format-list-bulleted"
     toggleIcon="material-symbols:close"
-    ariaLabel="Table of Contents"
+    ariaLabel={i18n(I18nKey.tableOfContents, uiLang)}
     onclick="window.toggleFloatingTOC()"
     class="hide"
   />
@@ -39,6 +40,7 @@ const hideSidebarOnPostPage =
     class="floating-toc-panel hide overflow-hidden rounded-2xl shadow-2xl backdrop-blur-lg border border-white/20 dark:border-white/10 md:w-80 w-[calc(100vw-2rem)] py-3"
     style="background-color: var(--card-bg-transparent);"
     >
+    <div class="px-6 pb-2 text-sm font-semibold text-75">{i18n(I18nKey.tableOfContents, uiLang)}</div>
     <div class="toc-scroll-container px-3">
         <div
         class="toc-content"
@@ -74,7 +76,7 @@ const hideSidebarOnPostPage =
         )}
         {!encrypted && items.length === 0 && (
           <div class="text-center py-8 text-gray-500 dark:text-gray-400">
-            <p>{i18n(I18nKey.tocEmpty)}</p>
+            <p>{i18n(I18nKey.tocEmpty, uiLang)}</p>
           </div>
         )}
         {/* 加密文章：留空，客户端解密后由 TOCManager 填充 */}
