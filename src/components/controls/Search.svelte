@@ -1,12 +1,14 @@
 <script lang="ts">
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { getLangFromPath, i18n } from "@i18n/translation";
 import { navigateToPage } from "@utils/navigation-utils";
 import { onMount } from "svelte";
 import Icon from "@/components/common/Icon.svelte";
 import type { SearchResult } from "@/global";
 import { FLOATING_PANEL_CLOSE_EVENT } from "@/utils/floating-panel-utils";
 import { url as formatUrl, getSearchUrl } from "@/utils/url-utils";
+
+export let lang: string | undefined = undefined;
 
 // --- State ---
 let keywordDesktop = "";
@@ -140,6 +142,10 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 
 // --- Initialization onMount ---
 onMount(() => {
+	const updateLanguage = () => { lang = getLangFromPath(window.location.pathname); };
+	updateLanguage();
+	document.addEventListener("swup:contentReplaced", updateLanguage);
+	window.addEventListener("lang-change", updateLanguage);
 	const initializePagefind = () => {
 		initialized = true;
 		if (keywordDesktop) search(keywordDesktop, true);
@@ -168,6 +174,8 @@ onMount(() => {
 	panel?.addEventListener(FLOATING_PANEL_CLOSE_EVENT, cancelPendingSearch);
 
 	return () => {
+		document.removeEventListener("swup:contentReplaced", updateLanguage);
+		window.removeEventListener("lang-change", updateLanguage);
 		panel?.removeEventListener(FLOATING_PANEL_CLOSE_EVENT, cancelPendingSearch);
 		document.removeEventListener("pagefindready", initializePagefind);
 		document.removeEventListener("pagefindloaderror", initializePagefind);
@@ -191,7 +199,7 @@ $: if (initialized && (keywordMobile || keywordMobile === "")) {
 ">
     <Icon icon="material-symbols:search"
           class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-    <input id="search-input-desktop" placeholder="{i18n(I18nKey.search)}" bind:value={keywordDesktop}
+    <input id="search-input-desktop" placeholder="{i18n(I18nKey.search, lang)}" bind:value={keywordDesktop}
            aria-controls="search-panel" data-floating-panel-no-expanded
            on:focus={handleDesktopFocus}
            class="transition-all pl-10 text-sm bg-transparent outline-0
@@ -217,7 +225,7 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
   ">
         <Icon icon="material-symbols:search"
               class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-        <input placeholder={i18n(I18nKey.search)} bind:value={keywordMobile}
+        <input placeholder={i18n(I18nKey.search, lang)} bind:value={keywordMobile}
                on:focus={requestPagefind}
                class="pl-10 absolute inset-0 text-sm bg-transparent outline-0
                focus:w-60 text-black/50 dark:text-white/50"
@@ -227,7 +235,7 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
     <!-- search results -->
     {#if isSearching}
         <div class="transition first-of-type:mt-2 lg:first-of-type:mt-0 block rounded-xl text-lg px-3 py-2 text-50">
-            {i18n(I18nKey.searchLoading)}
+            {i18n(I18nKey.searchLoading, lang)}
         </div>
     {:else if result.length > 0}
         {#each result.slice(0, 5) as item}
@@ -251,7 +259,7 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
                 {#if item.content && item.content.includes('<mark>')}
                     <div class="transition text-sm text-30" style="display: flex; align-items: flex-start; margin-top: 0.1rem">
                         <span style="display: inline-block; background-color: var(--btn-plain-bg-active); color: var(--primary); padding: 0.1em 0.4em; border-radius: 5px; font-size: 0.75em; font-weight: 600; margin-right: 0.5em; shrink: 0;">
-                            {i18n(I18nKey.searchContent)}
+                            {i18n(I18nKey.searchContent, lang)}
                         </span>
                         <div>
                             {@html item.content}
@@ -265,18 +273,18 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
                on:click={(e) => handleResultClick(e, getSearchUrl(keywordDesktop || keywordMobile))}
                class="transition first-of-type:mt-2 lg:first-of-type:mt-0 group block rounded-xl text-lg px-3 py-2 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active) text-(--primary) font-bold text-center">
                 <span class="inline-flex items-center">
-                    {i18n(I18nKey.searchViewMore).replace('{count}', (result.length - 5).toString())}
+                    {i18n(I18nKey.searchViewMore, lang).replace('{count}', (result.length - 5).toString())}
                     <Icon icon="fa7-solid:arrow-right" class="transition text-[0.75rem] ml-1"></Icon>
                 </span>
             </a>
         {/if}
     {:else if result.length === 0}
         <div class="transition first-of-type:mt-2 lg:first-of-type:mt-0 block rounded-xl text-lg px-3 py-2 text-50">
-            {i18n(I18nKey.searchNoResults)}
+            {i18n(I18nKey.searchNoResults, lang)}
         </div>
     {:else if keywordDesktop || keywordMobile}
         <div class="transition first-of-type:mt-2 lg:first-of-type:mt-0 block rounded-xl text-lg px-3 py-2 text-50">
-            {i18n(I18nKey.searchTypeSomething)}
+            {i18n(I18nKey.searchTypeSomething, lang)}
         </div>
     {/if}
 </div>
