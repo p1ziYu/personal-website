@@ -97,6 +97,7 @@ const jumpHrefFirst = url(isEn ? "/en/" : "/");
           lastPage={page.lastPage}
           hrefTemplate={jumpHrefTemplate}
           hrefFirst={jumpHrefFirst}
+          lang={lang}
         />
         <span class="text-sm text-neutral-500 dark:text-neutral-500">/</span>
         <span class="text-base font-bold text-neutral-700 dark:text-neutral-300">{page.lastPage}</span>
@@ -159,6 +160,7 @@ const jumpHrefFirst = url(isEn ? "/en/" : "/");
                 lastPage={page.lastPage}
                 hrefTemplate={jumpHrefTemplate}
                 hrefFirst={jumpHrefFirst}
+                lang={lang}
               />
             );
           if (p == page.currentPage)
