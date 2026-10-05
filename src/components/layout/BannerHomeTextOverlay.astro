@@ -13,6 +13,9 @@ const { showHomeText, initialRandomSubtitle } = Astro.props;
 const homeText = backgroundWallpaper.common?.homeText;
 const homeTextLinks = homeText?.links;
 const homeTextLinksEnable = homeText?.linksEnable !== false;
+const enTitle = (homeText as any)?.titleEn || "p1ziYu's Space";
+const enSubtitle = (homeText as any)?.subtitleEn || ["Live for what you love"];
+const enSubtitleArray = Array.isArray(enSubtitle) ? enSubtitle : [enSubtitle];
 ---
 {homeText?.enable && (
     <div class={`banner-home-text-overlay absolute inset-0 z-20 flex items-center justify-center ${!showHomeText ? 'hidden' : ''}`}>
@@ -20,21 +23,36 @@ const homeTextLinksEnable = homeText?.linksEnable !== false;
             <div class="flex flex-col">
                 {homeText.title && (
                     <div class="banner-title font-bold text-white mb-2 lg:mb-4 leading-tight" style={{ '--banner-title-size': homeText.titleSize || "3rem" }}>
-                        {homeText.title}
+                        <span class="lang-zh">{homeText.title}</span>
+                        <span class="lang-en">{enTitle}</span>
                     </div>
                 )}
                 {homeText.subtitle && (
                     <div id="banner-subtitle" class="banner-subtitle text-white/90 leading-snug" style={{ fontSize: homeText.subtitleSize || "1.5rem" }} data-subtitles={JSON.stringify(homeText.subtitle)}>
-                        {homeText.typewriter?.enable ? (
-                            <TypewriterText
-                                text={homeText.subtitle}
-                                speed={homeText.typewriter.speed}
-                                deleteSpeed={homeText.typewriter.deleteSpeed}
-                                pauseTime={homeText.typewriter.pauseTime}
-                            />
-                        ) : (
-                            initialRandomSubtitle
-                        )}
+                        <div class="lang-zh">
+                            {homeText.typewriter?.enable ? (
+                                <TypewriterText
+                                    text={homeText.subtitle}
+                                    speed={homeText.typewriter.speed}
+                                    deleteSpeed={homeText.typewriter.deleteSpeed}
+                                    pauseTime={homeText.typewriter.pauseTime}
+                                />
+                            ) : (
+                                initialRandomSubtitle
+                            )}
+                        </div>
+                        <div class="lang-en">
+                            {homeText.typewriter?.enable ? (
+                                <TypewriterText
+                                    text={enSubtitleArray}
+                                    speed={homeText.typewriter.speed}
+                                    deleteSpeed={homeText.typewriter.deleteSpeed}
+                                    pauseTime={homeText.typewriter.pauseTime}
+                                />
+                            ) : (
+                                enSubtitleArray[0]
+                            )}
+                        </div>
                     </div>
                 )}
                 {/* 横幅标题下方的链接图标（subtitle 的兄弟节点，避免被打字机/随机副标题的 textContent 覆盖清掉） */}
@@ -90,7 +108,12 @@ const homeTextLinksEnable = homeText?.linksEnable !== false;
                     const randomIndex = Math.floor(Math.random() * subtitles.length);
                     window.fireflyCachedSubtitle = subtitles[randomIndex];
                 }
-                subtitleElement.textContent = window.fireflyCachedSubtitle;
+                const zhEl = subtitleElement.querySelector('.lang-zh');
+                if (zhEl) {
+                    zhEl.textContent = window.fireflyCachedSubtitle;
+                } else {
+                    subtitleElement.textContent = window.fireflyCachedSubtitle;
+                }
             }
         } catch (e) {
             console.error("Failed to parse subtitles", e);
