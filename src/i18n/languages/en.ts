@@ -480,6 +480,10 @@ export const en: Translation = {
 	[Key.today]: "Today",
 
 	// Site Info
+	[Key.siteInfoLocal]: "Local",
+	[Key.siteInfoLocalDev]: "Local Dev",
+	[Key.siteInfoUnknown]: "unknown",
+	[Key.siteInfoUnknownCi]: "Unknown CI",
 	[Key.siteInfo]: "Site Info",
 	[Key.siteInfoBuildTime]: "Build Time",
 	[Key.siteInfoBuildPlatform]: "Build Platform",
