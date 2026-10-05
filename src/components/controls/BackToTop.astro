@@ -1,4 +1,6 @@
 ---
+import I18nKey from "@/i18n/i18nKey";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import FloatingButton from "@/components/common/FloatingButton.astro";
 ---
 
@@ -6,10 +8,24 @@ import FloatingButton from "@/components/common/FloatingButton.astro";
 <FloatingButton
   id="back-to-top-btn"
   icon="material-symbols:keyboard-arrow-up-rounded"
-  ariaLabel="Back to Top"
+  ariaLabel={i18n(I18nKey.backToTop, getLangFromPath(Astro.url.pathname))}
   onclick="backToTop()"
   class="hide" 
 />
+
+<script is:inline define:vars={{ labelZh: i18n(I18nKey.backToTop, "zh_CN"), labelEn: i18n(I18nKey.backToTop, "en") }}>
+  function updateFloatingLabel() {
+    const control = document.getElementById("back-to-top-btn");
+    if (!control) return;
+    const path = window.location.pathname;
+    const label = path === "/en" || path.startsWith("/en/") ? labelEn : labelZh;
+    control.title = label;
+    control.querySelector("button")?.setAttribute("aria-label", label);
+  }
+  updateFloatingLabel();
+  document.addEventListener("swup:contentReplaced", updateFloatingLabel);
+  window.addEventListener("lang-change", updateFloatingLabel);
+</script>
 
 <script is:raw is:inline>
   function backToTop() {
