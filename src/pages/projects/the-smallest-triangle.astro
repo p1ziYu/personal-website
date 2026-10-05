@@ -1,5 +1,7 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 
 interface Props {
 	lang?: string;
@@ -237,7 +239,7 @@ const description = isEn
 								class="w-full py-3.5 px-4 rounded-xl bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(239,68,68,0.4)] transition flex items-center justify-center gap-2.5"
 							>
 								<span id="anneal-icon" class="text-lg">🔥</span>
-								<span id="anneal-btn-text">退火优化 (Simulated Annealing)</span>
+								<span id="anneal-btn-text">{i18n(I18nKey.annealingActionInitial, isEn ? "en" : undefined)}</span>
 							</button>
 
 							<div class="grid grid-cols-2 gap-3 mt-1">
@@ -268,9 +270,9 @@ const description = isEn
 							<div id="anneal-status-banner" class="mt-2 p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800 text-[11px] font-mono text-zinc-400 flex items-center justify-between">
 								<span class="flex items-center gap-1.5">
 									<span id="anneal-live-dot" class="w-2 h-2 rounded-full bg-zinc-500"></span>
-									<span id="anneal-rate-text">退火引擎就绪 (~30 步/秒)</span>
+									<span id="anneal-rate-text">{i18n(I18nKey.annealingStatusInitial, isEn ? "en" : undefined)}</span>
 								</span>
-								<span id="anneal-steps-counter">0 次尝试</span>
+								<span id="anneal-steps-counter">{i18n(I18nKey.annealingStepsInitial, isEn ? "en" : undefined)}</span>
 							</div>
 						</div>
 
