@@ -3,13 +3,15 @@ import { Icon } from "astro-icon/components";
 import WidgetLayout from "@/components/common/WidgetLayout.astro";
 import { siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import type { WidgetComponentConfig } from "@/types/config";
 import {
 	getCategoryList,
 	getSortedPosts,
 	getTagList,
 } from "@/utils/content-utils";
+
+const uiLang = getLangFromPath(Astro.url.pathname);
 
 interface Props {
 	class?: string;
@@ -68,50 +70,50 @@ const lastActivityDate = posts.reduce<Date | null>((latest, post) => {
 
 const lastPostDate = lastActivityDate ? lastActivityDate.toISOString() : null;
 
-const todayText = i18n(I18nKey.today);
+const todayText = i18n(I18nKey.today, uiLang);
+const daysText = i18n(I18nKey.siteStatsDays, uiLang);
+const daysAgoText = i18n(I18nKey.siteStatsDaysAgo, uiLang);
 
 const stats = [
 	{
 		icon: "material-symbols:article-outline",
-		label: i18n(I18nKey.siteStatsPostCount),
+		label: i18n(I18nKey.siteStatsPostCount, uiLang),
 		value: posts.length,
 	},
 	{
 		icon: "material-symbols:folder-outline",
-		label: i18n(I18nKey.siteStatsCategoryCount),
+		label: i18n(I18nKey.siteStatsCategoryCount, uiLang),
 		value: categories.length,
 	},
 	{
 		icon: "material-symbols:label-outline",
-		label: i18n(I18nKey.siteStatsTagCount),
+		label: i18n(I18nKey.siteStatsTagCount, uiLang),
 		value: tags.length,
 	},
 	{
 		icon: "material-symbols:text-ad-outline-rounded",
-		label: i18n(I18nKey.siteStatsTotalWords),
+		label: i18n(I18nKey.siteStatsTotalWords, uiLang),
 		value: totalWords,
 		formatted: true,
 	},
 	{
 		icon: "material-symbols:calendar-clock-outline",
-		label: i18n(I18nKey.siteStatsRunningDays),
+		label: i18n(I18nKey.siteStatsRunningDays, uiLang),
 		value: 0, // 将由客户端更新
-		suffix: i18n(I18nKey.siteStatsDays).replace("{days}", ""),
 		dynamic: true,
 		id: "running-days",
 	},
 	{
 		icon: "mingcute:heartbeat-line",
-		label: i18n(I18nKey.siteStatsLastUpdate),
+		label: i18n(I18nKey.siteStatsLastUpdate, uiLang),
 		value: 0, // 将由客户端更新
-		suffix: i18n(I18nKey.siteStatsDaysAgo).replace("{days}", ""),
 		dynamic: true,
 		id: "last-update",
 	},
 ];
 ---
 
-<WidgetLayout name={i18n(I18nKey.siteStats)} showTitle={showTitle} id="site-stats" class={className} style={style}>
+<WidgetLayout name={i18n(I18nKey.siteStats, uiLang)} showTitle={showTitle} id="site-stats" class={className} style={style}>
   <div class="flex flex-col gap-2">
     {stats.map((stat) => (
       <div class="flex items-center justify-between px-3 py-1.5">
@@ -130,18 +132,21 @@ const stats = [
           >
             {stat.formatted ? formatNumber(stat.value) : stat.value}
           </span>
-          {stat.suffix && (
-            <span class="ml-1 text-sm text-neutral-500 dark:text-neutral-400">
-              {stat.suffix}
-            </span>
-          )}
         </div>
       </div>
     ))}
   </div>
 </WidgetLayout>
 
-<script is:inline define:vars={{ siteStartDate, lastPostDate, todayText }}>
+<script is:inline define:vars={{ siteStartDate, lastPostDate, todayText, daysText, daysAgoText, uiLang }}>
+  function formatDays(days, ago) {
+    if (uiLang === "en") {
+      return ago
+        ? new Intl.RelativeTimeFormat("en", { numeric: "always" }).format(-days, "day")
+        : `${days} ${days === 1 ? "day" : "days"}`;
+    }
+    return (ago ? daysAgoText : daysText).replace("{days}", String(days));
+  }
   function updateDynamicStats() {
     const today = new Date();
 
@@ -152,7 +157,7 @@ const stats = [
 
     const runningDaysElements = document.querySelectorAll('[data-stat-id="running-days"]');
     runningDaysElements.forEach((element) => {
-      element.textContent = diffDays.toString();
+      element.textContent = formatDays(diffDays, false);
     });
 
     // 更新最后活动时间
@@ -165,14 +170,8 @@ const stats = [
       lastUpdateElements.forEach((element) => {
         if (daysSinceLastUpdate === 0) {
           element.textContent = todayText;
-          if (element.nextElementSibling) {
-            element.nextElementSibling.style.display = 'none';
-          }
         } else {
-          element.textContent = daysSinceLastUpdate.toString();
-          if (element.nextElementSibling) {
-            element.nextElementSibling.style.display = '';
-          }
+          element.textContent = formatDays(daysSinceLastUpdate, true);
         }
       });
     }
@@ -182,11 +181,11 @@ const stats = [
   updateDynamicStats();
 
   // 防止 Swup 切页重跑脚本时重复注册监听器
-  if (!window.__siteStatsInit) {
-    window.__siteStatsInit = true;
+  if (window.__siteStatsCleanup) window.__siteStatsCleanup();
+  {
     // 页面切换时重新更新
-    document.addEventListener("swup:contentReplaced", () => {
-      setTimeout(updateDynamicStats, 100);
-    });
+    const onReplace = () => setTimeout(updateDynamicStats, 100);
+    document.addEventListener("swup:contentReplaced", onReplace);
+    window.__siteStatsCleanup = () => document.removeEventListener("swup:contentReplaced", onReplace);
   }
 </script>
