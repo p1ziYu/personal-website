@@ -59,6 +59,9 @@ const {
 const path = customPath || (id ? `/posts/${id}` : "");
 const visibleTags =
 	typeof maxTags === "number" ? tags?.slice(0, maxTags) : tags;
+
+const isEn = Astro.url.pathname.startsWith("/en");
+const lang = isEn ? "en" : undefined;
 ---
 
 <div
@@ -75,7 +78,7 @@ const visibleTags =
     pinned && (
       <div class="pinned-btn flex items-center gap-1 bg-(--btn-regular-bg) text-(--btn-content) rounded-md px-2 py-1.5 font-bold">
         <Icon name="material-symbols:pinboard" class="text-xl" />
-        <span class="text-sm">{i18n(I18nKey.pinned)}</span>
+        <span class="text-sm">{i18n(I18nKey.pinned, lang)}</span>
       </div>
     )
   }
@@ -123,12 +126,12 @@ const visibleTags =
         </div>
         <div class="flex flex-row flex-nowrap items-center">
           <a
-            href={getCategoryUrl(category || "")}
-            aria-label={`View all posts in the ${category || i18n(I18nKey.uncategorized)} category`}
+            href={getCategoryUrl(category || "", lang)}
+            aria-label={`View all posts in the ${category || i18n(I18nKey.uncategorized, lang)} category`}
             class="link-lg transition text-50 text-sm font-medium
               hover:text-(--primary) dark:hover:text-(--primary) whitespace-nowrap"
           >
-            {category || i18n(I18nKey.uncategorized)}
+            {category || i18n(I18nKey.uncategorized, lang)}
           </a>
         </div>
       </div>
@@ -160,7 +163,7 @@ const visibleTags =
                   /
                 </div>
                 <a
-                  href={getTagUrl(tag)}
+                  href={getTagUrl(tag, lang)}
                   aria-label={`View all posts with the ${tag.trim()} tag`}
                   class="link-lg transition text-50 text-sm font-medium
                     hover:text-(--primary) dark:hover:text-(--primary) whitespace-nowrap"
@@ -171,7 +174,7 @@ const visibleTags =
             ))}
           {showNoTags && !(visibleTags && visibleTags.length > 0) && (
             <div class="transition text-50 text-sm font-medium">
-              {i18n(I18nKey.noTags)}
+              {i18n(I18nKey.noTags, lang)}
             </div>
           )}
         </div>
@@ -258,7 +261,7 @@ const visibleTags =
           <Icon name="material-symbols:notes-rounded" class="text-xl" />
         </div>
         <span class="text-50 text-sm font-medium">
-          {words} {i18n(words === 1 ? I18nKey.wordCount : I18nKey.wordsCount)}
+          {words} {i18n(words === 1 ? I18nKey.wordCount : I18nKey.wordsCount, lang)}
         </span>
       </div>
     )
@@ -271,7 +274,7 @@ const visibleTags =
           <Icon name="material-symbols:schedule-outline-rounded" class="text-xl" />
         </div>
         <span class="text-50 text-sm font-medium">
-          {minutes} {i18n(minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount)}
+          {minutes} {i18n(minutes === 1 ? I18nKey.minuteCount : I18nKey.minutesCount, lang)}
         </span>
       </div>
     )
