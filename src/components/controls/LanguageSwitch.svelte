@@ -1,6 +1,8 @@
 <script lang="ts">
 import { onMount } from "svelte";
 import { siteConfig } from "@/config";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 import { hasEnglishVersion, isEnPath } from "@/utils/route-manifest";
 
 interface SwupHooks {
@@ -115,14 +117,14 @@ onMount(() => {
 });
 </script>
 
-<div class="z-50" title={!canSwitch ? "English version not available for this page" : undefined}>
+<div class="z-50" title={!canSwitch ? i18n(I18nKey.englishUnavailable, isEn ? "en" : "zh_CN") : undefined}>
 	<button
 		type="button"
 		id="language-switch"
 		disabled={!canSwitch}
 		aria-disabled={!canSwitch ? "true" : undefined}
-		aria-label={!canSwitch ? "English version not available for this page" : (isEn ? "切换为中文" : "Switch to English")}
-		title={!canSwitch ? "English version not available for this page" : (isEn ? "切换为中文" : "Switch to English")}
+		aria-label={!canSwitch ? i18n(I18nKey.englishUnavailable, isEn ? "en" : "zh_CN") : i18n(isEn ? I18nKey.switchToChinese : I18nKey.switchToEnglish, isEn ? "en" : "zh_CN")}
+		title={!canSwitch ? i18n(I18nKey.englishUnavailable, isEn ? "en" : "zh_CN") : i18n(isEn ? I18nKey.switchToChinese : I18nKey.switchToEnglish, isEn ? "en" : "zh_CN")}
 		class="btn-plain scale-animation rounded-lg h-11 px-2.5 flex items-center justify-center gap-1 active:scale-90 font-medium text-xs select-none disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none {siteConfig.navbar.followTheme ? 'text-(--primary)' : 'text-black/75 dark:text-white/75 hover:text-(--primary) dark:hover:text-(--primary)'}"
 		onclick={toggleLanguage}
 	>
