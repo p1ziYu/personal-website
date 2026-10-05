@@ -195,10 +195,10 @@ const lang = isEn ? "en" : undefined;
             />
           </div>
           <span class="text-50 text-sm font-medium mr-1">
-            {i18n(I18nKey.pageViews)}
+            {i18n(I18nKey.pageViews, lang)}
           </span>
           <span class="text-50 text-sm font-medium" id="twikoo_visitors">
-            {i18n(I18nKey.pageViewsLoading)}
+            {i18n(I18nKey.pageViewsLoading, lang)}
           </span>
         </div>
       )
@@ -217,13 +217,13 @@ const lang = isEn ? "en" : undefined;
             />
           </div>
           <span class="text-50 text-sm font-medium mr-1">
-            {i18n(I18nKey.pageViews)}
+            {i18n(I18nKey.pageViews, lang)}
           </span>
           <span
             class="text-50 text-sm font-medium waline-pageview-count"
             data-path={path}
           >
-            {i18n(I18nKey.pageViewsLoading)}
+            {i18n(I18nKey.pageViewsLoading, lang)}
           </span>
         </div>
       )
@@ -242,13 +242,13 @@ const lang = isEn ? "en" : undefined;
             />
           </div>
           <span class="text-50 text-sm font-medium mr-1">
-            {i18n(I18nKey.pageViews)}
+            {i18n(I18nKey.pageViews, lang)}
           </span>
           <span
             class="text-50 text-sm font-medium artalk-pv-count"
             data-path={path}
           >
-            {i18n(I18nKey.pageViewsLoading)}
+            {i18n(I18nKey.pageViewsLoading, lang)}
           </span>
         </div>
       )
@@ -287,7 +287,7 @@ const lang = isEn ? "en" : undefined;
           <Icon name="material-symbols:lock-outline" class="text-xl" />
         </div>
         <span class="text-50 text-sm font-medium">
-          {i18n(I18nKey.postEncrypted)}
+          {i18n(I18nKey.postEncrypted, lang)}
         </span>
       </div>
     )
