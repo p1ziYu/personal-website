@@ -1,14 +1,15 @@
 ---
 import FloatingButton from "@/components/common/FloatingButton.astro";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
+const uiLang = getLangFromPath(Astro.url.pathname);
 ---
 
 <FloatingButton
   id="immersive-reading-btn"
   icon="material-symbols:auto-stories"
   toggleIcon="material-symbols:logout"
-  ariaLabel={i18n(I18nKey.enterImmersiveReading)}
+  ariaLabel={i18n(I18nKey.enterImmersiveReading, uiLang)}
   onclick="window.toggleImmersiveReading()"
   class="hide"
 />
