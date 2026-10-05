@@ -33,25 +33,28 @@ function joinUrl(...parts: string[]): string {
 	return joined.replace(/\/+/g, "/");
 }
 
-export function getPostUrlBySlug(slug: string): string {
-	// 移除文件扩展名（如 .md, .mdx 等）
-	const slugWithoutExt = removeFileExtension(slug);
-	return url(`/posts/${slugWithoutExt}/`);
+export function getPostUrlBySlug(slug: string, lang?: string): string {
+	// 移除文件扩展名（如 .md, .mdx 等）以及可能存在的语言前缀
+	const isEn = lang === "en" || slug.startsWith("en/");
+	const slugWithoutExt = removeFileExtension(slug).replace(/^(en|zh_CN)\//, "");
+	return url(isEn ? `/en/posts/${slugWithoutExt}/` : `/posts/${slugWithoutExt}/`);
 }
 
-export function getTagUrl(tag: string): string {
-	if (!tag) return url("/archive/");
-	return url(`/archive/?tag=${encodeURIComponent(tag.trim())}`);
+export function getTagUrl(tag: string, lang?: string): string {
+	const base = lang === "en" ? "/en/archive/" : "/archive/";
+	if (!tag) return url(base);
+	return url(`${base}?tag=${encodeURIComponent(tag.trim())}`);
 }
 
-export function getCategoryUrl(category: string | null): string {
+export function getCategoryUrl(category: string | null, lang?: string): string {
+	const base = lang === "en" ? "/en/archive/" : "/archive/";
 	if (
 		!category ||
 		category.trim() === "" ||
-		category.trim().toLowerCase() === i18n(I18nKey.uncategorized).toLowerCase()
+		category.trim().toLowerCase() === i18n(I18nKey.uncategorized, lang).toLowerCase()
 	)
-		return url("/archive/?uncategorized=true");
-	return url(`/archive/?category=${encodeURIComponent(category.trim())}`);
+		return url(`${base}?uncategorized=true`);
+	return url(`${base}?category=${encodeURIComponent(category.trim())}`);
 }
 
 export function getDir(path: string): string {
