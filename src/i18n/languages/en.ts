@@ -51,7 +51,7 @@ export const en: Translation = {
 	[Key.dynamicNextImage]: "Next image",
 	[Key.dynamicViewImage]: "View image {index}",
 	[Key.dynamicSelectImage]: "Select image {index}",
-	[Key.musicNoPlaying]: "No playing",
+	[Key.musicNoPlaying]: "Nothing playing",
 	[Key.musicLyrics]: "Lyrics",
 	[Key.musicVolume]: "Volume",
 	[Key.musicPlayMode]: "Switch Play Mode",
@@ -367,7 +367,7 @@ export const en: Translation = {
 	// Related Posts
 	[Key.relatedPosts]: "Related Posts",
 	[Key.randomPosts]: "Random Posts",
-	[Key.smartRecommend]: "Smart",
+	[Key.smartRecommend]: "Selected for You",
 	[Key.randomRecommend]: "Random",
 	[Key.noRelatedPosts]: "No related posts",
 	[Key.noRandomPosts]: "No random posts",
@@ -449,8 +449,8 @@ export const en: Translation = {
 	[Key.siteStatsCategoryCount]: "Categories",
 	[Key.siteStatsTagCount]: "Tags",
 	[Key.siteStatsTotalWords]: "Total Words",
-	[Key.siteStatsRunningDays]: "Running Days",
-	[Key.siteStatsLastUpdate]: "Last Activity",
+	[Key.siteStatsRunningDays]: "Uptime",
+	[Key.siteStatsLastUpdate]: "Last Active",
 	[Key.siteStatsDaysAgo]: "{days} days ago",
 	[Key.siteStatsDays]: "{days} days",
 	[Key.today]: "Today",
@@ -467,7 +467,7 @@ export const en: Translation = {
 	[Key.siteInfoExpand]: "Show build info",
 	[Key.siteInfoCollapse]: "Hide build info",
 	[Key.siteInfoDomain]: "Domain",
-	[Key.siteInfoLicense]: "License",
+	[Key.siteInfoLicense]: "Article License",
 
 	// Calendar Component
 	[Key.calendarSunday]: "Sun",
