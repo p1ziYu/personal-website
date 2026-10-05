@@ -4,6 +4,8 @@ import ScrollDownIndicator from "@/components/controls/ScrollDownIndicator.astro
 import BackgroundPlayer from "@/components/features/BackgroundPlayer.astro";
 import BannerHomeTextOverlay from "@/components/layout/BannerHomeTextOverlay.astro";
 import BannerPostMetaOverlay from "@/components/layout/BannerPostMetaOverlay.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import { backgroundWallpaper } from "@/config";
 import type {
 	BannerPostMeta,
@@ -42,7 +44,7 @@ const wallpaperPosition = state.isFullscreenMode
             <div class:list={["slide-item block lg:hidden", index === 0 && "active"]} data-index={index}>
                 <template>
                     <ImageWrapper
-                        alt="Mobile background image of the blog"
+                        alt={i18n(I18nKey.mobileBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full w-full"
                         src={src}
                         position={wallpaperPosition}
@@ -59,7 +61,7 @@ const wallpaperPosition = state.isFullscreenMode
             <div class:list={["slide-item hidden lg:block", index === 0 && "active"]} data-index={index}>
                 <template>
                     <ImageWrapper
-                        alt="Desktop background image of the blog"
+                        alt={i18n(I18nKey.desktopBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full"
                         src={src}
                         position={wallpaperPosition}
@@ -76,7 +78,7 @@ const wallpaperPosition = state.isFullscreenMode
             {backgroundImages.mobile.length > 0 && (
                 <div class="slide-item active block lg:hidden">
                     <ImageWrapper
-                        alt="Mobile background image of the blog"
+                        alt={i18n(I18nKey.mobileBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full w-full"
                         src={backgroundImages.mobile[0]}
                         position={wallpaperPosition}
@@ -93,7 +95,7 @@ const wallpaperPosition = state.isFullscreenMode
             {backgroundImages.desktop.length > 0 && (
                 <div class="slide-item active hidden lg:block">
                     <ImageWrapper
-                        alt="Desktop background image of the blog"
+                        alt={i18n(I18nKey.desktopBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full"
                         src={backgroundImages.desktop[0]}
                         position={wallpaperPosition}
@@ -118,7 +120,7 @@ const wallpaperPosition = state.isFullscreenMode
             <div class="banner-image-slot absolute inset-0 block lg:hidden">
                 <template>
                     <ImageWrapper
-                        alt="Mobile background image of the blog"
+                        alt={i18n(I18nKey.mobileBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full w-full"
                         src={backgroundImages.mobile[0]}
                         position={wallpaperPosition}
@@ -135,7 +137,7 @@ const wallpaperPosition = state.isFullscreenMode
             <div class="banner-image-slot absolute inset-0 hidden lg:block">
                 <template>
                     <ImageWrapper
-                        alt="Desktop background image of the blog"
+                        alt={i18n(I18nKey.desktopBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full"
                         src={backgroundImages.desktop[0]}
                         position={wallpaperPosition}
@@ -152,7 +154,7 @@ const wallpaperPosition = state.isFullscreenMode
             {backgroundImages.mobile.length > 0 && (
                 <div class="absolute inset-0 block lg:hidden">
                     <ImageWrapper
-                        alt="Mobile background image of the blog"
+                        alt={i18n(I18nKey.mobileBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full w-full"
                         src={backgroundImages.mobile[0]}
                         position={wallpaperPosition}
@@ -169,7 +171,7 @@ const wallpaperPosition = state.isFullscreenMode
             {backgroundImages.desktop.length > 0 && (
                 <div class="absolute inset-0 hidden lg:block">
                     <ImageWrapper
-                        alt="Desktop background image of the blog"
+                        alt={i18n(I18nKey.desktopBackgroundImage, getLangFromPath(Astro.url.pathname))}
                         class="object-cover h-full"
                         src={backgroundImages.desktop[0]}
                         position={wallpaperPosition}
