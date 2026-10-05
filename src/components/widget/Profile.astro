@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
 import ImageWrapper from "@/components/common/ImageWrapper.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import { profileConfig } from "@/config/profileConfig";
 import { encodeMailto, MAILTO_ONCLICK_SCRIPT } from "@/utils/email-utils";
 import { url } from "@/utils/url-utils";
@@ -31,7 +33,7 @@ const className = Astro.props.class;
     </div>
     <ImageWrapper
       src={profileConfig.avatar || ""}
-      alt={`${profileConfig.name}的插画头像`}
+      alt={getLangFromPath(Astro.url.pathname) === "en" ? `${profileConfig.name} ${i18n(I18nKey.profileAvatar, "en")}` : `${profileConfig.name}${i18n(I18nKey.profileAvatar, "zh_CN")}`}
       class="profile-avatar-image mx-auto lg:w-full h-full lg:mt-0"
       loading="eager"
       fetchpriority="high"
