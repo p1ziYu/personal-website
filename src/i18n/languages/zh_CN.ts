@@ -2,6 +2,13 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const zh_CN: Translation = {
+	[Key.language]: "语言 / Language",
+	[Key.navigationMenu]: "导航菜单",
+	[Key.tabNavigation]: "标签页",
+	[Key.closeMenu]: "关闭菜单",
+	[Key.switchToEnglish]: "切换为英文",
+	[Key.switchToChinese]: "切换为中文",
+	[Key.englishUnavailable]: "此页面暂无英文版",
 	[Key.home]: "主页",
 	[Key.about]: "关于我",
 	[Key.archive]: "归档",
@@ -95,6 +102,18 @@ export const zh_CN: Translation = {
 	[Key.booknavEmpty]: "暂无书签",
 
 	// 项目展示页
+	// Project initial UI text
+	[Key.kineticMemeNote]: "≈ 23,034 掌（完美对应迷因！）",
+	[Key.kineticEnergyNote]: "单掌动能: 12.48 J (手重 0.4kg)",
+	[Key.kineticTimeInitial]: "3 小时 12 分",
+	[Key.kineticTimeNote]: "按 2 掌/秒无休止连续拍击",
+	[Key.kineticTemperatureNote]: "4°C 升至 75°C 熟透",
+	[Key.kineticToastInitial]: "热身完毕！",
+	[Key.kineticStatusInitial]: "冰凉生鲜",
+	[Key.annealingActionInitial]: "退火优化 (Simulated Annealing)",
+	[Key.annealingStatusInitial]: "退火引擎就绪 (~30 步/秒)",
+	[Key.annealingStepsInitial]: "0 次尝试",
+
 	[Key.projects]: "项目",
 	[Key.projectsDescription]: "这里展示我开发过的项目",
 	[Key.projectDetails]: "查看详情",
@@ -487,6 +506,18 @@ export const zh_CN: Translation = {
 	[Key.calendarHeatmapWeek]: "{month}月第{week}周，{count}篇文章",
 	[Key.advertisement]: "广告",
 
+	[Key.profileAvatar]: "的插画头像",
+	[Key.displaySettings]: "显示设置",
+	[Key.resetToDefault]: "恢复默认",
+	[Key.calendarPreviousMonth]: "上个月",
+	[Key.calendarNextMonth]: "下个月",
+	[Key.calendarBackToToday]: "返回今天",
+	[Key.backToTop]: "返回顶部",
+	[Key.scrollToComments]: "跳转到评论",
+	[Key.mobileBackgroundImage]: "博客移动端背景图片",
+	[Key.desktopBackgroundImage]: "博客桌面端背景图片",
+	[Key.tagPostsLabel]: "查看含有{name}标签的所有文章",
+	[Key.categoryPostsLabel]: "查看{name}分类的所有文章",
 	[Key.shareArticle]: "分享",
 	[Key.generatingPoster]: "海报生成中...",
 	[Key.copied]: "已复制",
