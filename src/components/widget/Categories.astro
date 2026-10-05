@@ -1,10 +1,14 @@
 ---
+import { taxonomyDisplayName } from "@/i18n/taxonomy";
 import ButtonLink from "@/components/common/ButtonLink.astro";
 import WidgetLayout from "@/components/common/WidgetLayout.astro";
 import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
+import { getLangFromPath, i18n } from "@/i18n/translation";
 import type { WidgetComponentConfig } from "@/types/config";
+import { getCategoryUrl } from "@/utils/url-utils";
 import { getCategoryList } from "@/utils/content-utils";
+
+const uiLang = getLangFromPath(Astro.url.pathname);
 
 const categories = await getCategoryList();
 
@@ -24,16 +28,16 @@ const isCollapsed = collapseThreshold
 	: false;
 ---
 
-<WidgetLayout name={i18n(I18nKey.categories)} showTitle={showTitle} id="categories" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
+<WidgetLayout name={i18n(I18nKey.categories, uiLang)} showTitle={showTitle} id="categories" isCollapsed={isCollapsed} collapsedHeight={COLLAPSED_HEIGHT}
                 class={className} style={style}
 >
     {categories.map((c) =>
         <ButtonLink
-            url={c.url}
+            url={getCategoryUrl(c.name, uiLang)}
             badge={String(c.count)}
-            label={`View all posts in the ${c.name.trim()} category`}
+            label={`View all posts in the ${taxonomyDisplayName(c.name.trim(), uiLang)} category`}
         >
-            {c.name.trim()}
+            {taxonomyDisplayName(c.name.trim(), uiLang)}
         </ButtonLink>
     )}
 </WidgetLayout>
