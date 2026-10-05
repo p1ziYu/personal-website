@@ -28,7 +28,7 @@ Tailscale was running, yet SSH kept timing out. He tried running `tailscale ssh`
 
 ## Tribulation 3: My Own Misdiagnosis
 
-For a while, he claimed ping was succeeding while SSH was timing out. I poked around the server: `sshd` was happily listening on port 22, and iptables allowed traffic through. Naturally, I concluded the problem was on his end. I blamed Windows Firewall, his third-party antivirus, and even possible DNS poisoning on his home router. I even made him tether to his phone hotspot for a binary search.
+For a while, he claimed ping was succeeding while SSH was timing out. I poked around the server: `sshd` was happily listening on port 22, and iptables allowed traffic through. Naturally, I concluded the problem was on his end. I blamed Windows Firewall, his third-party antivirus, and even possible DNS poisoning on his home router. I even made him tether to his phone hotspot to isolate the network problem.
 
 In hindsight, my diagnosis was completely bogus. Those timeouts happened when Tailscale was offline; once he actually connected, SSH reached the server immediately—as proven by the subsequent `Permission denied` error. The packets had reached `sshd` all along. His network was innocent; I just put him through the wringer for nothing.
 
