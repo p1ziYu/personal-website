@@ -1,7 +1,16 @@
 <script lang="ts">
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { getLangFromPath, i18n } from "@i18n/translation";
 import { onMount } from "svelte";
+let { lang }: { lang?: string } = $props();
+let uiLang = $state(lang);
+onMount(() => {
+	const updateLang = () => { uiLang = getLangFromPath(window.location.pathname); };
+	updateLang();
+	document.addEventListener("swup:contentReplaced", updateLang);
+	window.addEventListener("lang-change", updateLang);
+	return () => { document.removeEventListener("swup:contentReplaced", updateLang); window.removeEventListener("lang-change", updateLang); };
+});
 import DropdownItem from "@/components/common/DropdownItem.svelte";
 import Icon from "@/components/common/Icon.svelte";
 import { DARK_MODE, LIGHT_MODE, SYSTEM_MODE } from "@/constants/constants";
@@ -131,7 +140,7 @@ onMount(() => {
             onclick={() => switchScheme(LIGHT_MODE)}
         >
             <Icon icon="material-symbols:wb-sunny-outline-rounded" class="text-[1.25rem] mr-3"></Icon>
-            {i18n(I18nKey.lightMode)}
+            {i18n(I18nKey.lightMode, uiLang)}
         </DropdownItem>
         <DropdownItem
             role="menuitem"
@@ -140,7 +149,7 @@ onMount(() => {
             onclick={() => switchScheme(DARK_MODE)}
         >
             <Icon icon="material-symbols:dark-mode-outline-rounded" class="text-[1.25rem] mr-3"></Icon>
-            {i18n(I18nKey.darkMode)}
+            {i18n(I18nKey.darkMode, uiLang)}
         </DropdownItem>
         <DropdownItem
             role="menuitem"
@@ -149,7 +158,7 @@ onMount(() => {
             onclick={() => switchScheme(SYSTEM_MODE)}
         >
             <Icon icon="material-symbols:brightness-auto-outline-rounded" class="text-[1.25rem] mr-3"></Icon>
-            {i18n(I18nKey.systemMode)}
+            {i18n(I18nKey.systemMode, uiLang)}
         </DropdownItem>
     </div>
 </div>
