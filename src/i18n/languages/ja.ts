@@ -2,6 +2,13 @@ import Key from "../i18nKey";
 import type { Translation } from "../translation";
 
 export const ja: Translation = {
+	[Key.language]: "Language",
+	[Key.navigationMenu]: "ナビゲーションメニュー",
+	[Key.tabNavigation]: "タブ",
+	[Key.closeMenu]: "メニューを閉じる",
+	[Key.switchToEnglish]: "英語に切り替える",
+	[Key.switchToChinese]: "中国語に切り替える",
+	[Key.englishUnavailable]: "このページの英語版はありません",
 	[Key.home]: "ホーム",
 	[Key.about]: "について",
 	[Key.archive]: "アーカイブ",
@@ -96,6 +103,18 @@ export const ja: Translation = {
 	[Key.booknavEmpty]: "ブックマークがありません",
 
 	// プロジェクト展示ページ
+	// Project initial UI text
+	[Key.kineticMemeNote]: "≈ 23,034 slaps (matches the meme!)",
+	[Key.kineticEnergyNote]: "Kinetic energy / slap: 12.48 J (0.4kg hand)",
+	[Key.kineticTimeInitial]: "3 hours 12 minutes",
+	[Key.kineticTimeNote]: "Continuous slapping at 2 slaps/sec",
+	[Key.kineticTemperatureNote]: "Heated from 4°C to target 75°C",
+	[Key.kineticToastInitial]: "Warm-up complete!",
+	[Key.kineticStatusInitial]: "Chilled Raw",
+	[Key.annealingActionInitial]: "Simulated Annealing",
+	[Key.annealingStatusInitial]: "Annealing engine ready (~30 moves/s)",
+	[Key.annealingStepsInitial]: "0 attempts",
+
 	[Key.projects]: "プロジェクト",
 	[Key.projectsDescription]: "私が開発したプロジェクトです",
 	[Key.projectDetails]: "詳細を見る",
@@ -495,6 +514,18 @@ export const ja: Translation = {
 	[Key.calendarHeatmapWeek]: "{month}月第{week}週、{count}記事",
 	[Key.advertisement]: "広告",
 
+	[Key.profileAvatar]: "illustrated avatar",
+	[Key.displaySettings]: "Display settings",
+	[Key.resetToDefault]: "Reset to default",
+	[Key.calendarPreviousMonth]: "Previous month",
+	[Key.calendarNextMonth]: "Next month",
+	[Key.calendarBackToToday]: "Back to today",
+	[Key.backToTop]: "Back to top",
+	[Key.scrollToComments]: "Scroll to comments",
+	[Key.mobileBackgroundImage]: "Mobile background image of the blog",
+	[Key.desktopBackgroundImage]: "Desktop background image of the blog",
+	[Key.tagPostsLabel]: "View all posts with the {name} tag",
+	[Key.categoryPostsLabel]: "View all posts in the {name} category",
 	[Key.shareArticle]: "共有",
 	[Key.generatingPoster]: "ポスター生成中...",
 	[Key.copied]: "コピーしました",
