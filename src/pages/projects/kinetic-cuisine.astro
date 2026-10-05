@@ -1,5 +1,7 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import I18nKey from "@/i18n/i18nKey";
+import { i18n } from "@/i18n/translation";
 
 const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
 
@@ -149,7 +151,7 @@ const description = isEn
 							23,038
 						</div>
 						<div class="text-[11px] opacity-60 mt-1" id="res-meme-note">
-							≈ 23,034 掌（完美对应迷因！）
+							{i18n(I18nKey.kineticMemeNote, isEn ? "en" : undefined)}
 						</div>
 					</div>
 
@@ -162,7 +164,7 @@ const description = isEn
 							287.6 kJ
 						</div>
 						<div class="text-[11px] opacity-50 mt-1" id="res-energy-sub">
-							单掌动能: 12.48 J (手重 0.4kg)
+							{i18n(I18nKey.kineticEnergyNote, isEn ? "en" : undefined)}
 						</div>
 					</div>
 
@@ -172,10 +174,10 @@ const description = isEn
 							<span class="lang-en">Time to Cook</span>
 						</div>
 						<div class="text-2xl font-bold font-mono" id="res-total-time">
-							3 小时 12 分
+							{i18n(I18nKey.kineticTimeInitial, isEn ? "en" : undefined)}
 						</div>
 						<div class="text-[11px] opacity-50 mt-1" id="res-time-sub">
-							按 2 掌/秒无休止连续拍击
+							{i18n(I18nKey.kineticTimeNote, isEn ? "en" : undefined)}
 						</div>
 					</div>
 
@@ -188,7 +190,7 @@ const description = isEn
 							71.0 °C
 						</div>
 						<div class="text-[11px] opacity-50 mt-1" id="res-temp-sub">
-							4°C 升至 75°C 熟透
+							{i18n(I18nKey.kineticTemperatureNote, isEn ? "en" : undefined)}
 						</div>
 					</div>
 				</div>
@@ -258,7 +260,7 @@ const description = isEn
 					<!-- Milestone Toast Banner -->
 					<div id="milestone-toast" class="absolute top-4 left-4 right-4 sm:left-auto sm:right-4 max-w-sm px-4 py-2.5 rounded-xl bg-amber-500 text-white font-medium text-xs shadow-lg transition-all duration-300 transform -translate-y-12 opacity-0 pointer-events-none z-30 flex items-center gap-2">
 						<span class="text-base" id="toast-icon">👋</span>
-						<span id="toast-text" class="flex-1">热身完毕！</span>
+						<span id="toast-text" class="flex-1">{i18n(I18nKey.kineticToastInitial, isEn ? "en" : undefined)}</span>
 					</div>
 
 					<!-- Visual Arena (No emoji, no external images) -->
@@ -298,7 +300,7 @@ const description = isEn
 						<div class="flex justify-between items-baseline text-xs font-mono">
 							<span class="opacity-75 font-sans font-medium flex items-center gap-1.5">
 								<span id="status-icon">❄️</span>
-								<span id="cook-status-text">冰凉生鲜</span>
+								<span id="cook-status-text">{i18n(I18nKey.kineticStatusInitial, isEn ? "en" : undefined)}</span>
 							</span>
 							<span class="font-bold">
 								<span id="sim-current-temp" class="text-amber-500">4.0</span>°C / <span id="sim-target-temp">75.0</span>°C
