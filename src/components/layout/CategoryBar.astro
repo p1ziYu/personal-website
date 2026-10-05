@@ -1,9 +1,12 @@
 ---
+import { canonicalTaxonomyName, taxonomyDisplayName } from "@/i18n/taxonomy";
 import I18nKey from "@i18n/i18nKey";
-import { i18n } from "@i18n/translation";
+import { getLangFromPath, i18n } from "@i18n/translation";
 import { Icon } from "astro-icon/components";
 import { getCategoryList, getSortedPostsList } from "@/utils/content-utils";
-import { url } from "@/utils/url-utils";
+import { getCategoryUrl, url } from "@/utils/url-utils";
+
+const uiLang = getLangFromPath(Astro.url.pathname);
 
 interface Props {
 	currentPostCategory?: string;
@@ -13,8 +16,8 @@ const { currentPostCategory } = Astro.props as Props;
 
 const categories = await getCategoryList();
 const totalPosts = (await getSortedPostsList()).length;
-const homeUrl = url("/");
-const archiveUrl = url("/archive/");
+const homeUrl = url(uiLang === "en" ? "/en/" : "/");
+const archiveUrl = url(uiLang === "en" ? "/en/archive/" : "/archive/");
 
 // 服务端计算初始高亮 pill（首屏无需等 JS）。
 // 查询串筛选（?category=/?tag=/?uncategorized）在静态页构建期不可知，
@@ -23,9 +26,9 @@ const pathname = Astro.url.pathname.replace(/\/$/, "");
 const homePath = homeUrl.replace(/\/$/, "");
 const archivePath = archiveUrl.replace(/\/$/, "");
 const isHome = pathname === homePath || pathname === "" || pathname === "/";
-const isCategories = pathname === "/categories";
+const isCategories = pathname.replace(/^\/en(?=\/)/, "") === "/categories";
 const isArchive = pathname === archivePath;
-const postCategory = (currentPostCategory || "").trim();
+const postCategory = canonicalTaxonomyName(currentPostCategory || "");
 
 // 返回某个 pill 的初始高亮属性：active（强）或 soft-active（弱，文章页所属分类）
 function initialActive(categoryName: string): {
@@ -55,7 +58,7 @@ function initialActive(categoryName: string): {
              transition-colors duration-150 ease-out flex items-center justify-center"
       data-category-name=""
       data-active={initialActive("").active ? "" : undefined}
-      aria-label={i18n(I18nKey.home)}
+      aria-label={i18n(I18nKey.home, uiLang)}
     >
       <Icon name="material-symbols:home" class="text-lg" />
     </a>
@@ -66,7 +69,7 @@ function initialActive(categoryName: string): {
       data-category-name="__archive__"
       data-active={initialActive("__archive__").active ? "" : undefined}
     >
-      {i18n(I18nKey.archive)}
+      {i18n(I18nKey.archive, uiLang)}
       <span class="pill-count">{totalPosts}</span>
     </a>
     <div class="category-divider shrink-0"></div>
@@ -78,14 +81,14 @@ function initialActive(categoryName: string): {
             const active = initialActive(cat.name);
             return (
             <a
-              href={cat.url}
+              href={getCategoryUrl(cat.name, uiLang)}
               class="category-pill focus-ring-inset text-sm px-4 py-1.5 whitespace-nowrap
                      transition-colors duration-150 ease-out flex items-center justify-center"
               data-category-name={cat.name}
               data-active={active.active ? "" : undefined}
               data-soft-active={active.soft ? "" : undefined}
             >
-              {cat.name}
+              {taxonomyDisplayName(cat.name, uiLang)}
               <span class="pill-count">{cat.count}</span>
             </a>
             );
@@ -96,14 +99,14 @@ function initialActive(categoryName: string): {
     </div>
     <div class="category-divider shrink-0 more-divider" aria-hidden="true"></div>
     <a
-      href={url("/categories/")}
+      href={url(uiLang === "en" ? "/en/categories/" : "/categories/")}
       class="category-pill focus-ring-inset text-sm px-3 py-1.5 shrink-0
              transition-colors duration-150 ease-out flex items-center justify-center gap-1"
       data-category-name="__categories__"
       data-active={initialActive("__categories__").active ? "" : undefined}
-      aria-label={i18n(I18nKey.more)}
+      aria-label={i18n(I18nKey.more, uiLang)}
     >
-      <span>{i18n(I18nKey.more)}</span>
+      <span>{i18n(I18nKey.more, uiLang)}</span>
       <Icon name="fa7-solid:chevron-right" class="text-sm" />
     </a>
   </div>
@@ -168,6 +171,7 @@ function initialActive(categoryName: string): {
 </style>
 
 <script>
+  import { canonicalTaxonomyName } from "@/i18n/taxonomy";
   let delayedCategoryBarScrollTimer: number | undefined;
 
   function getCategoryBarState(bar: HTMLElement, currentUrl: URL) {
@@ -176,13 +180,13 @@ function initialActive(categoryName: string): {
     const archivePath = (bar.getAttribute("data-archive-path") || "/archive").replace(/\/$/, "");
     const isHome = pathname === homePath || pathname === "" || pathname === "/";
     const isArchive = pathname === archivePath;
-    const isCategories = pathname === "/categories";
+    const isCategories = pathname.replace(/^\/en(?=\/)/, "") === "/categories";
 
     return {
       isHome,
       isArchive,
       isCategories,
-      activeCategory: currentUrl.searchParams.get("category") || "",
+      activeCategory: canonicalTaxonomyName(currentUrl.searchParams.get("category") || ""),
       hasTag: currentUrl.searchParams.has("tag"),
       hasUncategorized: currentUrl.searchParams.has("uncategorized"),
     };
@@ -191,7 +195,7 @@ function initialActive(categoryName: string): {
   function setActiveCategory(bar: HTMLElement, currentUrl: URL) {
     const { isHome, isArchive, isCategories, activeCategory, hasTag, hasUncategorized } =
       getCategoryBarState(bar, currentUrl);
-    const postCategory = (bar.getAttribute("data-current-post-category") || "").trim();
+    const postCategory = canonicalTaxonomyName(bar.getAttribute("data-current-post-category") || "");
 
     const pills = bar.querySelectorAll<HTMLAnchorElement>(".category-pill");
     pills.forEach((pill) => {
