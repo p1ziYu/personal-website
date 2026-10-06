@@ -44,9 +44,12 @@ for (const post of posts) {
 
 		// 分别计算中文字符和英文字符
 		const chineseChars = text.match(/[\u4e00-\u9fa5]/g) || [];
-		const englishChars = text.match(/[a-zA-Z]/g) || [];
+		const englishWords = text
+			.replace(/[\u4e00-\u9fa5]/g, " ")
+			.split(/\s+/)
+			.filter((token) => /[a-zA-Z]/.test(token));
 
-		totalWords += chineseChars.length + englishChars.length;
+		totalWords += chineseChars.length + englishWords.length;
 	}
 }
 
@@ -185,7 +188,7 @@ const stats = [
   {
     // 页面切换时重新更新
     const onReplace = () => setTimeout(updateDynamicStats, 100);
-    document.addEventListener("swup:contentReplaced", onReplace);
-    window.__siteStatsCleanup = () => document.removeEventListener("swup:contentReplaced", onReplace);
+    document.addEventListener("astro:after-swap", onReplace);
+    window.__siteStatsCleanup = () => document.removeEventListener("astro:after-swap", onReplace);
   }
 </script>
