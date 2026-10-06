@@ -53,9 +53,9 @@ let uiLang = $state(lang);
 onMount(() => {
 	const updateLang = () => { uiLang = getLangFromPath(window.location.pathname); };
 	updateLang();
-	document.addEventListener("swup:contentReplaced", updateLang);
+	document.addEventListener("astro:after-swap", updateLang);
 	window.addEventListener("lang-change", updateLang);
-	return () => { document.removeEventListener("swup:contentReplaced", updateLang); window.removeEventListener("lang-change", updateLang); };
+	return () => { document.removeEventListener("astro:after-swap", updateLang); window.removeEventListener("lang-change", updateLang); };
 });
 import Icon from "@/components/common/Icon.svelte";
 import {
