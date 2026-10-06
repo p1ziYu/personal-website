@@ -33,7 +33,7 @@ const className = Astro.props.class;
     </div>
     <ImageWrapper
       src={profileConfig.avatar || ""}
-      alt={getLangFromPath(Astro.url.pathname) === "en" ? `${profileConfig.name} ${i18n(I18nKey.profileAvatar, "en")}` : `${profileConfig.name}${i18n(I18nKey.profileAvatar, "zh_CN")}`}
+      alt={getLangFromPath(Astro.url.pathname) === "en" ? `p1ziYu ${i18n(I18nKey.profileAvatar, "en")}` : `${profileConfig.name}${i18n(I18nKey.profileAvatar, "zh_CN")}`}
       class="profile-avatar-image mx-auto lg:w-full h-full lg:mt-0"
       loading="eager"
       fetchpriority="high"
@@ -72,7 +72,7 @@ const className = Astro.props.class;
                             {showName && item.name}
                         </a>
                     } else {
-                        return <a rel="me" aria-label={item.name} href={item.url} target="_blank" class={className}>
+                        return <a rel="me" aria-label={item.name === "小红书" ? i18n(I18nKey.profileXiaohongshu, getLangFromPath(Astro.url.pathname)) : item.name} href={item.url} target="_blank" class={className}>
                             <Icon name={item.icon} class="text-[1.5rem]"></Icon>
                             {showName && item.name}
                         </a>
@@ -88,7 +88,7 @@ const className = Astro.props.class;
                             {item.name}
                         </a>
                     } else {
-                        return <a rel="me" aria-label={item.name} href={item.url} target="_blank"
+                        return <a rel="me" aria-label={item.name === "小红书" ? i18n(I18nKey.profileXiaohongshu, getLangFromPath(Astro.url.pathname)) : item.name} href={item.url} target="_blank"
                                             class="btn-regular rounded-lg h-10 gap-2 px-3 font-bold active:scale-95">
                                 <Icon name={item.icon} class="text-[1.5rem]"></Icon>
                                 {item.name}
