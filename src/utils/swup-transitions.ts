@@ -1,4 +1,3 @@
-import { isEnPath } from "@/utils/route-manifest";
 import { expressiveCodeConfig, navbarMode, siteConfig } from "@/config";
 import type { WALLPAPER_MODE } from "@/types/config";
 import { scheduleContentOverflowEnhancements } from "@/utils/content-overflow-utils";
@@ -65,16 +64,6 @@ function finishProgressBar(): void {
 function registerSwupHooks(): void {
 	// 非首页全屏模式与 overlay 一致（内容在最上面），首页 hero 结构回顶即可，
 	// 均无需自定义 swup 回顶行为，保留默认滚动到顶部
-	// The navbar and static sidebars survive Swup navigation. Reload when crossing
-	// languages so their server-rendered labels and player state use the new locale.
-	window.swup.hooks.on("visit:start", (visit: { from: { url: string }; to: { url: string }; abort(): void }) => {
-		const from = new URL(visit.from.url, window.location.origin);
-		const to = new URL(visit.to.url, window.location.origin);
-		if (isEnPath(from.pathname) !== isEnPath(to.pathname)) {
-			visit.abort();
-			window.location.assign(to.href);
-		}
-	});
 	// TODO: temp solution to change the height of the banner
 	window.swup.hooks.on(
 		"link:click",
@@ -302,10 +291,6 @@ function registerSwupHooks(): void {
 					},
 				});
 				document.dispatchEvent(pageLoadedEvent);
-				console.log(
-					"Layout: 触发 firefly:page:loaded 事件，路径:",
-					window.location.pathname,
-				);
 			}
 		}, 300);
 	});
