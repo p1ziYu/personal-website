@@ -643,5 +643,5 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
   }
   document.addEventListener('DOMContentLoaded', handleEnLinks);
   document.addEventListener('astro:page-load', handleEnLinks);
-  document.addEventListener('swup:contentReplaced', handleEnLinks);
+  document.addEventListener('astro:after-swap', handleEnLinks);
 </script>
