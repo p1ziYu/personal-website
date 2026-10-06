@@ -1,0 +1,1838 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Switchback · The Flattest Path Laboratory"
+	: "之字路 · 最平路线实验室";
+const description = isEn
+	? "Find the flattest route across hilly terrain by trading off distance vs elevation gain. Interactive Dijkstra pathfinding on procedural hillshade terrain with Pareto frontier analysis."
+	: "在起伏山地中权衡距离与爬升，寻找最平坦路线。基于程序化地形与 Dijkstra 算法的之字路交互实验室，实时探索帕累托最优前沿。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32">
+		<div class="card-base z-10 px-4 sm:px-8 py-6 relative w-full">
+			<!-- 头部标题区 -->
+			<div class="mb-6">
+				<div class="flex items-center gap-2 mb-2">
+					<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--primary)] text-white">Daily Lab</span>
+					<span class="text-xs opacity-60 font-mono">Pareto Topography · 2026</span>
+				</div>
+				<h1 class="text-2xl sm:text-3xl font-bold mb-3 tracking-tight">
+					<span class="lang-zh">之字路 · 最平路线实验室</span>
+					<span class="lang-en">Switchback · The Flattest Path Lab</span>
+				</h1>
+				<p class="text-sm opacity-80 leading-relaxed mb-1.5">
+					<span class="lang-zh">
+						在山地城市出行中，纯几何最短的直线往往逼迫行人和骑手翻越陡峭的绝壁。现实中的登山步道与盘山公路，会利用「之字折返」（Switchbacks）沿等高线斜切，以多走平路的代价换取平缓的坡度。
+					</span>
+					<span class="lang-en">
+						In hilly cities, the shortest straight-line route often forces walkers and cyclists up punishing slopes. Mountain roads and trail switchbacks make a deliberate trade-off: traveling farther horizontally to maintain a comfortable, manageable grade.
+					</span>
+				</p>
+				<p class="text-sm opacity-70 leading-relaxed">
+					<span class="lang-zh">
+						本实验室在程序化山丘地貌上运行加权 Dijkstra 最短路算法。拖拽起点（A）与终点（B），调节爬升惩罚系数 λ，实时探索距离与爬升的帕累托最优前沿（Pareto Frontier）。
+					</span>
+					<span class="lang-en">
+						This laboratory runs weighted Dijkstra pathfinding across procedural hillshade terrain. Drag Start (A) and Finish (B), adjust the climb penalty λ, and explore the Pareto frontier trading off distance against total elevation gain.
+					</span>
+				</p>
+			</div>
+
+			<!-- 控制预设条 -->
+			<div class="flex flex-wrap items-center justify-between gap-3 p-3.5 mb-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
+				<!-- 预设路线按钮 -->
+				<div class="flex flex-wrap items-center gap-2">
+					<span class="text-xs font-medium opacity-60 mr-1">
+						<span class="lang-zh">寻路预设:</span>
+						<span class="lang-en">Presets:</span>
+					</span>
+					<button
+						id="preset-shortest"
+						type="button"
+						class="preset-btn px-3 py-1.5 rounded-xl text-xs font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
+					>
+						<span class="lang-zh">🏃 最短直线 (λ = 0)</span>
+						<span class="lang-en">🏃 Shortest (λ = 0)</span>
+					</button>
+					<button
+						id="preset-balanced"
+						type="button"
+						class="preset-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-[var(--primary)] text-white shadow-sm active:scale-95 transition"
+					>
+						<span class="lang-zh">⚖️ 舒适之字 (λ = 16)</span>
+						<span class="lang-en">⚖️ Balanced (λ = 16)</span>
+					</button>
+					<button
+						id="preset-flattest"
+						type="button"
+						class="preset-btn px-3 py-1.5 rounded-xl text-xs font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition"
+					>
+						<span class="lang-zh">🚲 极致避坡 (λ = 200)</span>
+						<span class="lang-en">🚲 Flattest (λ = 200)</span>
+					</button>
+				</div>
+
+				<!-- 地形切换与起终点互换 -->
+				<div class="flex items-center gap-2">
+					<button
+						id="btn-swap"
+						type="button"
+						class="px-3 py-1.5 rounded-xl text-xs font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5 active:scale-95 transition flex items-center gap-1.5"
+						title="Swap Start and Finish"
+					>
+						<span>⇄</span>
+						<span class="lang-zh">互换起终点</span>
+						<span class="lang-en">Swap A ↔ B</span>
+					</button>
+					<button
+						id="btn-reseed"
+						type="button"
+						class="px-3 py-1.5 rounded-xl text-xs font-semibold border border-[var(--primary)]/40 text-[var(--primary)] bg-[var(--primary)]/10 hover:bg-[var(--primary)]/20 active:scale-95 transition flex items-center gap-1.5"
+					>
+						<span>🎲</span>
+						<span class="lang-zh">切换地形</span>
+						<span class="lang-en">New Terrain</span>
+						<span id="terrain-badge" class="font-mono text-[11px] opacity-75">(1/4)</span>
+					</button>
+				</div>
+			</div>
+
+			<!-- 爬升惩罚滑块控制面板 -->
+			<div class="p-4 sm:p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-5">
+				<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+					<div>
+						<div class="flex items-center gap-2">
+							<span class="text-xs font-bold uppercase tracking-wider opacity-60">
+								<span class="lang-zh">爬升惩罚系数</span>
+								<span class="lang-en">Climb Penalty Factor</span>
+							</span>
+							<span class="text-xs font-mono font-bold px-2 py-0.5 rounded-md bg-[var(--primary)]/15 text-[var(--primary)] border border-[var(--primary)]/30">
+								λ = <span id="lambda-value-text">16.0</span>
+							</span>
+						</div>
+						<p id="lambda-desc-text" class="text-xs opacity-75 mt-1">
+							<span class="lang-zh">每爬升 1 米相当于多走 16 米平路：沿等高线之字蜿蜒，主动避开险坡。</span>
+							<span class="lang-en">1 meter of climb equals 16 meters extra walking: winding along contours to avoid sheer cliffs.</span>
+						</p>
+					</div>
+					<div class="text-[11px] font-mono opacity-50 sm:text-right">
+						<div>Cost = Distance + λ × ElevationGain</div>
+						<div>Dijkstra · 8-connected grid</div>
+					</div>
+				</div>
+
+				<!-- 滑块本体 -->
+				<div class="relative pt-1 pb-1">
+					<input
+						type="range"
+						id="lambda-slider"
+						min="0"
+						max="100"
+						step="1"
+						value="45"
+						class="w-full h-2 bg-black/20 dark:bg-white/15 rounded-lg appearance-none cursor-pointer accent-[var(--primary)]"
+					/>
+					<div class="flex justify-between text-[11px] font-mono opacity-50 mt-1 px-1">
+						<span>0 (<span class="lang-zh">不计坡度</span><span class="lang-en">Pure Distance</span>)</span>
+						<span>1 (<span class="lang-zh">轻度避坡</span><span class="lang-en">Gentle</span>)</span>
+						<span>16 (<span class="lang-zh">舒适骑行</span><span class="lang-en">Balanced</span>)</span>
+						<span>60 (<span class="lang-zh">强力避坡</span><span class="lang-en">Strong</span>)</span>
+						<span>200 (<span class="lang-zh">宁绕勿爬</span><span class="lang-en">Max Flat</span>)</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- 关键指标实时看板 (4 指标) -->
+			<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
+				<!-- 指标 1: 总路程 -->
+				<div class="p-3.5 sm:p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+					<div class="text-xs font-semibold opacity-60">
+						<span class="lang-zh">总路程</span>
+						<span class="lang-en">Total Distance</span>
+					</div>
+					<div class="my-1.5 flex items-baseline gap-1.5">
+						<span id="stat-dist" class="text-2xl sm:text-3xl font-extrabold font-mono text-[var(--primary)]">--</span>
+						<span class="text-xs font-mono opacity-60">m</span>
+					</div>
+					<div id="stat-dist-diff" class="text-[11px] font-mono opacity-60 truncate">
+						vs 最短: +0m (+0%)
+					</div>
+				</div>
+
+				<!-- 指标 2: 累计爬升 -->
+				<div class="p-3.5 sm:p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+					<div class="text-xs font-semibold opacity-60">
+						<span class="lang-zh">累计爬升</span>
+						<span class="lang-en">Elevation Gain</span>
+					</div>
+					<div class="my-1.5 flex items-baseline gap-1.5">
+						<span id="stat-climb" class="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-500">--</span>
+						<span class="text-xs font-mono opacity-60">m</span>
+					</div>
+					<div id="stat-climb-diff" class="text-[11px] font-mono opacity-60 truncate">
+						vs 最短: -0m (-0%)
+					</div>
+				</div>
+
+				<!-- 指标 3: 最大坡度 -->
+				<div class="p-3.5 sm:p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+					<div class="text-xs font-semibold opacity-60">
+						<span class="lang-zh">最大坡度</span>
+						<span class="lang-en">Max Grade</span>
+					</div>
+					<div class="my-1.5 flex items-baseline gap-1.5">
+						<span id="stat-grade" class="text-2xl sm:text-3xl font-extrabold font-mono text-amber-500">--</span>
+						<span class="text-xs font-mono opacity-60">%</span>
+					</div>
+					<div id="stat-grade-desc" class="text-[11px] opacity-60 truncate">
+						<span class="lang-zh">缓和路段</span>
+						<span class="lang-en">Gentle slope</span>
+					</div>
+				</div>
+
+				<!-- 指标 4: 之字拐点数 -->
+				<div class="p-3.5 sm:p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+					<div class="text-xs font-semibold opacity-60">
+						<span class="lang-zh">之字折返次数</span>
+						<span class="lang-en">Switchback Turns</span>
+					</div>
+					<div class="my-1.5 flex items-baseline gap-1.5">
+						<span id="stat-turns" class="text-2xl sm:text-3xl font-extrabold font-mono text-teal-500">0</span>
+						<span class="text-xs font-mono opacity-60">
+							<span class="lang-zh">次折返</span>
+							<span class="lang-en">turns</span>
+						</span>
+					</div>
+					<div class="text-[11px] opacity-60 truncate">
+						<span class="lang-zh">沿坡面蜿蜒盘旋</span>
+						<span class="lang-en">Contour winding</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- 主地图画布与右侧前沿图布局 -->
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 mb-5">
+				<!-- 地形阴影地图 (占 8 列) -->
+				<div class="lg:col-span-8 flex flex-col">
+					<div class="relative rounded-2xl overflow-hidden bg-[#0c131a] border border-black/15 dark:border-white/15 shadow-xl">
+						<canvas
+							id="map-canvas"
+							class="block w-full touch-none select-none cursor-crosshair"
+							style="aspect-ratio: 16/10; min-height: 340px; max-height: 520px;"
+						></canvas>
+
+						<!-- 地图操作提示浮层 -->
+						<div class="absolute top-3 left-3 flex flex-wrap items-center gap-2 pointer-events-none">
+							<span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-black/70 text-emerald-300 border border-emerald-500/30 backdrop-blur-md">
+								🟢 <span class="lang-zh">起点 A (可拖拽)</span><span class="lang-en">Start A (Draggable)</span>
+							</span>
+							<span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-black/70 text-rose-300 border border-rose-500/30 backdrop-blur-md">
+								🔴 <span class="lang-zh">终点 B (可拖拽)</span><span class="lang-en">Finish B (Draggable)</span>
+							</span>
+						</div>
+
+						<!-- 坡度色阶图例 -->
+						<div class="absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/80 text-white/80 border border-white/10 backdrop-blur-md text-[10px] font-mono pointer-events-none">
+							<span class="opacity-60 mr-1"><span class="lang-zh">坡度:</span><span class="lang-en">Slope:</span></span>
+							<span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500"></span> 0-4%
+							<span class="inline-block w-2.5 h-2.5 rounded-full bg-lime-500 ml-1"></span> 4-8%
+							<span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 ml-1"></span> 8-12%
+							<span class="inline-block w-2.5 h-2.5 rounded-full bg-rose-500 ml-1"></span> &gt;12%
+						</div>
+
+						<!-- 地形名称标签 -->
+						<div id="terrain-name-tag" class="absolute bottom-3 left-3 text-[11px] font-mono px-2.5 py-1 rounded-lg bg-black/75 text-white/70 border border-white/10 backdrop-blur-md pointer-events-none">
+							双峰山口与中央马鞍谷 · 3.2km × 2.4km
+						</div>
+					</div>
+				</div>
+
+				<!-- 帕累托前沿图卡片 (占 4 列) -->
+				<div class="lg:col-span-4 flex flex-col justify-between p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10">
+					<div>
+						<div class="flex items-center justify-between mb-2">
+							<div class="font-bold text-xs uppercase tracking-wider opacity-80 flex items-center gap-1.5">
+								<span>🎯</span>
+								<span class="lang-zh">帕累托最优前沿</span>
+								<span class="lang-en">Pareto Frontier</span>
+							</div>
+							<span class="text-[10px] font-mono opacity-50">Distance vs Climb</span>
+						</div>
+						<p class="text-[11px] opacity-70 leading-relaxed mb-3">
+							<span class="lang-zh">
+								每一个散点都代表一条在距离与爬升综合考量下无可超越的最优路线。点击图中散点可直接切换至对应方案。
+							</span>
+							<span class="lang-en">
+								Every dot is a route nothing else beats on both counts. Click any dot on the frontier curve to inspect its route.
+							</span>
+						</p>
+
+						<!-- 帕累托图画布 -->
+						<div class="relative rounded-xl overflow-hidden bg-[#0c131a] border border-black/15 dark:border-white/15 p-1 mb-2">
+							<canvas
+								id="pareto-canvas"
+								class="block w-full cursor-pointer touch-none select-none"
+								style="height: 220px;"
+							></canvas>
+						</div>
+					</div>
+
+					<div class="text-[11px] font-mono opacity-60 p-2.5 rounded-xl bg-black/10 dark:bg-white/5 border border-black/5 dark:border-white/5 space-y-1">
+						<div class="flex justify-between">
+							<span><span class="lang-zh">当前方案:</span><span class="lang-en">Current:</span></span>
+							<span id="pareto-current-info" class="font-bold text-[var(--primary)]">λ = 16.0</span>
+						</div>
+						<div class="flex justify-between text-[10px]">
+							<span class="opacity-70"><span class="lang-zh">前沿有效采样:</span><span class="lang-en">Sampled routes:</span></span>
+							<span id="pareto-points-count" class="opacity-70">12 组路线</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 地形剖面高度图 (Profile Chart) -->
+			<div class="p-4 sm:p-5 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-8">
+				<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+					<div>
+						<h3 class="text-sm font-bold flex items-center gap-2">
+							<span>📈</span>
+							<span class="lang-zh">路线地形剖面图 (Elevation Profile)</span>
+							<span class="lang-en">Route Elevation Profile</span>
+						</h3>
+						<p class="text-xs opacity-60 mt-0.5">
+							<span class="lang-zh">在剖面图上滑动悬停，可在上方地图中同步查看对应的实时地形位置与瞬时坡度。</span>
+							<span class="lang-en">Hover across the profile to trace the elevation curve and inspect the matching spot on the map.</span>
+						</p>
+					</div>
+
+					<!-- 剖面实时悬停读数 -->
+					<div id="profile-hover-data" class="text-xs font-mono px-3 py-1.5 rounded-xl bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 flex items-center gap-3">
+						<span class="opacity-60"><span class="lang-zh">悬停检视:</span><span class="lang-en">Hover:</span></span>
+						<span id="hover-dist" class="font-bold">-- m</span>
+						<span id="hover-elev" class="text-emerald-500 font-bold">▲ -- m</span>
+						<span id="hover-grade" class="text-amber-500 font-bold">--%</span>
+					</div>
+				</div>
+
+				<div class="relative rounded-xl overflow-hidden bg-[#0c131a] border border-black/15 dark:border-white/15 p-1">
+					<canvas
+						id="profile-canvas"
+						class="block w-full touch-none select-none cursor-crosshair"
+						style="height: 140px;"
+					></canvas>
+				</div>
+			</div>
+
+			<!-- 深度科普卡片区 (三类路线设计境界) -->
+			<div class="mb-8">
+				<h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+					<span>🏔️</span>
+					<span class="lang-zh">山路寻径的智慧：三种典型的路线哲学</span>
+					<span class="lang-en">Three Topographic Philosophies: Distance vs Effort</span>
+				</h2>
+				<div class="grid sm:grid-cols-3 gap-4">
+					<!-- 卡片 1: 几何最短 -->
+					<div class="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+						<div>
+							<div class="text-2xl mb-2">🏃</div>
+							<div class="font-bold text-sm mb-1 text-rose-500">
+								<span class="lang-zh">几何最短 (Shortest: λ = 0)</span>
+								<span class="lang-en">Direct Euclidean (λ = 0)</span>
+							</div>
+							<p class="text-xs font-medium opacity-90 leading-relaxed mb-2">
+								<span class="lang-zh">纯直线翻山越岭，遭遇令人窒息的断崖陡坡。</span>
+								<span class="lang-en">Straight-line ascent: blindly scales steep peaks, tackling punishing inclines.</span>
+							</p>
+						</div>
+						<p class="text-[11px] opacity-60 leading-normal">
+							<span class="lang-zh">算法完全不顾坡度代价，哪怕是 25% 的绝壁也照直冲上去。距离虽短，但行人和骑手的体力消耗成倍激增，在真实世界中难以通行。</span>
+							<span class="lang-en">Ignores topography entirely. While horizontal distance is minimized, climbing energy scales brutally, rendering it impractical for everyday commuters.</span>
+						</p>
+					</div>
+
+					<!-- 卡片 2: 之字折返 -->
+					<div class="p-4 rounded-2xl bg-[var(--primary)]/10 border border-[var(--primary)]/30 flex flex-col justify-between">
+						<div>
+							<div class="text-2xl mb-2">⚖️</div>
+							<div class="font-bold text-sm mb-1 text-[var(--primary)]">
+								<span class="lang-zh">之字折返 (Switchback: Balanced)</span>
+								<span class="lang-en">Balanced Switchback</span>
+							</div>
+							<p class="text-xs font-medium opacity-90 leading-relaxed mb-2">
+								<span class="lang-zh">沿山脊等高线蜿蜒，以适量距离代价换取舒适平缓的坡度。</span>
+								<span class="lang-en">Traversing contour lines: trading modest distance for gentle, sustainable grades.</span>
+							</p>
+						</div>
+						<p class="text-[11px] opacity-70 leading-normal">
+							<span class="lang-zh">土木工程与登山步道的黄金标准。通过「之字形」盘旋或寻找山坳垭口，将陡坡拆解为舒适的 4%~7% 缓坡，总耗能处于帕累托最优平衡点。</span>
+							<span class="lang-en">The gold standard of mountain engineering. Winding back and forth keeps heart rates steady and pedal cadence smooth, hitting the true Pareto sweet spot.</span>
+						</p>
+					</div>
+
+					<!-- 卡片 3: 极致避坡 -->
+					<div class="p-4 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex flex-col justify-between">
+						<div>
+							<div class="text-2xl mb-2">🚲</div>
+							<div class="font-bold text-sm mb-1 text-emerald-500">
+								<span class="lang-zh">极致避坡 (Flattest: λ = 200)</span>
+								<span class="lang-en">Flattest Detour (λ = 200)</span>
+							</div>
+							<p class="text-xs font-medium opacity-90 leading-relaxed mb-2">
+								<span class="lang-zh">宁愿绕远多走几倍平路，也绝不向上多爬升 1 米。</span>
+								<span class="lang-en">Zero-climb priority: detouring around valleys to eliminate vertical ascent.</span>
+							</p>
+						</div>
+						<p class="text-[11px] opacity-60 leading-normal">
+							<span class="lang-zh">完全避开山体，沿着谷底洼地或外围平原大范围迂回。将爬升降至物理极限，极其适合重载骑行、轮椅通行或推婴儿车漫步。</span>
+							<span class="lang-en">Bypasses hills altogether by hugging riverbeds and coastal lowlands. Ideal for cargo bikes, strollers, and wheelchair accessibility.</span>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<hr class="my-6 border-black/10 dark:border-white/10" />
+
+			<!-- 底部版权与灵感说明 -->
+			<div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs opacity-60">
+				<div>
+					<span class="lang-zh">灵感来源：flattensf.com（2026-10-06 HN 首页）</span>
+					<span class="lang-en">Inspired by: flattensf.com (HN front page, Oct 6 2026)</span>
+				</div>
+				<div>
+					<span class="lang-zh">本页面由 AI 生成。</span>
+					<span class="lang-en">Generated by AI.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// ==========================================
+		// 之字路实验室 · 核心算法与交互渲染引擎
+		// ==========================================
+
+		interface TerrainPreset {
+			nameZh: string;
+			nameEn: string;
+			seed: number;
+			start: [number, number];
+			finish: [number, number];
+			hills: { x: number; y: number; r: number; h: number }[];
+			valleys: { x: number; y: number; r: number; d: number }[];
+		}
+
+		interface RoutePoint {
+			gx: number;
+			gy: number;
+			x: number;
+			y: number;
+			elevation: number;
+			cumDist: number;
+			slope: number;
+		}
+
+		interface RouteResult {
+			lambda: number;
+			path: RoutePoint[];
+			totalDist: number;
+			totalClimb: number;
+			maxGrade: number;
+			turns: number;
+		}
+
+		interface ParetoPoint {
+			lambda: number;
+			dist: number;
+			climb: number;
+			isCurrent: boolean;
+		}
+
+		function initSwitchbackLab() {
+			const mapCanvas = document.getElementById("map-canvas") as HTMLCanvasElement;
+			if (!mapCanvas) return;
+			const mapCtx = mapCanvas.getContext("2d");
+			if (!mapCtx) return;
+
+			const paretoCanvas = document.getElementById("pareto-canvas") as HTMLCanvasElement;
+			const paretoCtx = paretoCanvas?.getContext("2d");
+
+			const profileCanvas = document.getElementById("profile-canvas") as HTMLCanvasElement;
+			const profileCtx = profileCanvas?.getContext("2d");
+
+			// UI 元素引用
+			const lambdaSlider = document.getElementById("lambda-slider") as HTMLInputElement;
+			const lambdaValueText = document.getElementById("lambda-value-text") as HTMLElement;
+			const lambdaDescText = document.getElementById("lambda-desc-text") as HTMLElement;
+			const statDist = document.getElementById("stat-dist") as HTMLElement;
+			const statDistDiff = document.getElementById("stat-dist-diff") as HTMLElement;
+			const statClimb = document.getElementById("stat-climb") as HTMLElement;
+			const statClimbDiff = document.getElementById("stat-climb-diff") as HTMLElement;
+			const statGrade = document.getElementById("stat-grade") as HTMLElement;
+			const statGradeDesc = document.getElementById("stat-grade-desc") as HTMLElement;
+			const statTurns = document.getElementById("stat-turns") as HTMLElement;
+			const btnShortest = document.getElementById("preset-shortest") as HTMLButtonElement;
+			const btnBalanced = document.getElementById("preset-balanced") as HTMLButtonElement;
+			const btnFlattest = document.getElementById("preset-flattest") as HTMLButtonElement;
+			const btnSwap = document.getElementById("btn-swap") as HTMLButtonElement;
+			const btnReseed = document.getElementById("btn-reseed") as HTMLButtonElement;
+			const terrainBadge = document.getElementById("terrain-badge") as HTMLElement;
+			const terrainNameTag = document.getElementById("terrain-name-tag") as HTMLElement;
+			const paretoCurrentInfo = document.getElementById("pareto-current-info") as HTMLElement;
+			const paretoPointsCount = document.getElementById("pareto-points-count") as HTMLElement;
+			const hoverDistEl = document.getElementById("hover-dist") as HTMLElement;
+			const hoverElevEl = document.getElementById("hover-elev") as HTMLElement;
+			const hoverGradeEl = document.getElementById("hover-grade") as HTMLElement;
+
+			const isEn = () =>
+				document.documentElement.lang === "en" ||
+				location.pathname.startsWith("/en") ||
+				document.documentElement.getAttribute("data-lang") === "en";
+
+			// 网格系统规格 (64 x 48 = 3072 节点, 单元步长 50m)
+			const GRID_W = 64;
+			const GRID_H = 48;
+			const CELL_SIZE_M = 50.0;
+			const DIAG_SIZE_M = 50.0 * Math.SQRT2;
+
+			// 精心编排的 4 组经典地貌预设
+			const TERRAINS: TerrainPreset[] = [
+				{
+					nameZh: "双峰山口与中央马鞍谷 · 3.2km × 2.4km",
+					nameEn: "Twin Peaks Pass & Saddle Valley · 3.2km × 2.4km",
+					seed: 101,
+					start: [10, 36],
+					finish: [54, 12],
+					hills: [
+						{ x: 22, y: 19, r: 14, h: 250 },
+						{ x: 43, y: 28, r: 15, h: 270 },
+						{ x: 12, y: 8, r: 10, h: 140 },
+					],
+					valleys: [{ x: 33, y: 23, r: 9, d: 90 }],
+				},
+				{
+					nameZh: "中央纵断山脊与折返垭口 · 3.2km × 2.4km",
+					nameEn: "Central Barrier Ridge & Cut Passes · 3.2km × 2.4km",
+					seed: 202,
+					start: [11, 24],
+					finish: [53, 24],
+					hills: [
+						{ x: 32, y: 10, r: 12, h: 260 },
+						{ x: 32, y: 24, r: 10, h: 285 },
+						{ x: 32, y: 38, r: 12, h: 255 },
+					],
+					valleys: [
+						{ x: 32, y: 17, r: 7, d: 130 },
+						{ x: 32, y: 31, r: 7, d: 135 },
+					],
+				},
+				{
+					nameZh: "环形火山口与沿海平原 · 3.2km × 2.4km",
+					nameEn: "Crater Caldera & Coastal Lowlands · 3.2km × 2.4km",
+					seed: 303,
+					start: [12, 12],
+					finish: [52, 38],
+					hills: [
+						{ x: 26, y: 26, r: 18, h: 260 },
+						{ x: 44, y: 18, r: 11, h: 190 },
+						{ x: 18, y: 40, r: 12, h: 180 },
+					],
+					valleys: [{ x: 29, y: 28, r: 11, d: 150 }],
+				},
+				{
+					nameZh: "连绵梯形丘陵与曲折深谷 · 3.2km × 2.4km",
+					nameEn: "Rolling Terrace Hills & Sinuous Canyons · 3.2km × 2.4km",
+					seed: 404,
+					start: [8, 12],
+					finish: [56, 36],
+					hills: [
+						{ x: 18, y: 28, r: 13, h: 220 },
+						{ x: 36, y: 15, r: 14, h: 240 },
+						{ x: 48, y: 28, r: 13, h: 210 },
+					],
+					valleys: [
+						{ x: 27, y: 22, r: 9, d: 95 },
+						{ x: 42, y: 22, r: 9, d: 100 },
+					],
+				},
+			];
+
+			let currentTerrainIndex = 0;
+			const elevations = new Float32Array(GRID_W * GRID_H);
+			let startNode = { gx: 10, gy: 36 };
+			let finishNode = { gx: 54, gy: 12 };
+			let currentLambda = 16.0;
+
+			// 离屏渲染的预生成地貌画布（避免主循环频繁重绘地形像素）
+			const offscreenTerrain = document.createElement("canvas");
+			offscreenTerrain.width = GRID_W * 10;
+			offscreenTerrain.height = GRID_H * 10;
+			const offscreenCtx = offscreenTerrain.getContext("2d");
+
+			// 交互状态
+			let draggingTarget: "start" | "finish" | null = null;
+			let profileHoverRatio: number | null = null;
+			let animOffset = 0;
+
+			// 缓存计算结果
+			let currentRoute: RouteResult | null = null;
+			let shortestRoute: RouteResult | null = null;
+			let paretoFrontier: ParetoPoint[] = [];
+
+			// 简单伪随机数发生器 (Mulberry32)
+			function mulberry32(seed: number) {
+				return () => {
+					let t = (seed += 0x6d2b79f5);
+					t = Math.imul(t ^ (t >>> 15), t | 1);
+					t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+					return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+				};
+			}
+
+			// 生成地形高度场
+			function generateTerrain(preset: TerrainPreset) {
+				const rand = mulberry32(preset.seed);
+				const perm = new Uint8Array(256);
+				for (let i = 0; i < 256; i++) perm[i] = i;
+				for (let i = 255; i > 0; i--) {
+					const j = Math.floor(rand() * (i + 1));
+					const tmp = perm[i];
+					perm[i] = perm[j];
+					perm[j] = tmp;
+				}
+
+				function noise2D(x: number, y: number): number {
+					const xi = Math.floor(x) & 255;
+					const yi = Math.floor(y) & 255;
+					const xf = x - Math.floor(x);
+					const yf = y - Math.floor(y);
+					const u = xf * xf * (3 - 2 * xf);
+					const v = yf * yf * (3 - 2 * yf);
+					const aa = perm[(perm[xi] + yi) & 255];
+					const ab = perm[(perm[xi] + yi + 1) & 255];
+					const ba = perm[(perm[xi + 1] + yi) & 255];
+					const bb = perm[(perm[xi + 1] + yi + 1) & 255];
+					const x1 = aa + (ba - aa) * u;
+					const x2 = ab + (bb - ab) * u;
+					return (x1 + (x2 - x1) * v) / 255;
+				}
+
+				for (let gy = 0; gy < GRID_H; gy++) {
+					for (let gx = 0; gx < GRID_W; gx++) {
+						let z = 25.0; // 基准海平面平原高度
+
+						// 叠加山峰
+						for (const hill of preset.hills) {
+							const dx = gx - hill.x;
+							const dy = gy - hill.y;
+							const distSq = dx * dx + dy * dy;
+							const rSq = hill.r * hill.r;
+							if (distSq < rSq * 2.2) {
+								const d = Math.sqrt(distSq) / hill.r;
+								const bell = Math.exp(-d * d * 1.6);
+								z += hill.h * bell;
+							}
+						}
+
+						// 叠加峡谷/切口 (凹陷马鞍区)
+						for (const valley of preset.valleys) {
+							const dx = gx - valley.x;
+							const dy = gy - valley.y;
+							const distSq = dx * dx + dy * dy;
+							const rSq = valley.r * valley.r;
+							if (distSq < rSq * 2.0) {
+								const d = Math.sqrt(distSq) / valley.r;
+								const cut = Math.exp(-d * d * 1.8);
+								z -= valley.d * cut;
+							}
+						}
+
+						// 叠加有机微地形多频噪声
+						const n1 = noise2D(gx * 0.12, gy * 0.12) * 22.0;
+						const n2 = noise2D(gx * 0.35, gy * 0.35) * 8.0;
+						z += n1 + n2;
+
+						// 边缘坡度收敛缓和
+						const edgeDist = Math.min(gx, GRID_W - 1 - gx, gy, GRID_H - 1 - gy);
+						if (edgeDist < 6) {
+							z = 20 + (z - 20) * (edgeDist / 6);
+						}
+
+						elevations[gy * GRID_W + gx] = Math.max(12.0, z);
+					}
+				}
+
+				// 重绘离屏地图纹理
+				renderOffscreenHillshade();
+			}
+
+			// 离屏渲染地貌光影与等高线
+			function renderOffscreenHillshade() {
+				if (!offscreenCtx) return;
+				const w = offscreenTerrain.width;
+				const h = offscreenTerrain.height;
+				const imgData = offscreenCtx.createImageData(w, h);
+				const data = imgData.data;
+
+				// 光源位于西北偏上方 (Azimuth 315°, Altitude 45°)
+				const lx = -0.577;
+				const ly = -0.577;
+				const lz = 0.577;
+
+				for (let py = 0; py < h; py++) {
+					const gy = (py / h) * (GRID_H - 1);
+					const gy0 = Math.floor(gy);
+					const gy1 = Math.min(GRID_H - 1, gy0 + 1);
+					const fy = gy - gy0;
+
+					for (let px = 0; px < w; px++) {
+						const gx = (px / w) * (GRID_W - 1);
+						const gx0 = Math.floor(gx);
+						const gx1 = Math.min(GRID_W - 1, gx0 + 1);
+						const fx = gx - gx0;
+
+						// 双线性插值采样海拔
+						const z00 = elevations[gy0 * GRID_W + gx0];
+						const z10 = elevations[gy0 * GRID_W + gx1];
+						const z01 = elevations[gy1 * GRID_W + gx0];
+						const z11 = elevations[gy1 * GRID_W + gx1];
+						const z =
+							z00 * (1 - fx) * (1 - fy) +
+							z10 * fx * (1 - fy) +
+							z01 * (1 - fx) * fy +
+							z11 * fx * fy;
+
+						// 中心差分估计法向量斜率
+						const dzdx = (z10 - z00) * 0.8;
+						const dzdy = (z01 - z00) * 0.8;
+						const len = Math.hypot(dzdx, dzdy, 1.0);
+						const nx = -dzdx / len;
+						const ny = -dzdy / len;
+						const nz = 1.0 / len;
+
+						const dot = nx * lx + ny * ly + nz * lz;
+						const shade = Math.min(1.25, Math.max(0.35, 0.45 + 0.65 * dot));
+
+						// 色调映射：深海蓝色低洼 -> 苔原深绿 -> 暖褐色山脊 -> 苍白山巅
+						const t = Math.min(1.0, Math.max(0.0, (z - 20) / 240));
+						let r = 0;
+						let g = 0;
+						let b = 0;
+
+						if (t < 0.25) {
+							const f = t / 0.25;
+							r = 16 + f * (24 - 16);
+							g = 26 + f * (46 - 26);
+							b = 36 + f * (58 - 36);
+						} else if (t < 0.6) {
+							const f = (t - 0.25) / 0.35;
+							r = 24 + f * (62 - 24);
+							g = 46 + f * (68 - 46);
+							b = 58 + f * (50 - 58);
+						} else if (t < 0.85) {
+							const f = (t - 0.6) / 0.25;
+							r = 62 + f * (110 - 62);
+							g = 68 + f * (96 - 68);
+							b = 50 + f * (78 - 50);
+						} else {
+							const f = (t - 0.85) / 0.15;
+							r = 110 + f * (165 - 110);
+							g = 96 + f * (165 - 96);
+							b = 78 + f * (172 - 78);
+						}
+
+						// 等高线计算 (每 25m 一道细线，每 75m 一道主干线)
+						const mod25 = z % 25;
+						const isContourMinor = mod25 < 1.2 || mod25 > 23.8;
+						const mod75 = z % 75;
+						const isContourMajor = mod75 < 1.6 || mod75 > 73.4;
+
+						let contourBright = 1.0;
+						if (isContourMajor) {
+							contourBright = 1.35;
+						} else if (isContourMinor) {
+							contourBright = 1.15;
+						}
+
+						const pIdx = (py * w + px) * 4;
+						data[pIdx] = Math.min(255, r * shade * contourBright);
+						data[pIdx + 1] = Math.min(255, g * shade * contourBright);
+						data[pIdx + 2] = Math.min(255, b * shade * contourBright);
+						data[pIdx + 3] = 255;
+					}
+				}
+
+				offscreenCtx.putImageData(imgData, 0, 0);
+
+				// 叠加虚构街道网格与街区肌理
+				offscreenCtx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+				offscreenCtx.lineWidth = 1;
+				const stepX = w / (GRID_W / 4);
+				const stepY = h / (GRID_H / 4);
+				for (let x = 0; x < w; x += stepX) {
+					offscreenCtx.beginPath();
+					offscreenCtx.moveTo(x, 0);
+					offscreenCtx.lineTo(x, h);
+					offscreenCtx.stroke();
+				}
+				for (let y = 0; y < h; y += stepY) {
+					offscreenCtx.beginPath();
+					offscreenCtx.moveTo(0, y);
+					offscreenCtx.lineTo(w, y);
+					offscreenCtx.stroke();
+				}
+			}
+
+			// 高性能二叉最小堆优先队列
+			class FastMinHeap {
+				costs: Float64Array;
+				nodes: Int32Array;
+				size: number;
+
+				constructor(capacity: number) {
+					this.costs = new Float64Array(capacity);
+					this.nodes = new Int32Array(capacity);
+					this.size = 0;
+				}
+
+				clear() {
+					this.size = 0;
+				}
+
+				push(node: number, cost: number) {
+					let i = this.size++;
+					this.nodes[i] = node;
+					this.costs[i] = cost;
+					while (i > 0) {
+						const parent = (i - 1) >> 1;
+						if (this.costs[parent] <= this.costs[i]) break;
+						const tmpN = this.nodes[parent];
+						const tmpC = this.costs[parent];
+						this.nodes[parent] = this.nodes[i];
+						this.costs[parent] = this.costs[i];
+						this.nodes[i] = tmpN;
+						this.costs[i] = tmpC;
+						i = parent;
+					}
+				}
+
+				pop(): { node: number; cost: number } | null {
+					if (this.size === 0) return null;
+					const retNode = this.nodes[0];
+					const retCost = this.costs[0];
+					this.size--;
+					if (this.size > 0) {
+						this.nodes[0] = this.nodes[this.size];
+						this.costs[0] = this.costs[this.size];
+						let i = 0;
+						while (true) {
+							let smallest = i;
+							const left = (i << 1) + 1;
+							const right = left + 1;
+							if (left < this.size && this.costs[left] < this.costs[smallest]) {
+								smallest = left;
+							}
+							if (right < this.size && this.costs[right] < this.costs[smallest]) {
+								smallest = right;
+							}
+							if (smallest === i) break;
+							const tmpN = this.nodes[i];
+							const tmpC = this.costs[i];
+							this.nodes[i] = this.nodes[smallest];
+							this.costs[i] = this.costs[smallest];
+							this.nodes[smallest] = tmpN;
+							this.costs[smallest] = tmpC;
+							i = smallest;
+						}
+					}
+					return { node: retNode, cost: retCost };
+				}
+			}
+
+			const heap = new FastMinHeap(GRID_W * GRID_H * 4);
+			const distArray = new Float64Array(GRID_W * GRID_H);
+			const prevArray = new Int32Array(GRID_W * GRID_H);
+
+			// Dijkstra 寻路算法: Cost = Distance + λ * max(0, Δz)
+			function computeDijkstra(
+				startGx: number,
+				startGy: number,
+				targetGx: number,
+				targetGy: number,
+				lambda: number,
+			): RouteResult {
+				distArray.fill(Infinity);
+				prevArray.fill(-1);
+				heap.clear();
+
+				const startIdx = startGy * GRID_W + startGx;
+				const targetIdx = targetGy * GRID_W + targetGx;
+
+				distArray[startIdx] = 0;
+				heap.push(startIdx, 0);
+
+				// 8-邻域位移与水平距离
+				const dxs = [-1, 0, 1, -1, 1, -1, 0, 1];
+				const dys = [-1, -1, -1, 0, 0, 1, 1, 1];
+				const dists = [
+					DIAG_SIZE_M,
+					CELL_SIZE_M,
+					DIAG_SIZE_M,
+					CELL_SIZE_M,
+					CELL_SIZE_M,
+					DIAG_SIZE_M,
+					CELL_SIZE_M,
+					DIAG_SIZE_M,
+				];
+
+				while (heap.size > 0) {
+					const top = heap.pop();
+					if (!top) break;
+					const u = top.node;
+					const uCost = top.cost;
+
+					if (u === targetIdx) break;
+					if (uCost > distArray[u]) continue;
+
+					const ux = u % GRID_W;
+					const uy = Math.floor(u / GRID_W);
+					const uz = elevations[u];
+
+					for (let i = 0; i < 8; i++) {
+						const vx = ux + dxs[i];
+						const vy = uy + dys[i];
+						if (vx < 0 || vx >= GRID_W || vy < 0 || vy >= GRID_H) continue;
+
+						const v = vy * GRID_W + vx;
+						const vz = elevations[v];
+						const stepDist = dists[i];
+						const elevGain = Math.max(0.0, vz - uz);
+
+						// 关键代价公式: 水平距离 + λ * 向上爬升增量
+						const edgeCost = stepDist + lambda * elevGain;
+						const newDist = uCost + edgeCost;
+
+						if (newDist < distArray[v]) {
+							distArray[v] = newDist;
+							prevArray[v] = u;
+							heap.push(v, newDist);
+						}
+					}
+				}
+
+				// 回溯提取路径
+				const pathNodes: number[] = [];
+				let curr: number = targetIdx;
+				while (curr !== -1) {
+					pathNodes.push(curr);
+					if (curr === startIdx) break;
+					curr = prevArray[curr];
+				}
+				pathNodes.reverse();
+
+				// 如果无连通解，返回起点到终点直线
+				if (pathNodes.length === 0 || pathNodes[0] !== startIdx) {
+					pathNodes.length = 0;
+					pathNodes.push(startIdx, targetIdx);
+				}
+
+				// 构建完整路径几何与统计指标
+				const path: RoutePoint[] = [];
+				let totalDist = 0;
+				let totalClimb = 0;
+				let maxGrade = 0;
+				let turns = 0;
+
+				for (let i = 0; i < pathNodes.length; i++) {
+					const idx = pathNodes[i];
+					const gx = idx % GRID_W;
+					const gy = Math.floor(idx / GRID_W);
+					const elev = elevations[idx];
+
+					let segDist = 0;
+					let slope = 0;
+
+					if (i > 0) {
+						const prevPt = path[i - 1];
+						const dx = (gx - prevPt.gx) * CELL_SIZE_M;
+						const dy = (gy - prevPt.gy) * CELL_SIZE_M;
+						segDist = Math.hypot(dx, dy);
+						totalDist += segDist;
+
+						const dz = elev - prevPt.elevation;
+						if (dz > 0) totalClimb += dz;
+
+						slope = segDist > 0 ? (Math.abs(dz) / segDist) * 100 : 0;
+						if (slope > maxGrade) maxGrade = slope;
+
+						// 之字拐点判定：计算两段前进向量之间的夹角转向
+						if (i >= 2) {
+							const p0 = path[i - 2];
+							const p1 = prevPt;
+							const v1x = p1.gx - p0.gx;
+							const v1y = p1.gy - p0.gy;
+							const v2x = gx - p1.gx;
+							const v2y = gy - p1.gy;
+							const dot = v1x * v2x + v1y * v2y;
+							const m1 = Math.hypot(v1x, v1y);
+							const m2 = Math.hypot(v2x, v2y);
+							if (m1 > 0 && m2 > 0) {
+								const cosVal = Math.max(-1, Math.min(1, dot / (m1 * m2)));
+								const angle = Math.acos(cosVal) * (180 / Math.PI);
+								if (angle > 40) turns++;
+							}
+						}
+					}
+
+					path.push({
+						gx,
+						gy,
+						x: gx,
+						y: gy,
+						elevation: elev,
+						cumDist: totalDist,
+						slope,
+					});
+				}
+
+				return {
+					lambda,
+					path,
+					totalDist,
+					totalClimb,
+					maxGrade,
+					turns,
+				};
+			}
+
+			// 计算帕累托最优前沿 (离散采样 12 组不同 λ 取值)
+			function computeParetoFrontier(): ParetoPoint[] {
+				const testLambdas = [0, 0.8, 2.5, 6, 12, 16, 28, 48, 80, 125, 170, 200];
+				const rawPoints: { lambda: number; dist: number; climb: number }[] = [];
+
+				for (const lam of testLambdas) {
+					const res = computeDijkstra(
+						startNode.gx,
+						startNode.gy,
+						finishNode.gx,
+						finishNode.gy,
+						lam,
+					);
+					rawPoints.push({
+						lambda: lam,
+						dist: Math.round(res.totalDist),
+						climb: Math.round(res.totalClimb),
+					});
+				}
+
+				// 去重并按距离升序排列
+				rawPoints.sort((a, b) => a.dist - b.dist || a.climb - b.climb);
+
+				// 帕累托过滤：保留距离更长但爬升严格更小的非劣解
+				const frontier: ParetoPoint[] = [];
+				let minClimbSoFar = Infinity;
+
+				for (const pt of rawPoints) {
+					if (pt.climb < minClimbSoFar) {
+						frontier.push({
+							lambda: pt.lambda,
+							dist: pt.dist,
+							climb: pt.climb,
+							isCurrent: Math.abs(pt.lambda - currentLambda) < 2.0,
+						});
+						minClimbSoFar = pt.climb;
+					}
+				}
+
+				return frontier;
+			}
+
+			// 从滑块 [0, 100] 对数映射到 λ ∈ [0, 200]
+			function sliderToLambda(v: number): number {
+				if (v <= 0) return 0;
+				if (v >= 100) return 200;
+				// 对数曲线: v=20 -> ~1, v=50 -> ~16, v=80 -> ~80, v=100 -> 200
+				const ratio = v / 100;
+				return Math.round(0.2 * Math.pow(1000, ratio) * 10) / 10;
+			}
+
+			function lambdaToSlider(lam: number): number {
+				if (lam <= 0) return 0;
+				if (lam >= 200) return 100;
+				const ratio = Math.log(lam / 0.2) / Math.log(1000);
+				return Math.round(Math.max(0, Math.min(100, ratio * 100)));
+			}
+
+			// 更新全部路线与图表数据
+			function recalculateAll() {
+				currentRoute = computeDijkstra(
+					startNode.gx,
+					startNode.gy,
+					finishNode.gx,
+					finishNode.gy,
+					currentLambda,
+				);
+				shortestRoute = computeDijkstra(
+					startNode.gx,
+					startNode.gy,
+					finishNode.gx,
+					finishNode.gy,
+					0,
+				);
+				paretoFrontier = computeParetoFrontier();
+				updateUIStats();
+				renderAllCanvas();
+			}
+
+			// 更新文字统计看板
+			function updateUIStats() {
+				if (!currentRoute || !shortestRoute) return;
+
+				lambdaValueText.textContent = currentLambda.toFixed(1);
+
+				// λ 语义化描述
+				if (currentLambda === 0) {
+					lambdaDescText.innerHTML = isEn()
+						? '<span class="text-rose-400 font-medium">Pure Shortest Path:</span> zero climb penalty. Straight up mountains regardless of steep cliffs.'
+						: '<span class="text-rose-400 font-medium">纯几何最短：</span>完全不计坡度代价，沿直线直接翻越险峰。';
+				} else if (currentLambda >= 180) {
+					lambdaDescText.innerHTML = isEn()
+						? '<span class="text-emerald-400 font-medium">Maximum Flatness:</span> 1m climb costs 200m walking. Avoids hill climbs at all costs.'
+						: '<span class="text-emerald-400 font-medium">极致避坡：</span>宁愿绕路 200 米也不爬 1 米，紧贴谷底平地迂回。';
+				} else {
+					lambdaDescText.innerHTML = isEn()
+						? `1 meter of vertical climb equals <strong class="text-[var(--primary)]">${currentLambda.toFixed(0)}m</strong> of flat walking distance.`
+						: `每爬升 1 米相当于多走 <strong class="text-[var(--primary)]">${currentLambda.toFixed(0)} 米</strong> 平路：沿山坡之字斜切。`;
+				}
+
+				// 指标 1: 距离
+				statDist.textContent = Math.round(currentRoute.totalDist).toLocaleString();
+				const distDiff = Math.round(currentRoute.totalDist - shortestRoute.totalDist);
+				const distPct = shortestRoute.totalDist > 0
+					? ((distDiff / shortestRoute.totalDist) * 100).toFixed(1)
+					: "0";
+				statDistDiff.textContent = distDiff > 0
+					? `vs 最短: +${distDiff}m (+${distPct}%)`
+					: "基准最短路线 (0%)";
+
+				// 指标 2: 爬升
+				statClimb.textContent = Math.round(currentRoute.totalClimb).toLocaleString();
+				const climbDiff = Math.round(shortestRoute.totalClimb - currentRoute.totalClimb);
+				const climbPct = shortestRoute.totalClimb > 0
+					? ((climbDiff / shortestRoute.totalClimb) * 100).toFixed(1)
+					: "0";
+				statClimbDiff.textContent = climbDiff > 0
+					? `已省爬升: -${climbDiff}m (-${climbPct}%)`
+					: "爬升最多 (基准)";
+
+				// 指标 3: 坡度
+				statGrade.textContent = currentRoute.maxGrade.toFixed(1);
+				if (currentRoute.maxGrade < 6) {
+					statGradeDesc.textContent = isEn() ? "Very gentle (easy)" : "非常平缓 (轻松)";
+				} else if (currentRoute.maxGrade < 10) {
+					statGradeDesc.textContent = isEn() ? "Moderate slope (rideable)" : "中度坡度 (舒适骑行)";
+				} else {
+					statGradeDesc.textContent = isEn() ? "Steep incline (punishing)" : "陡峭绝壁 (翻越困难)";
+				}
+
+				// 指标 4: 之字折返
+				statTurns.textContent = String(currentRoute.turns);
+
+				// 帕累托看板卡片信息
+				paretoCurrentInfo.textContent = `λ = ${currentLambda.toFixed(1)} (${Math.round(currentRoute.totalDist)}m / +${Math.round(currentRoute.totalClimb)}m)`;
+				paretoPointsCount.textContent = `${paretoFrontier.length} 个前沿最优解`;
+
+				// 预设激活高亮状态
+				const isShort = currentLambda === 0;
+				const isBal = Math.abs(currentLambda - 16) < 1;
+				const isFlat = currentLambda >= 195;
+
+				btnShortest.className = `preset-btn px-3 py-1.5 rounded-xl text-xs font-medium border border-black/15 dark:border-white/15 transition ${
+					isShort ? "bg-[var(--primary)] text-white shadow-sm font-semibold" : "hover:bg-black/5 dark:hover:bg-white/5"
+				}`;
+				btnBalanced.className = `preset-btn px-3.5 py-1.5 rounded-xl text-xs transition ${
+					isBal ? "bg-[var(--primary)] text-white shadow-sm font-semibold" : "font-medium border border-black/15 dark:border-white/15 hover:bg-black/5 dark:hover:bg-white/5"
+				}`;
+				btnFlattest.className = `preset-btn px-3 py-1.5 rounded-xl text-xs font-medium border border-black/15 dark:border-white/15 transition ${
+					isFlat ? "bg-[var(--primary)] text-white shadow-sm font-semibold" : "hover:bg-black/5 dark:hover:bg-white/5"
+				}`;
+			}
+
+			// ==========================================
+			// 画布渲染组 (Map, Pareto, Profile)
+			// ==========================================
+
+			function renderAllCanvas() {
+				renderMap();
+				renderParetoChart();
+				renderProfileChart();
+			}
+
+			// 渲染主地图
+			function renderMap() {
+				if (!mapCtx) return;
+				const cw = mapCanvas.width;
+				const ch = mapCanvas.height;
+
+				mapCtx.clearRect(0, 0, cw, ch);
+
+				// 绘制底图地貌与等高线
+				mapCtx.drawImage(offscreenTerrain, 0, 0, cw, ch);
+
+				// 坐标换算辅助函数 (网格坐标 -> 物理像素坐标)
+				const toPxX = (gx: number) => ((gx + 0.5) / GRID_W) * cw;
+				const toPxY = (gy: number) => ((gy + 0.5) / GRID_H) * ch;
+
+				// 绘制纯几何最短路线作为对照虚线 (Ghost Route)
+				if (shortestRoute && shortestRoute.path.length > 1 && currentLambda > 0) {
+					mapCtx.beginPath();
+					mapCtx.setLineDash([5, 5]);
+					mapCtx.strokeStyle = "rgba(239, 68, 68, 0.4)";
+					mapCtx.lineWidth = 2;
+					for (let i = 0; i < shortestRoute.path.length; i++) {
+						const pt = shortestRoute.path[i];
+						const px = toPxX(pt.gx);
+						const py = toPxY(pt.gy);
+						if (i === 0) mapCtx.moveTo(px, py);
+						else mapCtx.lineTo(px, py);
+					}
+					mapCtx.stroke();
+					mapCtx.setLineDash([]);
+				}
+
+				// 绘制当前选定的加权 Dijkstra 路线 (按坡度分段着色)
+				if (currentRoute && currentRoute.path.length > 1) {
+					// 底部发光光晕
+					mapCtx.beginPath();
+					mapCtx.strokeStyle = "rgba(0, 0, 0, 0.6)";
+					mapCtx.lineWidth = 8;
+					mapCtx.lineCap = "round";
+					mapCtx.lineJoin = "round";
+					for (let i = 0; i < currentRoute.path.length; i++) {
+						const px = toPxX(currentRoute.path[i].gx);
+						const py = toPxY(currentRoute.path[i].gy);
+						if (i === 0) mapCtx.moveTo(px, py);
+						else mapCtx.lineTo(px, py);
+					}
+					mapCtx.stroke();
+
+					// 分段上色线段
+					for (let i = 1; i < currentRoute.path.length; i++) {
+						const p0 = currentRoute.path[i - 1];
+						const p1 = currentRoute.path[i];
+						const slope = p1.slope;
+
+						let col = "#10b981"; // 0-4% 绿色
+						if (slope > 12) col = "#ef4444"; // >12% 红色险坡
+						else if (slope > 8) col = "#f59e0b"; // 8-12% 橙黄
+						else if (slope > 4) col = "#84cc16"; // 4-8% 黄绿
+
+						mapCtx.beginPath();
+						mapCtx.strokeStyle = col;
+						mapCtx.lineWidth = 5;
+						mapCtx.lineCap = "round";
+						mapCtx.moveTo(toPxX(p0.gx), toPxY(p0.gy));
+						mapCtx.lineTo(toPxX(p1.gx), toPxY(p1.gy));
+						mapCtx.stroke();
+					}
+
+					// 动态流动行进点 (Marching Dash)
+					mapCtx.beginPath();
+					mapCtx.setLineDash([6, 12]);
+					mapCtx.lineDashOffset = -animOffset;
+					mapCtx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+					mapCtx.lineWidth = 2;
+					for (let i = 0; i < currentRoute.path.length; i++) {
+						const px = toPxX(currentRoute.path[i].gx);
+						const py = toPxY(currentRoute.path[i].gy);
+						if (i === 0) mapCtx.moveTo(px, py);
+						else mapCtx.lineTo(px, py);
+					}
+					mapCtx.stroke();
+					mapCtx.setLineDash([]);
+				}
+
+				// 剖面图悬停联动：在地图上对应点绘制高亮瞄准靶
+				if (profileHoverRatio !== null && currentRoute && currentRoute.path.length > 0) {
+					const targetDist = profileHoverRatio * currentRoute.totalDist;
+					let hoverPt = currentRoute.path[0];
+					for (const pt of currentRoute.path) {
+						if (pt.cumDist >= targetDist) {
+							hoverPt = pt;
+							break;
+						}
+					}
+
+					const hpx = toPxX(hoverPt.gx);
+					const hpy = toPxY(hoverPt.gy);
+
+					// 脉冲靶心环
+					mapCtx.beginPath();
+					mapCtx.arc(hpx, hpy, 16, 0, Math.PI * 2);
+					mapCtx.fillStyle = "rgba(56, 189, 248, 0.2)";
+					mapCtx.fill();
+					mapCtx.strokeStyle = "#38bdf8";
+					mapCtx.lineWidth = 2.5;
+					mapCtx.stroke();
+
+					mapCtx.beginPath();
+					mapCtx.arc(hpx, hpy, 4, 0, Math.PI * 2);
+					mapCtx.fillStyle = "#ffffff";
+					mapCtx.fill();
+
+					// 悬停标签
+					mapCtx.font = "bold 11px ui-monospace, monospace";
+					mapCtx.fillStyle = "#ffffff";
+					mapCtx.shadowColor = "rgba(0,0,0,0.8)";
+					mapCtx.shadowBlur = 4;
+					mapCtx.fillText(`▲ ${Math.round(hoverPt.elevation)}m (${hoverPt.slope.toFixed(1)}%)`, hpx + 12, hpy - 8);
+					mapCtx.shadowBlur = 0;
+				}
+
+				// 绘制起点 A (绿色标记)
+				const sx = toPxX(startNode.gx);
+				const sy = toPxY(startNode.gy);
+				const sElev = Math.round(elevations[startNode.gy * GRID_W + startNode.gx]);
+
+				mapCtx.beginPath();
+				mapCtx.arc(sx, sy, 18, 0, Math.PI * 2);
+				mapCtx.fillStyle = "rgba(16, 185, 129, 0.25)";
+				mapCtx.fill();
+
+				mapCtx.beginPath();
+				mapCtx.arc(sx, sy, 11, 0, Math.PI * 2);
+				mapCtx.fillStyle = "#10b981";
+				mapCtx.strokeStyle = "#ffffff";
+				mapCtx.lineWidth = 2.5;
+				mapCtx.fill();
+				mapCtx.stroke();
+
+				mapCtx.font = "900 11px system-ui, sans-serif";
+				mapCtx.fillStyle = "#ffffff";
+				mapCtx.textAlign = "center";
+				mapCtx.textBaseline = "middle";
+				mapCtx.fillText("A", sx, sy);
+
+				mapCtx.font = "bold 10px ui-monospace, monospace";
+				mapCtx.fillStyle = "#10b981";
+				mapCtx.shadowColor = "rgba(0,0,0,0.8)";
+				mapCtx.shadowBlur = 3;
+				mapCtx.fillText(`A · ${sElev}m`, sx, sy + 22);
+				mapCtx.shadowBlur = 0;
+
+				// 绘制终点 B (红色标记)
+				const fx = toPxX(finishNode.gx);
+				const fy = toPxY(finishNode.gy);
+				const fElev = Math.round(elevations[finishNode.gy * GRID_W + finishNode.gx]);
+
+				mapCtx.beginPath();
+				mapCtx.arc(fx, fy, 18, 0, Math.PI * 2);
+				mapCtx.fillStyle = "rgba(244, 63, 94, 0.25)";
+				mapCtx.fill();
+
+				mapCtx.beginPath();
+				mapCtx.arc(fx, fy, 11, 0, Math.PI * 2);
+				mapCtx.fillStyle = "#f43f5e";
+				mapCtx.strokeStyle = "#ffffff";
+				mapCtx.lineWidth = 2.5;
+				mapCtx.fill();
+				mapCtx.stroke();
+
+				mapCtx.font = "900 11px system-ui, sans-serif";
+				mapCtx.fillStyle = "#ffffff";
+				mapCtx.textAlign = "center";
+				mapCtx.textBaseline = "middle";
+				mapCtx.fillText("B", fx, fy);
+
+				mapCtx.font = "bold 10px ui-monospace, monospace";
+				mapCtx.fillStyle = "#f87171";
+				mapCtx.shadowColor = "rgba(0,0,0,0.8)";
+				mapCtx.shadowBlur = 3;
+				mapCtx.fillText(`B · ${fElev}m`, fx, fy + 22);
+				mapCtx.shadowBlur = 0;
+			}
+
+			// 渲染帕累托最优前沿图
+			function renderParetoChart() {
+				if (!paretoCtx) return;
+				const pw = paretoCanvas.width;
+				const ph = paretoCanvas.height;
+
+				paretoCtx.clearRect(0, 0, pw, ph);
+
+				if (paretoFrontier.length === 0) return;
+
+				const padL = 36;
+				const padR = 24;
+				const padT = 20;
+				const padB = 30;
+
+				let minD = Infinity;
+				let maxD = -Infinity;
+				let minC = Infinity;
+				let maxC = -Infinity;
+
+				for (const p of paretoFrontier) {
+					if (p.dist < minD) minD = p.dist;
+					if (p.dist > maxD) maxD = p.dist;
+					if (p.climb < minC) minC = p.climb;
+					if (p.climb > maxC) maxC = p.climb;
+				}
+
+				// 防止范围过窄除零
+				if (maxD - minD < 200) maxD = minD + 200;
+				if (maxC - minC < 20) maxC = minC + 20;
+
+				const mapX = (d: number) => padL + ((d - minD) / (maxD - minD)) * (pw - padL - padR);
+				const mapY = (c: number) => ph - padB - ((c - minC) / (maxC - minC)) * (ph - padT - padB);
+
+				// 坐标轴网格线
+				paretoCtx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+				paretoCtx.lineWidth = 1;
+				paretoCtx.beginPath();
+				paretoCtx.moveTo(padL, padT);
+				paretoCtx.lineTo(padL, ph - padB);
+				paretoCtx.lineTo(pw - padR, ph - padB);
+				paretoCtx.stroke();
+
+				// 轴线标签
+				paretoCtx.font = "9px ui-monospace, monospace";
+				paretoCtx.fillStyle = "rgba(255, 255, 255, 0.4)";
+				paretoCtx.textAlign = "left";
+				paretoCtx.fillText("爬升 Climb", 6, padT + 8);
+				paretoCtx.textAlign = "right";
+				paretoCtx.fillText("距离 Dist", pw - 6, ph - 8);
+
+				// 刻度数值
+				paretoCtx.textAlign = "right";
+				paretoCtx.fillText(`${Math.round(maxC)}m`, padL - 4, padT + 10);
+				paretoCtx.fillText(`${Math.round(minC)}m`, padL - 4, ph - padB);
+
+				paretoCtx.textAlign = "center";
+				paretoCtx.fillText(`${Math.round(minD)}m`, padL + 12, ph - padB + 14);
+				paretoCtx.fillText(`${Math.round(maxD)}m`, pw - padR, ph - padB + 14);
+
+				// 绘制帕累托阶梯曲线 (Pareto Frontier Step Curve)
+				paretoCtx.beginPath();
+				paretoCtx.strokeStyle = "#38bdf8";
+				paretoCtx.lineWidth = 2.5;
+				for (let i = 0; i < paretoFrontier.length; i++) {
+					const pt = paretoFrontier[i];
+					const px = mapX(pt.dist);
+					const py = mapY(pt.climb);
+					if (i === 0) paretoCtx.moveTo(px, py);
+					else paretoCtx.lineTo(px, py);
+				}
+				paretoCtx.stroke();
+
+				// 绘制前沿散点
+				for (const pt of paretoFrontier) {
+					const px = mapX(pt.dist);
+					const py = mapY(pt.climb);
+					const isCurrent = Math.abs(pt.lambda - currentLambda) < 2.0;
+
+					if (isCurrent) {
+						paretoCtx.beginPath();
+						paretoCtx.arc(px, py, 9, 0, Math.PI * 2);
+						paretoCtx.fillStyle = "rgba(56, 189, 248, 0.3)";
+						paretoCtx.fill();
+
+						paretoCtx.beginPath();
+						paretoCtx.arc(px, py, 5, 0, Math.PI * 2);
+						paretoCtx.fillStyle = "#ffffff";
+						paretoCtx.strokeStyle = "#38bdf8";
+						paretoCtx.lineWidth = 2.5;
+						paretoCtx.fill();
+						paretoCtx.stroke();
+					} else {
+						paretoCtx.beginPath();
+						paretoCtx.arc(px, py, 3.5, 0, Math.PI * 2);
+						paretoCtx.fillStyle = "#38bdf8";
+						paretoCtx.fill();
+					}
+				}
+			}
+
+			// 渲染路线剖面图
+			function renderProfileChart() {
+				if (!profileCtx || !currentRoute) return;
+				const pw = profileCanvas.width;
+				const ph = profileCanvas.height;
+
+				profileCtx.clearRect(0, 0, pw, ph);
+
+				const path = currentRoute.path;
+				if (path.length < 2) return;
+
+				const padL = 40;
+				const padR = 20;
+				const padT = 16;
+				const padB = 24;
+
+				let minElev = Infinity;
+				let maxElev = -Infinity;
+				for (const p of path) {
+					if (p.elevation < minElev) minElev = p.elevation;
+					if (p.elevation > maxElev) maxElev = p.elevation;
+				}
+
+				// 防止平坦区域除以零
+				if (maxElev - minElev < 15) {
+					maxElev = minElev + 15;
+				}
+
+				const totalDist = currentRoute.totalDist;
+				const mapX = (d: number) => padL + (d / totalDist) * (pw - padL - padR);
+				const mapY = (e: number) => ph - padB - ((e - minElev) / (maxElev - minElev)) * (ph - padT - padB);
+
+				// 绘制剖面面积填充渐变
+				const grad = profileCtx.createLinearGradient(0, padT, 0, ph - padB);
+				grad.addColorStop(0, "rgba(16, 185, 129, 0.45)");
+				grad.addColorStop(0.7, "rgba(16, 185, 129, 0.1)");
+				grad.addColorStop(1, "rgba(16, 185, 129, 0.0)");
+
+				profileCtx.beginPath();
+				profileCtx.moveTo(mapX(0), ph - padB);
+				for (const pt of path) {
+					profileCtx.lineTo(mapX(pt.cumDist), mapY(pt.elevation));
+				}
+				profileCtx.lineTo(mapX(totalDist), ph - padB);
+				profileCtx.closePath();
+				profileCtx.fillStyle = grad;
+				profileCtx.fill();
+
+				// 剖面轮廓折线
+				profileCtx.beginPath();
+				profileCtx.strokeStyle = "#10b981";
+				profileCtx.lineWidth = 2.5;
+				profileCtx.lineCap = "round";
+				profileCtx.lineJoin = "round";
+				for (let i = 0; i < path.length; i++) {
+					const px = mapX(path[i].cumDist);
+					const py = mapY(path[i].elevation);
+					if (i === 0) profileCtx.moveTo(px, py);
+					else profileCtx.lineTo(px, py);
+				}
+				profileCtx.stroke();
+
+				// 坐标轴底线与文字
+				profileCtx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+				profileCtx.lineWidth = 1;
+				profileCtx.beginPath();
+				profileCtx.moveTo(padL, ph - padB);
+				profileCtx.lineTo(pw - padR, ph - padB);
+				profileCtx.stroke();
+
+				profileCtx.font = "9px ui-monospace, monospace";
+				profileCtx.fillStyle = "rgba(255, 255, 255, 0.45)";
+				profileCtx.textAlign = "right";
+				profileCtx.fillText(`${Math.round(maxElev)}m`, padL - 6, padT + 10);
+				profileCtx.fillText(`${Math.round(minElev)}m`, padL - 6, ph - padB);
+
+				profileCtx.textAlign = "center";
+				profileCtx.fillText("0m (起)", padL, ph - 6);
+				profileCtx.fillText(`${Math.round(totalDist)}m (终)`, pw - padR, ph - 6);
+
+				// 悬停竖线游标
+				if (profileHoverRatio !== null) {
+					const hDist = profileHoverRatio * totalDist;
+					let hoverPt = path[0];
+					for (const pt of path) {
+						if (pt.cumDist >= hDist) {
+							hoverPt = pt;
+							break;
+						}
+					}
+
+					const hx = mapX(hoverPt.cumDist);
+					const hy = mapY(hoverPt.elevation);
+
+					profileCtx.beginPath();
+					profileCtx.setLineDash([3, 3]);
+					profileCtx.strokeStyle = "rgba(56, 189, 248, 0.75)";
+					profileCtx.lineWidth = 1.5;
+					profileCtx.moveTo(hx, padT);
+					profileCtx.lineTo(hx, ph - padB);
+					profileCtx.stroke();
+					profileCtx.setLineDash([]);
+
+					profileCtx.beginPath();
+					profileCtx.arc(hx, hy, 4, 0, Math.PI * 2);
+					profileCtx.fillStyle = "#38bdf8";
+					profileCtx.fill();
+					profileCtx.strokeStyle = "#ffffff";
+					profileCtx.lineWidth = 2;
+					profileCtx.stroke();
+				}
+			}
+
+			// ==========================================
+			// 交互事件监听与触控绑定
+			// ==========================================
+
+			// 调整 Canvas 分辨率匹配 CSS 尺寸
+			function resizeCanvas() {
+				const rectMap = mapCanvas.getBoundingClientRect();
+				const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+				mapCanvas.width = Math.floor(rectMap.width * dpr);
+				mapCanvas.height = Math.floor(rectMap.height * dpr);
+
+				if (paretoCanvas) {
+					const rectP = paretoCanvas.getBoundingClientRect();
+					paretoCanvas.width = Math.floor(rectP.width * dpr);
+					paretoCanvas.height = Math.floor(rectP.height * dpr);
+				}
+
+				if (profileCanvas) {
+					const rectProf = profileCanvas.getBoundingClientRect();
+					profileCanvas.width = Math.floor(rectProf.width * dpr);
+					profileCanvas.height = Math.floor(rectProf.height * dpr);
+				}
+
+				renderAllCanvas();
+			}
+
+			// 地图拖拽标记处理
+			function getMapGridFromEvent(e: PointerEvent): { gx: number; gy: number } {
+				const rect = mapCanvas.getBoundingClientRect();
+				const rx = (e.clientX - rect.left) / rect.width;
+				const ry = (e.clientY - rect.top) / rect.height;
+				const gx = Math.max(0, Math.min(GRID_W - 1, Math.round(rx * GRID_W)));
+				const gy = Math.max(0, Math.min(GRID_H - 1, Math.round(ry * GRID_H)));
+				return { gx, gy };
+			}
+
+			mapCanvas.addEventListener("pointerdown", (e: PointerEvent) => {
+				const rect = mapCanvas.getBoundingClientRect();
+				const rx = (e.clientX - rect.left) / rect.width;
+				const ry = (e.clientY - rect.top) / rect.height;
+				const curGx = rx * GRID_W;
+				const curGy = ry * GRID_H;
+
+				const dStart = Math.hypot(curGx - startNode.gx, curGy - startNode.gy);
+				const dFinish = Math.hypot(curGx - finishNode.gx, curGy - finishNode.gy);
+
+				if (dStart < 4.5) {
+					draggingTarget = "start";
+					mapCanvas.setPointerCapture(e.pointerId);
+				} else if (dFinish < 4.5) {
+					draggingTarget = "finish";
+					mapCanvas.setPointerCapture(e.pointerId);
+				}
+			});
+
+			mapCanvas.addEventListener("pointermove", (e: PointerEvent) => {
+				if (!draggingTarget) return;
+				const { gx, gy } = getMapGridFromEvent(e);
+
+				if (draggingTarget === "start") {
+					if (gx !== startNode.gx || gy !== startNode.gy) {
+						startNode = { gx, gy };
+						recalculateAll();
+					}
+				} else if (draggingTarget === "finish") {
+					if (gx !== finishNode.gx || gy !== finishNode.gy) {
+						finishNode = { gx, gy };
+						recalculateAll();
+					}
+				}
+			});
+
+			function stopDragging(e: PointerEvent) {
+				if (draggingTarget) {
+					try {
+						mapCanvas.releasePointerCapture(e.pointerId);
+					} catch {
+						// ignore
+					}
+					draggingTarget = null;
+				}
+			}
+
+			mapCanvas.addEventListener("pointerup", stopDragging);
+			mapCanvas.addEventListener("pointercancel", stopDragging);
+
+			// 滑块调节
+			lambdaSlider.addEventListener("input", () => {
+				currentLambda = sliderToLambda(Number(lambdaSlider.value));
+				recalculateAll();
+			});
+
+			// 预设按钮
+			btnShortest.addEventListener("click", () => {
+				currentLambda = 0;
+				lambdaSlider.value = "0";
+				recalculateAll();
+			});
+
+			btnBalanced.addEventListener("click", () => {
+				currentLambda = 16.0;
+				lambdaSlider.value = String(lambdaToSlider(16.0));
+				recalculateAll();
+			});
+
+			btnFlattest.addEventListener("click", () => {
+				currentLambda = 200.0;
+				lambdaSlider.value = "100";
+				recalculateAll();
+			});
+
+			// 互换起终点
+			btnSwap.addEventListener("click", () => {
+				const tmp = { ...startNode };
+				startNode = { ...finishNode };
+				finishNode = tmp;
+				recalculateAll();
+			});
+
+			// 换个地形
+			btnReseed.addEventListener("click", () => {
+				currentTerrainIndex = (currentTerrainIndex + 1) % TERRAINS.length;
+				loadTerrainPreset(currentTerrainIndex);
+			});
+
+			function loadTerrainPreset(idx: number) {
+				const preset = TERRAINS[idx];
+				terrainBadge.textContent = `(${idx + 1}/${TERRAINS.length})`;
+				terrainNameTag.textContent = isEn() ? preset.nameEn : preset.nameZh;
+				startNode = { gx: preset.start[0], gy: preset.start[1] };
+				finishNode = { gx: preset.finish[0], gy: preset.finish[1] };
+				generateTerrain(preset);
+				recalculateAll();
+			}
+
+			// 剖面图悬停交互
+			if (profileCanvas) {
+				profileCanvas.addEventListener("pointermove", (e: PointerEvent) => {
+					if (!currentRoute || currentRoute.path.length < 2) return;
+					const rect = profileCanvas.getBoundingClientRect();
+					const rx = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+					profileHoverRatio = rx;
+
+					const targetDist = rx * currentRoute.totalDist;
+					let hoverPt = currentRoute.path[0];
+					for (const pt of currentRoute.path) {
+						if (pt.cumDist >= targetDist) {
+							hoverPt = pt;
+							break;
+						}
+					}
+
+					hoverDistEl.textContent = `${Math.round(hoverPt.cumDist)} m`;
+					hoverElevEl.textContent = `▲ ${Math.round(hoverPt.elevation)} m`;
+					hoverGradeEl.textContent = `${hoverPt.slope.toFixed(1)}%`;
+
+					renderMap();
+					renderProfileChart();
+				});
+
+				profileCanvas.addEventListener("pointerleave", () => {
+					profileHoverRatio = null;
+					hoverDistEl.textContent = "-- m";
+					hoverElevEl.textContent = "▲ -- m";
+					hoverGradeEl.textContent = "--%";
+					renderMap();
+					renderProfileChart();
+				});
+			}
+
+			// 帕累托图点击交互 (点击散点直接切换至该路线)
+			if (paretoCanvas) {
+				paretoCanvas.addEventListener("click", (e: MouseEvent) => {
+					if (paretoFrontier.length === 0) return;
+					const rect = paretoCanvas.getBoundingClientRect();
+					const dpr = Math.min(window.devicePixelRatio || 1, 2);
+					const clickX = (e.clientX - rect.left) * dpr;
+					const clickY = (e.clientY - rect.top) * dpr;
+
+					const pw = paretoCanvas.width;
+					const ph = paretoCanvas.height;
+					const padL = 36;
+					const padR = 24;
+					const padT = 20;
+					const padB = 30;
+
+					let minD = Infinity;
+					let maxD = -Infinity;
+					let minC = Infinity;
+					let maxC = -Infinity;
+					for (const p of paretoFrontier) {
+						if (p.dist < minD) minD = p.dist;
+						if (p.dist > maxD) maxD = p.dist;
+						if (p.climb < minC) minC = p.climb;
+						if (p.climb > maxC) maxC = p.climb;
+					}
+					if (maxD - minD < 200) maxD = minD + 200;
+					if (maxC - minC < 20) maxC = minC + 20;
+
+					const mapX = (d: number) => padL + ((d - minD) / (maxD - minD)) * (pw - padL - padR);
+					const mapY = (c: number) => ph - padB - ((c - minC) / (maxC - minC)) * (ph - padT - padB);
+
+					let closestPt: ParetoPoint | null = null;
+					let closestDist = Infinity;
+
+					for (const pt of paretoFrontier) {
+						const px = mapX(pt.dist);
+						const py = mapY(pt.climb);
+						const d = Math.hypot(clickX - px, clickY - py);
+						if (d < 24 && d < closestDist) {
+							closestDist = d;
+							closestPt = pt;
+						}
+					}
+
+					if (closestPt) {
+						currentLambda = closestPt.lambda;
+						lambdaSlider.value = String(lambdaToSlider(currentLambda));
+						recalculateAll();
+					}
+				});
+			}
+
+			// 动画循环 (为虚线行进箭头提供平滑动画)
+			let animFrame: number;
+			function loop() {
+				animOffset = (animOffset + 0.35) % 18;
+				renderMap();
+				animFrame = requestAnimationFrame(loop);
+			}
+
+			// 窗口尺寸调整监听
+			let rszTimer: ReturnType<typeof setTimeout> | undefined;
+			window.addEventListener("resize", () => {
+				clearTimeout(rszTimer);
+				rszTimer = setTimeout(() => {
+					resizeCanvas();
+				}, 100);
+			});
+
+			// 初始化执行
+			loadTerrainPreset(0);
+			resizeCanvas();
+			animFrame = requestAnimationFrame(loop);
+
+			// 清理上一轮动画回调
+			window.addEventListener(
+				"astro:before-swap",
+				() => {
+					cancelAnimationFrame(animFrame);
+				},
+				{ once: true },
+			);
+		}
+
+		// 页面初始化与 Astro 路由转换支持
+		initSwitchbackLab();
+		document.addEventListener("astro:page-load", initSwitchbackLab);
+	</script>
+</MainGridLayout>
