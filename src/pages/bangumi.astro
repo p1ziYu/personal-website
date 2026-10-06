@@ -80,26 +80,26 @@ async function fetchBangumiData(username: string, subjectType: number) {
 	const isDev = import.meta.env.DEV;
 	const maxPages = isDev ? 1 : 0; // 0 表示不限制
 
-	console.log(
+	if (import.meta.env.DEV) console.log(
 		`[Bangumi] ${isDev ? "🔧 Dev mode" : "🌐 Prod mode"} - fetching subjectType ${subjectType} data for user ${username}...`,
 	);
 
 	while (hasMore) {
 		// 开发模式限制：只获取一页
 		if (isDev && maxPages > 0 && allData.length >= limit * maxPages) {
-			console.log(`[Bangumi] Dev mode: fetched ${maxPages} page(s), stopping`);
+			if (import.meta.env.DEV) console.log(`[Bangumi] Dev mode: fetched ${maxPages} page(s), stopping`);
 			break;
 		}
 
 		// 检查是否超过最大获取限制
 		if (maxTotal > 0 && allData.length >= maxTotal) {
-			console.log(`[Bangumi] Reached max fetch limit ${maxTotal}, stopping`);
+			if (import.meta.env.DEV) console.log(`[Bangumi] Reached max fetch limit ${maxTotal}, stopping`);
 			break;
 		}
 
 		const url = `${bangumiConfig.apiUrl}/v0/users/${username}/collections?subject_type=${subjectType}&limit=${limit}&offset=${offset}`;
 
-		console.log(`[Bangumi] Fetching data: ${url} (fetched: ${allData.length})`);
+		if (import.meta.env.DEV) console.log(`[Bangumi] Fetching data: ${url} (fetched: ${allData.length})`);
 
 		const response = await fetch(url, {
 			headers: {
@@ -135,7 +135,7 @@ async function fetchBangumiData(username: string, subjectType: number) {
 		}
 	}
 
-	console.log(`[Bangumi] Fetched ${allData.length} items in total`);
+	if (import.meta.env.DEV) console.log(`[Bangumi] Fetched ${allData.length} items in total`);
 	return allData;
 }
 
@@ -151,9 +151,9 @@ const isUserIdConfigured =
 	bangumiConfig.username.trim() !== "";
 
 if (!isUserIdConfigured) {
-	console.log("[Bangumi] ⚠️ Bangumi user ID not configured, skipping fetch");
+	if (import.meta.env.DEV) console.log("[Bangumi] ⚠️ Bangumi user ID not configured, skipping fetch");
 } else if (!isDynamic) {
-	console.log("[Bangumi] 🌐 Fetching data from API (static mode)");
+	if (import.meta.env.DEV) console.log("[Bangumi] 🌐 Fetching data from API (static mode)");
 }
 
 if (!isDynamic) {
