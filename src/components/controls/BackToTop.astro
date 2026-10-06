@@ -23,7 +23,7 @@ import FloatingButton from "@/components/common/FloatingButton.astro";
     control.querySelector("button")?.setAttribute("aria-label", label);
   }
   updateFloatingLabel();
-  document.addEventListener("swup:contentReplaced", updateFloatingLabel);
+  document.addEventListener("astro:after-swap", updateFloatingLabel);
   window.addEventListener("lang-change", updateFloatingLabel);
 </script>
 
