@@ -149,7 +149,7 @@ onMount(() => {
 		else if (keywordMobile) search(keywordMobile, false);
 	};
 	updateLanguage();
-	document.addEventListener("swup:contentReplaced", updateLanguage);
+	document.addEventListener("astro:after-swap", updateLanguage);
 	window.addEventListener("lang-change", updateLanguage);
 	const initializePagefind = () => {
 		initialized = true;
@@ -179,7 +179,7 @@ onMount(() => {
 	panel?.addEventListener(FLOATING_PANEL_CLOSE_EVENT, cancelPendingSearch);
 
 	return () => {
-		document.removeEventListener("swup:contentReplaced", updateLanguage);
+		document.removeEventListener("astro:after-swap", updateLanguage);
 		window.removeEventListener("lang-change", updateLanguage);
 		panel?.removeEventListener(FLOATING_PANEL_CLOSE_EVENT, cancelPendingSearch);
 		document.removeEventListener("pagefindready", initializePagefind);
@@ -204,7 +204,7 @@ $: if (initialized && (keywordMobile || keywordMobile === "")) {
 ">
     <Icon icon="material-symbols:search"
           class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-    <input id="search-input-desktop" placeholder="{i18n(I18nKey.search, lang)}" bind:value={keywordDesktop}
+    <input id="search-input-desktop" aria-label={i18n(I18nKey.search, lang)} placeholder="{i18n(I18nKey.search, lang)}" bind:value={keywordDesktop}
            aria-controls="search-panel" data-floating-panel-no-expanded
            on:focus={handleDesktopFocus}
            class="transition-all pl-10 text-sm bg-transparent outline-0
@@ -230,7 +230,7 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
   ">
         <Icon icon="material-symbols:search"
               class="absolute text-[1.25rem] pointer-events-none ml-3 transition my-auto text-black/30 dark:text-white/30"></Icon>
-        <input placeholder={i18n(I18nKey.search, lang)} bind:value={keywordMobile}
+        <input aria-label={i18n(I18nKey.search, lang)} placeholder={i18n(I18nKey.search, lang)} bind:value={keywordMobile}
                on:focus={requestPagefind}
                class="pl-10 absolute inset-0 text-sm bg-transparent outline-0
                focus:w-60 text-black/50 dark:text-white/50"
@@ -249,7 +249,7 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2"
                class="transition first-of-type:mt-2 lg:first-of-type:mt-0 group block
            rounded-xl text-lg px-3 py-2 hover:bg-(--btn-plain-bg-hover) active:bg-(--btn-plain-bg-active)">
                 <div class="transition text-90 inline-flex font-bold group-hover:text-(--primary)">
-                    {@html item.meta.title}
+                    {item.meta.title}
                     <Icon icon="fa7-solid:chevron-right"
                           class="transition text-[0.75rem] translate-x-1 my-auto text-(--primary)"></Icon>
                 </div>
