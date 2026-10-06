@@ -511,6 +511,7 @@ export const zh_CN: Translation = {
 	[Key.advertisement]: "广告",
 
 	[Key.profileAvatar]: "的插画头像",
+	[Key.profileXiaohongshu]: "小红书",
 	[Key.displaySettings]: "显示设置",
 	[Key.resetToDefault]: "恢复默认",
 	[Key.calendarPreviousMonth]: "上个月",
