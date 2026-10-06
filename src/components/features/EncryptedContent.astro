@@ -14,14 +14,15 @@ const { password, slug, hint = "" } = Astro.props;
 
 const rawHtml = await Astro.slots.render("default");
 const encryptedData = encryptContent(rawHtml, password, slug);
+const lang = Astro.url.pathname.startsWith("/en/") ? "en" : undefined;
 
 const labels = {
-	protected: i18n(I18nKey.passwordProtected),
-	desc: i18n(I18nKey.passwordProtectedDesc),
-	hint: i18n(I18nKey.passwordHint),
-	placeholder: i18n(I18nKey.passwordPlaceholder),
-	submit: i18n(I18nKey.passwordSubmit),
-	error: i18n(I18nKey.passwordError),
+	protected: i18n(I18nKey.passwordProtected, lang),
+	desc: i18n(I18nKey.passwordProtectedDesc, lang),
+	hint: i18n(I18nKey.passwordHint, lang),
+	placeholder: i18n(I18nKey.passwordPlaceholder, lang),
+	submit: i18n(I18nKey.passwordSubmit, lang),
+	error: i18n(I18nKey.passwordError, lang),
 };
 ---
 
