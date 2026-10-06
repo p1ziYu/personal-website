@@ -61,13 +61,13 @@ async function fetchAll(kind: MalListKind): Promise<MalListItem[]> {
 	while (true) {
 		// 开发模式限制：只获取一页
 		if (isDev && maxPages > 0 && allItems.length >= limit * maxPages) {
-			console.log(`[MAL] Dev mode: fetched ${maxPages} page(s), stopping`);
+			if (import.meta.env.DEV) console.log(`[MAL] Dev mode: fetched ${maxPages} page(s), stopping`);
 			break;
 		}
 
 		// 检查是否超过最大获取限制
 		if (maxTotal > 0 && allItems.length >= maxTotal) {
-			console.log(`[MAL] Reached max fetch limit ${maxTotal}, stopping`);
+			if (import.meta.env.DEV) console.log(`[MAL] Reached max fetch limit ${maxTotal}, stopping`);
 			break;
 		}
 
@@ -99,19 +99,19 @@ let animeFailed = false;
 let mangaFailed = false;
 
 if (isConfigured) {
-	console.log(
+	if (import.meta.env.DEV) console.log(
 		`[MAL] ${isDev ? "🔧 Dev mode" : "🌐 Prod mode"} - fetching list for user ${malConfig.username}...`,
 	);
 	try {
 		animeItems = await fetchAll("anime");
-		console.log(`[MAL] Anime list: ${animeItems.length} items`);
+		if (import.meta.env.DEV) console.log(`[MAL] Anime list: ${animeItems.length} items`);
 	} catch (error) {
 		console.error("[MAL] Failed to fetch anime list:", error);
 		animeFailed = true;
 	}
 	try {
 		mangaItems = await fetchAll("manga");
-		console.log(`[MAL] Manga list: ${mangaItems.length} items`);
+		if (import.meta.env.DEV) console.log(`[MAL] Manga list: ${mangaItems.length} items`);
 	} catch (error) {
 		console.error("[MAL] Failed to fetch manga list:", error);
 		mangaFailed = true;
