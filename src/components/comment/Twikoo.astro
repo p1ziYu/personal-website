@@ -50,17 +50,15 @@ const config = {
   function initTwikoo() {
     if (typeof twikoo !== "undefined") {
       const commentEl = document.getElementById("tcomment");
-      if (commentEl) {
+      if (commentEl && !window.__twikooInitializedElements?.has(commentEl)) {
+        window.__twikooInitializedElements ??= new WeakSet();
+        window.__twikooInitializedElements.add(commentEl);
         commentEl.innerHTML = "";
 
         const dynamicConfig = createTwikooConfig();
-        console.log("[Twikoo] Init config:", dynamicConfig);
 
         twikoo
           .init(dynamicConfig)
-          .then(() => {
-            console.log("[Twikoo] Init complete");
-          })
           .catch((error) => {
             console.error("[Twikoo] Init failed:", error);
           });
@@ -74,26 +72,10 @@ const config = {
   // 页面加载时初始化
   document.addEventListener("DOMContentLoaded", initTwikoo);
 
-  // Swup 页面切换后重新初始化
-  if (window.swup && window.swup.hooks) {
-    window.swup.hooks.on("content:replace", function () {
-      setTimeout(initTwikoo, 200);
-    });
-  } else {
-    document.addEventListener("swup:enable", function () {
-      if (window.swup && window.swup.hooks) {
-        window.swup.hooks.on("content:replace", function () {
-          setTimeout(initTwikoo, 200);
-        });
-      }
-    });
-  }
-
   // 自定义事件监听
   document.addEventListener("firefly:page:loaded", function () {
     const commentEl = document.getElementById("tcomment");
     if (commentEl) {
-      console.log("[Twikoo] Re-initializing via custom event");
       initTwikoo();
     }
   });
