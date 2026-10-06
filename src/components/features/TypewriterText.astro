@@ -170,7 +170,7 @@ const textData = Array.isArray(text) ? JSON.stringify(text) : text;
     }
 
     // 支持页面切换时重新初始化（兼容不同 swup 事件名）
-    document.addEventListener("swup:contentReplaced", runInitWithDelay);
+    document.addEventListener("astro:after-swap", runInitWithDelay);
     document.addEventListener("swup:content:replace", runInitWithDelay);
     document.addEventListener("swup:page:view", runInitWithDelay);
 
