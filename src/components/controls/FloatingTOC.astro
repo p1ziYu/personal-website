@@ -336,9 +336,6 @@ const uiLang = getLangFromPath(Astro.url.pathname);
     window.floatingTOCListenersInitialized = true;
 
     // Swup 路由切换
-    document.addEventListener("swup:contentReplaced", () => {
-      setTimeout(initFloatingTOC, 100);
-    });
     
     // Astro 页面切换事件
     document.addEventListener("astro:page-load", () => {
