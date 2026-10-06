@@ -505,6 +505,7 @@ enum I18nKey {
 	advertisement = "advertisement",
 
 	profileAvatar = "profileAvatar",
+	profileXiaohongshu = "profileXiaohongshu",
 	displaySettings = "displaySettings",
 	resetToDefault = "resetToDefault",
 	calendarPreviousMonth = "calendarPreviousMonth",
