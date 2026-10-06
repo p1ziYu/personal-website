@@ -8,6 +8,9 @@ Disallow: /_astro/
 Disallow: /archive/?tag=
 Disallow: /archive/?category=
 Disallow: /archive/?uncategorized=
+Disallow: /en/archive/?tag=
+Disallow: /en/archive/?category=
+Disallow: /en/archive/?uncategorized=
 
 Sitemap: ${new URL("sitemap-index.xml", import.meta.env.SITE).href}
 `.trim();
