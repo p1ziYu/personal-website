@@ -80,7 +80,7 @@ export function getSearchUrl(query: string, lang?: string): string {
 // 自我 canonical。分页（/2/）、文章页等无查询串的路径保持原样。
 export function getCanonicalUrl(urlObj: URL): string {
 	const pathname = urlObj.pathname;
-	if (pathname === "/archive/" || pathname === "/search/") {
+	if (["/archive/", "/search/", "/en/archive/", "/en/search/"].includes(pathname)) {
 		return new URL(pathname, urlObj.origin).toString();
 	}
 	return urlObj.toString();
