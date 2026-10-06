@@ -523,6 +523,7 @@ export const ru: Translation = {
 	[Key.advertisement]: "Реклама",
 
 	[Key.profileAvatar]: "illustrated avatar",
+	[Key.profileXiaohongshu]: "Xiaohongshu",
 	[Key.displaySettings]: "Display settings",
 	[Key.resetToDefault]: "Reset to default",
 	[Key.calendarPreviousMonth]: "Previous month",
