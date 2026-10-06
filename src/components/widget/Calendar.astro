@@ -315,6 +315,13 @@ const postUrlPrefix = url("/posts/");
     if (nextBtn) nextBtn.style.visibility = currentView === 'year' ? 'hidden' : 'visible';
   }
 
+  function activateOnKey(event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      event.currentTarget.click();
+    }
+  }
+
   function renderDayView() {
     const now = new Date();
     const currentYear = displayYear;
@@ -374,6 +381,7 @@ const postUrlPrefix = url("/posts/");
       return `
         <div
           class="${classes.join(' ')}"
+          role="button" tabindex="${day ? 0 : -1}" aria-label="${dateKey || day || ''}"
           data-date="${dateKey}"
           data-has-post="${hasPost}"
         >
@@ -424,10 +432,11 @@ const postUrlPrefix = url("/posts/");
       
       const dotHtml = hasPost ? '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-(--primary)"></span>' : '';
       
-      return `<div class="${classes.join(' ')}" data-month="${index}">${name}${dotHtml}</div>`;
+      return `<div class="${classes.join(' ')}" role="button" tabindex="0" data-month="${index}">${name}${dotHtml}</div>`;
     }).join('');
 
     container.querySelectorAll('[data-month]').forEach(el => {
+      el.addEventListener('keydown', activateOnKey);
       el.addEventListener('click', () => {
         displayMonth = parseInt(el.getAttribute('data-month'));
         currentView = 'day';
@@ -450,10 +459,11 @@ const postUrlPrefix = url("/posts/");
       } else {
         classes.push("text-neutral-700 dark:text-neutral-300");
       }
-      return `<div class="${classes.join(' ')}" data-year="${year}">${year}<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-(--primary)"></span></div>`;
+      return `<div class="${classes.join(' ')}" role="button" tabindex="0" data-year="${year}">${year}<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-(--primary)"></span></div>`;
     }).join('');
 
     container.querySelectorAll('[data-year]').forEach(el => {
+      el.addEventListener('keydown', activateOnKey);
       el.addEventListener('click', () => {
         displayYear = parseInt(el.getAttribute('data-year'));
         currentView = 'month';
@@ -514,6 +524,7 @@ const postUrlPrefix = url("/posts/");
     let currentSelectedDay = null;
     
     calendarDays.forEach(dayElement => {
+      dayElement.addEventListener('keydown', activateOnKey);
       dayElement.addEventListener('click', () => {
         const dateKey = dayElement.getAttribute('data-date');
         const hasPost = dayElement.getAttribute('data-has-post') === 'true';
@@ -609,6 +620,9 @@ const postUrlPrefix = url("/posts/");
       if (resetBtn) resetBtn.onclick = () => resetToToday();
       
       if (navDisplay) {
+        navDisplay.setAttribute('role', 'button');
+        navDisplay.tabIndex = 0;
+        navDisplay.onkeydown = activateOnKey;
         navDisplay.onclick = () => {
           if (currentView === 'day') {
             currentView = 'month';
@@ -628,8 +642,8 @@ const postUrlPrefix = url("/posts/");
   {
     // 页面切换时重新渲染
     const onReplace = () => setTimeout(initCalendar, 100);
-    document.addEventListener("swup:contentReplaced", onReplace);
-    window.__calendarCleanup = () => document.removeEventListener("swup:contentReplaced", onReplace);
+    document.addEventListener("astro:after-swap", onReplace);
+    window.__calendarCleanup = () => document.removeEventListener("astro:after-swap", onReplace);
   }
 </script>
 
