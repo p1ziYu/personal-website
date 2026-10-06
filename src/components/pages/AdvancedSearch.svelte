@@ -147,6 +147,7 @@ const handleInput = () => {
             <input
                 type="text"
                 class="block w-full p-4 pl-10 text-sm bg-transparent border border-black/10 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-(--primary) focus:border-(--primary) hover:border-black/20 dark:hover:border-white/20 text-75 placeholder:opacity-50 transition-colors outline-hidden"
+                aria-label={i18n(I18nKey.search, lang)}
                 placeholder={i18n(I18nKey.search, lang)}
                 bind:value={keyword}
                 on:input={handleInput}
