@@ -1,7 +1,7 @@
 import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getSortedPosts } from "@utils/content-utils";
-import { url } from "@utils/url-utils";
+import { getPostUrlBySlug, url } from "@utils/url-utils";
 import type { APIRoute } from "astro";
 import { siteConfig } from "@/config";
 
@@ -115,7 +115,7 @@ export const GET: APIRoute = async ({ site }) => {
 	}
 	lines.push("", "## Recent Posts");
 	for (const post of recentPosts) {
-		const link = abs(url(`/posts/${post.id}/`));
+		const link = abs(getPostUrlBySlug(post.id));
 		const desc = post.data.description || "";
 		lines.push(
 			desc
