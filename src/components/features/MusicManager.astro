@@ -106,6 +106,17 @@ const managerConfigStr = JSON.stringify({
     document.body.appendChild(audio);
     audio.pause();
 
+    function readVolume() {
+        var fallback = Number.isFinite(config.volume) ? config.volume : 0.7;
+        try {
+            var stored = localStorage.getItem('music-player-volume');
+            var parsed = stored === null ? fallback : Number(stored);
+            return Math.max(0, Math.min(1, Number.isFinite(parsed) ? parsed : fallback));
+        } catch (e) {
+            return Math.max(0, Math.min(1, fallback));
+        }
+    }
+
     // ── State ────────────────────────────────────────────────
     var loadVersion = 0; // incremented on each loadTrack to discard stale play() results
     var state = {
@@ -113,9 +124,7 @@ const managerConfigStr = JSON.stringify({
         currentIndex: 0,
         isPlaying: false,
         playMode: 0, // 0: list, 1: one, 2: random
-        volume: localStorage.getItem('music-player-volume') !== null
-            ? parseFloat(localStorage.getItem('music-player-volume'))
-            : (config.volume || 0.7),
+        volume: readVolume(),
         isMuted: false,
         lyrics: [],
         currentLrcIndex: -1,
@@ -347,12 +356,12 @@ const managerConfigStr = JSON.stringify({
     }
 
     function setVolume(val) {
-        val = Math.max(0, Math.min(1, val));
+        val = Math.max(0, Math.min(1, Number.isFinite(val) ? val : state.volume));
         state.volume = val;
         state.isMuted = false;
         audio.volume = val;
         audio.muted = false;
-        localStorage.setItem('music-player-volume', val.toString());
+        try { localStorage.setItem('music-player-volume', val.toString()); } catch (e) {}
         emit('fm:volume', { volume: val, isMuted: false });
     }
 
