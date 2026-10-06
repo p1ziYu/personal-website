@@ -522,6 +522,7 @@ export const en: Translation = {
 	[Key.advertisement]: "Advertisement",
 
 	[Key.profileAvatar]: "illustrated avatar",
+	[Key.profileXiaohongshu]: "Xiaohongshu",
 	[Key.displaySettings]: "Display settings",
 	[Key.resetToDefault]: "Reset to default",
 	[Key.calendarPreviousMonth]: "Previous month",
