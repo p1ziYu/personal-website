@@ -305,8 +305,23 @@ const viewConfigStr = JSON.stringify({
 
             itemEl.dataset.index = idx;
             itemEl.setAttribute('role', 'option');
+            itemEl.tabIndex = 0;
             itemEl.setAttribute('aria-label', track.name + ' - ' + track.artist);
             itemEl.onclick = function () { mgr.playTrackByIndex(idx); };
+            itemEl.onkeydown = function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    itemEl.click();
+                    return;
+                }
+                if (!['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(e.key)) return;
+                e.preventDefault();
+                var target = e.key === 'Home' ? 0 : e.key === 'End' ? vs.playlist.length - 1 : idx + (e.key === 'ArrowDown' ? 1 : -1);
+                target = Math.max(0, Math.min(vs.playlist.length - 1, target));
+                ui.playlistContainer.scrollTop = target * ITEM_H;
+                vsCommitRange();
+                if (vs.renderedEls[target]) vs.renderedEls[target].focus();
+            };
 
             // Absolute positioning for virtual scroll
             itemEl.style.position = 'absolute';
