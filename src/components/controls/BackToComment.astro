@@ -22,7 +22,7 @@ import FloatingButton from "@/components/common/FloatingButton.astro";
     control.querySelector("button")?.setAttribute("aria-label", label);
   }
   updateFloatingLabel();
-  document.addEventListener("swup:contentReplaced", updateFloatingLabel);
+  document.addEventListener("astro:after-swap", updateFloatingLabel);
   window.addEventListener("lang-change", updateFloatingLabel);
 </script>
 
@@ -61,7 +61,7 @@ import FloatingButton from "@/components/common/FloatingButton.astro";
   if (!window.__backToCommentInit) {
     window.__backToCommentInit = true;
     document.addEventListener("astro:page-load", updateCommentButtonVisibility);
-    document.addEventListener("swup:contentReplaced", updateCommentButtonVisibility);
+    document.addEventListener("astro:after-swap", updateCommentButtonVisibility);
     document.addEventListener("swup:enable", updateCommentButtonVisibility);
   }
 </script>
