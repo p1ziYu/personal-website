@@ -51,7 +51,7 @@ import { url } from "@/utils/url-utils";
     window.__backToHomeInit = true;
     // Re-check on view transitions or swup navigation
     document.addEventListener("astro:page-load", updateBackToHomeVisibility);
-    document.addEventListener("swup:contentReplaced", updateBackToHomeVisibility);
+    document.addEventListener("astro:after-swap", updateBackToHomeVisibility);
     window.addEventListener("lang-change", updateBackToHomeVisibility);
   }
 </script>
