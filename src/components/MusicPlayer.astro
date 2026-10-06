@@ -1399,7 +1399,7 @@ const i18nDataStr = JSON.stringify(i18nData);
 		}
 	}
 
-	document.addEventListener("swup:contentReplaced", updateI18nLabels);
+	document.addEventListener("astro:after-swap", updateI18nLabels);
 	window.addEventListener("lang-change", updateI18nLabels);
 
 	// ── Startup & Init ───────────────────────────────────────
