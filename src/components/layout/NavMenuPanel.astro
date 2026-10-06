@@ -38,7 +38,7 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
         <header class="mobile-menu-header">
             <span class="mobile-menu-title">
                 <span class="lang-zh">{navTitle}</span>
-                <span class="lang-en">p1ziYu's Space</span>
+                <span class="lang-en">{siteConfig.title}</span>
             </span>
             <button type="button" class="mobile-menu-close" aria-label={i18n(I18nKey.closeMenu, isEn ? "en" : undefined)} data-label-zh={i18n(I18nKey.closeMenu, "zh_CN")} data-label-en={i18n(I18nKey.closeMenu, "en")}>
                 <Icon name="material-symbols:close-rounded" class="text-[1.5rem]" />
@@ -392,15 +392,11 @@ const getLocalizedUrl = (targetUrl: string, external?: boolean) => {
         });
     }
     window.addEventListener("lang-change", syncMenuLabels);
-    document.addEventListener("swup:contentReplaced", syncMenuLabels);
+    document.addEventListener("astro:after-swap", syncMenuLabels);
     syncMenuLabels();
 
     // 当前页高亮 + 含当前页的父级自动展开（Swup 切页后重扫）
     document.addEventListener("astro:page-load", () => {
-        markActiveNav();
-        syncMobileLangBtn();
-    });
-    document.addEventListener("swup:contentReplaced", () => {
         markActiveNav();
         syncMobileLangBtn();
     });
