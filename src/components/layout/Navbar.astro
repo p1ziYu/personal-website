@@ -191,7 +191,7 @@ const logoVariants = await Promise.all(
                                         <Icon name="material-symbols:home-pin-outline" class="navbar-logo text-[1.75rem] mb-1 mr-2" />
                                     )}
                     <span class="lang-zh">{navbarTitle}</span>
-                    <span class="lang-en">p1ziYu's Space</span>
+                    <span class="lang-en">{siteConfig.title}</span>
                 </div>
             </a>
             <div class:list={[
@@ -211,13 +211,13 @@ const logoVariants = await Promise.all(
                     client:load
                 />
                 {musicPlayerConfig.showInNavbar && (
-                    <button aria-label={i18n(I18nKey.music)} aria-controls="music-nav-panel" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" data-label-zh={i18n(I18nKey.music, "zh_CN")} data-label-en={i18n(I18nKey.music, "en")} id="music-player-switch">
+                    <button aria-label={i18n(I18nKey.music, isEn ? "en" : "zh_CN")} aria-controls="music-nav-panel" aria-expanded="false" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" data-label-zh={i18n(I18nKey.music, "zh_CN")} data-label-en={i18n(I18nKey.music, "en")} id="music-player-switch">
                         <Icon name="material-symbols:music-note-rounded" class="text-[1.25rem]"></Icon>
                     </button>
                 )}
                 {backgroundWallpaper.playerEnable && backgroundWallpaper.mode !== "none" && (
                     <button
-                        aria-label={i18n(I18nKey.videoPlay)}
+                        aria-label={i18n(I18nKey.videoPlay, isEn ? "en" : "zh_CN")}
 						class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90 hidden md:flex"
                         data-label-zh={i18n(I18nKey.videoPlay, "zh_CN")} data-label-en={i18n(I18nKey.videoPlay, "en")} id="bg-player-toggle"
                         data-i18n-play={i18n(I18nKey.videoPlay)}
@@ -261,7 +261,7 @@ const logoVariants = await Promise.all(
     });
   }
   syncNavbarLabels();
-  document.addEventListener("swup:contentReplaced", syncNavbarLabels);
+  document.addEventListener("astro:after-swap", syncNavbarLabels);
   window.addEventListener("lang-change", syncNavbarLabels);
 </script>
 
