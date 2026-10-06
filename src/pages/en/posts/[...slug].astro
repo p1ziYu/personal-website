@@ -230,7 +230,7 @@ const seriesData = await getSeriesPosts(entry);
     is:inline
     slot="head"
     type="application/ld+json"
-    set:html={JSON.stringify(jsonLd)}
+    set:html={JSON.stringify(jsonLd).replace(/</g, "\\u003c")}
   />
   <div
     class="flex w-full rounded-(--radius-large) overflow-hidden relative mb-4"
