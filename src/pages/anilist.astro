@@ -27,7 +27,7 @@ let fetchError = "";
 if (isConfigured) {
 	try {
 		groups = await fetchAnilistLists(ANILIST_USERNAME);
-		console.log(`[AniList] Page data: ${groups.reduce((s, g) => s + g.entries.length, 0)} items`);
+		if (import.meta.env.DEV) console.log(`[AniList] Page data: ${groups.reduce((s, g) => s + g.entries.length, 0)} items`);
 	} catch (error) {
 		fetchError = error instanceof Error ? error.message : String(error);
 		console.error("[AniList] Failed to fetch data:", error);
