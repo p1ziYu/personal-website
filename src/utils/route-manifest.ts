@@ -35,6 +35,7 @@ export const ENGLISH_POST_SLUGS: ReadonlySet<string> = new Set<string>([
 	"an-address-of-ones-own",
 	"a-beautiful-misunderstanding",
 	"writing-on-firefly",
+	"first-round-in-america",
 ]);
 
 /**
