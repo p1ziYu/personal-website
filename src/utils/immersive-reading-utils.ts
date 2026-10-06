@@ -217,9 +217,6 @@ export function initImmersiveReading(): void {
 	if (!window.__immersiveReadingInit) {
 		window.__immersiveReadingInit = true;
 
-		document.addEventListener("swup:contentReplaced", () => {
-			setTimeout(initImmersiveReading, 100);
-		});
 		document.addEventListener("astro:page-load", () => {
 			setTimeout(initImmersiveReading, 100);
 		});
