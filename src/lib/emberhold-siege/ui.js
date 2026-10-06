@@ -196,12 +196,12 @@ export function mount() {
 					? (isEn() ? "Best record saved to this device" : "最佳纪录已保存在此设备")
 					: (isEn() ? "Best record could not be saved to this device" : "最佳纪录未能保存至此设备，仅在本次游戏中保留");
 			} else if (game.phase === "intro") {
-				$("overlay-title").innerHTML = isEn ? "The Long Night Approaches<br /><span>The Embers Endure.</span>" : "长夜将至<br /><span>余烬不灭。</span>";
-				$("overlay-description").innerHTML = isEn
+				$("overlay-title").innerHTML = isEn() ? "The Long Night Approaches<br /><span>The Embers Endure.</span>" : "长夜将至<br /><span>余烬不灭。</span>";
+				$("overlay-description").innerHTML = isEn()
 					? "The horde closes through the mist. Rally your defense<br />and keep the sanctuary's last flame burning."
 					: "敌军正从雾中逼近。筑起防线，<br />让这座要塞的最后一束火光继续燃烧。";
-				$("begin").innerHTML = isEn ? "Ignite the Beacon <span>→</span>" : "点燃烽火 <span>→</span>";
-				$("overlay-foot").textContent = isEn ? "Initial 300 Gold · 20 Core Health · Zero Downloads" : "初始 300 金币 · 20 点耐久 · 无需联网";
+				$("begin").innerHTML = isEn() ? "Ignite the Beacon <span>→</span>" : "点燃烽火 <span>→</span>";
+				$("overlay-foot").textContent = isEn() ? "Initial 300 Gold · 20 Core Health · Zero Downloads" : "初始 300 金币 · 20 点耐久 · 无需联网";
 			}
 		}
 		tickUI();
@@ -226,7 +226,7 @@ export function mount() {
 				0,
 			);
 			const remaining = game.queue.length + game.enemies.length;
-			$("wave-status").textContent = isEn ? `Remaining Enemies ${remaining} / ${total}` : `剩余敌军 ${remaining} / ${total}`;
+			$("wave-status").textContent = isEn() ? `Remaining Enemies ${remaining} / ${total}` : `剩余敌军 ${remaining} / ${total}`;
 			$("wave-progress-fill").style.width = `${(1 - remaining / total) * 100}%`;
 		} else {
 			$("phase-label").textContent =
