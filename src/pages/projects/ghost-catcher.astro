@@ -1,0 +1,1772 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Ghost Catcher · IceCube Neutrino Detector Lab"
+	: "幽灵捕手 · 冰立方中微子探测器实验室";
+const description = isEn
+	? "A Neutrino Detector You Can Play With: Celebrating Francis Halzen's 2026 Nobel Prize in Physics for IceCube and astrophysical neutrinos. Interactive Cherenkov radiation, DOM charge-timing, and cosmic ghost particle tracking in Antarctic deep ice."
+	: "幽灵捕手 · GHOST CATCHER：致敬弗朗西斯·哈尔岑荣获 2026 诺贝尔物理学奖。在南极千米深冰中交互式观测切伦科夫辐射蓝光锥、DOM 时序电荷与宇宙幽灵信使反向追踪。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#050b14] text-zinc-100 border border-zinc-800/80 shadow-2xl selection:bg-cyan-500/30 selection:text-cyan-200">
+			<!-- Background Ambient Glow & Grid -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#0ea5e9_1px,transparent_1px)] [background-size:24px_24px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/2 -right-32 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<section class="relative z-10 mb-8 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+							<span class="lang-zh">★ 2026 诺贝尔物理学奖 · FRANCIS HALZEN</span>
+							<span class="lang-en">★ 2026 NOBEL PRIZE IN PHYSICS · FRANCIS HALZEN</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+							<span>🧊</span>
+							<span>SOUTH POLE · 1 km³ ICE</span>
+						</div>
+					</div>
+					<div class="text-xs font-mono text-zinc-400">
+						<span class="lang-zh">2026-10-06 斯德哥尔摩宣布</span>
+						<span class="lang-en">Announced 2026-10-06 in Stockholm</span>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2">
+					<span class="lang-zh">幽灵捕手 · 冰立方中微子探测器</span>
+					<span class="lang-en">Ghost Catcher · IceCube Neutrino Lab</span>
+				</h1>
+				<p class="text-lg sm:text-xl font-bold text-cyan-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">幽灵捕手 · GHOST CATCHER — A Neutrino Detector You Can Play With</span>
+					<span class="lang-en">GHOST CATCHER — A Neutrino Detector You Can Play With</span>
+				</p>
+				<p class="text-sm sm:text-base text-zinc-300/90 max-w-3xl leading-relaxed mb-3">
+					<span class="lang-zh">
+						2026 年 10 月 6 日，瑞典皇家科学院宣布将诺贝尔物理学奖授予弗朗西斯·哈尔岑（Francis Halzen，82 岁，威斯康星大学麦迪逊分校），表彰其对南极冰立方（IceCube）中微子天文台的决定性贡献及发现高能天体物理中微子。
+					</span>
+					<span class="lang-en">
+						On October 6, 2026, the Royal Swedish Academy of Sciences awarded the Nobel Prize in Physics to Francis Halzen (82, University of Wisconsin-Madison) for decisive contributions to the IceCube Neutrino Observatory and the discovery of high-energy neutrinos of astrophysical origin.
+					</span>
+				</p>
+				<p class="text-xs sm:text-sm text-zinc-400 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						真实的冰立方拥有 86 根钢缆、5,160 个数字光学模块（DOMs），深埋在南极点 1,450 至 2,450 米的超纯净冰川中，占据整整一立方公里。中微子极偶尔与冰原子核相撞产生超光速次级粒子（在冰中速度超越光速 c / 1.31），激发出约 41° 的切伦科夫蓝光。DOM 记录纳秒级到达时序，逆向追踪并锁定百亿光年外的暴烈宇宙天体源。
+					</span>
+					<span class="lang-en">
+						The real IceCube operates 86 strings with 60 DOMs each (5,160 optical sensors), buried 1,450–2,450 m deep inside a cubic kilometer of pristine South Pole glacial ice. Neutrinos occasionally collide with ice nuclei, producing secondary particles (like muons) moving faster than light in ice (v &gt; c / 1.31), radiating a ~41° blue Cherenkov light cone recorded with nanosecond precision.
+					</span>
+				</p>
+			</section>
+
+			<!-- BODY COUNTER BANNER -->
+			<section class="relative z-10 mb-8">
+				<div class="rounded-2xl bg-zinc-950/90 border border-cyan-500/30 p-5 sm:p-6 shadow-[0_0_25px_rgba(6,182,212,0.15)] relative overflow-hidden">
+					<div class="absolute -right-16 -top-16 w-48 h-48 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+						<div class="flex items-center gap-2">
+							<span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
+							<span class="text-xs font-mono uppercase tracking-widest text-cyan-300 font-bold">
+								<span class="lang-zh">📡 太阳中微子实时穿透通量监测</span>
+								<span class="lang-en">📡 Real-Time Solar Neutrino Flux Monitor</span>
+							</span>
+						</div>
+						<div class="text-[11px] font-mono text-cyan-400/90 bg-cyan-950/60 px-2.5 py-1 rounded-md border border-cyan-800/60">
+							~100 TRILLION / SEC · HUMAN BODY
+						</div>
+					</div>
+
+					<div class="flex flex-col md:flex-row items-baseline md:items-center justify-between gap-4">
+						<div>
+							<div class="text-xs font-mono text-zinc-400 mb-1">
+								<span class="lang-zh">自你打开本页面以来，穿透你身体的太阳中微子总数：</span>
+								<span class="lang-en">Solar neutrinos passing through your body since opening this page:</span>
+							</div>
+							<div id="body-counter" class="font-mono text-3xl sm:text-5xl font-black text-cyan-300 tracking-wider drop-shadow-[0_0_15px_rgba(6,182,212,0.7)]">
+								0.00 × 10¹⁴
+							</div>
+						</div>
+
+						<div class="flex flex-col sm:flex-row gap-4 sm:gap-6 text-xs font-mono border-t md:border-t-0 md:border-l border-zinc-800 md:pl-6 pt-3 md:pt-0">
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">地面通量</span>
+									<span class="lang-en">Earth Surface Flux</span>
+								</span>
+								<span class="text-zinc-200 font-bold">6.5 × 10¹⁰ / cm²·s</span>
+							</div>
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">人体穿透速率</span>
+									<span class="lang-en">Body Transit Rate</span>
+								</span>
+								<span class="text-cyan-400 font-bold">~1.0 × 10¹⁴ / s</span>
+							</div>
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">80年体内碰撞期望</span>
+									<span class="lang-en">80-Yr Body Collisions</span>
+								</span>
+								<span class="text-amber-400 font-bold">
+									<span class="lang-zh">~1 次 (几乎完全透明)</span>
+									<span class="lang-en">~1 Event (Nearly 100% Transparent)</span>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE DETECTOR SANDBOX & CANVAS SECTION -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+							<span class="text-cyan-400 font-mono text-xl">01/</span>
+							<span class="lang-zh">南极深冰截面与交互沙盒</span>
+							<span class="lang-en">Antarctic Ice Cross-Section & Sandbox</span>
+						</h2>
+						<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+							<span class="lang-zh">在 1,450–2,450 米深冰中发射中微子。观察罕见碰撞、切伦科夫蓝光锥 (~41°) 以及 DOM 光电倍增管的时序梯度响应。</span>
+							<span class="lang-en">Fire neutrinos into deep ice (1,450–2,450 m). Witness rare collisions, ~41° Cherenkov light cones, and DOM timing gradients.</span>
+						</p>
+					</div>
+
+					<!-- Historic presets -->
+					<div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+						<span class="text-zinc-400 mr-1">
+							<span class="lang-zh">著名真实事件:</span>
+							<span class="lang-en">Real Events:</span>
+						</span>
+						<button id="preset-ernie" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 hover:border-cyan-400 text-zinc-300 hover:text-white transition active:scale-95" title="2012 First PeV event">
+							Ernie (1.14 PeV)
+						</button>
+						<button id="preset-bert" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 hover:border-cyan-400 text-zinc-300 hover:text-white transition active:scale-95" title="2012 PeV event">
+							Bert (1.04 PeV)
+						</button>
+						<button id="preset-blazar" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-amber-500/50 text-amber-300 hover:text-white hover:border-amber-400 transition active:scale-95" title="2017 TXS 0506+056">
+							TXS 0506+056 (290 TeV)
+						</button>
+						<button id="preset-ngc" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 hover:border-cyan-400 text-zinc-300 hover:text-white transition active:scale-95" title="2022 Starburst galaxy">
+							NGC 1068 (79 TeV)
+						</button>
+					</div>
+				</div>
+
+				<!-- DETECTOR CANVAS CONTAINER -->
+				<div class="relative w-full rounded-2xl bg-[#030814] border border-zinc-800 shadow-[0_0_40px_rgba(0,0,0,0.8)] overflow-hidden mb-6">
+					<!-- Canvas Overlay Toast Alert -->
+					<div id="event-toast" class="absolute top-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none transition-all duration-300 opacity-0 -translate-y-2">
+						<div class="px-4 py-2 rounded-xl bg-zinc-950/90 border border-zinc-700 text-xs font-mono shadow-2xl flex items-center gap-2">
+							<span id="toast-icon">👻</span>
+							<span id="toast-msg" class="text-zinc-200"></span>
+						</div>
+					</div>
+
+					<!-- Real-Time Reconstructed Source Badge pinned on canvas -->
+					<div id="source-badge" class="absolute bottom-4 right-4 z-20 pointer-events-none transition-all duration-300 opacity-0">
+						<div class="px-3.5 py-2 rounded-xl bg-zinc-950/90 border border-cyan-500/60 shadow-2xl text-xs font-mono flex items-center gap-2">
+							<span class="text-amber-400">✦</span>
+							<div>
+								<div class="text-[10px] text-zinc-400 uppercase tracking-widest">
+									<span class="lang-zh">反向追踪天体源</span>
+									<span class="lang-en">Reconstructed Source</span>
+								</div>
+								<div id="source-name" class="text-cyan-300 font-bold">耀变体 TXS 0506+056</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Canvas Depth Scale Legend (Right Top) -->
+					<div class="absolute top-3 right-3 z-10 pointer-events-none hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-lg bg-black/60 border border-zinc-800 text-[11px] font-mono text-zinc-400">
+						<div class="flex items-center gap-1.5">
+							<span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+							<span class="lang-zh">率先到达 (0-40ns)</span>
+							<span class="lang-en">Earliest (0-40ns)</span>
+						</div>
+						<div class="flex items-center gap-1.5">
+							<span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+							<span class="lang-zh">中间时序</span>
+							<span class="lang-en">Mid Timing</span>
+						</div>
+						<div class="flex items-center gap-1.5">
+							<span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+							<span class="lang-zh">延迟光子</span>
+							<span class="lang-en">Trailing</span>
+						</div>
+					</div>
+
+					<canvas
+						id="icecube-canvas"
+						class="w-full h-[460px] sm:h-[540px] block cursor-crosshair touch-none select-none"
+					></canvas>
+				</div>
+
+				<!-- INTERACTIVE CONTROLS DOCK -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+					<!-- PRIMARY CONTROLS (Left Col: 7 cols) -->
+					<div class="lg:col-span-7 space-y-4">
+						<!-- ZENITH SLIDER CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm">
+							<div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+								<div class="flex items-center gap-2">
+									<span class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300">
+										<span class="lang-zh">天顶入射角 (Zenith Angle θ)</span>
+										<span class="lang-en">Zenith Angle θ</span>
+									</span>
+									<span id="zenith-angle-text" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60">
+										θ = 34.0°
+									</span>
+								</div>
+								<div id="zenith-channel-badge" class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300">
+									⬇️ 下行通道 (Down-going · 来自天空)
+								</div>
+							</div>
+
+							<input
+								id="slider-zenith"
+								type="range"
+								min="0"
+								max="180"
+								step="1"
+								value="34"
+								class="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+							/>
+
+							<div class="flex justify-between text-[11px] font-mono text-zinc-500 mt-2">
+								<span>0° (天顶 / Sky)</span>
+								<span>90° (地平线 / Horizon)</span>
+								<span>180° (天底 / Nadir · 地心)</span>
+							</div>
+
+							<!-- Zenith Quick Angle Presets -->
+							<div class="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-zinc-800/80 text-xs font-mono">
+								<span class="text-zinc-500 text-[11px]">
+									<span class="lang-zh">快捷角度:</span>
+									<span class="lang-en">Angles:</span>
+								</span>
+								<button id="ang-sky" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									0° (直射)
+								</button>
+								<button id="ang-down" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									34° (经典下行)
+								</button>
+								<button id="ang-horiz" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									90° (水平切线)
+								</button>
+								<button id="ang-up" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									142° (穿透地球)
+								</button>
+								<button id="ang-nadir" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									180° (地心自底向上)
+								</button>
+							</div>
+						</div>
+
+						<!-- ENERGY LEVEL SELECTION CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm">
+							<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+								<div class="flex items-center gap-2">
+									<span class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300">
+										<span class="lang-zh">中微子能量级别 (Energy Scale)</span>
+										<span class="lang-en">Neutrino Energy Scale</span>
+									</span>
+									<span class="text-[11px] font-mono text-zinc-500">
+										σ_ν ∝ E^0.5 (玩具截面 / Toy Simulation)
+									</span>
+								</div>
+								<div id="energy-xsec-text" class="text-[11px] font-mono text-cyan-400">
+									相对截面: 1.0×
+								</div>
+							</div>
+
+							<div class="grid grid-cols-3 gap-2">
+								<button
+									id="btn-energy-1tev"
+									type="button"
+									class="energy-btn px-3 py-2 rounded-xl text-xs font-mono font-semibold border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-cyan-500/50 transition active:scale-95 text-center"
+								>
+									<div>1 TeV</div>
+									<div class="text-[10px] font-normal text-zinc-500">
+										<span class="lang-zh">低能天体 / P ~ 0.05%</span>
+										<span class="lang-en">Low-E / P ~ 0.05%</span>
+									</div>
+								</button>
+								<button
+									id="btn-energy-100tev"
+									type="button"
+									class="energy-btn px-3 py-2 rounded-xl text-xs font-mono font-semibold border border-cyan-500 bg-cyan-950/40 text-cyan-300 shadow-sm transition active:scale-95 text-center"
+								>
+									<div>100 TeV</div>
+									<div class="text-[10px] font-normal text-cyan-400/80">
+										<span class="lang-zh">典型宇宙源 / P ~ 0.20%</span>
+										<span class="lang-en">Astrophysical / P ~ 0.20%</span>
+									</div>
+								</button>
+								<button
+									id="btn-energy-10pev"
+									type="button"
+									class="energy-btn px-3 py-2 rounded-xl text-xs font-mono font-semibold border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-cyan-500/50 transition active:scale-95 text-center"
+								>
+									<div>10 PeV</div>
+									<div class="text-[10px] font-normal text-zinc-500">
+										<span class="lang-zh">极端巨能 / P ~ 2.0%</span>
+										<span class="lang-en">Extreme PeV / P ~ 2.0%</span>
+									</div>
+								</button>
+							</div>
+						</div>
+
+						<!-- ACTION BUTTONS -->
+						<div class="flex flex-wrap items-center gap-3">
+							<!-- FIRE SINGLE -->
+							<button
+								id="btn-fire-single"
+								type="button"
+								class="flex-1 min-w-[160px] px-5 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-zinc-950 font-bold text-sm tracking-wide shadow-[0_0_20px_rgba(6,182,212,0.4)] transition active:scale-95 flex items-center justify-center gap-2"
+							>
+								<span>🎯</span>
+								<span>
+									<span class="lang-zh">发射单颗中微子</span>
+									<span class="lang-en">Fire Single Neutrino</span>
+								</span>
+							</button>
+
+							<!-- TRIGGER EVENT -->
+							<button
+								id="btn-trigger-event"
+								type="button"
+								class="px-4 py-3 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-bold text-xs tracking-wide transition active:scale-95 flex items-center gap-2"
+								title="Guaranteed high-energy event for inspection"
+							>
+								<span>⚡</span>
+								<span>
+									<span class="lang-zh">必定捕获高能事例</span>
+									<span class="lang-en">Force High-E Event</span>
+								</span>
+							</button>
+
+							<!-- BARRAGE MODE -->
+							<button
+								id="btn-barrage"
+								type="button"
+								class="px-4 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold text-xs tracking-wide transition active:scale-95 flex items-center gap-2"
+							>
+								<span>🚀</span>
+								<span>
+									<span class="lang-zh">齐射模式 (N=2000)</span>
+									<span class="lang-en">Barrage (N=2000)</span>
+								</span>
+							</button>
+
+							<!-- CLEAR / RESET -->
+							<button
+								id="btn-clear"
+								type="button"
+								class="px-3.5 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs transition active:scale-95"
+								title="Clear Display"
+							>
+								<span>🔄</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- EVENT INSPECTION & TELEMETRY PANEL (Right Col: 5 cols) -->
+					<div class="lg:col-span-5 space-y-4">
+						<!-- CAPTURED EVENT READOUT CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm">
+							<div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-800/80">
+								<div class="flex items-center gap-2">
+									<span class="text-xs font-mono uppercase tracking-widest text-cyan-400 font-bold">
+										<span class="lang-zh">事例探测报告 · EVENT DISPLAY</span>
+										<span class="lang-en">Event Display Telemetry</span>
+									</span>
+								</div>
+								<div id="event-topology-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-400">
+									等待事例 / QUIESCENT
+								</div>
+							</div>
+
+							<div class="grid grid-cols-2 gap-3 text-xs font-mono mb-4">
+								<div class="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-800/60">
+									<span class="text-zinc-500 block text-[10px]">
+										<span class="lang-zh">沉积能量 (Energy)</span>
+										<span class="lang-en">Deposited Energy</span>
+									</span>
+									<span id="readout-energy" class="text-base font-bold text-cyan-300">-- TeV</span>
+								</div>
+								<div class="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-800/60">
+									<span class="text-zinc-500 block text-[10px]">
+										<span class="lang-zh">重建天顶角 (Zenith)</span>
+										<span class="lang-en">Reconstructed Zenith</span>
+									</span>
+									<span id="readout-zenith" class="text-base font-bold text-white">--°</span>
+								</div>
+								<div class="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-800/60">
+									<span class="text-zinc-500 block text-[10px]">
+										<span class="lang-zh">触发 DOM 数量</span>
+										<span class="lang-en">DOMs Triggered</span>
+									</span>
+									<span id="readout-doms" class="text-base font-bold text-amber-400">0 / 504</span>
+								</div>
+								<div class="bg-zinc-900/60 p-2.5 rounded-lg border border-zinc-800/60">
+									<span class="text-zinc-500 block text-[10px]">
+										<span class="lang-zh">总光电子电荷 (Charge)</span>
+										<span class="lang-en">Total Charge</span>
+									</span>
+									<span id="readout-charge" class="text-base font-bold text-white">0 p.e.</span>
+								</div>
+							</div>
+
+							<!-- CANDIDATE CELESTIAL SOURCE -->
+							<div class="bg-cyan-950/20 border border-cyan-800/40 rounded-xl p-3 text-xs font-mono">
+								<div class="text-[10px] text-zinc-400 mb-1">
+									<span class="lang-zh">逆向天体信使推算 (Celestial Origin Tracking)</span>
+									<span class="lang-en">Cosmic Messenger Vector</span>
+								</div>
+								<div id="readout-source" class="font-bold text-cyan-300">
+									<span class="lang-zh">暂无捕获 · 发射中微子开始实验</span>
+									<span class="lang-en">No event · Fire neutrinos to trigger</span>
+								</div>
+								<div id="readout-detail" class="text-[11px] text-zinc-400 mt-1 leading-normal">
+									<span class="lang-zh">中微子穿透光年级物质不偏转，其到达方向直指深空高能宇宙加速器。</span>
+									<span class="lang-en">Neutrinos travel across gigaparsecs undeflected, pointing directly to violent cosmic accelerators.</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- BARRAGE STATS & HISTOGRAM CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm">
+							<div class="flex items-center justify-between mb-3 pb-2 border-b border-zinc-800/80">
+								<div class="text-xs font-mono uppercase tracking-widest text-zinc-300 font-bold">
+									<span class="lang-zh">齐射统计与能量柱状图 (BARRAGE TALLY)</span>
+									<span class="lang-en">Barrage Tally & Energy Spectrum</span>
+								</div>
+								<div class="text-[10px] font-mono text-zinc-500">
+									N = 2000 TOY MC
+								</div>
+							</div>
+
+							<div class="grid grid-cols-4 gap-2 text-center text-xs font-mono mb-3">
+								<div class="bg-zinc-900/60 p-2 rounded-lg border border-zinc-800/50">
+									<div class="text-[10px] text-zinc-500">
+										<span class="lang-zh">发射</span>
+										<span class="lang-en">Fired</span>
+									</div>
+									<div id="tally-fired" class="font-bold text-zinc-200">0</div>
+								</div>
+								<div class="bg-zinc-900/60 p-2 rounded-lg border border-zinc-800/50">
+									<div class="text-[10px] text-zinc-500">
+										<span class="lang-zh">捕获</span>
+										<span class="lang-en">Hits</span>
+									</div>
+									<div id="tally-hits" class="font-bold text-cyan-400">0</div>
+								</div>
+								<div class="bg-zinc-900/60 p-2 rounded-lg border border-zinc-800/50">
+									<div class="text-[10px] text-zinc-500">
+										<span class="lang-zh">逸出</span>
+										<span class="lang-en">Escaped</span>
+									</div>
+									<div id="tally-escaped" class="font-bold text-zinc-400">0</div>
+								</div>
+								<div class="bg-zinc-900/60 p-2 rounded-lg border border-zinc-800/50">
+									<div class="text-[10px] text-zinc-500">
+										<span class="lang-zh">捕获率</span>
+										<span class="lang-en">Rate</span>
+									</div>
+									<div id="tally-rate" class="font-bold text-amber-400">0.00%</div>
+								</div>
+							</div>
+
+							<!-- LIVE HISTOGRAM BARS -->
+							<div class="space-y-2 pt-2 border-t border-zinc-800/60 text-[11px] font-mono">
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-zinc-400">1-10 TeV:</span>
+									<div class="flex-1 h-3 bg-zinc-900 rounded overflow-hidden">
+										<div id="bar-bin-0" class="h-full bg-cyan-600 transition-all duration-300" style="width: 0%;"></div>
+									</div>
+									<span id="count-bin-0" class="w-8 text-right text-zinc-300">0</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-zinc-400">10-100 TeV:</span>
+									<div class="flex-1 h-3 bg-zinc-900 rounded overflow-hidden">
+										<div id="bar-bin-1" class="h-full bg-cyan-500 transition-all duration-300" style="width: 0%;"></div>
+									</div>
+									<span id="count-bin-1" class="w-8 text-right text-zinc-300">0</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-zinc-400">100T-1 PeV:</span>
+									<div class="flex-1 h-3 bg-zinc-900 rounded overflow-hidden">
+										<div id="bar-bin-2" class="h-full bg-amber-500 transition-all duration-300" style="width: 0%;"></div>
+									</div>
+									<span id="count-bin-2" class="w-8 text-right text-zinc-300">0</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-zinc-400">1-10 PeV:</span>
+									<div class="flex-1 h-3 bg-zinc-900 rounded overflow-hidden">
+										<div id="bar-bin-3" class="h-full bg-purple-500 transition-all duration-300" style="width: 0%;"></div>
+									</div>
+									<span id="count-bin-3" class="w-8 text-right text-zinc-300">0</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- BILINGUAL EXPLAINER SECTIONS (4 Cards) -->
+			<section class="relative z-10 mb-8">
+				<div class="mb-6">
+					<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+						<span class="text-cyan-400 font-mono text-xl">02/</span>
+						<span class="lang-zh">从幽灵粒子到诺贝尔奖 · 科学原理</span>
+						<span class="lang-en">From Ghost Particles to Nobel Prize · Physics Guide</span>
+					</h2>
+					<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+						<span class="lang-zh">四张卡片读懂南极深冰里的切伦科夫蓝光、哈尔岑的拓荒之路与宇宙终极信使。</span>
+						<span class="lang-en">Four concise cards explaining Cherenkov light in deep ice, Halzen's pioneer journey, and cosmic messengers.</span>
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<!-- CARD 1: What is a neutrino? -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-2">
+								<span>01 · PARTICLE PHYSICS</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">中微子究竟是什么？· 宇宙中的幽灵粒子</span>
+								<span class="lang-en">What is a Neutrino? · The Ghost Particle</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/80 leading-relaxed mb-4">
+								<span class="lang-zh">
+									中微子是基本粒子标准模型中最神秘的轻子：不带电荷、自旋 1/2，且静止质量微乎其微（三种中微子质量之和小于 0.12 eV，不及电子的五百万分之一）。它们不参与强相互作用和电磁相互作用，仅通过极微弱的弱相互作用和引力感知外界。即使是一光年厚的实体铅板，高能中微子也能毫发无损地透射而过。每秒钟有上百兆太阳中微子正穿过你的身体，但终其一生也很难有哪怕一颗中微子触碰你体内的任何一个原子。
+								</span>
+								<span class="lang-en">
+									Neutrinos are the standard model's most elusive leptons: electrically neutral, spin-1/2, with near-zero rest mass (&lt; 0.12 eV, less than 1/5,000,000th of an electron). Unfettered by electromagnetism and strong force, they interact solely through the weak force and gravity. A high-energy neutrino could effortlessly penetrate a light-year of solid lead. Every second, trillions stream through you undetected.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono text-zinc-400">
+							<span>3 Flavors (ν_e, ν_μ, ν_τ)</span>
+							<span class="text-cyan-400">Zero Charge · Quantum Oscillations</span>
+						</div>
+					</div>
+
+					<!-- CARD 2: How IceCube sees them -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-2">
+								<span>02 · CHERENKOV RADIATION</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">冰立方如何捕捉幽灵？· 万米冰川的蓝光锥</span>
+								<span class="lang-en">How IceCube Traps Ghosts · Cherenkov Light</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/80 leading-relaxed mb-4">
+								<span class="lang-zh">
+									南极冰盖在 1,450–2,450 米深处经数万年极端压实，气泡完全逸出，形成了地球上最纯净、最透明的固体晶体。当中微子极偶尔击中水分子原子核时，会转化为相对论性带电粒子（如缪子 μ）。光在冰中的相速度降为 c/n ≈ c/1.31 ≈ 228,850 km/s，而带电粒子的速度超过了冰中光速！正如超音速战机产生音爆激波，粒子在冰中激发出夹角约 41° 的幽灵般切伦科夫蓝光。5,160 个 DOM 记录纳秒级到达时序：最早被光照亮的 DOM 呈红橙色，最晚的呈蓝紫色，物理学家便能精确重建其入射弹道。
+								</span>
+								<span class="lang-en">
+									Glacial ice deep beneath the South Pole (1,450–2,450 m) has been compressed bubble-free over millennia into crystalline purity. When a neutrino collides with an atomic nucleus, it produces a secondary charged particle (e.g. muon) traveling faster than light in ice (c / 1.31). This emits an optical shockwave—a ~41° blue Cherenkov cone. 5,160 optical sensors (DOMs) register single-photon arrival times; color gradients (red=early, blue=late) allow nanosecond ballistic reconstruction.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono text-zinc-400">
+							<span>θ_c = arccos(1/n) ≈ 40.2°</span>
+							<span class="text-cyan-400">5,160 DOMs · 1 km³ Ice</span>
+						</div>
+					</div>
+
+					<!-- CARD 3: The 2026 Nobel Prize & Milestones -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center gap-2 text-amber-400 font-mono text-xs font-bold mb-2">
+								<span>03 · NOBEL PRIZE 2026</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">2026 诺奖与科学里程碑 · 从 Ernie 到 TXS 0506</span>
+								<span class="lang-en">The 2026 Nobel Prize · Halzen & Cosmic Milestones</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/80 leading-relaxed mb-4">
+								<span class="lang-zh">
+									弗朗西斯·哈尔岑（Francis Halzen）早在上世纪 80 年代便倡议用天然冰川作为中微子靶标，先后主持 AMANDA（2000 年完成）与冰立方（2010 年竣工）。2012 年，冰立方首次捕获突破 1 PeV（千万亿电子伏特）的宇宙中微子，物理学家幽默地将其命名为“厄尼”（Ernie）和“伯特”（Bert）。2017 年 9 月 22 日，一颗 290 TeV 的中微子（IceCube-170922A）被实时反向定位到 40 亿光年外的耀变体 TXS 0506+056，全球多信使望远镜随即确认了伴随的伽马射线爆发，证实超大质量黑洞喷流是高能中微子宇宙源。
+								</span>
+								<span class="lang-en">
+									Francis Halzen envisioned using clear Antarctic polar ice as a target in the 1980s, leading AMANDA (completed 2000) and IceCube (completed 2010). In 2012, IceCube discovered the first PeV-scale astrophysical neutrinos, famously dubbed "Ernie" and "Bert". On Sep 22, 2017, event IceCube-170922A (290 TeV) was pinpointed to blazar TXS 0506+056, matched with MAGIC gamma-ray alerts—marking humanity's first joint neutrino-electromagnetic cosmic discovery.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono text-zinc-400">
+							<span>Francis Halzen (UW-Madison)</span>
+							<span class="text-amber-400">Stockholm · 2026-10-06</span>
+						</div>
+					</div>
+
+					<!-- CARD 4: Why neutrinos matter -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/80 border border-zinc-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center gap-2 text-cyan-400 font-mono text-xs font-bold mb-2">
+								<span>04 · MULTIMESSENGER ASTRONOMY</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">为什么中微子如此重要？· 穿越迷雾的宇宙信使</span>
+								<span class="lang-en">Why Neutrinos Matter · The Ultimate Messengers</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/80 leading-relaxed mb-4">
+								<span class="lang-zh">
+									光子容易被星际尘埃、致密气体云乃至宇宙微波背景辐射（CMB）阻挡散射；带电宇宙射线（质子等）在星系磁场中漫无目的地偏转拐弯，彻底抹除了源头记忆。唯有中微子：电中性、穿透力无可匹敌，能从宇宙中最暴烈的核心引擎（超大质量黑洞吸积盘、超新星遗迹激波、伽马暴喷流）毫发无损地直冲出来，沿着笔直的时空测地线跨越数十亿光年径直撞入南极深冰。它们与电磁波、引力波一同，构成了人类多信使天文学的三大基石。
+								</span>
+								<span class="lang-en">
+									Photons get obscured by dense dust and cosmic microwave background; charged cosmic rays get scrambled by galactic magnetic fields. Only neutrinos slice through cosmological distance in straight lines from violent engines (supermassive black holes, supernova shocks, gamma-ray bursts). Alongside light and gravitational waves, they form the triumphant triad of modern multimessenger astrophysics.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs font-mono text-zinc-400">
+							<span>Straight Cosmic Geodesics</span>
+							<span class="text-cyan-400">Light + GW + Neutrinos</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- FOOTER SECTION -->
+			<div class="pt-6 border-t border-zinc-800/80 text-xs font-mono text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+				<div>
+					<span class="lang-zh">致敬 2026 诺贝尔物理学奖公布 · 南极冰立方中微子天文台 (IceCube)</span>
+					<span class="lang-en">Inspired by the 2026 Nobel Prize in Physics announcement · IceCube Neutrino Observatory</span>
+				</div>
+				<div class="text-zinc-500">
+					p1ziyu.com · 2026
+				</div>
+			</div>
+
+			<hr class="my-6 border-zinc-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-cyan-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<style>
+		.stat-digit {
+			letter-spacing: 0.05em;
+		}
+	</style>
+
+	<script is:inline>
+		// ==========================================
+		// Ghost Catcher · IceCube Interactive Simulator
+		// Vanilla JavaScript Engine (Client-side)
+		// ==========================================
+
+		(function () {
+			let animId = null;
+			let tickerTimer = null;
+			let pageStartTime = Date.now();
+
+			function initGhostCatcher() {
+				// Clean previous loops if reloading via Astro navigation
+				if (animId) cancelAnimationFrame(animId);
+				if (tickerTimer) clearInterval(tickerTimer);
+
+				const canvas = document.getElementById("icecube-canvas");
+				if (!canvas) return;
+				const ctx = canvas.getContext("2d");
+				if (!ctx) return;
+
+				// UI Elements
+				const bodyCounterEl = document.getElementById("body-counter");
+				const sliderZenith = document.getElementById("slider-zenith");
+				const zenithAngleText = document.getElementById("zenith-angle-text");
+				const zenithChannelBadge = document.getElementById("zenith-channel-badge");
+				const btnFireSingle = document.getElementById("btn-fire-single");
+				const btnTriggerEvent = document.getElementById("btn-trigger-event");
+				const btnBarrage = document.getElementById("btn-barrage");
+				const btnClear = document.getElementById("btn-clear");
+
+				const btn1TeV = document.getElementById("btn-energy-1tev");
+				const btn100TeV = document.getElementById("btn-energy-100tev");
+				const btn10PeV = document.getElementById("btn-energy-10pev");
+				const energyXsecText = document.getElementById("energy-xsec-text");
+
+				const readoutEnergy = document.getElementById("readout-energy");
+				const readoutZenith = document.getElementById("readout-zenith");
+				const readoutDoms = document.getElementById("readout-doms");
+				const readoutCharge = document.getElementById("readout-charge");
+				const readoutSource = document.getElementById("readout-source");
+				const readoutDetail = document.getElementById("readout-detail");
+				const eventTopologyBadge = document.getElementById("event-topology-badge");
+
+				const tallyFiredEl = document.getElementById("tally-fired");
+				const tallyHitsEl = document.getElementById("tally-hits");
+				const tallyEscapedEl = document.getElementById("tally-escaped");
+				const tallyRateEl = document.getElementById("tally-rate");
+
+				const barBin0 = document.getElementById("bar-bin-0");
+				const barBin1 = document.getElementById("bar-bin-1");
+				const barBin2 = document.getElementById("bar-bin-2");
+				const barBin3 = document.getElementById("bar-bin-3");
+				const countBin0 = document.getElementById("count-bin-0");
+				const countBin1 = document.getElementById("count-bin-1");
+				const countBin2 = document.getElementById("count-bin-2");
+				const countBin3 = document.getElementById("count-bin-3");
+
+				const eventToast = document.getElementById("event-toast");
+				const toastIcon = document.getElementById("toast-icon");
+				const toastMsg = document.getElementById("toast-msg");
+				const sourceBadge = document.getElementById("source-badge");
+				const sourceName = document.getElementById("source-name");
+
+				// Quick angle buttons
+				const angSky = document.getElementById("ang-sky");
+				const angDown = document.getElementById("ang-down");
+				const angHoriz = document.getElementById("ang-horiz");
+				const angUp = document.getElementById("ang-up");
+				const angNadir = document.getElementById("ang-nadir");
+
+				// Presets
+				const presetErnie = document.getElementById("preset-ernie");
+				const presetBert = document.getElementById("preset-bert");
+				const presetBlazar = document.getElementById("preset-blazar");
+				const presetNgc = document.getElementById("preset-ngc");
+
+				// State
+				let currentZenithDeg = 34; // degrees
+				let currentEnergyLevel = 100; // TeV (1, 100, 10000)
+				let tallyFired = 0;
+				let tallyHits = 0;
+				let tallyEscaped = 0;
+				let histogramCounts = [0, 0, 0, 0]; // [1-10 TeV, 10-100 TeV, 100T-1 PeV, 1-10 PeV]
+
+				// Canvas physical layout settings
+				let dpr = Math.min(window.devicePixelRatio || 1, 2);
+				let cw = 0;
+				let ch = 0;
+
+				// Geometry in canvas units
+				let detTop = 0;
+				let detBottom = 0;
+				let detLeft = 0;
+				let detRight = 0;
+				let surfaceY = 0;
+
+				const NUM_STRINGS = 34;
+				const DOMS_PER_STRING = 14;
+				let domList = []; // Array of DOM objects
+
+				// Active particle tracks currently animating
+				// Each track: { x0, y0, x1, y1, angleRad, progress, speed, isHit, hitPoint, eventData, cherenkovCone, litDoms, alpha }
+				let activeTracks = [];
+				let ambientSnow = [];
+
+				// Toast timeout
+				let toastTimer = null;
+				function showToast(icon, msgZh, msgEn, duration = 3200) {
+					if (!eventToast || !toastMsg) return;
+					clearTimeout(toastTimer);
+					const isEnPage =
+						document.documentElement.lang === "en" ||
+						location.pathname.startsWith("/en") ||
+						document.documentElement.getAttribute("data-lang") === "en";
+					if (toastIcon) toastIcon.textContent = icon;
+					toastMsg.textContent = isEnPage ? msgEn : msgZh;
+					eventToast.style.opacity = "1";
+					eventToast.style.transform = "translate(-50%, 0)";
+					toastTimer = setTimeout(() => {
+						eventToast.style.opacity = "0";
+						eventToast.style.transform = "translate(-50%, -8px)";
+					}, duration);
+				}
+
+				// BODY COUNTER TICKER
+				function updateBodyCounter() {
+					if (!bodyCounterEl) return;
+					const elapsedSec = (Date.now() - pageStartTime) / 1000;
+					// ~1.0 x 10^14 neutrinos per sec
+					const totalNeutrinos = elapsedSec * 1.0e14;
+					const exponent = Math.floor(Math.log10(totalNeutrinos || 1));
+					const mantissa = totalNeutrinos / Math.pow(10, exponent);
+					bodyCounterEl.textContent = `${mantissa.toFixed(2)} × 10¹⁴`;
+				}
+				tickerTimer = setInterval(updateBodyCounter, 80);
+				updateBodyCounter();
+
+				// RESIZE & DOM INITIALIZATION
+				function resizeCanvas() {
+					const rect = canvas.getBoundingClientRect();
+					cw = rect.width;
+					ch = rect.height || 480;
+					dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+					canvas.width = Math.floor(cw * dpr);
+					canvas.height = Math.floor(ch * dpr);
+					ctx.setTransform(1, 0, 0, 1, 0, 0);
+					ctx.scale(dpr, dpr);
+
+					surfaceY = Math.floor(ch * 0.14);
+					detTop = Math.floor(ch * 0.32); // 1,450 m
+					detBottom = Math.floor(ch * 0.88); // 2,450 m
+					detLeft = Math.floor(cw * 0.14);
+					detRight = Math.floor(cw * 0.94);
+
+					// Build DOM array
+					domList = [];
+					const xStep = (detRight - detLeft) / (NUM_STRINGS - 1);
+					const yStep = (detBottom - detTop) / (DOMS_PER_STRING - 1);
+
+					for (let s = 0; s < NUM_STRINGS; s++) {
+						const sx = detLeft + s * xStep;
+						for (let d = 0; d < DOMS_PER_STRING; d++) {
+							const sy = detTop + d * yStep;
+							// Depth in meters (1450m to 2450m)
+							const depthM = 1450 + Math.round((d / (DOMS_PER_STRING - 1)) * 1000);
+							domList.push({
+								stringIndex: s + 1,
+								domIndex: d + 1,
+								x: sx,
+								y: sy,
+								depthM: depthM,
+								// Dynamic hit lighting state
+								litProgress: 0,
+								charge: 0,
+								timingColor: "#38bdf8",
+								hitTimeNs: 0,
+							});
+						}
+					}
+
+					// Ambient snow particles
+					ambientSnow = [];
+					for (let i = 0; i < 40; i++) {
+						ambientSnow.push({
+							x: Math.random() * cw,
+							y: Math.random() * surfaceY,
+							vx: -0.4 - Math.random() * 0.8,
+							vy: 0.1 + Math.random() * 0.3,
+							size: 1 + Math.random() * 2,
+							alpha: 0.3 + Math.random() * 0.5,
+						});
+					}
+				}
+
+				// COLOR SPECTRUM BASED ON ARRIVAL TIME
+				// Early hits: Red-Orange (0-40ns) -> Yellow-Green (40-100ns) -> Cyan-Blue-Violet (>120ns)
+				function getTimingColor(tRatio) {
+					// tRatio 0.0 to 1.0
+					if (tRatio <= 0.25) {
+						const k = tRatio / 0.25;
+						return `rgb(255, ${Math.round(60 + 120 * k)}, 40)`;
+					} else if (tRatio <= 0.5) {
+						const k = (tRatio - 0.25) / 0.25;
+						return `rgb(${Math.round(255 - 130 * k)}, ${Math.round(180 + 50 * k)}, 50)`;
+					} else if (tRatio <= 0.75) {
+						const k = (tRatio - 0.5) / 0.25;
+						return `rgb(34, 211, ${Math.round(238 - 80 * k)})`;
+					} else {
+						const k = (tRatio - 0.75) / 0.25;
+						return `rgb(${Math.round(30 + 150 * k)}, 100, 255)`;
+					}
+				}
+
+				// UPDATE ZENITH DISPLAY
+				function updateZenithLabel(deg) {
+					currentZenithDeg = deg;
+					if (zenithAngleText) zenithAngleText.textContent = `θ = ${deg.toFixed(1)}°`;
+					if (zenithChannelBadge) {
+						const isEnPage =
+							document.documentElement.lang === "en" ||
+							location.pathname.startsWith("/en") ||
+							document.documentElement.getAttribute("data-lang") === "en";
+						if (deg < 85) {
+							zenithChannelBadge.textContent = isEnPage
+								? "⬇️ Down-going (From Sky · Atmospheric Background)"
+								: "⬇️ 下行通道 (来自天空 · 大气缪子背景)";
+							zenithChannelBadge.className =
+								"text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300";
+						} else if (deg <= 95) {
+							zenithChannelBadge.textContent = isEnPage
+								? "➡️ Horizontal (Tangent to Horizon)"
+								: "➡️ 地平线切向 (水平入射)";
+							zenithChannelBadge.className =
+								"text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300";
+						} else {
+							zenithChannelBadge.textContent = isEnPage
+								? "⬆️ Up-going (Traversed Entire Earth · Golden Channel!)"
+								: "⬆️ 上行通道 (穿透 12,740km 地球 · 黄金纯净天体信道!)";
+							zenithChannelBadge.className =
+								"text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-amber-950/60 border border-amber-600/60 text-amber-300";
+						}
+					}
+				}
+
+				// SLIDER LISTENER
+				if (sliderZenith) {
+					sliderZenith.addEventListener("input", (e) => {
+						const val = parseFloat(e.target.value);
+						updateZenithLabel(val);
+					});
+				}
+
+				// QUICK ANGLE BUTTONS
+				function setZenith(deg) {
+					if (sliderZenith) sliderZenith.value = String(deg);
+					updateZenithLabel(deg);
+				}
+				if (angSky) angSky.addEventListener("click", () => setZenith(0));
+				if (angDown) angDown.addEventListener("click", () => setZenith(34));
+				if (angHoriz) angHoriz.addEventListener("click", () => setZenith(90));
+				if (angUp) angUp.addEventListener("click", () => setZenith(142));
+				if (angNadir) angNadir.addEventListener("click", () => setZenith(180));
+
+				// ENERGY SELECT BUTTONS
+				function setEnergy(level) {
+					currentEnergyLevel = level;
+					[btn1TeV, btn100TeV, btn10PeV].forEach((btn) => {
+						if (!btn) return;
+						btn.className =
+							"energy-btn px-3 py-2 rounded-xl text-xs font-mono font-semibold border border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-cyan-500/50 transition active:scale-95 text-center";
+					});
+
+					let activeBtn = btn100TeV;
+					let factorStr = "1.0× (100 TeV)";
+					if (level === 1) {
+						activeBtn = btn1TeV;
+						factorStr = "0.1× (1 TeV · 低能较小截面)";
+					} else if (level === 10000) {
+						activeBtn = btn10PeV;
+						factorStr = "10.0× (10 PeV · 极端超大截面)";
+					}
+
+					if (activeBtn) {
+						activeBtn.className =
+							"energy-btn px-3 py-2 rounded-xl text-xs font-mono font-semibold border border-cyan-500 bg-cyan-950/40 text-cyan-300 shadow-sm transition active:scale-95 text-center";
+					}
+					if (energyXsecText) {
+						energyXsecText.textContent = `相对截面: ${factorStr}`;
+					}
+				}
+
+				if (btn1TeV) btn1TeV.addEventListener("click", () => setEnergy(1));
+				if (btn100TeV) btn100TeV.addEventListener("click", () => setEnergy(100));
+				if (btn10PeV) btn10PeV.addEventListener("click", () => setEnergy(10000));
+
+				// ASTROPHYSICAL SOURCES GENERATOR
+				const CANDIDATE_SOURCES = [
+					{
+						nameZh: "🌌 耀变体 TXS 0506+056 (Blazar Jet · 40亿光年)",
+						nameEn: "🌌 Blazar TXS 0506+056 (Relativistic Jet · 4 Gly)",
+						detailZh: "超大质量黑洞相对论喷流直指地球，与 MAGIC 伽马射线联合确认。",
+						detailEn: "Supermassive black hole relativistic jet aligned with Earth, confirmed with MAGIC.",
+					},
+					{
+						nameZh: "💥 超新星遗迹激波 SNR G106.3+2.7 (Supernova Shock)",
+						nameEn: "💥 Supernova Remnant SNR G106.3+2.7",
+						detailZh: "恒星引力坍缩激波加速质子，与星际介质碰撞产生高能介子衰变。",
+						detailEn: "Stellar core-collapse shock accelerating protons into dense molecular clouds.",
+					},
+					{
+						nameZh: "🌀 超大质量黑洞潮汐瓦解事件 TDE AT2019dsg",
+						nameEn: "🌀 Tidal Disruption Event TDE AT2019dsg",
+						detailZh: "恒星靠近黑洞被撕裂瓦解，极端吸积与相对论外流发射 PeV 级中微子。",
+						detailEn: "Star shredded by supermassive black hole tidal gravity, driving relativistic outflows.",
+					},
+					{
+						nameZh: "🌀 活跃星暴星系 NGC 1068 (Starburst AGN)",
+						nameEn: "🌀 Starburst Active Galaxy NGC 1068",
+						detailZh: "致密尘埃云遮蔽了伽马射线，唯有中微子穿透核区直达地球。",
+						detailEn: "Thick dust toroids obscure high-energy gamma rays, revealed only by neutrinos.",
+					},
+					{
+						nameZh: "🌌 银河系中心人马座 A* (Galactic Center Sgr A*)",
+						nameEn: "🌌 Galactic Center Sgr A* Cosmic Ray Sea",
+						detailZh: "银心四百万倍太阳质量黑洞周围超高能质子与星际气体发生碰撞。",
+						detailEn: "Protons interacting with dense interstellar gas near Milky Way central black hole.",
+					},
+				];
+
+				// COMPUTE PARTICLE TRAJECTORY FROM ZENITH DEGREE
+				function computeTrajectory(thetaDeg, isForceHit = false) {
+					// theta = 0: from straight above (sky) moving downwards: (0, 1)
+					// theta = 90: horizontal moving left to right: (1, 0)
+					// theta = 180: from below (Earth core) moving upwards: (0, -1)
+					const rad = (thetaDeg * Math.PI) / 180;
+					const dirX = Math.sin(rad);
+					const dirY = Math.cos(rad);
+
+					// Entry & exit points through canvas bounds
+					let x0, y0, x1, y1;
+					const centerDetX = (detLeft + detRight) / 2;
+					const centerDetY = (detTop + detBottom) / 2;
+
+					// Ray casting through box center with offset
+					const span = Math.hypot(cw, ch) * 1.5;
+					const jitterX = (Math.random() - 0.5) * (detRight - detLeft) * 0.6;
+					const midX = centerDetX + jitterX;
+					const midY = centerDetY;
+
+					x0 = midX - dirX * span;
+					y0 = midY - dirY * span;
+					x1 = midX + dirX * span;
+					y1 = midY + dirY * span;
+
+					// Interaction check:
+					// Cross section ~ 0.002 * sqrt(E / 100)
+					const pInteraction = isForceHit
+						? 1.0
+						: 0.002 * Math.sqrt(currentEnergyLevel / 100);
+					const isHit = Math.random() < pInteraction;
+
+					let hitPoint = null;
+					let eventData = null;
+					let cherenkovCone = null;
+					let litDoms = [];
+
+					if (isHit) {
+						// Vertex inside instrumented volume
+						const vx = detLeft + Math.random() * (detRight - detLeft);
+						const vy = detTop + Math.random() * (detBottom - detTop);
+						hitPoint = { x: vx, y: vy };
+
+						// Energy calculation based on current energy level with log-normal distribution
+						let energyTeV = currentEnergyLevel * (0.4 + Math.random() * 1.8);
+						if (currentEnergyLevel >= 10000) {
+							energyTeV = 1000 + Math.random() * 9000;
+						}
+
+						const isCascade = Math.random() > 0.65;
+						const sourceInfo =
+							CANDIDATE_SOURCES[Math.floor(Math.random() * CANDIDATE_SOURCES.length)];
+
+						eventData = {
+							energyTeV: energyTeV,
+							zenithDeg: thetaDeg + (Math.random() - 0.5) * 0.8, // Reconstruction error ~0.4 deg
+							isCascade: isCascade,
+							source: sourceInfo,
+							totalCharge: 0,
+							hitDomsCount: 0,
+						};
+
+						// Calculate Cherenkov cone envelope in ice
+						// Cherenkov angle in ice: theta_c ≈ 40.2° ≈ 0.70 rad
+						const thetaC = (40.5 * Math.PI) / 180;
+						const trackLength = isCascade
+							? 80 + Math.random() * 40
+							: 240 + Math.random() * 100;
+						const trackEnd = {
+							x: vx + dirX * trackLength,
+							y: vy + dirY * trackLength,
+						};
+
+						// Normal to track direction
+						const nx = -dirY;
+						const ny = dirX;
+						const coneWidth = trackLength * Math.tan(thetaC);
+
+						cherenkovCone = {
+							v0: { x: vx, y: vy },
+							v1: trackEnd,
+							dirX: dirX,
+							dirY: dirY,
+							normX: nx,
+							normY: ny,
+							length: trackLength,
+							coneWidth: coneWidth,
+						};
+
+						// Find which DOMs fall in Cherenkov light corridor & compute physical timing
+						let minTime = Infinity;
+						let maxTime = -Infinity;
+						const rawHits = [];
+
+						for (const dom of domList) {
+							// Vector from vertex to DOM
+							const dx = dom.x - vx;
+							const dy = dom.y - vy;
+							const proj = dx * dirX + dy * dirY; // distance along track
+							const perp = Math.abs(dx * nx + dy * ny); // perpendicular distance
+
+							// Optical threshold: forward cone within 160px
+							if (proj > -10 && proj < trackLength + 60 && perp < coneWidth * 1.2 + 25) {
+								// Speed of muon ~ c, speed of light in ice c/n (n ≈ 1.31)
+								// Physical arrival time t_ns
+								const tNs = (proj * 1.0) / 0.3 + (perp * 1.31) / 0.3; // in simulated nanoseconds
+								const chargePE = Math.max(
+									1,
+									Math.round((380 / (perp + 12)) * (1.0 + Math.random() * 0.4)),
+								);
+
+								if (tNs < minTime) minTime = tNs;
+								if (tNs > maxTime) maxTime = tNs;
+
+								rawHits.push({
+									dom: dom,
+									tNs: tNs,
+									chargePE: chargePE,
+								});
+							}
+						}
+
+						if (maxTime <= minTime) maxTime = minTime + 10;
+						let totalPE = 0;
+
+						for (const hit of rawHits) {
+							const tRatio = Math.max(0, Math.min(1, (hit.tNs - minTime) / (maxTime - minTime)));
+							const timingColor = getTimingColor(tRatio);
+
+							hit.dom.litProgress = 1.0;
+							hit.dom.charge = hit.chargePE;
+							hit.dom.timingColor = timingColor;
+							hit.dom.hitTimeNs = Math.round(hit.tNs);
+
+							totalPE += hit.chargePE;
+							litDoms.push(hit.dom);
+						}
+
+						eventData.totalCharge = totalPE;
+						eventData.hitDomsCount = rawHits.length;
+					}
+
+					return {
+						x0: x0,
+						y0: y0,
+						x1: x1,
+						y1: y1,
+						dirX: dirX,
+						dirY: dirY,
+						progress: 0,
+						speed: 0.035, // progress increment per frame
+						isHit: isHit,
+						hitPoint: hitPoint,
+						eventData: eventData,
+						cherenkovCone: cherenkovCone,
+						litDoms: litDoms,
+						alpha: 1.0,
+					};
+				}
+
+				// POPULATE EVENT READOUT TELEMETRY
+				function displayEventTelemetry(data) {
+					if (!data) return;
+
+					// Format energy: TeV or PeV
+					let energyStr = "";
+					if (data.energyTeV >= 1000) {
+						energyStr = `${(data.energyTeV / 1000).toFixed(2)} PeV`;
+					} else {
+						energyStr = `${data.energyTeV.toFixed(1)} TeV`;
+					}
+
+					if (readoutEnergy) readoutEnergy.textContent = energyStr;
+					if (readoutZenith) readoutZenith.textContent = `${data.zenithDeg.toFixed(1)}°`;
+					if (readoutDoms) readoutDoms.textContent = `${data.hitDomsCount} / 504`;
+					if (readoutCharge) readoutCharge.textContent = `${data.totalCharge.toLocaleString()} p.e.`;
+
+					const isEnPage =
+						document.documentElement.lang === "en" ||
+						location.pathname.startsWith("/en") ||
+						document.documentElement.getAttribute("data-lang") === "en";
+
+					if (eventTopologyBadge) {
+						const typeStr = data.isCascade
+							? isEnPage
+								? "CASCADE (ν_e / ν_τ)"
+								: "级联型 (ν_e / ν_τ 强子簇射)"
+							: isEnPage
+								? "TRACK (ν_μ 缪子径迹)"
+								: "径迹型 (ν_μ 相对论缪子)";
+						eventTopologyBadge.textContent = typeStr;
+						eventTopologyBadge.className =
+							"text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-500/70 text-cyan-300 font-bold";
+					}
+
+					if (readoutSource) {
+						readoutSource.textContent = isEnPage ? data.source.nameEn : data.source.nameZh;
+					}
+					if (readoutDetail) {
+						readoutDetail.textContent = isEnPage ? data.source.detailEn : data.source.detailZh;
+					}
+
+					// Show canvas pinned badge
+					if (sourceBadge && sourceName) {
+						sourceName.textContent = isEnPage ? data.source.nameEn : data.source.nameZh;
+						sourceBadge.style.opacity = "1";
+					}
+				}
+
+				// UPDATE TALLY METRICS & HISTOGRAM
+				function updateTallyMetrics(newFired, newHits) {
+					tallyFired += newFired;
+					tallyHits += newHits;
+					tallyEscaped += newFired - newHits;
+
+					if (tallyFiredEl) tallyFiredEl.textContent = tallyFired.toLocaleString();
+					if (tallyHitsEl) tallyHitsEl.textContent = tallyHits.toLocaleString();
+					if (tallyEscapedEl) tallyEscapedEl.textContent = tallyEscaped.toLocaleString();
+
+					const rate = tallyFired > 0 ? (tallyHits / tallyFired) * 100 : 0;
+					if (tallyRateEl) tallyRateEl.textContent = `${rate.toFixed(2)}%`;
+
+					// Update histogram bars
+					const maxBin = Math.max(1, ...histogramCounts);
+					const bars = [barBin0, barBin1, barBin2, barBin3];
+					const counts = [countBin0, countBin1, countBin2, countBin3];
+
+					for (let i = 0; i < 4; i++) {
+						if (bars[i]) {
+							const pct = (histogramCounts[i] / maxBin) * 100;
+							bars[i].style.width = `${Math.min(100, Math.max(6, pct))}%`;
+						}
+						if (counts[i]) {
+							counts[i].textContent = String(histogramCounts[i]);
+						}
+					}
+				}
+
+				// REGISTER HIT IN HISTOGRAM
+				function recordHistogramEnergy(energyTeV) {
+					if (energyTeV < 10) {
+						histogramCounts[0]++;
+					} else if (energyTeV < 100) {
+						histogramCounts[1]++;
+					} else if (energyTeV < 1000) {
+						histogramCounts[2]++;
+					} else {
+						histogramCounts[3]++;
+					}
+				}
+
+				// FIRE SINGLE ACTION
+				function fireSingleNeutrino(isForce = false) {
+					const track = computeTrajectory(currentZenithDeg, isForce);
+					activeTracks.push(track);
+
+					updateTallyMetrics(1, track.isHit ? 1 : 0);
+
+					if (track.isHit) {
+						recordHistogramEnergy(track.eventData.energyTeV);
+						displayEventTelemetry(track.eventData);
+						showToast(
+							"⚡",
+							`捕获中微子！能量: ${(track.eventData.energyTeV >= 1000 ? (track.eventData.energyTeV / 1000).toFixed(2) + " PeV" : track.eventData.energyTeV.toFixed(1) + " TeV")} · 触发 ${track.eventData.hitDomsCount} 个 DOM`,
+							`Neutrino Captured! E = ${(track.eventData.energyTeV >= 1000 ? (track.eventData.energyTeV / 1000).toFixed(2) + " PeV" : track.eventData.energyTeV.toFixed(1) + " TeV")} · ${track.eventData.hitDomsCount} DOMs Lit`,
+						);
+					} else {
+						showToast(
+							"👻",
+							"未命中 · 幽灵粒子穿透地球与冰层逸出 (弱相互作用极度罕见)",
+							"Missed · Ghost neutrino passed through Earth without collision",
+						);
+					}
+				}
+
+				if (btnFireSingle) {
+					btnFireSingle.addEventListener("click", () => fireSingleNeutrino(false));
+				}
+				if (btnTriggerEvent) {
+					btnTriggerEvent.addEventListener("click", () => fireSingleNeutrino(true));
+				}
+
+				// BARRAGE MODE (N=2000)
+				let isBarraging = false;
+				function runBarrage() {
+					if (isBarraging) return;
+					isBarraging = true;
+					const N = 2000;
+					const pInt = 0.002 * Math.sqrt(currentEnergyLevel / 100);
+
+					let barrageHits = 0;
+
+					// Monte Carlo trials
+					for (let i = 0; i < N; i++) {
+						if (Math.random() < pInt) {
+							barrageHits++;
+							// Sample energy in TeV
+							let energyTeV = currentEnergyLevel * (0.3 + Math.random() * 2.2);
+							recordHistogramEnergy(energyTeV);
+						}
+					}
+
+					// Visual stream: generate 25 quick animated track streaks
+					const streamCount = 25;
+					for (let i = 0; i < streamCount; i++) {
+						const isThisHit = i === 0 && barrageHits > 0;
+						setTimeout(() => {
+							const t = computeTrajectory(currentZenithDeg, isThisHit);
+							t.speed = 0.05 + Math.random() * 0.04;
+							activeTracks.push(t);
+							if (isThisHit && t.isHit) {
+								displayEventTelemetry(t.eventData);
+							}
+						}, i * 35);
+					}
+
+					updateTallyMetrics(N, barrageHits);
+
+					setTimeout(() => {
+						isBarraging = false;
+						showToast(
+							"🚀",
+							`齐射完毕: 2,000 颗中微子 · 捕获 ${barrageHits} 例 · 逸出 ${N - barrageHits} 例`,
+							`Barrage Done: 2,000 fired · ${barrageHits} captured · ${N - barrageHits} escaped`,
+						);
+					}, 1000);
+				}
+
+				if (btnBarrage) {
+					btnBarrage.addEventListener("click", runBarrage);
+				}
+
+				// CLEAR / RESET
+				if (btnClear) {
+					btnClear.addEventListener("click", () => {
+						activeTracks = [];
+						for (const d of domList) {
+							d.litProgress = 0;
+							d.charge = 0;
+						}
+						tallyFired = 0;
+						tallyHits = 0;
+						tallyEscaped = 0;
+						histogramCounts = [0, 0, 0, 0];
+						updateTallyMetrics(0, 0);
+						if (sourceBadge) sourceBadge.style.opacity = "0";
+						if (eventTopologyBadge) {
+							eventTopologyBadge.textContent = "等待事例 / QUIESCENT";
+							eventTopologyBadge.className =
+								"text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-400";
+						}
+						if (readoutEnergy) readoutEnergy.textContent = "-- TeV";
+						if (readoutZenith) readoutZenith.textContent = "--°";
+						if (readoutDoms) readoutDoms.textContent = "0 / 504";
+						if (readoutCharge) readoutCharge.textContent = "0 p.e.";
+						showToast("🔄", "画布与统计已重置", "Display and statistics cleared");
+					});
+				}
+
+				// HISTORIC PRESET BUTTONS
+				function loadHistoricEvent(energyTeV, zenithDeg, isCascade, sourceName, desc) {
+					setZenith(zenithDeg);
+					const track = computeTrajectory(zenithDeg, true);
+					track.eventData.energyTeV = energyTeV;
+					track.eventData.isCascade = isCascade;
+					track.eventData.source = {
+						nameZh: sourceName,
+						nameEn: sourceName,
+						detailZh: desc,
+						detailEn: desc,
+					};
+					activeTracks.push(track);
+					recordHistogramEnergy(energyTeV);
+					updateTallyMetrics(1, 1);
+					displayEventTelemetry(track.eventData);
+					showToast("⭐", `载入历史里程碑: ${sourceName}`, `Loaded historic event: ${sourceName}`);
+				}
+
+				if (presetErnie) {
+					presetErnie.addEventListener("click", () => {
+						loadHistoricEvent(
+							1140,
+							34.2,
+							true,
+							"Ernie (厄尼 · 2012 第一批 PeV 宇宙级联事件)",
+							"人类首个确认的千万亿电子伏特级 (PeV) 宇宙高能中微子，开启高能中微子天文学纪元。",
+						);
+					});
+				}
+				if (presetBert) {
+					presetBert.addEventListener("click", () => {
+						loadHistoricEvent(
+							1040,
+							52.1,
+							true,
+							"Bert (伯特 · 2012 第一批 PeV 宇宙级联事件)",
+							"与 Ernie 同年探测到的孪生 PeV 级联事例，彻底证实天体物理高能中微子通量。",
+						);
+					});
+				}
+				if (presetBlazar) {
+					presetBlazar.addEventListener("click", () => {
+						loadHistoricEvent(
+							290,
+							142.3,
+							false,
+							"IceCube-170922A (耀变体 TXS 0506+056 联合证实)",
+							"穿透整个地球的上行缪子径迹！全球 20 座电磁望远镜联合预警，首度证实黑洞喷流中微子源。",
+						);
+					});
+				}
+				if (presetNgc) {
+					presetNgc.addEventListener("click", () => {
+						loadHistoricEvent(
+							79,
+							104.5,
+							false,
+							"NGC 1068 (星暴星系活跃核稳态辐射 · 2022)",
+							"冰立方积累 10 年数据探测到的活跃星系核稳态中微子点源，多信使天文学重大进展。",
+						);
+					});
+				}
+
+				// ==========================================
+				// CANVAS RENDER LOOP
+				// ==========================================
+				function render() {
+					ctx.clearRect(0, 0, cw, ch);
+
+					// 1. Background Glacier Ice Gradient
+					const iceGrad = ctx.createLinearGradient(0, 0, 0, ch);
+					iceGrad.addColorStop(0, "#081b33"); // Cold surface twilight
+					iceGrad.addColorStop(0.18, "#041022"); // Firn layer transition
+					iceGrad.addColorStop(0.45, "#020a17"); // 1450m ultra-clear ice
+					iceGrad.addColorStop(0.75, "#020712"); // 2000m deep dark ice
+					iceGrad.addColorStop(1.0, "#01040a"); // 2800m bedrock approach
+					ctx.fillStyle = iceGrad;
+					ctx.fillRect(0, 0, cw, ch);
+
+					// 2. Volcanic Dust Layer (around ~2000m depth, between 60% and 66% of canvas)
+					const dustY0 = Math.floor(detTop + (detBottom - detTop) * 0.52);
+					const dustY1 = Math.floor(detTop + (detBottom - detTop) * 0.62);
+					const dustGrad = ctx.createLinearGradient(0, dustY0, 0, dustY1);
+					dustGrad.addColorStop(0, "rgba(50, 40, 25, 0)");
+					dustGrad.addColorStop(0.5, "rgba(70, 55, 30, 0.14)");
+					dustGrad.addColorStop(1, "rgba(50, 40, 25, 0)");
+					ctx.fillStyle = dustGrad;
+					ctx.fillRect(detLeft - 20, dustY0, detRight - detLeft + 40, dustY1 - dustY0);
+
+					// 3. Depth Scale & Labels on Left
+					ctx.strokeStyle = "rgba(56, 189, 248, 0.25)";
+					ctx.lineWidth = 1;
+					const rulerX = detLeft - 18;
+					ctx.beginPath();
+					ctx.moveTo(rulerX, surfaceY);
+					ctx.lineTo(rulerX, detBottom + 20);
+					ctx.stroke();
+
+					ctx.fillStyle = "rgba(148, 163, 184, 0.75)";
+					ctx.font = "10px monospace";
+					ctx.textAlign = "right";
+
+					// 0m Surface
+					ctx.fillText("0 m", rulerX - 6, surfaceY + 3);
+					ctx.beginPath();
+					ctx.moveTo(rulerX - 4, surfaceY);
+					ctx.lineTo(rulerX + 4, surfaceY);
+					ctx.stroke();
+
+					// 1,450m Top
+					ctx.fillText("-1,450 m", rulerX - 6, detTop + 3);
+					ctx.beginPath();
+					ctx.moveTo(rulerX - 4, detTop);
+					ctx.lineTo(rulerX + 4, detTop);
+					ctx.stroke();
+
+					// Volcanic dust marker
+					ctx.fillStyle = "rgba(217, 119, 6, 0.65)";
+					ctx.fillText("~2,000 m (Dust)", rulerX - 6, (dustY0 + dustY1) / 2 + 3);
+					ctx.fillStyle = "rgba(148, 163, 184, 0.75)";
+
+					// 2,450m Bottom
+					ctx.fillText("-2,450 m", rulerX - 6, detBottom + 3);
+					ctx.beginPath();
+					ctx.moveTo(rulerX - 4, detBottom);
+					ctx.lineTo(rulerX + 4, detBottom);
+					ctx.stroke();
+
+					// 4. Surface Snow Line & South Pole Station Markers
+					ctx.strokeStyle = "rgba(224, 242, 254, 0.8)";
+					ctx.lineWidth = 2;
+					ctx.beginPath();
+					ctx.moveTo(0, surfaceY);
+					for (let x = 0; x <= cw; x += 10) {
+						const y = surfaceY + Math.sin(x * 0.02) * 1.5;
+						ctx.lineTo(x, y);
+					}
+					ctx.stroke();
+
+					// IceCube Laboratory (ICL) Building
+					const iclX = detLeft + 90;
+					ctx.fillStyle = "#1e293b";
+					ctx.strokeStyle = "#0284c7";
+					ctx.lineWidth = 1;
+					ctx.fillRect(iclX - 24, surfaceY - 14, 48, 14);
+					ctx.strokeRect(iclX - 24, surfaceY - 14, 48, 14);
+					// Twin towers of ICL
+					ctx.fillRect(iclX - 20, surfaceY - 22, 10, 8);
+					ctx.strokeRect(iclX - 20, surfaceY - 22, 10, 8);
+					ctx.fillRect(iclX + 10, surfaceY - 22, 10, 8);
+					ctx.strokeRect(iclX + 10, surfaceY - 22, 10, 8);
+
+					ctx.fillStyle = "rgba(224, 242, 254, 0.85)";
+					ctx.font = "9px monospace";
+					ctx.textAlign = "center";
+					ctx.fillText("IceCube Lab (ICL)", iclX, surfaceY - 27);
+
+					// South Pole Ceremonial Marker
+					const spX = detLeft + 25;
+					ctx.strokeStyle = "#f59e0b";
+					ctx.lineWidth = 2;
+					ctx.beginPath();
+					ctx.moveTo(spX, surfaceY - 18);
+					ctx.lineTo(spX, surfaceY);
+					ctx.stroke();
+					// Red flag
+					ctx.fillStyle = "#ef4444";
+					ctx.beginPath();
+					ctx.moveTo(spX, surfaceY - 18);
+					ctx.lineTo(spX + 12, surfaceY - 13);
+					ctx.lineTo(spX, surfaceY - 8);
+					ctx.fill();
+					ctx.fillStyle = "#fbbf24";
+					ctx.fillText("South Pole", spX + 6, surfaceY - 22);
+
+					// Ambient snow particles
+					for (const s of ambientSnow) {
+						s.x += s.vx;
+						s.y += s.vy;
+						if (s.x < 0) s.x = cw;
+						if (s.y > surfaceY) s.y = 0;
+						ctx.fillStyle = `rgba(224, 242, 254, ${s.alpha})`;
+						ctx.fillRect(s.x, s.y, s.size, s.size);
+					}
+
+					// 5. Cable Strings
+					const xStep = (detRight - detLeft) / (NUM_STRINGS - 1);
+					ctx.strokeStyle = "rgba(56, 189, 248, 0.12)";
+					ctx.lineWidth = 1;
+					for (let s = 0; s < NUM_STRINGS; s++) {
+						const sx = detLeft + s * xStep;
+						ctx.beginPath();
+						ctx.moveTo(sx, surfaceY);
+						ctx.lineTo(sx, detBottom + 12);
+						ctx.stroke();
+					}
+
+					// 6. Active Particle Tracks & Cherenkov Cones
+					for (let i = activeTracks.length - 1; i >= 0; i--) {
+						const tr = activeTracks[i];
+						tr.progress += tr.speed;
+
+						// Interpolated head position of the particle
+						const currX = tr.x0 + (tr.x1 - tr.x0) * Math.min(1, tr.progress);
+						const currY = tr.y0 + (tr.y1 - tr.y0) * Math.min(1, tr.progress);
+
+						// Draw dashed ghost trajectory streak
+						ctx.save();
+						ctx.strokeStyle = `rgba(34, 211, 238, ${0.4 * tr.alpha})`;
+						ctx.lineWidth = 1.5;
+						ctx.setLineDash([4, 6]);
+						ctx.beginPath();
+						ctx.moveTo(tr.x0, tr.y0);
+						ctx.lineTo(currX, currY);
+						ctx.stroke();
+						ctx.restore();
+
+						// Particle head glow
+						if (tr.progress < 1.1) {
+							ctx.fillStyle = `rgba(255, 255, 255, ${0.9 * tr.alpha})`;
+							ctx.beginPath();
+							ctx.arc(currX, currY, 2.5, 0, Math.PI * 2);
+							ctx.fill();
+						}
+
+						// If hit occurred, draw Cherenkov shockwave cone & muon ionizing track
+						if (tr.isHit && tr.cherenkovCone && tr.progress > 0.3) {
+							const cone = tr.cherenkovCone;
+							const vx = cone.v0.x;
+							const vy = cone.v0.y;
+
+							// Draw translucent Cherenkov Blue Cone Envelope
+							ctx.save();
+							ctx.beginPath();
+							ctx.moveTo(vx, vy);
+							ctx.lineTo(
+								cone.v1.x + cone.normX * cone.coneWidth,
+								cone.v1.y + cone.normY * cone.coneWidth,
+							);
+							ctx.lineTo(
+								cone.v1.x - cone.normX * cone.coneWidth,
+								cone.v1.y - cone.normY * cone.coneWidth,
+							);
+							ctx.closePath();
+
+							const coneGrad = ctx.createLinearGradient(vx, vy, cone.v1.x, cone.v1.y);
+							coneGrad.addColorStop(0, `rgba(6, 182, 212, ${0.35 * tr.alpha})`);
+							coneGrad.addColorStop(0.7, `rgba(2, 132, 199, ${0.2 * tr.alpha})`);
+							coneGrad.addColorStop(1, `rgba(30, 58, 138, ${0.05 * tr.alpha})`);
+							ctx.fillStyle = coneGrad;
+							ctx.fill();
+
+							// Cherenkov shockwave outer wavefront line
+							ctx.strokeStyle = `rgba(56, 189, 248, ${0.45 * tr.alpha})`;
+							ctx.lineWidth = 1;
+							ctx.stroke();
+							ctx.restore();
+
+							// Relativistic Muon Track core
+							ctx.save();
+							ctx.strokeStyle = `rgba(255, 255, 255, ${0.95 * tr.alpha})`;
+							ctx.lineWidth = 2.5;
+							ctx.beginPath();
+							ctx.moveTo(vx, vy);
+							ctx.lineTo(cone.v1.x, cone.v1.y);
+							ctx.stroke();
+
+							// Outer intense cyan ionizing aura
+							ctx.strokeStyle = `rgba(34, 211, 238, ${0.5 * tr.alpha})`;
+							ctx.lineWidth = 7;
+							ctx.stroke();
+							ctx.restore();
+
+							// Reverse Cosmic Direction Vector (Back-pointing arrow to cosmos)
+							ctx.save();
+							ctx.setLineDash([3, 4]);
+							ctx.strokeStyle = `rgba(251, 191, 36, ${0.8 * tr.alpha})`;
+							ctx.lineWidth = 1.5;
+							const revLen = 140;
+							const revX = vx - cone.dirX * revLen;
+							const revY = vy - cone.dirY * revLen;
+							ctx.beginPath();
+							ctx.moveTo(vx, vy);
+							ctx.lineTo(revX, revY);
+							ctx.stroke();
+
+							// Arrow head
+							const arrHeadLen = 10;
+							const arrowAngle = Math.atan2(-cone.dirY, -cone.dirX);
+							ctx.fillStyle = `rgba(251, 191, 36, ${0.9 * tr.alpha})`;
+							ctx.beginPath();
+							ctx.moveTo(revX, revY);
+							ctx.lineTo(
+								revX - arrHeadLen * Math.cos(arrowAngle - Math.PI / 6),
+								revY - arrHeadLen * Math.sin(arrowAngle - Math.PI / 6),
+							);
+							ctx.lineTo(
+								revX - arrHeadLen * Math.cos(arrowAngle + Math.PI / 6),
+								revY - arrHeadLen * Math.sin(arrowAngle + Math.PI / 6),
+							);
+							ctx.closePath();
+							ctx.fill();
+
+							// Label
+							ctx.font = "bold 9px monospace";
+							ctx.fillStyle = `rgba(251, 191, 36, ${0.95 * tr.alpha})`;
+							ctx.fillText("COSMIC ORIGIN VECTOR", revX + 8, revY - 4);
+							ctx.restore();
+						}
+
+						// Fade out old tracks gently
+						if (tr.progress > 1.2) {
+							tr.alpha -= 0.015;
+							if (tr.alpha <= 0) {
+								activeTracks.splice(i, 1);
+							}
+						}
+					}
+
+					// 7. Render DOM Modules (Digital Optical Modules)
+					for (const d of domList) {
+						if (d.litProgress > 0.05) {
+							// Hit DOM: Pulsing halo & Charge-scaled radius
+							const baseR = 3 + Math.min(8, Math.sqrt(d.charge) * 0.45);
+
+							// Outer soft halo
+							ctx.fillStyle = d.timingColor.replace("rgb", "rgba").replace(")", ", 0.25)");
+							ctx.beginPath();
+							ctx.arc(d.x, d.y, baseR * 2.8, 0, Math.PI * 2);
+							ctx.fill();
+
+							// Mid halo
+							ctx.fillStyle = d.timingColor.replace("rgb", "rgba").replace(")", ", 0.55)");
+							ctx.beginPath();
+							ctx.arc(d.x, d.y, baseR * 1.6, 0, Math.PI * 2);
+							ctx.fill();
+
+							// Solid core
+							ctx.fillStyle = d.timingColor;
+							ctx.beginPath();
+							ctx.arc(d.x, d.y, baseR, 0, Math.PI * 2);
+							ctx.fill();
+
+							// White hot center
+							ctx.fillStyle = "#ffffff";
+							ctx.beginPath();
+							ctx.arc(d.x, d.y, baseR * 0.45, 0, Math.PI * 2);
+							ctx.fill();
+
+							// Decay lit progress very slowly to leave long phosphorescence
+							d.litProgress = Math.max(0, d.litProgress - 0.003);
+						} else {
+							// Quiescent DOM: Faint optical sphere
+							ctx.fillStyle = "rgba(56, 189, 248, 0.35)";
+							ctx.beginPath();
+							ctx.arc(d.x, d.y, 1.8, 0, Math.PI * 2);
+							ctx.fill();
+						}
+					}
+
+					animId = requestAnimationFrame(render);
+				}
+
+				// INIT
+				window.addEventListener("resize", resizeCanvas);
+				resizeCanvas();
+				updateZenithLabel(34);
+				setEnergy(100);
+				render();
+
+				// Canvas Hover Tooltip on DOMs
+				canvas.addEventListener("mousemove", (e) => {
+					const rect = canvas.getBoundingClientRect();
+					const mx = e.clientX - rect.left;
+					const my = e.clientY - rect.top;
+
+					let hoveredDom = null;
+					for (const d of domList) {
+						if (Math.hypot(d.x - mx, d.y - my) < 8) {
+							hoveredDom = d;
+							break;
+						}
+					}
+
+					if (hoveredDom && hoveredDom.litProgress > 0.1) {
+						canvas.title = `String #${hoveredDom.stringIndex} · DOM #${hoveredDom.domIndex} | Depth: ${hoveredDom.depthM}m | Time: +${hoveredDom.hitTimeNs}ns | Charge: ${hoveredDom.charge} p.e.`;
+					} else if (hoveredDom) {
+						canvas.title = `String #${hoveredDom.stringIndex} · DOM #${hoveredDom.domIndex} | Depth: ${hoveredDom.depthM}m (Quiescent)`;
+					} else {
+						canvas.title = "";
+					}
+				});
+			}
+
+			// Clean up animation on Astro page transitions
+			window.addEventListener(
+				"astro:before-swap",
+				() => {
+					if (animId) cancelAnimationFrame(animId);
+					if (tickerTimer) clearInterval(tickerTimer);
+				},
+				{ once: true },
+			);
+
+			// Init on current load and future Swup page transitions
+			initGhostCatcher();
+			document.addEventListener("astro:page-load", initGhostCatcher);
+		})();
+	</script>
+</MainGridLayout>
