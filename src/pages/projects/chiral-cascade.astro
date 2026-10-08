@@ -1,0 +1,1458 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Chiral Cascade · The Soai Autocatalysis Lab"
+	: "手性雪崩 · Soai 自催化与非线性手性放大实验室";
+const description = isEn
+	? "A Chiral Snowball Reaction You Can Play With: Celebrating Henri B. Kagan and Kenso Soai's 2026 Nobel Prize in Chemistry for non-linear effects and autocatalysis in asymmetric organic synthesis. Amplifying 0.00005% ee to >99.5% homochirality."
+	: "手性雪崩 · CHIRAL CASCADE：致敬亨利·卡冈与硤合宪三荣获 2026 诺贝尔化学奖。交互式 2D 模拟不对称有机合成中的非线性效应与 Soai 自催化反应，探索极微小对映体过量 (0.00005% ee) 如何指数级滚雪球放大至 >99.5% ee，破译生命单一手性起源。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#050b14] text-zinc-100 border border-zinc-800/80 shadow-2xl selection:bg-cyan-500/30 selection:text-cyan-200">
+			<!-- Background Ambient Glow & Subtle Grid -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:24px_24px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<section class="relative z-10 mb-8 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+							<span class="lang-zh">★ 2026 诺贝尔化学奖 · KAGAN & SOAI</span>
+							<span class="lang-en">★ 2026 NOBEL PRIZE IN CHEMISTRY · KAGAN & SOAI</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+							<span>🧪</span>
+							<span>SOAI REACTION (1995) · AUTOCATALYSIS</span>
+						</div>
+					</div>
+					<div class="text-xs font-mono text-zinc-400">
+						<span class="lang-zh">2026-10-07 斯德哥尔摩宣布 · 瑞典皇家科学院</span>
+						<span class="lang-en">Announced 2026-10-07 in Stockholm</span>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2">
+					<span class="lang-zh">手性雪崩 · CHIRAL CASCADE</span>
+					<span class="lang-en">Chiral Cascade - The Soai Autocatalysis Lab</span>
+				</h1>
+				<p class="text-lg sm:text-xl font-bold text-cyan-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">手性雪崩 · CHIRAL CASCADE — The Soai Autocatalysis Lab</span>
+					<span class="lang-en">CHIRAL CASCADE — The Soai Autocatalysis Lab</span>
+				</p>
+				<p class="text-sm sm:text-base text-zinc-300/90 max-w-3xl leading-relaxed mb-3">
+					<span class="lang-zh">
+						2026 年 10 月 7 日，瑞典皇家科学院宣布将诺贝尔化学奖授予法国化学家亨利·B·卡冈（Henri B. Kagan，巴黎第十一大学荣休教授）与日本化学家硤合宪三（Kenso Soai，东京理科大学荣休教授），表彰其在不对称有机合成中发现非线性效应与自催化反应（"for the discovery of non-linear effects and autocatalysis in asymmetric organic synthesis"）。
+					</span>
+					<span class="lang-en">
+						On October 7, 2026, the Royal Swedish Academy of Sciences awarded the Nobel Prize in Chemistry to French chemist Henri B. Kagan (Professor Emeritus, Université Paris-Sud) and Japanese chemist Kenso Soai (Professor Emeritus, Tokyo University of Science) "for the discovery of non-linear effects and autocatalysis in asymmetric organic synthesis".
+					</span>
+				</p>
+				<p class="text-xs sm:text-sm text-zinc-400 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						1995 年硤合反应（Soai reaction）：二异丙基锌与嘧啶-5-甲醛在反应中，产物直接作为自身生成的高效手性催化剂。哪怕初始对映体过量仅有 0.00005%（千万分之五），也会在数轮催化循环内指数级雪崩放大至 &gt;99.5% ee。产物催化自身诞生，多数派手性不可逆滚雪球，首次在实验室内机械化再现了生命单一手性（Homochirality）的涌现奇迹。
+					</span>
+					<span class="lang-en">
+						The star 1995 Soai reaction: diisopropylzinc + pyrimidine-5-carbaldehyde. An initial enantiomeric excess as tiny as 0.00005% (5 parts in 10 million) was amplified autocatalytically to &gt;99.5% ee within a few cycles. The product catalyzes its own formation, so the majority handedness snowballs irreversibly—providing a mechanical answer to life's origin of homochirality.
+					</span>
+				</p>
+			</section>
+
+			<!-- REAL-TIME STATS BANNER -->
+			<section class="relative z-10 mb-8">
+				<div class="rounded-2xl bg-zinc-950/90 border border-cyan-500/30 p-5 sm:p-6 shadow-[0_0_25px_rgba(6,182,212,0.15)] relative overflow-hidden">
+					<div class="absolute -right-16 -top-16 w-48 h-48 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+						<div class="flex items-center gap-2">
+							<span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
+							<span class="text-xs font-mono uppercase tracking-widest text-cyan-300 font-bold">
+								<span class="lang-zh">🧬 反应器手性放大动力学实时监测</span>
+								<span class="lang-en">🧬 Real-Time Chiral Amplification Monitor</span>
+							</span>
+						</div>
+						<div class="text-[11px] font-mono text-cyan-400/90 bg-cyan-950/60 px-2.5 py-1 rounded-md border border-cyan-800/60 flex items-center gap-1.5">
+							<span id="stat-cycle-badge">CYCLE 0</span>
+							<span>·</span>
+							<span id="stat-hand-badge" class="text-zinc-400">50:50 RACEMIC</span>
+						</div>
+					</div>
+
+					<div class="flex flex-col md:flex-row items-baseline md:items-center justify-between gap-4">
+						<div>
+							<div class="text-xs font-mono text-zinc-400 mb-1">
+								<span class="lang-zh">当前对映体过量 (Enantiomeric Excess):</span>
+								<span class="lang-en">Current Enantiomeric Excess (ee):</span>
+							</div>
+							<div class="flex items-baseline gap-3">
+								<div id="stat-ee" class="font-mono text-3xl sm:text-5xl font-black text-cyan-300 tracking-wider drop-shadow-[0_0_15px_rgba(6,182,212,0.7)]">
+									0.00005% ee
+								</div>
+								<div id="stat-dominant-tag" class="text-xs font-mono font-bold px-2.5 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60">
+									(S) Dominant
+								</div>
+							</div>
+						</div>
+
+						<div class="flex flex-col sm:flex-row gap-4 sm:gap-6 text-xs font-mono border-t md:border-t-0 md:border-l border-zinc-800 md:pl-6 pt-3 md:pt-0">
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">分子微观种群</span>
+									<span class="lang-en">Chiral Population</span>
+								</span>
+								<div class="flex items-center gap-1.5 mt-0.5">
+									<span id="stat-left-count" class="text-cyan-400 font-bold">200 (S)</span>
+									<span class="text-zinc-600">/</span>
+									<span id="stat-right-count" class="text-amber-400 font-bold">200 (R)</span>
+								</div>
+							</div>
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">自催化放大倍率</span>
+									<span class="lang-en">Amplification Factor</span>
+								</span>
+								<span id="stat-amplification" class="text-cyan-400 font-bold">1.0×</span>
+							</div>
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">单一手性纯度目标</span>
+									<span class="lang-en">Homochirality Goal</span>
+								</span>
+								<span class="text-amber-400 font-bold">&gt;99.5% ee</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Visual balance ratio bar -->
+					<div class="mt-4 pt-3 border-t border-zinc-800/60">
+						<div class="flex justify-between text-[11px] font-mono text-zinc-400 mb-1">
+							<span class="text-cyan-400 font-semibold">(S) 左手性 <span id="bar-left-pct">50.0%</span></span>
+							<span class="text-zinc-500">N = 400 分子池</span>
+							<span class="text-amber-400 font-semibold">(R) 右手性 <span id="bar-right-pct">50.0%</span></span>
+						</div>
+						<div class="w-full h-2 rounded-full bg-zinc-900 overflow-hidden flex">
+							<div id="bar-fill-left" class="h-full bg-cyan-400 transition-all duration-300 shadow-[0_0_8px_rgba(6,182,212,0.8)]" style="width: 50%;"></div>
+							<div id="bar-fill-right" class="h-full bg-amber-400 transition-all duration-300 shadow-[0_0_8px_rgba(245,158,11,0.8)]" style="width: 50%;"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE SIMULATION SECTION: THE SNOWBALL LAB -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+							<span class="text-cyan-400 font-mono text-xl">01/</span>
+							<span class="lang-zh">手性雪崩自催化沙盒 · The Snowball Lab</span>
+							<span class="lang-en">The Snowball Lab · Autocatalytic Canvas</span>
+						</h2>
+						<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+							<span class="lang-zh">约 400 颗分子处于布朗热运动溶液中，绘制为镜面对称的手性螺旋。每轮自催化循环中，多数派分子作为催化剂主动招募并翻转少数派，观察激发的雪崩波与光环脉冲。</span>
+							<span class="lang-en">About 400 molecule particles in solution, rendered as mirror-symmetric chiral pinwheels. In each cycle, majority product autocatalyzes and converts minority molecules with a visible conversion wave.</span>
+						</p>
+					</div>
+
+					<!-- Presets Bar -->
+					<div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+						<span class="text-zinc-400 mr-1">
+							<span class="lang-zh">经典预设:</span>
+							<span class="lang-en">Presets:</span>
+						</span>
+						<button id="preset-soai" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-cyan-500/60 text-cyan-300 hover:text-white hover:bg-cyan-950 transition active:scale-95" title="Soai 1995: 0.00005% ee seed snowballs to >99.5%">
+							Soai 1995 (0.00005%)
+						</button>
+						<button id="preset-coin" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white transition active:scale-95" title="Coin flip: Exactly 50/50 balance, random noise picks winner">
+							Coin flip (50/50)
+						</button>
+						<button id="preset-lean" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-amber-500/50 text-amber-300 hover:text-white transition active:scale-95" title="Slight lean: 5% initial ee">
+							Slight lean (5%)
+						</button>
+					</div>
+				</div>
+
+				<!-- SIMULATOR CANVAS CONTAINER -->
+				<div class="relative w-full rounded-2xl bg-[#030814] border border-zinc-800 shadow-[0_0_40px_rgba(0,0,0,0.8)] overflow-hidden mb-6">
+					<!-- Canvas Overlay Toast Alert -->
+					<div id="cascade-toast" class="absolute top-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none transition-all duration-300 opacity-0 -translate-y-2">
+						<div class="px-4 py-2 rounded-xl bg-zinc-950/95 border border-cyan-500/50 text-xs font-mono shadow-2xl flex items-center gap-2">
+							<span id="toast-icon">⚡</span>
+							<span id="toast-msg" class="text-zinc-200"></span>
+						</div>
+					</div>
+
+					<!-- Canvas Legend (Top Right) -->
+					<div class="absolute top-3 right-3 z-10 pointer-events-none hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-lg bg-black/70 border border-zinc-800 text-[11px] font-mono text-zinc-400 backdrop-blur-xs">
+						<div class="flex items-center gap-1.5">
+							<span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_6px_rgba(6,182,212,0.8)]"></span>
+							<span class="lang-zh">左手性 (S) · 逆时针</span>
+							<span class="lang-en">Left (S) · CCW</span>
+						</div>
+						<div class="flex items-center gap-1.5">
+							<span class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]"></span>
+							<span class="lang-zh">右手性 (R) · 顺时针</span>
+							<span class="lang-en">Right (R) · CW</span>
+						</div>
+						<div class="flex items-center gap-1.5">
+							<span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+							<span class="lang-zh">催化翻转脉冲</span>
+							<span class="lang-en">Conversion Wave</span>
+						</div>
+					</div>
+
+					<!-- MAIN SIMULATION CANVAS -->
+					<canvas
+						id="chiral-canvas"
+						class="w-full h-[440px] sm:h-[500px] block cursor-crosshair touch-none select-none"
+					></canvas>
+				</div>
+
+				<!-- INTERACTIVE CONTROLS DOCK -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+					<!-- PRIMARY CONTROLS (Left Col: 7 cols) -->
+					<div class="lg:col-span-7 space-y-4">
+						<!-- INITIAL IMBALANCE SLIDER CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm">
+							<div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+								<div class="flex items-center gap-2">
+									<span class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300">
+										<span class="lang-zh">初始手性不平衡度 (Initial ee)</span>
+										<span class="lang-en">Initial Imbalance (Initial ee)</span>
+									</span>
+									<span id="slider-val-badge" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60">
+										ee = 0.00005%
+									</span>
+								</div>
+								<div id="seed-state-badge" class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300">
+									🧪 Soai 1995 经典起点 (5 / 10,000,000)
+								</div>
+							</div>
+
+							<input
+								id="slider-imbalance"
+								type="range"
+								min="0"
+								max="100"
+								step="1"
+								value="0"
+								class="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+							/>
+
+							<div class="flex justify-between text-[11px] font-mono text-zinc-500 mt-2">
+								<span>0.00005% (Soai)</span>
+								<span>0.1%</span>
+								<span>1.0%</span>
+								<span>5.0%</span>
+								<span>25.0%</span>
+							</div>
+
+							<!-- Quick Imbalance Selectors -->
+							<div class="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-zinc-800/80 text-xs font-mono">
+								<span class="text-zinc-500 text-[11px]">
+									<span class="lang-zh">快捷偏量:</span>
+									<span class="lang-en">Quick ee:</span>
+								</span>
+								<button id="quick-ee-soai" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									0.00005%
+								</button>
+								<button id="quick-ee-coin" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									0.0% (50/50)
+								</button>
+								<button id="quick-ee-point-1" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									0.1%
+								</button>
+								<button id="quick-ee-1" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									1.0%
+								</button>
+								<button id="quick-ee-5" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									5.0%
+								</button>
+								<button id="quick-ee-25" type="button" class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white transition active:scale-95 text-[11px]">
+									25.0%
+								</button>
+							</div>
+						</div>
+
+						<!-- ACTION BUTTONS ROW -->
+						<div class="flex flex-wrap items-center gap-3">
+							<!-- RUN CYCLE BUTTON -->
+							<button
+								id="btn-run-cycle"
+								type="button"
+								class="flex-1 min-w-[170px] px-5 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-zinc-950 font-black text-sm tracking-wide shadow-[0_0_20px_rgba(6,182,212,0.4)] transition active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+							>
+								<span>⚡</span>
+								<span>
+									<span class="lang-zh">RUN CYCLE (推进催化循环)</span>
+									<span class="lang-en">RUN CYCLE</span>
+								</span>
+							</button>
+
+							<!-- AUTO-RUN TOGGLE -->
+							<button
+								id="btn-autorun"
+								type="button"
+								class="px-4 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 font-bold text-xs tracking-wide transition active:scale-95 flex items-center gap-2 cursor-pointer"
+								title="Toggle continuous autocatalytic cycles"
+							>
+								<span id="autorun-icon">▶️</span>
+								<span>
+									<span class="lang-zh">连续自动推进</span>
+									<span class="lang-en">Auto-Run Cascade</span>
+								</span>
+							</button>
+
+							<!-- RE-SEED BUTTON -->
+							<button
+								id="btn-reseed"
+								type="button"
+								class="px-4 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-300 hover:text-white text-xs font-bold transition active:scale-95 flex items-center gap-2 cursor-pointer"
+								title="Reset reactor to selected initial state"
+							>
+								<span>🔄</span>
+								<span>
+									<span class="lang-zh">重置反应池</span>
+									<span class="lang-en">Re-Seed</span>
+								</span>
+							</button>
+
+							<!-- NOISE NUDGE BUTTON -->
+							<button
+								id="btn-noise"
+								type="button"
+								class="px-3.5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-amber-300 hover:text-amber-200 text-xs font-bold transition active:scale-95 flex items-center gap-1.5 cursor-pointer"
+								title="Inject random fluctuation (±1 flip)"
+							>
+								<span>🎲</span>
+								<span>
+									<span class="lang-zh">热涨落扰动</span>
+									<span class="lang-en">Noise Nudge</span>
+								</span>
+							</button>
+						</div>
+
+						<!-- TEACHING MOMENT CALLOUT (Strict requirement: one short line) -->
+						<div class="p-4 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-xs font-mono text-cyan-200/90 flex items-start gap-3 shadow-inner">
+							<span class="text-amber-400 text-base leading-none">💡</span>
+							<div class="leading-relaxed">
+								<span class="font-bold text-amber-300">
+									<span class="lang-zh">教学启示：</span>
+									<span class="lang-en">Teaching Moment:</span>
+								</span>
+								<span class="lang-zh">在绝对 50/50 且零涨落的对称态下，反应池永远保持平衡；但只要存在微乎其微的哪怕一丝扰动，自催化就会将其雪崩放大为完全单一手性。</span>
+								<span class="lang-en">At exactly 50/50 with zero noise the field stays balanced; any tiny nudge snowballs into complete homochirality.</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- SECONDARY DOCK (Right Col: 5 cols) - LIVE CHART & TELEMETRY -->
+					<div class="lg:col-span-5 space-y-4">
+						<!-- EE VS CYCLE CHART CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm">
+							<div class="flex items-center justify-between gap-2 mb-2">
+								<div class="flex items-center gap-2">
+									<span class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300">
+										<span class="lang-zh">对映体过量增长轨迹 (ee vs Cycle)</span>
+										<span class="lang-en">Exponential Climb (ee vs Cycle)</span>
+									</span>
+								</div>
+								<span class="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/50">
+									KINETICS LOG
+								</span>
+							</div>
+
+							<div class="relative w-full h-36 bg-[#02050c] rounded-lg border border-zinc-800/80 overflow-hidden">
+								<canvas id="chart-canvas" class="w-full h-full block"></canvas>
+							</div>
+
+							<div class="flex justify-between items-center text-[10px] font-mono text-zinc-500 mt-2">
+								<span>Cycle 0</span>
+								<span class="text-amber-400/80">-- &gt;99.5% 阈值线</span>
+								<span id="chart-max-cycle">Cycle 5</span>
+							</div>
+						</div>
+
+						<!-- MECHANISM GLANCE CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm space-y-3">
+							<div class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300 flex items-center justify-between">
+								<span>
+									<span class="lang-zh">Soai 反应化学配方</span>
+									<span class="lang-en">Soai Reaction Components</span>
+								</span>
+								<span class="text-[10px] text-zinc-500 font-normal">JACS 1995</span>
+							</div>
+
+							<div class="text-[11px] font-mono space-y-2 text-zinc-300">
+								<div class="p-2 rounded bg-zinc-900/60 border border-zinc-800 flex items-center justify-between">
+									<span class="text-zinc-400">底物 A</span>
+									<span class="text-cyan-300 font-semibold">二异丙基锌 i-Pr₂Zn</span>
+								</div>
+								<div class="p-2 rounded bg-zinc-900/60 border border-zinc-800 flex items-center justify-between">
+									<span class="text-zinc-400">底物 B</span>
+									<span class="text-cyan-300 font-semibold">嘧啶-5-甲醛</span>
+								</div>
+								<div class="p-2 rounded bg-zinc-900/60 border border-zinc-800 flex items-center justify-between">
+									<span class="text-zinc-400">产物 / 催化剂</span>
+									<span class="text-amber-300 font-semibold">手性嘧啶醇（自催化核心）</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- EXPLAINER SECTIONS (Bilingual, terse, direct, opinionated, no filler) -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="mb-6">
+					<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+						<span class="text-cyan-400 font-mono text-xl">02/</span>
+						<span class="lang-zh">手性、非线性效应与生命同手性</span>
+						<span class="lang-en">Chirality, Non-Linear Effects & Homochirality</span>
+					</h2>
+					<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+						<span class="lang-zh">四个核心命题，解析不对称合成如何从微观分子对称破缺走向生命的宏观秩序。</span>
+						<span class="lang-en">Four concise sections explaining mirror asymmetry, Kagan's mathematics, Soai's snowball, and the origin of life.</span>
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+					<!-- SECTION 1: WHAT IS CHIRALITY -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-widest">
+									TOPIC 01 · FOUNDATION
+								</span>
+								<span class="text-lg">✋🤚</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">何为手性 · 镜像不可重合的宇宙几何</span>
+								<span class="lang-en">What is Chirality · Hands and Enantiomers</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									伸出你的左手和右手：它们结构对称、拥有完全相同的零部件，但在三维空间中无论如何旋转都无法重合。化学中互为镜像却不可重叠的分子称为对映异构体（Enantiomers）。
+								</span>
+								<span class="lang-en">
+									Look at your left and right hands: identical in components, perfect mirror images, yet impossible to superimpose upon each other in three-dimensional space. Molecules possessing this mirror asymmetry are called enantiomers.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-amber-300/90 bg-amber-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-amber-500/20">
+							<span class="lang-zh">
+								💊 对制药界而言手性事关生死：沙利度胺（反应停）的右手型分子是温和镇静剂，而其镜像左手型分子却直接导致了上万例婴儿肢体畸形悲剧。
+							</span>
+							<span class="lang-en">
+								💊 In pharmaceuticals, chirality is life or death: (R)-thalidomide was a safe sedative, while its mirror-image (S)-enantiomer caused severe fetal malformations.
+							</span>
+						</div>
+					</div>
+
+					<!-- SECTION 2: KAGAN'S NON-LINEAR EFFECT -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-widest">
+									TOPIC 02 · MATHEMATICS
+								</span>
+								<span class="text-lg">📈</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">卡冈非线性效应 · 藏在动力学里的放大镜</span>
+								<span class="lang-en">Kagan's Non-Linear Effect · Amplifying in the Math</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									传统不对称合成长期默认为线性传递：催化剂有 10% ee，产物就该是 10% ee。亨利·卡冈（Henri B. Kagan）打破了这一经验教条：微弱富集手性的催化剂能够产出不对称度极高的产物（正非线性效应，(+)-NLE）。
+								</span>
+								<span class="lang-en">
+									Classical synthesis assumed linear transfer: a catalyst with 10% ee produces a product with 10% ee. Henri B. Kagan proved this wrong: a slightly enriched catalyst can yield a disproportionately pure asymmetric product ((+)-NLE).
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-cyan-300/90 bg-cyan-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-cyan-500/20">
+							<span class="lang-zh">
+								⚙️ 动力学蓄水池：异手性二聚体（R-S）往往催化失活，如同陷阱将少数派分子死死锁住；活跃的同手性二聚体（S-S）主导合成，放大器早已藏在反应数学之中。
+							</span>
+							<span class="lang-en">
+								⚙️ Dimer reservoir effect: Heterochiral (R-S) dimers remain catalytically inactive, trapping the minority enantiomer and letting active homochiral dimers dominate.
+							</span>
+						</div>
+					</div>
+
+					<!-- SECTION 3: SOAI'S SNOWBALL -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-widest">
+									TOPIC 03 · THE EXPERIMENT
+								</span>
+								<span class="text-lg">❄️</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">硤合自催化雪崩 · 5/10,000,000 到 &gt;99.5%</span>
+								<span class="lang-en">Soai's Snowball · Autocatalytic Cascade</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									1995 年硤合宪三发现：二异丙基锌与嘧啶-5-甲醛反应生成的产物嘧啶醇，直接作为自身反应的手性催化剂。产物催化自身诞生，多数派分子呈指数级自我复制。
+								</span>
+								<span class="lang-en">
+									In 1995 Kenso Soai discovered that chiral pyrimidyl alcohol formed by diisopropylzinc and pyrimidine-5-carbaldehyde autocatalyzes its own generation. The product catalyzes itself, exponentially multiplying the majority handedness.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-amber-300/90 bg-amber-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-amber-500/20">
+							<span class="lang-zh">
+								⚡ 极微起始：哪怕初始过量仅 0.00005%（千万分之五，如一粒微尘落入大泳池），数轮催化循环后也能滚雪球跃升至 &gt;99.5% ee 的绝对单手性。
+							</span>
+							<span class="lang-en">
+								⚡ Tiny seed, massive cascade: An initial enantiomeric excess as tiny as 0.00005% (5 in 10 million) amplified autocatalytically to &gt;99.5% ee within consecutive cycles.
+							</span>
+						</div>
+					</div>
+
+					<!-- SECTION 4: WHY IT MATTERS -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-cyan-400 font-semibold uppercase tracking-widest">
+									TOPIC 04 · ORIGIN OF LIFE
+								</span>
+								<span class="text-lg">🌱</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">为何重要 · 生命同手性起源的机械实证</span>
+								<span class="lang-en">Why It Matters · The Homochirality of Life</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									地球生命是完全单一手性的：所有蛋白质的氨基酸皆为左手型（L），核酸骨架的核糖皆为右手型（D）。混合外消旋物会破坏生物大分子的立体折叠，彻底瘫痪生命机器。
+								</span>
+								<span class="lang-en">
+									Terrestrial life is homochiral: amino acids in proteins are almost all left-handed, sugars in DNA/RNA right-handed. A racemic mixture would prevent molecular biology from functioning.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-cyan-300/90 bg-cyan-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-cyan-500/20">
+							<span class="lang-zh">
+								🌌 机械论的胜利：生命最初的对称破缺源自何处？硤合反应是极少数把这一形而上学哲学疑问降维为机械动力学实证的实验室壮举——任意微小的偶然扰动，足以雪崩出整个生命世界。
+							</span>
+							<span class="lang-en">
+								🌌 From philosophy to mechanics: Where did life's asymmetry come from? Soai's reaction is one of the few lab demos that makes a philosophical question feel mechanical.
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- NOBEL LAUREATES DOSSIER SECTION -->
+			<section class="relative z-10 mb-8">
+				<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/90 border border-zinc-800/90">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+						<div class="flex items-center gap-2">
+							<span class="text-amber-400 text-lg">🎖️</span>
+							<h3 class="text-base font-bold text-white">
+								<span class="lang-zh">2026 诺贝尔化学奖得主档案</span>
+								<span class="lang-en">2026 Nobel Chemistry Laureates Dossier</span>
+							</h3>
+						</div>
+						<div class="text-xs font-mono text-zinc-500">
+							Kungl. Vetenskapsakademien · Stockholm
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+						<div class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800">
+							<div class="text-amber-400 font-bold text-sm mb-1">Henri B. Kagan</div>
+							<div class="text-zinc-400 mb-2">Professor Emeritus, Université Paris-Sud (France)</div>
+							<div class="text-zinc-300/80 leading-relaxed">
+								<span class="lang-zh">突破性发现手性合成中的非线性效应（Non-Linear Effects in Asymmetric Synthesis），揭示了催化剂二聚自聚集导致的手性放大动力学本质。</span>
+								<span class="lang-en">Pioneered non-linear effects in asymmetric synthesis, uncovering how catalytic association states mathematically amplify or dampen stereochemical outcomes.</span>
+							</div>
+						</div>
+						<div class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800">
+							<div class="text-cyan-400 font-bold text-sm mb-1">Kenso Soai (硤合宪三)</div>
+							<div class="text-zinc-400 mb-2">Professor Emeritus, Tokyo University of Science (Japan)</div>
+							<div class="text-zinc-300/80 leading-relaxed">
+								<span class="lang-zh">1995 年发现著名的 Soai 不对称自催化反应，首次在化学实验中实证了千万分之五手性杂质能在数个循环内自催化放大至 &gt;99.5% ee 的手性雪崩奇迹。</span>
+								<span class="lang-en">Discovered the 1995 Soai reaction, the first experimental verification of asymmetric autocatalysis multiplying a 0.00005% ee seed into &gt;99.5% homochirality.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- FOOTER SECTION -->
+			<div class="pt-6 border-t border-zinc-800/80 text-xs font-mono text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+				<div>
+					<span class="lang-zh">致敬 2026 诺贝尔化学奖公布 · 不对称合成非线性效应与 Soai 自催化</span>
+					<span class="lang-en">Celebrating the 2026 Nobel Prize in Chemistry · Kagan & Soai</span>
+				</div>
+				<div class="text-zinc-500">
+					p1ziyu.com · 2026
+				</div>
+			</div>
+
+			<hr class="my-6 border-zinc-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-cyan-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<script is:inline>
+		// ========================================================
+		// Chiral Cascade · Soai Autocatalysis Interactive Simulator
+		// Vanilla JavaScript Client-Side Engine
+		// ========================================================
+
+		(function () {
+			let animId = null;
+			let autoRunTimer = null;
+
+			function initChiralCascade() {
+				// Clean up previous animations if re-initialized
+				if (animId) cancelAnimationFrame(animId);
+				if (autoRunTimer) {
+					clearInterval(autoRunTimer);
+					autoRunTimer = null;
+				}
+
+				const canvas = document.getElementById("chiral-canvas");
+				const chartCanvas = document.getElementById("chart-canvas");
+				if (!canvas || !chartCanvas) return;
+
+				const ctx = canvas.getContext("2d");
+				const chartCtx = chartCanvas.getContext("2d");
+				if (!ctx || !chartCtx) return;
+
+				// Elements
+				const statEe = document.getElementById("stat-ee");
+				const statDomTag = document.getElementById("stat-dominant-tag");
+				const statCycleBadge = document.getElementById("stat-cycle-badge");
+				const statHandBadge = document.getElementById("stat-hand-badge");
+				const statLeftCount = document.getElementById("stat-left-count");
+				const statRightCount = document.getElementById("stat-right-count");
+				const statAmplification = document.getElementById("stat-amplification");
+				const barLeftPct = document.getElementById("bar-left-pct");
+				const barRightPct = document.getElementById("bar-right-pct");
+				const barFillLeft = document.getElementById("bar-fill-left");
+				const barFillRight = document.getElementById("bar-fill-right");
+				const sliderImbalance = document.getElementById("slider-imbalance");
+				const sliderValBadge = document.getElementById("slider-val-badge");
+				const seedStateBadge = document.getElementById("seed-state-badge");
+				const cascadeToast = document.getElementById("cascade-toast");
+				const toastIcon = document.getElementById("toast-icon");
+				const toastMsg = document.getElementById("toast-msg");
+				const btnRunCycle = document.getElementById("btn-run-cycle");
+				const btnAutoRun = document.getElementById("btn-autorun");
+				const autoRunIcon = document.getElementById("autorun-icon");
+				const btnReseed = document.getElementById("btn-reseed");
+				const btnNoise = document.getElementById("btn-noise");
+
+				// Presets
+				const presetSoai = document.getElementById("preset-soai");
+				const presetCoin = document.getElementById("preset-coin");
+				const presetLean = document.getElementById("preset-lean");
+
+				// Quick ee buttons
+				const quickEeSoai = document.getElementById("quick-ee-soai");
+				const quickEeCoin = document.getElementById("quick-ee-coin");
+				const quickEePoint1 = document.getElementById("quick-ee-point-1");
+				const quickEe1 = document.getElementById("quick-ee-1");
+				const quickEe5 = document.getElementById("quick-ee-5");
+				const quickEe25 = document.getElementById("quick-ee-25");
+
+				// SIMULATION PARAMETERS
+				const NUM_PARTICLES = 400;
+				let particles = [];
+				let currentCycle = 0;
+				let currentPreset = "soai"; // "soai" | "coin" | "lean" | "custom"
+				let microscopicSeed = 0.00005; // 0.00005% for Soai preset
+				let dominantHand = -1; // -1 for Left (S) cyan, +1 for Right (R) amber
+				let cycleHistory = []; // { cycle, ee, dominantHand }
+				let toastTimeout = null;
+				let isAutoRunning = false;
+				let waveFronts = []; // Expanding visual wave rings
+
+				// Resize handler
+				function resizeCanvases() {
+					const rect = canvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					canvas.width = rect.width * dpr;
+					canvas.height = rect.height * dpr;
+					ctx.resetTransform();
+					ctx.scale(dpr, dpr);
+
+					const cRect = chartCanvas.getBoundingClientRect();
+					chartCanvas.width = cRect.width * dpr;
+					chartCanvas.height = cRect.height * dpr;
+					chartCtx.resetTransform();
+					chartCtx.scale(dpr, dpr);
+
+					renderChart();
+				}
+
+				function showToast(icon, msg) {
+					if (!cascadeToast || !toastMsg) return;
+					toastIcon.textContent = icon;
+					toastMsg.textContent = msg;
+					cascadeToast.classList.remove("opacity-0", "-translate-y-2");
+					cascadeToast.classList.add("opacity-100", "translate-y-0");
+
+					if (toastTimeout) clearTimeout(toastTimeout);
+					toastTimeout = setTimeout(() => {
+						cascadeToast.classList.remove("opacity-100", "translate-y-0");
+						cascadeToast.classList.add("opacity-0", "-translate-y-2");
+					}, 2600);
+				}
+
+				// Slider to ee mapping (logarithmic scale)
+				// 0: 0.00005%, 25: 0.1%, 50: 1.0%, 75: 5.0%, 100: 25.0%
+				function sliderToEe(val) {
+					if (val <= 0) return 0.00005;
+					if (val <= 25) return 0.00005 + (0.1 - 0.00005) * (val / 25);
+					if (val <= 50) return 0.1 * Math.pow(10, ((val - 25) / 25));
+					if (val <= 75) return 1.0 + (5.0 - 1.0) * ((val - 50) / 25);
+					return 5.0 + (25.0 - 5.0) * ((val - 75) / 25);
+				}
+
+				function eeToSlider(ee) {
+					if (ee <= 0.00005) return 0;
+					if (ee <= 0.1) return Math.round((ee - 0.00005) / (0.1 - 0.00005) * 25);
+					if (ee <= 1.0) return Math.round(25 + (Math.log10(ee / 0.1)) * 25);
+					if (ee <= 5.0) return Math.round(50 + ((ee - 1.0) / 4.0) * 25);
+					return Math.round(75 + ((Math.min(25.0, ee) - 5.0) / 20.0) * 25);
+				}
+
+				// Initialize particle state
+				function seedParticles(eePercent, preferredHand = -1) {
+					const rect = canvas.getBoundingClientRect();
+					const w = rect.width || 800;
+					const h = rect.height || 480;
+
+					currentCycle = 0;
+					dominantHand = preferredHand;
+					microscopicSeed = eePercent;
+
+					// Compute discrete particle ratio
+					// If ee is microscopic (< 0.1%), split 200 vs 200 exactly at Cycle 0
+					let numLeft = 200;
+					let numRight = 200;
+
+					if (eePercent >= 0.5) {
+						// Substantial initial imbalance
+						const excess = Math.round((NUM_PARTICLES * (eePercent / 100)) / 2);
+						if (preferredHand === -1) {
+							numLeft = Math.min(NUM_PARTICLES, 200 + excess);
+							numRight = NUM_PARTICLES - numLeft;
+						} else {
+							numRight = Math.min(NUM_PARTICLES, 200 + excess);
+							numLeft = NUM_PARTICLES - numRight;
+						}
+					}
+
+					particles = [];
+					const hands = [];
+					for (let i = 0; i < numLeft; i++) hands.push(-1);
+					for (let i = 0; i < numRight; i++) hands.push(1);
+
+					// Shuffle hands randomly
+					for (let i = hands.length - 1; i > 0; i--) {
+						const j = Math.floor(Math.random() * (i + 1));
+						const temp = hands[i];
+						hands[i] = hands[j];
+						hands[j] = temp;
+					}
+
+					for (let i = 0; i < NUM_PARTICLES; i++) {
+						particles.push({
+							x: Math.random() * (w - 40) + 20,
+							y: Math.random() * (h - 40) + 20,
+							vx: (Math.random() - 0.5) * 0.45,
+							vy: (Math.random() - 0.5) * 0.45,
+							angle: Math.random() * Math.PI * 2,
+							vAngle: (Math.random() - 0.5) * 0.02,
+							hand: hands[i], // -1 = Left (S cyan), +1 = Right (R amber)
+							pulse: 0,
+							scheduledFlip: null,
+						});
+					}
+
+					cycleHistory = [{
+						cycle: 0,
+						ee: eePercent,
+						dominantHand: preferredHand,
+						numLeft: numLeft,
+						numRight: numRight,
+					}];
+
+					waveFronts = [];
+					updateTelemetry();
+					renderChart();
+				}
+
+				// Calculate live telemetry numbers
+				function updateTelemetry() {
+					let leftCount = 0;
+					let rightCount = 0;
+					for (const p of particles) {
+						if (p.hand === -1) leftCount++;
+						else rightCount++;
+					}
+
+					const total = particles.length;
+					let liveEe = (Math.abs(leftCount - rightCount) / total) * 100;
+
+					// If in cycle 0 with microscopic seed and 200/200, preserve the microscopic seed in readout
+					if (currentCycle === 0 && leftCount === 200 && rightCount === 200) {
+						liveEe = microscopicSeed;
+					}
+
+					// Update ee display
+					let eeStr = "";
+					if (liveEe < 0.001) {
+						eeStr = liveEe.toFixed(5) + "% ee";
+					} else if (liveEe < 0.1) {
+						eeStr = liveEe.toFixed(4) + "% ee";
+					} else if (liveEe < 10) {
+						eeStr = liveEe.toFixed(2) + "% ee";
+					} else {
+						eeStr = liveEe.toFixed(1) + "% ee";
+					}
+					if (statEe) statEe.textContent = eeStr;
+
+					// Major hand tag
+					if (statDomTag) {
+						if (leftCount > rightCount || (leftCount === rightCount && dominantHand === -1 && microscopicSeed > 0)) {
+							statDomTag.textContent = "(S) Dominant · 左手性";
+							statDomTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60";
+							if (statEe) statEe.className = "font-mono text-3xl sm:text-5xl font-black text-cyan-300 tracking-wider drop-shadow-[0_0_15px_rgba(6,182,212,0.7)]";
+						} else if (rightCount > leftCount || (leftCount === rightCount && dominantHand === 1 && microscopicSeed > 0)) {
+							statDomTag.textContent = "(R) Dominant · 右手性";
+							statDomTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-950 text-amber-300 border border-amber-800/60";
+							if (statEe) statEe.className = "font-mono text-3xl sm:text-5xl font-black text-amber-300 tracking-wider drop-shadow-[0_0_15px_rgba(245,158,11,0.7)]";
+						} else {
+							statDomTag.textContent = "Racemic · 外消旋 50:50";
+							statDomTag.className = "text-xs font-mono font-bold px-2.5 py-1 rounded bg-zinc-900 text-zinc-400 border border-zinc-700";
+							if (statEe) statEe.className = "font-mono text-3xl sm:text-5xl font-black text-zinc-300 tracking-wider";
+						}
+					}
+
+					if (statCycleBadge) statCycleBadge.textContent = `CYCLE ${currentCycle}`;
+					if (statHandBadge) {
+						if (leftCount > rightCount) {
+							statHandBadge.textContent = `${((leftCount / total) * 100).toFixed(1)}% (S)`;
+							statHandBadge.className = "text-cyan-400";
+						} else if (rightCount > leftCount) {
+							statHandBadge.textContent = `${((rightCount / total) * 100).toFixed(1)}% (R)`;
+							statHandBadge.className = "text-amber-400";
+						} else {
+							statHandBadge.textContent = "50:50 RACEMIC";
+							statHandBadge.className = "text-zinc-400";
+						}
+					}
+
+					if (statLeftCount) statLeftCount.textContent = `${leftCount} (S)`;
+					if (statRightCount) statRightCount.textContent = `${rightCount} (R)`;
+
+					const leftPct = ((leftCount / total) * 100).toFixed(1);
+					const rightPct = ((rightCount / total) * 100).toFixed(1);
+					if (barLeftPct) barLeftPct.textContent = `${leftPct}%`;
+					if (barRightPct) barRightPct.textContent = `${rightPct}%`;
+					if (barFillLeft) barFillLeft.style.width = `${leftPct}%`;
+					if (barFillRight) barFillRight.style.width = `${rightPct}%`;
+
+					// Amplification factor
+					if (statAmplification) {
+						if (microscopicSeed > 0) {
+							const factor = Math.max(1.0, liveEe / microscopicSeed);
+							if (factor > 100000) {
+								statAmplification.textContent = (factor / 1000000).toFixed(2) + "M×";
+							} else if (factor > 1000) {
+								statAmplification.textContent = factor.toFixed(0) + "×";
+							} else {
+								statAmplification.textContent = factor.toFixed(1) + "×";
+							}
+						} else {
+							statAmplification.textContent = "1.0× (Noise)";
+						}
+					}
+				}
+
+				// Execute 1 Autocatalytic Cycle
+				function runCycle() {
+					currentCycle++;
+
+					let numLeft = 0;
+					let numRight = 0;
+					for (const p of particles) {
+						if (p.hand === -1) numLeft++;
+						else numRight++;
+					}
+
+					// Check symmetry condition
+					if (numLeft === numRight) {
+						if (dominantHand === 0 && microscopicSeed === 0) {
+							// Exact 50/50 with zero noise: field stays balanced!
+							showToast("⚖️", "对称态停滞：50/50 且无噪声下无偏向。请点击‘热涨落扰动’或使用预设。");
+							cycleHistory.push({
+								cycle: currentCycle,
+								ee: 0,
+								dominantHand: 0,
+								numLeft: 200,
+								numRight: 200,
+							});
+							updateTelemetry();
+							renderChart();
+							return;
+						}
+					}
+
+					// Determine majority hand
+					let winHand = dominantHand;
+					if (numLeft > numRight) winHand = -1;
+					else if (numRight > numLeft) winHand = 1;
+					else if (winHand === 0) {
+						// Random spontaneous symmetry break
+						winHand = Math.random() < 0.5 ? -1 : 1;
+					}
+					dominantHand = winHand;
+
+					// Target ee progression for Soai / non-linear autocatalytic model
+					let targetEe = 0;
+					if (currentPreset === "soai" && microscopicSeed === 0.00005) {
+						// Faithful 1995 Soai reaction exponential cascade
+						if (currentCycle === 1) targetEe = 3.2; // 206 vs 194
+						else if (currentCycle === 2) targetEe = 31.5; // 263 vs 137
+						else if (currentCycle === 3) targetEe = 86.4; // 373 vs 27
+						else if (currentCycle === 4) targetEe = 99.6; // 399 vs 1
+						else targetEe = 100.0;
+					} else {
+						// General Kagan-Soai non-linear dimer amplification model
+						const currentFrac = Math.max(numLeft, numRight) / NUM_PARTICLES;
+						// Dimeric non-linear cooperative recruitment
+						const nextMajorityFrac = Math.min(1.0, Math.pow(currentFrac, 1.8) / (Math.pow(currentFrac, 1.8) + Math.pow(1 - currentFrac, 1.8)) + 0.05);
+						targetEe = (nextMajorityFrac - (1 - nextMajorityFrac)) * 100;
+					}
+
+					// Calculate how many minority particles must flip to majority
+					const targetMajorityCount = Math.min(NUM_PARTICLES, Math.round(NUM_PARTICLES * (0.5 + targetEe / 200)));
+					const currentMajorityCount = winHand === -1 ? numLeft : numRight;
+					const flipsNeeded = Math.max(0, targetMajorityCount - currentMajorityCount);
+
+					// Candidate particles that have the minority hand
+					const candidates = particles.filter((p) => p.hand !== winHand);
+
+					if (candidates.length === 0 || flipsNeeded === 0) {
+						showToast("🎉", "单一手性完成：已达到 100% 绝对纯手性 (>99.5% ee)！");
+						if (isAutoRunning) toggleAutoRun();
+						return;
+					}
+
+					// Catalytic epicenter (center of canvas or centroid of majority)
+					const rect = canvas.getBoundingClientRect();
+					const centerX = rect.width / 2;
+					const centerY = rect.height / 2;
+
+					// Trigger expanding visual wave
+					waveFronts.push({
+						x: centerX,
+						y: centerY,
+						radius: 0,
+						maxRadius: Math.hypot(centerX, centerY) * 1.2,
+						alpha: 1.0,
+						color: winHand === -1 ? "#06b6d4" : "#f59e0b",
+					});
+
+					// Sort candidates by proximity to center to simulate a catalytic wave outward
+					candidates.sort((a, b) => {
+						const distA = Math.hypot(a.x - centerX, a.y - centerY);
+						const distB = Math.hypot(b.x - centerX, b.y - centerY);
+						return distA - distB;
+					});
+
+					const flipBatch = candidates.slice(0, flipsNeeded);
+					const maxDelay = 750; // ms wave duration
+
+					flipBatch.forEach((p, idx) => {
+						const delay = (idx / flipBatch.length) * maxDelay;
+						setTimeout(() => {
+							p.hand = winHand;
+							p.pulse = 1.0;
+							updateTelemetry();
+						}, delay);
+					});
+
+					// Complete cycle recording
+					setTimeout(() => {
+						let finalLeft = 0;
+						let finalRight = 0;
+						for (const p of particles) {
+							if (p.hand === -1) finalLeft++;
+							else finalRight++;
+						}
+						const finalEe = (Math.abs(finalLeft - finalRight) / NUM_PARTICLES) * 100;
+
+						cycleHistory.push({
+							cycle: currentCycle,
+							ee: finalEe,
+							dominantHand: winHand,
+							numLeft: finalLeft,
+							numRight: finalRight,
+						});
+
+						updateTelemetry();
+						renderChart();
+
+						const handLabel = winHand === -1 ? "(S) 左手性" : "(R) 右手性";
+						showToast(
+							"⚡",
+							`循环 ${currentCycle} 完成：自催化招募 +${flipsNeeded} 分子 · ee 跃升至 ${finalEe.toFixed(1)}% (${handLabel})`,
+						);
+
+						if (finalEe >= 99.5 && isAutoRunning) {
+							toggleAutoRun();
+							showToast("🏆", `雪崩达标：在第 ${currentCycle} 轮成功超越 >99.5% ee 单一手性纯度！`);
+						}
+					}, maxDelay + 50);
+				}
+
+				// Auto-run toggle
+				function toggleAutoRun() {
+					isAutoRunning = !isAutoRunning;
+					if (isAutoRunning) {
+						if (autoRunIcon) autoRunIcon.textContent = "⏸️";
+						btnAutoRun.classList.add("border-cyan-400", "bg-cyan-950/60", "text-cyan-300");
+						autoRunTimer = setInterval(() => {
+							runCycle();
+						}, 1400);
+					} else {
+						if (autoRunIcon) autoRunIcon.textContent = "▶️";
+						btnAutoRun.classList.remove("border-cyan-400", "bg-cyan-950/60", "text-cyan-300");
+						if (autoRunTimer) {
+							clearInterval(autoRunTimer);
+							autoRunTimer = null;
+						}
+					}
+				}
+
+				// Inject random thermal noise
+				function injectNoise() {
+					if (particles.length === 0) return;
+					// Pick 1 random particle and flip it
+					const p = particles[Math.floor(Math.random() * particles.length)];
+					p.hand = -p.hand;
+					p.pulse = 1.0;
+					showToast("🎲", `热涨落扰动：单分子偶然翻转，微观打破对称平衡！`);
+					updateTelemetry();
+				}
+
+				// Render ee vs cycle chart
+				function renderChart() {
+					const rect = chartCanvas.getBoundingClientRect();
+					const w = rect.width;
+					const h = rect.height;
+					if (w === 0 || h === 0) return;
+
+					chartCtx.clearRect(0, 0, w, h);
+
+					const padLeft = 28;
+					const padRight = 14;
+					const padTop = 14;
+					const padBottom = 22;
+					const plotW = w - padLeft - padRight;
+					const plotH = h - padTop - padBottom;
+
+					// Background grid lines
+					chartCtx.strokeStyle = "rgba(255, 255, 255, 0.08)";
+					chartCtx.lineWidth = 1;
+
+					// 0%, 50%, 100% lines
+					[0, 0.5, 1.0].forEach((yFrac) => {
+						const y = padTop + plotH * (1 - yFrac);
+						chartCtx.beginPath();
+						chartCtx.moveTo(padLeft, y);
+						chartCtx.lineTo(padLeft + plotW, y);
+						chartCtx.stroke();
+
+						chartCtx.fillStyle = "rgba(161, 161, 170, 0.6)";
+						chartCtx.font = "9px monospace";
+						chartCtx.fillText(`${Math.round(yFrac * 100)}%`, 2, y + 3);
+					});
+
+					// 99.5% threshold line (dashed amber)
+					const y99 = padTop + plotH * (1 - 0.995);
+					chartCtx.save();
+					chartCtx.setLineDash([3, 3]);
+					chartCtx.strokeStyle = "rgba(245, 158, 11, 0.5)";
+					chartCtx.beginPath();
+					chartCtx.moveTo(padLeft, y99);
+					chartCtx.lineTo(padLeft + plotW, y99);
+					chartCtx.stroke();
+					chartCtx.restore();
+
+					if (cycleHistory.length === 0) return;
+
+					// Max cycle for x-axis scale
+					const maxC = Math.max(5, currentCycle, cycleHistory.length - 1);
+					const maxCycleEl = document.getElementById("chart-max-cycle");
+					if (maxCycleEl) maxCycleEl.textContent = `Cycle ${maxC}`;
+
+					// X-axis coordinate mapper
+					const getX = (c) => padLeft + (c / maxC) * plotW;
+					const getY = (ee) => padTop + plotH * (1 - Math.min(100, ee) / 100);
+
+					// Draw connecting line
+					chartCtx.beginPath();
+					cycleHistory.forEach((pt, i) => {
+						const x = getX(pt.cycle);
+						const y = getY(pt.ee);
+						if (i === 0) chartCtx.moveTo(x, y);
+						else chartCtx.lineTo(x, y);
+					});
+
+					const lastPt = cycleHistory[cycleHistory.length - 1];
+					const strokeColor = lastPt && lastPt.dominantHand === 1 ? "#f59e0b" : "#06b6d4";
+					chartCtx.strokeStyle = strokeColor;
+					chartCtx.lineWidth = 2.5;
+					chartCtx.stroke();
+
+					// Draw glowing points
+					cycleHistory.forEach((pt, i) => {
+						const x = getX(pt.cycle);
+						const y = getY(pt.ee);
+
+						chartCtx.fillStyle = pt.dominantHand === 1 ? "#f59e0b" : "#06b6d4";
+						chartCtx.beginPath();
+						chartCtx.arc(x, y, i === cycleHistory.length - 1 ? 4.5 : 3, 0, Math.PI * 2);
+						chartCtx.fill();
+
+						if (i === cycleHistory.length - 1) {
+							// Outer ring
+							chartCtx.strokeStyle = "#ffffff";
+							chartCtx.lineWidth = 1.5;
+							chartCtx.beginPath();
+							chartCtx.arc(x, y, 6, 0, Math.PI * 2);
+							chartCtx.stroke();
+						}
+					});
+				}
+
+				// Draw a single handed molecule glyph
+				function drawMolecule(p) {
+					ctx.save();
+					ctx.translate(p.x, p.y);
+					ctx.rotate(p.angle);
+
+					const isLeft = p.hand === -1;
+					const accentColor = isLeft ? "#06b6d4" : "#f59e0b";
+					const coreColor = isLeft ? "#67e8f9" : "#fbbf24";
+					const haloColor = isLeft ? "rgba(6, 182, 212, 0.28)" : "rgba(245, 158, 11, 0.28)";
+
+					// Flaring pulse during flip
+					if (p.pulse > 0) {
+						const s = 1.0 + p.pulse * 0.45;
+						ctx.scale(s, s);
+
+						// White flash core
+						ctx.fillStyle = `rgba(255, 255, 255, ${p.pulse * 0.8})`;
+						ctx.beginPath();
+						ctx.arc(0, 0, 7, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Ambient soft halo
+					ctx.fillStyle = haloColor;
+					ctx.beginPath();
+					ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Handed 3-blade curved pinwheel / spiral
+					// Curvature sign: -1 for Left (CCW), +1 for Right (CW)
+					const curvature = isLeft ? -1 : 1;
+					const armColor = p.pulse > 0.4 ? "#ffffff" : accentColor;
+					const beadColor = p.pulse > 0.4 ? "#ffffff" : coreColor;
+
+					ctx.strokeStyle = armColor;
+					ctx.lineWidth = 1.6;
+
+					for (let k = 0; k < 3; k++) {
+						const phi = (k * 2 * Math.PI) / 3;
+						const r0 = 2.4;
+						const startX = r0 * Math.cos(phi);
+						const startY = r0 * Math.sin(phi);
+
+						// Quadratic curve control point bending in direction of chirality
+						const cpAngle = phi + curvature * 0.65;
+						const cpR = 5.6;
+						const cpX = cpR * Math.cos(cpAngle);
+						const cpY = cpR * Math.sin(cpAngle);
+
+						// Arm tip
+						const endAngle = phi + curvature * 0.98;
+						const endR = 8.2;
+						const endX = endR * Math.cos(endAngle);
+						const endY = endR * Math.sin(endAngle);
+
+						ctx.beginPath();
+						ctx.moveTo(startX, startY);
+						ctx.quadraticCurveTo(cpX, cpY, endX, endY);
+						ctx.stroke();
+
+						// Tip atom sphere
+						ctx.fillStyle = beadColor;
+						ctx.beginPath();
+						ctx.arc(endX, endY, 1.3, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Center stereocenter nucleus
+					ctx.fillStyle = p.pulse > 0.5 ? "#ffffff" : coreColor;
+					ctx.beginPath();
+					ctx.arc(0, 0, 2.2, 0, Math.PI * 2);
+					ctx.fill();
+
+					ctx.restore();
+
+					// Expanding shockwave ripple ring during conversion
+					if (p.pulse > 0) {
+						ctx.strokeStyle = `rgba(255, 255, 255, ${p.pulse * 0.7})`;
+						ctx.lineWidth = 1.4;
+						ctx.beginPath();
+						ctx.arc(p.x, p.y, (1.0 - p.pulse) * 22 + 5, 0, Math.PI * 2);
+						ctx.stroke();
+
+						p.pulse = Math.max(0, p.pulse - 0.024);
+					}
+				}
+
+				// Main canvas animation loop
+				function render() {
+					const rect = canvas.getBoundingClientRect();
+					const w = rect.width;
+					const h = rect.height;
+
+					// Deep reaction vessel background
+					ctx.fillStyle = "#030814";
+					ctx.fillRect(0, 0, w, h);
+
+					// Subtle grid lines inside canvas
+					ctx.strokeStyle = "rgba(6, 182, 212, 0.05)";
+					ctx.lineWidth = 1;
+					const gridSize = 40;
+					for (let x = 0; x < w; x += gridSize) {
+						ctx.beginPath();
+						ctx.moveTo(x, 0);
+						ctx.lineTo(x, h);
+						ctx.stroke();
+					}
+					for (let y = 0; y < h; y += gridSize) {
+						ctx.beginPath();
+						ctx.moveTo(0, y);
+						ctx.lineTo(w, y);
+						ctx.stroke();
+					}
+
+					// Render expanding catalytic wavefront rings
+					for (let i = waveFronts.length - 1; i >= 0; i--) {
+						const wf = waveFronts[i];
+						wf.radius += 5.5;
+						wf.alpha = Math.max(0, 1.0 - wf.radius / wf.maxRadius);
+
+						ctx.save();
+						ctx.strokeStyle = wf.color;
+						ctx.globalAlpha = wf.alpha * 0.6;
+						ctx.lineWidth = 3;
+						ctx.shadowColor = wf.color;
+						ctx.shadowBlur = 12;
+						ctx.beginPath();
+						ctx.arc(wf.x, wf.y, wf.radius, 0, Math.PI * 2);
+						ctx.stroke();
+						ctx.restore();
+
+						if (wf.radius >= wf.maxRadius || wf.alpha <= 0) {
+							waveFronts.splice(i, 1);
+						}
+					}
+
+					// Update & draw particles
+					for (const p of particles) {
+						// Brownian drift
+						p.x += p.vx;
+						p.y += p.vy;
+						p.angle += p.vAngle;
+
+						// Soft boundary bounce
+						if (p.x < 16) {
+							p.x = 16;
+							p.vx = -p.vx;
+						} else if (p.x > w - 16) {
+							p.x = w - 16;
+							p.vx = -p.vx;
+						}
+						if (p.y < 16) {
+							p.y = 16;
+							p.vy = -p.vy;
+						} else if (p.y > h - 16) {
+							p.y = h - 16;
+							p.vy = -p.vy;
+						}
+
+						drawMolecule(p);
+					}
+
+					animId = requestAnimationFrame(render);
+				}
+
+				// EVENT LISTENERS
+				window.addEventListener("resize", resizeCanvases);
+
+				if (btnRunCycle) {
+					btnRunCycle.addEventListener("click", () => {
+						runCycle();
+					});
+				}
+
+				if (btnAutoRun) {
+					btnAutoRun.addEventListener("click", () => {
+						toggleAutoRun();
+					});
+				}
+
+				if (btnReseed) {
+					btnReseed.addEventListener("click", () => {
+						const ee = sliderToEe(Number(sliderImbalance.value));
+						seedParticles(ee, dominantHand || -1);
+						showToast("🔄", `反应池重置完成：初始 ee = ${ee < 0.001 ? ee.toFixed(5) : ee.toFixed(2)}%`);
+					});
+				}
+
+				if (btnNoise) {
+					btnNoise.addEventListener("click", () => {
+						injectNoise();
+					});
+				}
+
+				// Presets click handlers
+				function applyPreset(name) {
+					currentPreset = name;
+					if (name === "soai") {
+						sliderImbalance.value = "0";
+						if (sliderValBadge) sliderValBadge.textContent = "ee = 0.00005%";
+						if (seedStateBadge) seedStateBadge.textContent = "🧪 Soai 1995 经典起点 (5 / 10,000,000)";
+						presetSoai.className = "px-2.5 py-1 rounded-md bg-cyan-950 border border-cyan-400 text-cyan-200 transition active:scale-95";
+						presetCoin.className = "px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-300 transition active:scale-95";
+						presetLean.className = "px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-300 transition active:scale-95";
+						seedParticles(0.00005, -1);
+						showToast("🧪", "已载入 Soai 1995 经典起点：初始 ee 0.00005%（千万分之五）。点击 RUN CYCLE 见证数轮雪崩放大至 >99.5%！");
+					} else if (name === "coin") {
+						sliderImbalance.value = "0";
+						if (sliderValBadge) sliderValBadge.textContent = "ee = 0.0% (50/50)";
+						if (seedStateBadge) seedStateBadge.textContent = "🪙 纯对称外消旋态 (Coin flip)";
+						presetSoai.className = "px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-300 transition active:scale-95";
+						presetCoin.className = "px-2.5 py-1 rounded-md bg-zinc-800 border border-zinc-400 text-white transition active:scale-95";
+						presetLean.className = "px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-300 transition active:scale-95";
+						seedParticles(0.0, 0);
+						showToast("🪙", "已载入 Coin flip 预设：严格 50/50 对称。自催化循环将依赖随机微观涨落决定胜出方向！");
+					} else if (name === "lean") {
+						sliderImbalance.value = String(eeToSlider(5.0));
+						if (sliderValBadge) sliderValBadge.textContent = "ee = 5.0%";
+						if (seedStateBadge) seedStateBadge.textContent = "📈 明显倾斜预设 (Slight lean 5%)";
+						presetSoai.className = "px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-300 transition active:scale-95";
+						presetCoin.className = "px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-300 transition active:scale-95";
+						presetLean.className = "px-2.5 py-1 rounded-md bg-amber-950 border border-amber-400 text-amber-200 transition active:scale-95";
+						seedParticles(5.0, -1);
+						showToast("📈", "已载入 Slight lean 预设：初始 5% ee 优势，将在 2-3 轮内迅速接管全场。");
+					}
+				}
+
+				if (presetSoai) presetSoai.addEventListener("click", () => applyPreset("soai"));
+				if (presetCoin) presetCoin.addEventListener("click", () => applyPreset("coin"));
+				if (presetLean) presetLean.addEventListener("click", () => applyPreset("lean"));
+
+				// Slider changes
+				if (sliderImbalance) {
+					sliderImbalance.addEventListener("input", (e) => {
+						currentPreset = "custom";
+						const ee = sliderToEe(Number(e.target.value));
+						if (sliderValBadge) {
+							sliderValBadge.textContent = `ee = ${ee < 0.001 ? ee.toFixed(5) : ee.toFixed(2)}%`;
+						}
+						if (seedStateBadge) {
+							seedStateBadge.textContent = `自定义初始偏量: ${ee < 0.001 ? ee.toFixed(5) : ee.toFixed(2)}%`;
+						}
+					});
+
+					sliderImbalance.addEventListener("change", (e) => {
+						const ee = sliderToEe(Number(e.target.value));
+						seedParticles(ee, dominantHand || -1);
+					});
+				}
+
+				// Quick ee buttons
+				if (quickEeSoai) quickEeSoai.addEventListener("click", () => applyPreset("soai"));
+				if (quickEeCoin) quickEeCoin.addEventListener("click", () => applyPreset("coin"));
+				if (quickEePoint1) {
+					quickEePoint1.addEventListener("click", () => {
+						currentPreset = "custom";
+						sliderImbalance.value = String(eeToSlider(0.1));
+						if (sliderValBadge) sliderValBadge.textContent = "ee = 0.1%";
+						seedParticles(0.1, -1);
+					});
+				}
+				if (quickEe1) {
+					quickEe1.addEventListener("click", () => {
+						currentPreset = "custom";
+						sliderImbalance.value = String(eeToSlider(1.0));
+						if (sliderValBadge) sliderValBadge.textContent = "ee = 1.0%";
+						seedParticles(1.0, -1);
+					});
+				}
+				if (quickEe5) quickEe5.addEventListener("click", () => applyPreset("lean"));
+				if (quickEe25) {
+					quickEe25.addEventListener("click", () => {
+						currentPreset = "custom";
+						sliderImbalance.value = String(eeToSlider(25.0));
+						if (sliderValBadge) sliderValBadge.textContent = "ee = 25.0%";
+						seedParticles(25.0, -1);
+					});
+				}
+
+				// INITIALIZATION
+				resizeCanvases();
+				applyPreset("soai");
+				render();
+			}
+
+			// Clean up animation on Astro page swap
+			window.addEventListener(
+				"astro:before-swap",
+				() => {
+					if (animId) cancelAnimationFrame(animId);
+					if (autoRunTimer) clearInterval(autoRunTimer);
+				},
+				{ once: true },
+			);
+
+			// Init on current load and future Swup page transitions
+			initChiralCascade();
+			document.addEventListener("astro:page-load", initChiralCascade);
+		})();
+	</script>
+</MainGridLayout>
