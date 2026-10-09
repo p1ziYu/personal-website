@@ -1,0 +1,2082 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Lightbearer Lab · The Optogenetics Lab"
+	: "光控大脑 · 光遗传学与光控神经元实验室";
+const description = isEn
+	? "The Optogenetics Lab: Celebrating Karl Deisseroth, Peter Hegemann, and Georg Nagel's 2026 Nobel Prize in Physiology or Medicine. Interactive light-gated ion channels, millisecond neuron switches, spike raster plots, and Chlamydomonas phototaxis."
+	: "光控大脑 · LIGHTBEARER LAB：致敬戴瑟罗斯、黑格曼与纳格尔荣获 2026 诺贝尔生理学或医学奖。交互式 2D 光遗传学实验室——拖动 ~470nm 蓝光光斑点亮表达了视紫红质的神经元，观测毫秒级动作电位放电、实时光栅图、衣藻趋光与 2021 复明试验。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#050b14] text-zinc-100 border border-zinc-800/80 shadow-2xl selection:bg-blue-500/30 selection:text-blue-200">
+			<!-- Background Ambient Glow & Grid -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<section class="relative z-10 mb-8 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+							<span class="lang-zh">★ 2026 诺贝尔生理学或医学奖 · DEISSEROTH, HEGEMANN, NAGEL</span>
+							<span class="lang-en">★ 2026 NOBEL PRIZE IN MEDICINE · DEISSEROTH, HEGEMANN, NAGEL</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono">
+							<span>⚡</span>
+							<span>OPTOGENETICS · ChR2 (470nm)</span>
+						</div>
+					</div>
+					<div class="text-xs font-mono text-zinc-400">
+						<span class="lang-zh">2026-10-05 斯德哥尔摩卡罗林斯卡学院宣布</span>
+						<span class="lang-en">Announced 2026-10-05 at Karolinska Institutet</span>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2">
+					<span class="lang-zh">光控大脑 · LIGHTBEARER LAB</span>
+					<span class="lang-en">Lightbearer Lab · The Optogenetics Lab</span>
+				</h1>
+				<p class="text-lg sm:text-xl font-bold text-blue-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">The Optogenetics Lab — 用光开关神经元</span>
+					<span class="lang-en">The Optogenetics Lab — Switching Neurons with Light</span>
+				</p>
+				<p class="text-sm sm:text-base text-zinc-300/90 max-w-3xl leading-relaxed mb-3">
+					<span class="lang-zh">
+						2026 年 10 月 5 日，瑞典卡罗林斯卡学院诺贝尔大会宣布将 2026 年诺贝尔生理学或医学奖授予卡尔·戴瑟罗斯（Karl Deisseroth，54 岁，美国斯坦福大学）、彼得·黑格曼（Peter Hegemann，71 岁，德国柏林洪堡大学）与格奥尔格·纳格尔（Georg Nagel，73 岁，德国维尔茨堡大学），表彰他们“发现光门控离子通道并开创光遗传学”（"for their discoveries concerning light-gated ion channels and optogenetics"），奖金 1,200 万瑞典克朗由三人均分。
+					</span>
+					<span class="lang-en">
+						On October 5, 2026, the Nobel Assembly at Karolinska Institutet in Stockholm awarded the 2026 Nobel Prize in Physiology or Medicine to Karl Deisseroth (54, Stanford University, California), Peter Hegemann (71, Humboldt University, Berlin), and Georg Nagel (73, University of Würzburg, Germany) "for their discoveries concerning light-gated ion channels and optogenetics". The 12 million SEK (~$1.2M) prize is shared equally.
+					</span>
+				</p>
+				<p class="text-xs sm:text-sm text-zinc-400 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						源起微观绿藻：黑格曼与纳格尔破译了单细胞绿藻（衣藻）依靠眼点趋光的秘密，发现了通道视紫红质-2（ChR2）——吸收约 470 nm 蓝光瞬间敞开离子通道引发电信号；随后戴瑟罗斯将该基因转入哺乳动物活体大脑神经元，创造了以毫秒级精度随意开关神经元放电的“光遗传学”钥匙。本页面与《幽灵捕手》（中微子物理学）和《手性雪崩》（不对称化学）共同构成 2026 诺奖科学三部曲。
+					</span>
+					<span class="lang-en">
+						From algae to mind: Hegemann and Nagel discovered channelrhodopsin-2 (ChR2) in green alga Chlamydomonas, a 7-transmembrane protein that opens a cation pore upon 470 nm blue light absorption. Deisseroth then expressed it in mammalian neurons, creating a millisecond-precision optical switch in living brain circuits. This completes the 2026 Nobel Science Trilogy alongside Ghost Catcher (Physics) and Chiral Cascade (Chemistry).
+					</span>
+				</p>
+			</section>
+
+			<!-- REAL-TIME STATS BANNER -->
+			<section class="relative z-10 mb-8">
+				<div class="rounded-2xl bg-zinc-950/90 border border-blue-500/30 p-5 sm:p-6 shadow-[0_0_25px_rgba(56,189,248,0.15)] relative overflow-hidden">
+					<div class="absolute -right-16 -top-16 w-48 h-48 bg-blue-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+						<div class="flex items-center gap-2">
+							<span id="stat-ping-dot" class="w-2.5 h-2.5 rounded-full bg-blue-400 animate-ping"></span>
+							<span class="text-xs font-mono uppercase tracking-widest text-blue-300 font-bold">
+								<span class="lang-zh">⚡ 光遗传学神经回路电生理实时监测</span>
+								<span class="lang-en">⚡ Real-Time Optogenetic Electrophysiology Monitor</span>
+							</span>
+						</div>
+						<div class="text-[11px] font-mono text-blue-400/90 bg-blue-950/60 px-2.5 py-1 rounded-md border border-blue-800/60 flex items-center gap-1.5">
+							<span id="stat-beam-mode">470nm BLUE ACTIVE</span>
+							<span>·</span>
+							<span id="stat-strobe-state" class="text-zinc-400">10 Hz STROBE</span>
+						</div>
+					</div>
+
+					<div class="flex flex-col md:flex-row items-baseline md:items-center justify-between gap-4">
+						<div>
+							<div class="text-xs font-mono text-zinc-400 mb-1">
+								<span class="lang-zh">动作电位放电总数 (Spikes Fired):</span>
+								<span class="lang-en">Total Action Potentials (Spikes Fired):</span>
+							</div>
+							<div class="flex items-baseline gap-3">
+								<div id="stat-spikes-count" class="font-mono text-3xl sm:text-5xl font-black text-amber-300 tracking-wider drop-shadow-[0_0_15px_rgba(245,158,11,0.6)]">
+									0
+								</div>
+								<div id="stat-latency-badge" class="text-xs font-mono font-bold px-2.5 py-1 rounded bg-blue-950 text-blue-300 border border-blue-800/60">
+									Δt ≈ 2.1 ms (光脉冲 → 放电)
+								</div>
+							</div>
+						</div>
+
+						<div class="flex flex-col sm:flex-row gap-4 sm:gap-6 text-xs font-mono border-t md:border-t-0 md:border-l border-zinc-800 md:pl-6 pt-3 md:pt-0">
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">已激发光脉冲</span>
+									<span class="lang-en">Light Pulses</span>
+								</span>
+								<div class="flex items-center gap-1.5 mt-0.5">
+									<span id="stat-pulses-count" class="text-blue-400 font-bold">0</span>
+									<span class="text-zinc-600">pulses</span>
+								</div>
+							</div>
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">瞬时放电频率</span>
+									<span class="lang-en">Firing Frequency</span>
+								</span>
+								<span id="stat-freq-readout" class="text-amber-400 font-bold">10.0 Hz</span>
+							</div>
+							<div>
+								<span class="text-zinc-500 block">
+									<span class="lang-zh">光敏神经元覆盖</span>
+									<span class="lang-en">Illuminated Neurons</span>
+								</span>
+								<span id="stat-active-ratio" class="text-blue-300 font-bold">0 / 64 (0%)</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Visual balance ratio bar -->
+					<div class="mt-4 pt-3 border-t border-zinc-800/60">
+						<div class="flex justify-between text-[11px] font-mono text-zinc-400 mb-1">
+							<span class="text-blue-400 font-semibold">
+								<span class="lang-zh">光照激活神经元比例</span>
+								<span class="lang-en">Illuminated Neurons</span>
+								<span id="bar-active-pct">0.0%</span>
+							</span>
+							<span class="text-zinc-500">ChR2-Expressing Population (N = 64)</span>
+							<span class="text-amber-400 font-semibold">
+								<span class="lang-zh">毫秒级同步放电锁定</span>
+								<span class="lang-en">Phase-Locked Firing</span>
+								<span id="bar-sync-pct">100%</span>
+							</span>
+						</div>
+						<div class="w-full h-2 rounded-full bg-zinc-900 overflow-hidden flex">
+							<div id="bar-fill-active" class="h-full bg-blue-400 transition-all duration-300 shadow-[0_0_8px_rgba(56,189,248,0.8)]" style="width: 25%;"></div>
+							<div id="bar-fill-quiescent" class="h-full bg-zinc-800 transition-all duration-300" style="width: 75%;"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 1 & 3: THE SWITCH HERO LAB & PRESETS -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+							<span class="text-blue-400 font-mono text-xl">01/</span>
+							<span class="lang-zh">神经开关实验室 · The Switch Hero Lab</span>
+							<span class="lang-en">The Switch Hero Lab · Optogenetic Canvas</span>
+						</h2>
+						<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+							<span class="lang-zh">在画布上拖动 470 nm 蓝光光斑。凡进入光束覆盖的神经元，其膜表面通道视紫红质（ChR2）瞬间开放，Na⁺/Ca²⁺ 涌入引发动作电位，橙色电脉冲沿神经突触传导！</span>
+							<span class="lang-en">Drag the 470 nm coherent blue light spot over the neural field. Channelrhodopsin-2 (ChR2) channels open instantly upon illumination, triggering millisecond action potentials along neurites!</span>
+						</p>
+					</div>
+
+					<!-- Presets Bar (Section 3 Presets) -->
+					<div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+						<span class="text-zinc-400 mr-1">
+							<span class="lang-zh">探索预设:</span>
+							<span class="lang-en">Presets:</span>
+						</span>
+						<button id="preset-switch" type="button" class="px-2.5 py-1 rounded-md bg-blue-950/80 border border-blue-400 text-blue-200 hover:text-white hover:bg-blue-900 transition active:scale-95 font-semibold" title="Default multi-neuron switch field">
+							🎛️ 开关 The Switch
+						</button>
+						<button id="preset-eyespot" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white transition active:scale-95" title="Chlamydomonas eyespot phototaxis tribute">
+							🔬 眼点 Eye-spot
+						</button>
+						<button id="preset-single" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-amber-500/50 text-amber-300 hover:text-white transition active:scale-95" title="Single cell patch-clamp oscilloscope">
+							⚡ 单细胞 Single Cell
+						</button>
+						<button id="preset-circuit" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-emerald-500/50 text-emerald-300 hover:text-white transition active:scale-95" title="Cortical circuit with synaptic delay">
+							🧠 脑回路 Circuit
+						</button>
+						<button id="preset-vision" type="button" class="px-2.5 py-1 rounded-md bg-zinc-900 border border-purple-500/50 text-purple-300 hover:text-white transition active:scale-95" title="2021 Retinitis pigmentosa vision restoration trial">
+							👁️ 复明 Vision (2021)
+						</button>
+					</div>
+				</div>
+
+				<!-- SIMULATOR CANVAS CONTAINER -->
+				<div class="relative w-full rounded-2xl bg-[#030814] border border-zinc-800 shadow-[0_0_40px_rgba(0,0,0,0.8)] overflow-hidden mb-6">
+					<!-- Canvas Overlay Toast Alert -->
+					<div id="neuro-toast" class="absolute top-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none transition-all duration-300 opacity-0 -translate-y-2">
+						<div class="px-4 py-2 rounded-xl bg-zinc-950/95 border border-blue-500/50 text-xs font-mono shadow-2xl flex items-center gap-2">
+							<span id="toast-icon">⚡</span>
+							<span id="toast-msg" class="text-zinc-200"></span>
+						</div>
+					</div>
+
+					<!-- Canvas Legend (Top Right) -->
+					<div class="absolute top-3 right-3 z-10 pointer-events-none hidden sm:flex items-center gap-3 px-3 py-1.5 rounded-lg bg-black/70 border border-zinc-800 text-[11px] font-mono text-zinc-400 backdrop-blur-xs">
+						<div class="flex items-center gap-1.5">
+							<span class="w-2.5 h-2.5 rounded-full bg-blue-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]"></span>
+							<span class="lang-zh">ChR2 蓝光敏感通道 (~470nm)</span>
+							<span class="lang-en">ChR2 Blue Sensor (~470nm)</span>
+						</div>
+						<div class="flex items-center gap-1.5">
+							<span class="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(245,158,11,0.8)]"></span>
+							<span class="lang-zh">动作电位放电 (+30mV)</span>
+							<span class="lang-en">Action Potential (+30mV)</span>
+						</div>
+						<div class="flex items-center gap-1.5">
+							<span class="w-2 h-2 rounded-full bg-cyan-300 animate-ping"></span>
+							<span class="lang-zh">毫秒级同步锁定</span>
+							<span class="lang-en">ms Phase Lock</span>
+						</div>
+					</div>
+
+					<!-- MAIN SIMULATION CANVAS -->
+					<canvas
+						id="neuro-canvas"
+						class="w-full h-[460px] sm:h-[520px] block cursor-crosshair touch-none select-none"
+					></canvas>
+				</div>
+
+				<!-- INTERACTIVE CONTROLS DOCK -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+					<!-- PRIMARY CONTROLS (Left Col: 7 cols) -->
+					<div class="lg:col-span-7 space-y-4">
+						<!-- FREQUENCY & PULSE SLIDER CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm">
+							<div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+								<div class="flex items-center gap-2">
+									<span class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300">
+										<span class="lang-zh">脉冲激发频率 (Pulse Frequency)</span>
+										<span class="lang-en">Pulse Frequency (Hz)</span>
+									</span>
+									<span id="slider-freq-badge" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-blue-950 text-blue-300 border border-blue-800/60">
+										10 Hz
+									</span>
+								</div>
+								<div id="freq-status-badge" class="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-zinc-300">
+									⚡ 经典生理频率 (θ/α 脑电波段)
+								</div>
+							</div>
+
+							<input
+								id="slider-frequency"
+								type="range"
+								min="1"
+								max="40"
+								step="1"
+								value="10"
+								class="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-400 focus:outline-hidden"
+							/>
+
+							<div class="flex justify-between text-[11px] font-mono text-zinc-500 mt-1">
+								<span>1 Hz (单发节拍)</span>
+								<span>10 Hz (经典频闪)</span>
+								<span>20 Hz (β 驱动)</span>
+								<span>40 Hz (γ 振荡上限)</span>
+							</div>
+
+							<!-- PULSE WIDTH & BEAM RADIUS ROW -->
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-3 border-t border-zinc-800/70">
+								<div>
+									<div class="flex justify-between text-xs font-mono text-zinc-400 mb-1">
+										<span>
+											<span class="lang-zh">光脉冲宽度 (Width):</span>
+											<span class="lang-en">Pulse Width:</span>
+										</span>
+										<span id="slider-width-badge" class="text-blue-300 font-bold">20 ms</span>
+									</div>
+									<input
+										id="slider-width"
+										type="range"
+										min="5"
+										max="50"
+										step="1"
+										value="20"
+										class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-400"
+									/>
+								</div>
+								<div>
+									<div class="flex justify-between text-xs font-mono text-zinc-400 mb-1">
+										<span>
+											<span class="lang-zh">蓝光光斑半径 (Radius):</span>
+											<span class="lang-en">Beam Radius:</span>
+										</span>
+										<span id="slider-radius-badge" class="text-blue-300 font-bold">95 px</span>
+									</div>
+									<input
+										id="slider-radius"
+										type="range"
+										min="40"
+										max="160"
+										step="5"
+										value="95"
+										class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-400"
+									/>
+								</div>
+							</div>
+						</div>
+
+						<!-- ACTION BUTTONS ROW -->
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+							<!-- TOGGLE LIGHT ON / OFF -->
+							<button
+								id="btn-toggle-light"
+								type="button"
+								class="flex items-center justify-center gap-2 p-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-98 text-white font-mono font-bold text-sm shadow-[0_0_20px_rgba(37,99,235,0.4)] transition border border-blue-400/50"
+							>
+								<span id="light-toggle-icon">💡</span>
+								<span id="light-toggle-text" class="lang-zh">蓝光关闭 LIGHT OFF</span>
+								<span id="light-toggle-text-en" class="lang-en hidden">LIGHT OFF</span>
+							</button>
+
+							<!-- STROBE MODE BUTTON -->
+							<button
+								id="btn-strobe-mode"
+								type="button"
+								class="flex items-center justify-center gap-2 p-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 active:scale-98 text-amber-300 border border-amber-500/50 font-mono font-bold text-xs shadow-md transition"
+							>
+								<span>⚡</span>
+								<span class="lang-zh">频闪模式 (10 Hz Strobe)</span>
+								<span class="lang-en">Strobe Mode (10 Hz)</span>
+							</button>
+
+							<!-- RESET NETWORK BUTTON -->
+							<button
+								id="btn-reset-lab"
+								type="button"
+								class="flex items-center justify-center gap-2 p-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 active:scale-98 text-zinc-300 border border-zinc-700 font-mono text-xs transition"
+							>
+								<span>↺</span>
+								<span class="lang-zh">重置神经元网络</span>
+								<span class="lang-en">Reset Network</span>
+							</button>
+						</div>
+
+						<!-- QUICK INSIGHT CALLOUT -->
+						<div class="p-3.5 rounded-xl bg-blue-950/40 border border-blue-800/40 text-xs font-mono text-zinc-300 flex items-start gap-2.5">
+							<span class="text-blue-400 text-sm mt-0.5">ℹ️</span>
+							<div>
+								<span class="text-blue-300 font-semibold">
+									<span class="lang-zh">光生物物理法则：</span>
+									<span class="lang-en">Photobiophysical Principle:</span>
+								</span>
+								<span class="lang-zh">
+									每个 ChR2 通道由发色团全反式视黄醛（retinal）捕获一个 ~470 nm 光子，触发视黄醛异构化并机械性敞开孔道。Na⁺ 顺电化学梯度内流瞬间使膜去极化，在 1.5–2.5 毫秒内爆发动作电位，实现电刺激与药理学无法企及的极高时空特异性。
+								</span>
+								<span class="lang-en">
+									Each ChR2 channel uses all-trans retinal to capture a ~470 nm photon, inducing retinal isomerization that opens the pore. Inflowing Na⁺ depolarizes the membrane to threshold within 1.5–2.5 ms, delivering temporal and cell-type specificity far beyond electrodes or drugs.
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- SECONDARY COLUMN: LIVE VOLTAGE TRACE & REAL-TIME STATS (Right Col: 5 cols) -->
+					<div class="lg:col-span-5 space-y-4">
+						<!-- LIVE MEMBRANE VOLTAGE TRACE CARD -->
+						<div class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-800/90 shadow-sm flex flex-col justify-between">
+							<div class="flex items-center justify-between mb-2">
+								<span class="text-xs font-bold font-mono uppercase tracking-wider text-zinc-300 flex items-center gap-2">
+									<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+									<span class="lang-zh">膜电位示波轨迹 (Membrane Voltage)</span>
+									<span class="lang-en">Membrane Potential (Oscilloscope)</span>
+								</span>
+								<span id="scope-vm-val" class="text-xs font-mono font-bold text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800/50">
+									-70.0 mV
+								</span>
+							</div>
+							<p class="text-[11px] text-zinc-400 font-mono mb-2">
+								<span class="lang-zh">蓝光照射 → ChR2 激活内流 → 瞬间去极化至 +30 mV 动作电位峰值</span>
+								<span class="lang-en">Blue light → ChR2 Na⁺ influx → Depolarization to +30 mV spike peak</span>
+							</p>
+
+							<!-- MINI OSCILLOSCOPE CANVAS -->
+							<div class="w-full h-36 bg-[#02050e] rounded-lg border border-zinc-800 overflow-hidden relative">
+								<canvas id="scope-canvas" class="w-full h-full block"></canvas>
+							</div>
+
+							<div class="flex justify-between items-center text-[10px] font-mono text-zinc-500 mt-2">
+								<span>静息: -70 mV</span>
+								<span class="text-blue-400">阈值: -55 mV</span>
+								<span class="text-amber-400">尖峰: +30 mV</span>
+								<span>超极化: -80 mV</span>
+							</div>
+						</div>
+
+						<!-- PRESET DESCRIPTION CARD -->
+						<div id="preset-info-card" class="p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-blue-900/40">
+							<div class="flex items-center justify-between mb-2">
+								<span id="preset-mode-title" class="text-xs font-bold font-mono text-blue-300 uppercase tracking-wider">
+									当前模式: 🎛️ 神经开关 The Switch
+								</span>
+								<span id="preset-badge-tag" class="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-400 border border-blue-800/60">
+									ACTIVE
+								</span>
+							</div>
+							<p id="preset-mode-desc" class="text-xs text-zinc-300 font-mono leading-relaxed">
+								拖动蓝光光斑照射不同神经元群落。观察神经元胞体荧光闪烁、树突与轴突上的电脉冲外传，以及放电后的绝对不应期（Refractory period）。
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 2: RASTER PLOT (THE PRECISION PROOF) -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+							<span class="text-blue-400 font-mono text-xl">02/</span>
+							<span class="lang-zh">毫秒级精度光栅图 · Spike Raster Plot</span>
+							<span class="lang-en">Millisecond Precision · Spike Raster Plot</span>
+						</h2>
+						<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+							<span class="lang-zh">顶轨（蓝色条带）为蓝光激光脉冲时序；下轨 1–8 为被光斑照射神经元的单脉冲放电（Amber tick marks）。调整频率滑块，观测神经元放电如何以小于 1 毫秒的抖动严格锁定光刺激！</span>
+							<span class="lang-en">Top track (blue blocks) represents 470 nm laser pulses; lower tracks 1–8 display individual neuron spike trains. Adjust the frequency slider and watch spikes phase-lock to light pulses with sub-millisecond precision!</span>
+						</p>
+					</div>
+
+					<div class="flex items-center gap-2 text-xs font-mono">
+						<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-500/40 text-blue-300">
+							<span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+							<span id="raster-jitter-badge">相位抖动 Jitter &lt; 0.8 ms</span>
+						</span>
+					</div>
+				</div>
+
+				<!-- RASTER CANVAS CONTAINER -->
+				<div class="w-full rounded-2xl bg-[#02050e] border border-zinc-800 p-4 sm:p-5 shadow-2xl relative overflow-hidden">
+					<div class="flex items-center justify-between text-xs font-mono text-zinc-400 mb-2">
+						<div class="flex items-center gap-4">
+							<span class="flex items-center gap-1.5 text-blue-400 font-bold">
+								<span class="w-3 h-3 bg-blue-500 rounded-xs"></span>
+								<span>光刺激脉冲 (470nm STIM)</span>
+							</span>
+							<span class="flex items-center gap-1.5 text-amber-400 font-bold">
+								<span class="w-1.5 h-3 bg-amber-400 rounded-xs"></span>
+								<span>神经元单脉冲放电 (SPIKES)</span>
+							</span>
+						</div>
+						<span class="text-zinc-500 hidden sm:inline">时间轴窗口: 1000 ms 滚动刷新</span>
+					</div>
+
+					<canvas
+						id="raster-canvas"
+						class="w-full h-48 sm:h-56 block rounded-xl border border-zinc-800/80 bg-[#01040a]"
+					></canvas>
+
+					<div class="flex justify-between items-center text-[10px] font-mono text-zinc-500 mt-2 px-1">
+						<span>-1000 ms</span>
+						<span>-750 ms</span>
+						<span>-500 ms</span>
+						<span>-250 ms</span>
+						<span class="text-blue-400 font-bold">NOW (0 ms)</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 3: PRESETS STORY SHOWCASE (DETAILED DEEP DIVE) -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="mb-6">
+					<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+						<span class="text-blue-400 font-mono text-xl">03/</span>
+						<span class="lang-zh">从绿藻到复明：四幕科学故事预设</span>
+						<span class="lang-en">From Algae to Vision: Four-Act Scientific Presets</span>
+					</h2>
+					<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+						<span class="lang-zh">点击下方故事卡片，画布将无缝切换为对应的科学实验场景：</span>
+						<span class="lang-en">Click any story card to transform the interactive canvas into its scientific milestone:</span>
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+					<!-- CARD 1: EYESPOT -->
+					<div
+						id="card-preset-eyespot"
+						class="p-5 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-emerald-500/60 cursor-pointer transition flex flex-col justify-between group"
+					>
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="text-xs font-mono text-emerald-400 font-semibold uppercase tracking-widest">
+									ACT I · ORIGIN
+								</span>
+								<span class="text-xl group-hover:scale-110 transition">🔬</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1.5 group-hover:text-emerald-300 transition">
+								<span class="lang-zh">衣藻眼点与趋光性</span>
+								<span class="lang-en">Chlamydomonas Eyespot</span>
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed">
+								<span class="lang-zh">单细胞绿藻依靠眼点处的视紫红质感知光线并划动双鞭毛趋光游动。正是黑格曼与纳格尔对这一演化古老光反应的执着，才挖掘出 ChR2 宝藏。</span>
+								<span class="lang-en">Green alga swims toward light using an orange eyespot containing rhodopsin. Hegemann & Nagel decoded this ancient phototaxis to discover ChR2.</span>
+							</p>
+						</div>
+						<div class="mt-4 pt-3 border-t border-zinc-800/80 text-[11px] font-mono text-emerald-400 flex items-center justify-between">
+							<span>加载趋光模拟</span>
+							<span>→</span>
+						</div>
+					</div>
+
+					<!-- CARD 2: SINGLE CELL -->
+					<div
+						id="card-preset-single"
+						class="p-5 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-amber-500/60 cursor-pointer transition flex flex-col justify-between group"
+					>
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="text-xs font-mono text-amber-400 font-semibold uppercase tracking-widest">
+									ACT II · CELLULAR
+								</span>
+								<span class="text-xl group-hover:scale-110 transition">⚡</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1.5 group-hover:text-amber-300 transition">
+								<span class="lang-zh">单神经元膜电位</span>
+								<span class="lang-en">Single Neuron Patch-Clamp</span>
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed">
+								<span class="lang-zh">特写单颗锥体神经元膜表面。观测 ChR2 跨膜孔道瞬间开合，Na⁺ 内流触发 -70mV 静息电位骤升至 +30mV 动作电位的完整动力学。</span>
+								<span class="lang-en">Zoom in on a pyramidal neuron. Watch ChR2 membrane gates swing open to flood Na⁺, firing an all-or-none action potential with live voltage trace.</span>
+							</p>
+						</div>
+						<div class="mt-4 pt-3 border-t border-zinc-800/80 text-[11px] font-mono text-amber-400 flex items-center justify-between">
+							<span>加载电生理特写</span>
+							<span>→</span>
+						</div>
+					</div>
+
+					<!-- CARD 3: CIRCUIT -->
+					<div
+						id="card-preset-circuit"
+						class="p-5 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-blue-500/60 cursor-pointer transition flex flex-col justify-between group"
+					>
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest">
+									ACT III · NETWORK
+								</span>
+								<span class="text-xl group-hover:scale-110 transition">🧠</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1.5 group-hover:text-blue-300 transition">
+								<span class="lang-zh">皮层神经网络级联</span>
+								<span class="lang-en">Cortical Circuit Cascades</span>
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed">
+								<span class="lang-zh">光斑唤醒特定的 ChR2 阳性中间神经元，动作电位经突触小体释放神经递质，触发下游层网络雪崩式同步放电与群体放电率上升。</span>
+								<span class="lang-en">Light triggers ChR2-positive upstream neurons; action potentials traverse synapses with millisecond delays, cascading through cortical layers.</span>
+							</p>
+						</div>
+						<div class="mt-4 pt-3 border-t border-zinc-800/80 text-[11px] font-mono text-blue-400 flex items-center justify-between">
+							<span>加载脑网络级联</span>
+							<span>→</span>
+						</div>
+					</div>
+
+					<!-- CARD 4: VISION -->
+					<div
+						id="card-preset-vision"
+						class="p-5 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-purple-500/60 cursor-pointer transition flex flex-col justify-between group"
+					>
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="text-xs font-mono text-purple-400 font-semibold uppercase tracking-widest">
+									ACT IV · CLINICAL
+								</span>
+								<span class="text-xl group-hover:scale-110 transition">👁️</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1.5 group-hover:text-purple-300 transition">
+								<span class="lang-zh">2021 视网膜复明试验</span>
+								<span class="lang-en">2021 Vision Restoration</span>
+							</h3>
+							<p class="text-xs text-zinc-300/80 leading-relaxed">
+								<span class="lang-zh">致敬萨赫勒（Sahel）领衔的视网膜色素变性人体试验：在退化视网膜中重构光敏神经节细胞，脉冲光投影重现隐藏视力表符号。</span>
+								<span class="lang-en">Tribute to Jose-Alain Sahel's retinitis pigmentosa trial: optogenetically engineered retinal ganglion cells decode light pulses into restored visual perception.</span>
+							</p>
+						</div>
+						<div class="mt-4 pt-3 border-t border-zinc-800/80 text-[11px] font-mono text-purple-400 flex items-center justify-between">
+							<span>加载复明点阵模拟</span>
+							<span>→</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 4: EXPLAINER (BILINGUAL PARAGRAPHS, POETIC & RIGOROUS) -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="mb-6">
+					<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-2">
+						<span class="text-blue-400 font-mono text-xl">04/</span>
+						<span class="lang-zh">光的使者：光遗传学五部科学简史</span>
+						<span class="lang-en">Lightbearers: The Five-Chapter History of Optogenetics</span>
+					</h2>
+					<p class="text-xs sm:text-sm text-zinc-400 mt-1">
+						<span class="lang-zh">从绿藻在池塘里的方向感，到克里克的世纪预言，再到点亮盲人瞳孔的光芒：</span>
+						<span class="lang-en">From green algae orienting in pond water, to Crick's visionary prediction, to restoring human sight:</span>
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+					<!-- CHAPTER 1: THE ALGAE'S EYE -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest">
+									CHAPTER 01 · MOLECULAR GENETICS
+								</span>
+								<span class="text-lg">🌿</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">藻类的眼 · 通道视紫红质-2 的发现</span>
+								<span class="lang-en">The Algae's Eye · Discovery of Channelrhodopsin</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									几十亿年来，单细胞绿藻衣藻（Chlamydomonas reinhardtii）在水体中自由游动，依靠细胞前侧一个小小的橙红色“眼点”寻找阳光进行光合作用。彼得·黑格曼（Peter Hegemann）与格奥尔格·纳格尔（Georg Nagel）在 2002–2003 年破译了这个分子机关：通道视紫红质-2（ChR2）。它将光敏受体与阳离子通道集于一体——只要被约 470 nm 蓝光照射，通道瞬间敞开，钠、钙离子涌入产生电脉冲。自然界在微小藻类中早已备好了操纵电信号的光控钥匙。
+								</span>
+								<span class="lang-en">
+									For billions of years, the single-celled green alga Chlamydomonas reinhardtii has steered through ponds toward sunlight via a microscopic orange-red eyespot. Peter Hegemann and Georg Nagel uncovered its molecular mechanism in 2002–2003: channelrhodopsin-2 (ChR2), an unprecedented protein uniting light sensor and ion channel. Absorption of ~470 nm blue light triggers rapid cation influx, generating an electrical current within milliseconds.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-blue-300/90 bg-blue-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-blue-500/20">
+							<span class="lang-zh">
+								🌊 启示：演化在最不起眼的低等生物体内封存了最精巧的光电引擎，等待好奇的心灵前去解读。
+							</span>
+							<span class="lang-en">
+								🌊 Insight: Evolution hid an all-in-one optoelectronic motor inside pond scum, awaiting discovery.
+							</span>
+						</div>
+					</div>
+
+					<!-- CHAPTER 2: THE 1979 PROPHECY -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest">
+									CHAPTER 02 · VISIONARY THEORY
+								</span>
+								<span class="text-lg">📜</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">1979 的预言 · 弗朗西斯·克里克的洞察</span>
+								<span class="lang-en">The 1979 Prophecy · Francis Crick's Vision</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									早在 1979 年，DNA 双螺旋共同发现者弗朗西斯·克里克（Francis Crick）在《科学美国人》发表了著名的预言：神经科学面临的终极难题在于无法特异性操纵大脑中成千上万种细胞类型。电极刺激如同“用重锤敲击精密机械”，无法分辨兴奋与抑制；化学药物扩散太慢，动辄需要数秒乃至数分钟。克里克写道：“要想真正理解大脑，我们需要能够随心所欲开关特定类型神经元的方法——而最理想的控制信号，将是光线。”
+								</span>
+								<span class="lang-en">
+									In 1979, Francis Crick (co-discoverer of DNA structure) published a visionary critique in Scientific American: neuroscience was hamstrung by indiscriminate tools. Electrodes act like sledgehammers stimulating everything at once; drugs diffuse over sluggish seconds or minutes. Crick foresaw that unlocking the brain required switching single cell types on and off at will, concluding: "the ideal signal would be light."
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-amber-300/90 bg-amber-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-amber-500/20">
+							<span class="lang-zh">
+								💡 预言成真：在克里克写下这段话 26 年后，光终于成为了人类点亮神经元回路的画笔。
+							</span>
+							<span class="lang-en">
+								💡 Prophecy fulfilled: 26 years later, light transformed from a theoretical wish into reality.
+							</span>
+						</div>
+					</div>
+
+					<!-- CHAPTER 3: THE SWITCH IN THE LIVING BRAIN -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest">
+									CHAPTER 03 · THE BREAKTHROUGH
+								</span>
+								<span class="text-lg">🐭</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">小鼠大脑的开关 · 光遗传学的诞生</span>
+								<span class="lang-en">The Brain Switch · Dawn of Optogenetics</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									2005 年，斯坦福大学的青年神经科学家卡尔·戴瑟罗斯（Karl Deisseroth）与其团队将 ChR2 基因装入无毒病毒载体，成功转导进哺乳动物神经元。当蓝色光纤照向活体小鼠大脑，光开关瞬间生效：一束蓝光闪烁，小鼠神经元以毫秒级时间精度发射动作电位，甚至能直接驱动小鼠按光照节律转弯、奔跑或压制焦虑恐惧。戴瑟罗斯将光学（Optics）与遗传学（Genetics）完美结合，正式确立了“光遗传学”（Optogenetics）这一划时代学科。
+								</span>
+								<span class="lang-en">
+									In 2005, Karl Deisseroth at Stanford University delivered ChR2 into mammalian neurons via viral vectors. Coupling genetics with fiber-optic illumination in freely moving mice, his lab demonstrated millisecond-precision optical control over neuronal firing and behavioral circuits. Deisseroth named and pioneered the field of Optogenetics, handing scientists the remote control of thought and behavior.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-blue-300/90 bg-blue-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-blue-500/20">
+							<span class="lang-zh">
+								⚡ 毫秒精度：告别迟钝的化学弥散，大脑回路的因果逻辑终于可以直接用光来书写与验证。
+							</span>
+							<span class="lang-en">
+								⚡ Millisecond causality: For the first time, circuit function could be interrogated with laser timing.
+							</span>
+						</div>
+					</div>
+
+					<!-- CHAPTER 4: RESTORING VISION 2021 -->
+					<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/70 border border-zinc-800 hover:border-zinc-700 transition flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<span class="text-xs font-mono text-blue-400 font-semibold uppercase tracking-widest">
+									CHAPTER 04 · CLINICAL RECOVERY
+								</span>
+								<span class="text-lg">👁️</span>
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">复明 2021 · 视网膜色素变性人体重见光明</span>
+								<span class="lang-en">Restoring Vision 2021 · Clinical Trial</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-zinc-300/90 leading-relaxed mb-3">
+								<span class="lang-zh">
+									光遗传学不仅重塑了基础脑科学，更带来了人类医学的奇迹。视网膜色素变性（Retinitis Pigmentosa）导致全球约 200 万人感光细胞退化失明。2021 年，《自然·医学》报道了由著名眼科专家何塞-阿兰·萨赫勒（José-Alain Sahel）领衔的国际临床试验：一名失明数十年的 58 岁患者接受了光遗传基因治疗，将光敏通道蛋白靶向注入残存的视网膜神经节细胞，并佩戴特制工程光脉冲眼镜。患者成功恢复了部分视力，首次能够辨认出桌面上的物体并数出杯子数量。
+								</span>
+								<span class="lang-en">
+									In 2021, an international clinical trial co-led by ophthalmologist José-Alain Sahel reported a milestone in Nature Medicine: a 58-year-old blind patient suffering from retinitis pigmentosa (which blinds ~2 million worldwide) partially regained functional vision through optogenetics. AAV vectors made surviving retinal ganglion cells light-sensitive; paired with photonic goggles, the patient could locate and count objects on a table.
+								</span>
+							</p>
+						</div>
+						<div class="pt-3 border-t border-zinc-800/80 text-xs font-mono text-purple-300/90 bg-purple-500/5 -mx-2 -mb-2 p-2 rounded-lg border border-purple-500/20">
+							<span class="lang-zh">
+								🌟 人道光芒：源于池塘绿藻的古老基因，最终点亮了失明人类眼底熄灭已久的光感之火。
+							</span>
+							<span class="lang-en">
+								🌟 Hope renewed: Ancient genes from pond algae reignited extinguished photoreceptors in humans.
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 5: NOBEL LAUREATES DOSSIER SECTION -->
+			<section class="relative z-10 mb-8">
+				<div class="p-5 sm:p-6 rounded-2xl bg-zinc-950/90 border border-zinc-800/90">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+						<div class="flex items-center gap-2">
+							<span class="text-amber-400 text-lg">🎖️</span>
+							<h3 class="text-base font-bold text-white">
+								<span class="lang-zh">2026 诺贝尔生理学或医学奖得主档案</span>
+								<span class="lang-en">2026 Nobel Medicine Laureates Dossier</span>
+							</h3>
+						</div>
+						<div class="text-xs font-mono text-zinc-500">
+							Nobel Assembly at Karolinska Institutet · Secretary-General Thomas Perlmann
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+						<!-- LAUREATE 1: DEISSEROTH -->
+						<div class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800">
+							<div class="text-amber-400 font-bold text-sm mb-0.5">Karl Deisseroth (卡尔·戴瑟罗斯)</div>
+							<div class="text-zinc-400 text-[11px] mb-2">54 岁 · 斯坦福大学神经生物学教授 (USA)</div>
+							<div class="text-zinc-300/80 leading-relaxed text-[11px]">
+								<span class="lang-zh">开创光遗传学活体神经元光控技术与 CLARITY 脑透明成像技术，首次实现自由活动哺乳动物活体特定神经元回路的毫秒级光控因果验证。</span>
+								<span class="lang-en">Pioneered in vivo mammalian optogenetics and CLARITY brain clearing; established causal millisecond dissection of intact neural circuits in behaving animals.</span>
+							</div>
+						</div>
+
+						<!-- LAUREATE 2: HEGEMANN -->
+						<div class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800">
+							<div class="text-blue-400 font-bold text-sm mb-0.5">Peter Hegemann (彼得·黑格曼)</div>
+							<div class="text-zinc-400 text-[11px] mb-2">71 岁 · 柏林洪堡大学实验生物物理学教授 (Germany)</div>
+							<div class="text-zinc-300/80 leading-relaxed text-[11px]">
+								<span class="lang-zh">毕生探索绿藻趋光分子机制，与纳格尔合作发现通道视紫红质 ChR1 与 ChR2，揭示了光吸收与离子通道直接耦合的生物物理本质。</span>
+								<span class="lang-en">Decoded algal phototaxis biophysics; co-discovered channelrhodopsin ChR1 and ChR2, proving light receptors directly function as ion channels.</span>
+							</div>
+						</div>
+
+						<!-- LAUREATE 3: NAGEL -->
+						<div class="p-4 rounded-xl bg-zinc-900/50 border border-zinc-800">
+							<div class="text-cyan-400 font-bold text-sm mb-0.5">Georg Nagel (格奥尔格·纳格尔)</div>
+							<div class="text-zinc-400 text-[11px] mb-2">73 岁 · 维尔茨堡大学分子植物生理学荣休教授 (Germany)</div>
+							<div class="text-zinc-300/80 leading-relaxed text-[11px]">
+								<span class="lang-zh">在非洲爪蟾卵母细胞中首次实现 ChR2 的功能性电生理表达，证实了单个蛋白质即可充当光门控阳离子通道，开启了分子工具化之路。</span>
+								<span class="lang-en">First demonstrated functional heterologous expression of ChR2 in Xenopus oocytes, proving a single polypeptide serves as a light-gated cation pore.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- FOOTER SECTION & TRILOGY LINK -->
+			<div class="pt-6 border-t border-zinc-800/80 text-xs font-mono text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+				<div>
+					<span class="lang-zh">灵感：2026 诺贝尔生理学或医学奖（Deisseroth, Hegemann, Nagel）· 诺奖科学三部曲完结</span>
+					<span class="lang-en">Inspired by the 2026 Nobel Prize in Physiology or Medicine (Deisseroth, Hegemann, Nagel)</span>
+				</div>
+				<div class="text-zinc-500">
+					p1ziyu.com · 2026
+				</div>
+			</div>
+
+			<hr class="my-6 border-zinc-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-blue-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<script is:inline>
+		// ========================================================
+		// Lightbearer Lab · The Optogenetics Interactive Simulator
+		// Vanilla JavaScript Client-Side Engine
+		// ========================================================
+
+		(function () {
+			let animId = null;
+			let strobeInterval = null;
+
+			function initLightbearerLab() {
+				// Clean up previous animations if re-initialized
+				if (animId) cancelAnimationFrame(animId);
+				if (strobeInterval) {
+					clearInterval(strobeInterval);
+					strobeInterval = null;
+				}
+
+				const canvas = document.getElementById("neuro-canvas");
+				const rasterCanvas = document.getElementById("raster-canvas");
+				const scopeCanvas = document.getElementById("scope-canvas");
+				if (!canvas || !rasterCanvas || !scopeCanvas) return;
+
+				const ctx = canvas.getContext("2d");
+				const rasterCtx = rasterCanvas.getContext("2d");
+				const scopeCtx = scopeCanvas.getContext("2d");
+				if (!ctx || !rasterCtx || !scopeCtx) return;
+
+				// UI Elements
+				const statSpikes = document.getElementById("stat-spikes-count");
+				const statPulses = document.getElementById("stat-pulses-count");
+				const statFreqReadout = document.getElementById("stat-freq-readout");
+				const statActiveRatio = document.getElementById("stat-active-ratio");
+				const statBeamMode = document.getElementById("stat-beam-mode");
+				const statStrobeState = document.getElementById("stat-strobe-state");
+				const barFillActive = document.getElementById("bar-fill-active");
+				const barFillQuiescent = document.getElementById("bar-fill-quiescent");
+				const barActivePct = document.getElementById("bar-active-pct");
+				const scopeVmVal = document.getElementById("scope-vm-val");
+				const toast = document.getElementById("neuro-toast");
+				const toastMsg = document.getElementById("toast-msg");
+				const toastIcon = document.getElementById("toast-icon");
+
+				// Controls
+				const sliderFreq = document.getElementById("slider-frequency");
+				const sliderFreqBadge = document.getElementById("slider-freq-badge");
+				const sliderWidth = document.getElementById("slider-width");
+				const sliderWidthBadge = document.getElementById("slider-width-badge");
+				const sliderRadius = document.getElementById("slider-radius");
+				const sliderRadiusBadge = document.getElementById("slider-radius-badge");
+				const btnToggleLight = document.getElementById("btn-toggle-light");
+				const btnStrobeMode = document.getElementById("btn-strobe-mode");
+				const btnResetLab = document.getElementById("btn-reset-lab");
+				const lightToggleIcon = document.getElementById("light-toggle-icon");
+				const lightToggleText = document.getElementById("light-toggle-text");
+				const lightToggleTextEn = document.getElementById("light-toggle-text-en");
+
+				// Presets buttons & cards
+				const presetSwitch = document.getElementById("preset-switch");
+				const presetEyespot = document.getElementById("preset-eyespot");
+				const presetSingle = document.getElementById("preset-single");
+				const presetCircuit = document.getElementById("preset-circuit");
+				const presetVision = document.getElementById("preset-vision");
+				const cardEyespot = document.getElementById("card-preset-eyespot");
+				const cardSingle = document.getElementById("card-preset-single");
+				const cardCircuit = document.getElementById("card-preset-circuit");
+				const cardVision = document.getElementById("card-preset-vision");
+				const presetTitle = document.getElementById("preset-mode-title");
+				const presetDesc = document.getElementById("preset-mode-desc");
+
+				// State Variables
+				let currentPreset = "switch"; // "switch", "eyespot", "single", "circuit", "vision"
+				let lightEnabled = true;
+				let strobeActive = true;
+				let strobePulseOn = true;
+				let lastStrobeToggleTime = performance.now();
+				let frequencyHz = 10;
+				let pulseWidthMs = 20;
+				let beamRadius = 95;
+				let totalSpikesFired = 0;
+				let totalLightPulses = 0;
+
+				// Light beam coordinate (relative to canvas css coordinates)
+				let beamX = 240;
+				let beamY = 220;
+
+				// Toast helper
+				let toastTimer = null;
+				function showToast(icon, message) {
+					if (!toast || !toastMsg || !toastIcon) return;
+					toastIcon.textContent = icon;
+					toastMsg.textContent = message;
+					toast.classList.remove("opacity-0", "-translate-y-2");
+					toast.classList.add("opacity-100", "translate-y-0");
+					if (toastTimer) clearTimeout(toastTimer);
+					toastTimer = setTimeout(() => {
+						toast.classList.remove("opacity-100", "translate-y-0");
+						toast.classList.add("opacity-0", "-translate-y-2");
+					}, 2600);
+				}
+
+				// Data Structures
+				const NUM_NEURONS = 64;
+				let neurons = [];
+				let rasterHistory = []; // time series of light & spikes
+				let scopeBuffer = []; // voltage trace array
+				let lastFrameTime = performance.now();
+
+				// Eye-spot simulation state
+				const algaState = {
+					x: 120,
+					y: 150,
+					vx: 0,
+					vy: 0,
+					angle: 0,
+					tailHistory: [],
+					flagellaPhase: 0,
+				};
+
+				// Single cell simulation state
+				const singleNeuronState = {
+					vm: -70.0, // resting mV
+					gateState: 0.0, // ChR2 open ratio (0..1)
+					phase: "rest", // rest, depol, spike, repol, hyperpol
+					phaseTimer: 0,
+				};
+
+				// Circuit mode state
+				let circuitLayers = {
+					l23: [],
+					l5: [],
+					synapses: [],
+				};
+				let psthHistory = new Array(24).fill(0);
+
+				// Vision mode (retina pixel matrix) state
+				const retinaGrid = {
+					cols: 16,
+					rows: 12,
+					cells: [],
+					revealedPct: 0,
+				};
+				// Optotype "E" matrix in 16x12
+				const letterEMask = [
+					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+					[0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+					[0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0],
+					[0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0],
+					[0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],
+					[0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+					[0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0],
+					[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				];
+
+				// Resize & DPI handling
+				let canvasW = 800;
+				let canvasH = 500;
+				let rasterW = 800;
+				let rasterH = 220;
+				let scopeW = 400;
+				let scopeH = 140;
+
+				function handleResize() {
+					const dpr = Math.min(window.devicePixelRatio || 1, 2);
+					const rect = canvas.getBoundingClientRect();
+					canvasW = rect.width;
+					canvasH = rect.height;
+					canvas.width = Math.floor(canvasW * dpr);
+					canvas.height = Math.floor(canvasH * dpr);
+					ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+					const rasterRect = rasterCanvas.getBoundingClientRect();
+					rasterW = rasterRect.width;
+					rasterH = rasterRect.height;
+					rasterCanvas.width = Math.floor(rasterW * dpr);
+					rasterCanvas.height = Math.floor(rasterH * dpr);
+					rasterCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+					const scopeRect = scopeCanvas.getBoundingClientRect();
+					scopeW = scopeRect.width;
+					scopeH = scopeRect.height;
+					scopeCanvas.width = Math.floor(scopeW * dpr);
+					scopeCanvas.height = Math.floor(scopeH * dpr);
+					scopeCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+				}
+
+				// Generate Neurons
+				function generateNeuronNetwork() {
+					neurons = [];
+					const margin = 50;
+					for (let i = 0; i < NUM_NEURONS; i++) {
+						const nx = margin + Math.random() * (canvasW - margin * 2);
+						const ny = margin + Math.random() * (canvasH - margin * 2);
+						const branches = [];
+						const numBranches = 4 + Math.floor(Math.random() * 4);
+						for (let b = 0; b < numBranches; b++) {
+							const angle = (b / numBranches) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+							const len1 = 18 + Math.random() * 26;
+							const x1 = Math.cos(angle) * len1;
+							const y1 = Math.sin(angle) * len1;
+							// sub-branch
+							const subAngle = angle + (Math.random() - 0.5) * 0.8;
+							const len2 = 12 + Math.random() * 18;
+							const x2 = x1 + Math.cos(subAngle) * len2;
+							const y2 = y1 + Math.sin(subAngle) * len2;
+							branches.push({ x1, y1, x2, y2 });
+						}
+
+						neurons.push({
+							id: i,
+							x: nx,
+							y: ny,
+							baseRadius: 6.5 + Math.random() * 3,
+							branches,
+							chr2: true, // all express ChR2
+							firing: false,
+							spikeProgress: 0,
+							refractoryTimer: 0,
+							lastFiredTime: 0,
+							spikesCount: 0,
+						});
+					}
+
+					// Init Circuit Mode Layers
+					circuitLayers.l23 = [];
+					circuitLayers.l5 = [];
+					circuitLayers.synapses = [];
+					for (let i = 0; i < 18; i++) {
+						circuitLayers.l23.push({
+							x: margin + (i / 17) * (canvasW - margin * 2),
+							y: canvasH * 0.32 + (Math.random() - 0.5) * 40,
+							firing: false,
+							spikeProgress: 0,
+							refractory: 0,
+						});
+					}
+					for (let i = 0; i < 22; i++) {
+						circuitLayers.l5.push({
+							x: margin + (i / 21) * (canvasW - margin * 2),
+							y: canvasH * 0.72 + (Math.random() - 0.5) * 50,
+							firing: false,
+							spikeProgress: 0,
+							refractory: 0,
+						});
+					}
+					// connect synapses L2/3 -> L5
+					for (let i = 0; i < circuitLayers.l23.length; i++) {
+						const numConn = 2 + Math.floor(Math.random() * 2);
+						for (let c = 0; c < numConn; c++) {
+							const targetIdx = Math.floor(Math.random() * circuitLayers.l5.length);
+							circuitLayers.synapses.push({
+								fromIdx: i,
+								toIdx: targetIdx,
+								progress: 0,
+								active: false,
+							});
+						}
+					}
+
+					// Init Retina Grid
+					retinaGrid.cells = [];
+					for (let r = 0; r < retinaGrid.rows; r++) {
+						for (let c = 0; c < retinaGrid.cols; c++) {
+							const isTarget = letterEMask[r] && letterEMask[r][c] === 1;
+							retinaGrid.cells.push({
+								row: r,
+								col: c,
+								isTarget,
+								charge: 0,
+								lastHit: 0,
+							});
+						}
+					}
+				}
+
+				// Scope voltage trace initializer
+				for (let i = 0; i < 120; i++) {
+					scopeBuffer.push(-70.0);
+				}
+
+				// Presets definitions
+				function applyPreset(name) {
+					currentPreset = name;
+					[presetSwitch, presetEyespot, presetSingle, presetCircuit, presetVision].forEach((b) => {
+						if (!b) return;
+						b.classList.remove("bg-blue-950/80", "border-blue-400", "text-blue-200", "font-semibold");
+						b.classList.add("bg-zinc-900", "border-zinc-700", "text-zinc-300");
+					});
+
+					if (name === "switch" && presetSwitch) {
+						presetSwitch.classList.add("bg-blue-950/80", "border-blue-400", "text-blue-200", "font-semibold");
+						presetTitle.textContent = "当前模式: 🎛️ 神经开关 The Switch";
+						presetDesc.textContent = "拖动蓝光光斑照射不同神经元群落。观察神经元胞体荧光闪烁、树突与轴突上的电脉冲外传，以及放电后的绝对不应期（Refractory period）。";
+						showToast("🎛️", "模式切换：神经开关沙盒 · 拖动光斑点亮神经元群");
+					} else if (name === "eyespot" && presetEyespot) {
+						presetEyespot.classList.add("bg-blue-950/80", "border-blue-400", "text-blue-200", "font-semibold");
+						presetTitle.textContent = "当前模式: 🔬 衣藻眼点与趋光性 (Hegemann & Nagel)";
+						presetDesc.textContent = "致敬绿藻趋光起源：衣藻（Chlamydomonas）依靠眼点内的视紫红质探测蓝光方位，两根鞭毛呈不对称摆动游向光源。拖动光斑引导它游泳！";
+						showToast("🔬", "模式切换：衣藻眼点趋光 · 拖动蓝光引导绿藻游泳");
+					} else if (name === "single" && presetSingle) {
+						presetSingle.classList.add("bg-blue-950/80", "border-blue-400", "text-blue-200", "font-semibold");
+						presetTitle.textContent = "当前模式: ⚡ 单细胞电生理膜电位特写";
+						presetDesc.textContent = "单神经元膜电位示波特写：光照射后 ChR2 孔道机械开启，Na⁺/Ca²⁺ 涌入。静息 -70mV 骤升至 +30mV 动作电位峰值，随后钾离子复极化。";
+						showToast("⚡", "模式切换：单神经元电生理 · 观测膜电位放电轨迹");
+					} else if (name === "circuit" && presetCircuit) {
+						presetCircuit.classList.add("bg-blue-950/80", "border-blue-400", "text-blue-200", "font-semibold");
+						presetTitle.textContent = "当前模式: 🧠 皮层微回路级联 (Layer 2/3 → Layer 5)";
+						presetDesc.textContent = "上层神经元吸收蓝光放电，动作电位经突触传递至深层锥体神经元（延迟约 3.5ms），激发出群体高频振荡波（PSTH 群体放电率激增）。";
+						showToast("🧠", "模式切换：皮层微回路级联 · 突触传递延迟模拟");
+					} else if (name === "vision" && presetVision) {
+						presetVision.classList.add("bg-blue-950/80", "border-blue-400", "text-blue-200", "font-semibold");
+						presetTitle.textContent = "当前模式: 👁️ 2021 视网膜色素变性复明试验 (Sahel et al.)";
+						presetDesc.textContent = "退化失明的视网膜神经节细胞经 AAV 导入 ChR2。拖动蓝光光斑照射感光点阵，神经节细胞同步放电，逐渐重组出隐藏的视力表 'E' 字母！";
+						showToast("👁️", "模式切换：2021 复明试验 · 光斑扫过重现视力表 E 字");
+					}
+				}
+
+				// Attach preset event listeners
+				if (presetSwitch) presetSwitch.addEventListener("click", () => applyPreset("switch"));
+				if (presetEyespot) presetEyespot.addEventListener("click", () => applyPreset("eyespot"));
+				if (presetSingle) presetSingle.addEventListener("click", () => applyPreset("single"));
+				if (presetCircuit) presetCircuit.addEventListener("click", () => applyPreset("circuit"));
+				if (presetVision) presetVision.addEventListener("click", () => applyPreset("vision"));
+				if (cardEyespot) cardEyespot.addEventListener("click", () => applyPreset("eyespot"));
+				if (cardSingle) cardSingle.addEventListener("click", () => applyPreset("single"));
+				if (cardCircuit) cardCircuit.addEventListener("click", () => applyPreset("circuit"));
+				if (cardVision) cardVision.addEventListener("click", () => applyPreset("vision"));
+
+				// Sliders event listeners
+				if (sliderFreq) {
+					sliderFreq.addEventListener("input", (e) => {
+						frequencyHz = Number.parseInt(e.target.value, 10);
+						if (sliderFreqBadge) sliderFreqBadge.textContent = `${frequencyHz} Hz`;
+						if (statFreqReadout) statFreqReadout.textContent = `${frequencyHz.toFixed(1)} Hz`;
+					});
+				}
+				if (sliderWidth) {
+					sliderWidth.addEventListener("input", (e) => {
+						pulseWidthMs = Number.parseInt(e.target.value, 10);
+						if (sliderWidthBadge) sliderWidthBadge.textContent = `${pulseWidthMs} ms`;
+					});
+				}
+				if (sliderRadius) {
+					sliderRadius.addEventListener("input", (e) => {
+						beamRadius = Number.parseInt(e.target.value, 10);
+						if (sliderRadiusBadge) sliderRadiusBadge.textContent = `${beamRadius} px`;
+					});
+				}
+
+				// Toggle light button
+				if (btnToggleLight) {
+					btnToggleLight.addEventListener("click", () => {
+						lightEnabled = !lightEnabled;
+						if (lightEnabled) {
+							btnToggleLight.classList.remove("bg-zinc-800", "border-zinc-700");
+							btnToggleLight.classList.add("bg-blue-600", "border-blue-400/50");
+							if (lightToggleIcon) lightToggleIcon.textContent = "💡";
+							if (lightToggleText) lightToggleText.textContent = "蓝光开启 LIGHT ON";
+							if (lightToggleTextEn) lightToggleTextEn.textContent = "LIGHT ON";
+							if (statBeamMode) statBeamMode.textContent = "470nm BLUE ACTIVE";
+							showToast("💡", "蓝光激光开启 · 470 nm 照射中");
+						} else {
+							btnToggleLight.classList.remove("bg-blue-600", "border-blue-400/50");
+							btnToggleLight.classList.add("bg-zinc-800", "border-zinc-700");
+							if (lightToggleIcon) lightToggleIcon.textContent = "🌑";
+							if (lightToggleText) lightToggleText.textContent = "蓝光关闭 LIGHT OFF";
+							if (lightToggleTextEn) lightToggleTextEn.textContent = "LIGHT OFF";
+							if (statBeamMode) statBeamMode.textContent = "LASER OFF";
+							showToast("🌑", "蓝光关闭 · 神经元恢复静息态");
+						}
+					});
+				}
+
+				// Strobe mode button
+				if (btnStrobeMode) {
+					btnStrobeMode.addEventListener("click", () => {
+						strobeActive = !strobeActive;
+						if (strobeActive) {
+							btnStrobeMode.classList.remove("text-zinc-400", "border-zinc-700");
+							btnStrobeMode.classList.add("text-amber-300", "border-amber-500/50");
+							if (statStrobeState) statStrobeState.textContent = `${frequencyHz} Hz STROBE`;
+							showToast("⚡", `频闪模式已开启 (${frequencyHz} Hz) · 毫秒级周期放电`);
+						} else {
+							btnStrobeMode.classList.remove("text-amber-300", "border-amber-500/50");
+							btnStrobeMode.classList.add("text-zinc-400", "border-zinc-700");
+							strobePulseOn = true;
+							if (statStrobeState) statStrobeState.textContent = "CONTINUOUS BEAM";
+							showToast("🔆", "常开照明模式 · 持续光束");
+						}
+					});
+				}
+
+				// Reset network button
+				if (btnResetLab) {
+					btnResetLab.addEventListener("click", () => {
+						totalSpikesFired = 0;
+						totalLightPulses = 0;
+						if (statSpikes) statSpikes.textContent = "0";
+						if (statPulses) statPulses.textContent = "0";
+						rasterHistory = [];
+						generateNeuronNetwork();
+						showToast("↺", "神经回路已重置 · 电生理参数就绪");
+					});
+				}
+
+				// Pointer interactions (mouse & touch)
+				function updateBeamPointer(clientX, clientY) {
+					const rect = canvas.getBoundingClientRect();
+					beamX = Math.max(20, Math.min(canvasW - 20, clientX - rect.left));
+					beamY = Math.max(20, Math.min(canvasH - 20, clientY - rect.top));
+				}
+
+				canvas.addEventListener("pointerdown", (e) => {
+					updateBeamPointer(e.clientX, e.clientY);
+				});
+				window.addEventListener("pointermove", (e) => {
+					const rect = canvas.getBoundingClientRect();
+					if (
+						e.clientX >= rect.left &&
+						e.clientX <= rect.right &&
+						e.clientY >= rect.top &&
+						e.clientY <= rect.bottom
+					) {
+						updateBeamPointer(e.clientX, e.clientY);
+					}
+				});
+
+				// Initialize layout
+				handleResize();
+				window.addEventListener("resize", handleResize);
+				generateNeuronNetwork();
+
+				// ==========================================
+				// MAIN SIMULATION LOOP (60 FPS)
+				// ==========================================
+				function renderLoop(currentTime) {
+					const dt = Math.min((currentTime - lastFrameTime) / 1000, 0.1);
+					lastFrameTime = currentTime;
+
+					// Compute strobe pulse timing
+					if (strobeActive) {
+						const periodMs = 1000 / frequencyHz;
+						const elapsedInPeriod = (currentTime - lastStrobeToggleTime) % periodMs;
+						const prevPulseState = strobePulseOn;
+						strobePulseOn = elapsedInPeriod < pulseWidthMs;
+						if (!prevPulseState && strobePulseOn) {
+							totalLightPulses++;
+							if (statPulses) statPulses.textContent = String(totalLightPulses);
+						}
+					} else {
+						strobePulseOn = true;
+					}
+
+					const isLightEffective = lightEnabled && strobePulseOn;
+
+					// Record into raster history
+					if (currentTime % 16 < 8) {
+						// Record every ~16ms
+						const sampledSpikes = [];
+						// sample first 8 neurons
+						for (let s = 0; s < 8; s++) {
+							sampledSpikes.push(neurons[s] && neurons[s].spikeProgress > 0 && neurons[s].spikeProgress < 0.3);
+						}
+						rasterHistory.push({
+							light: isLightEffective,
+							spikes: sampledSpikes,
+							time: currentTime,
+						});
+						if (rasterHistory.length > 250) rasterHistory.shift();
+					}
+
+					// Clear canvases
+					ctx.fillStyle = "#030814";
+					ctx.fillRect(0, 0, canvasW, canvasH);
+
+					// Draw background grid lines
+					ctx.strokeStyle = "rgba(30, 41, 59, 0.4)";
+					ctx.lineWidth = 0.5;
+					const gridSpacing = 40;
+					ctx.beginPath();
+					for (let x = 0; x < canvasW; x += gridSpacing) {
+						ctx.moveTo(x, 0);
+						ctx.lineTo(x, canvasH);
+					}
+					for (let y = 0; y < canvasH; y += gridSpacing) {
+						ctx.moveTo(0, y);
+						ctx.lineTo(canvasW, y);
+					}
+					ctx.stroke();
+
+					// RENDER MODE-SPECIFIC CANVAS
+					if (currentPreset === "switch") {
+						renderSwitchMode(dt, isLightEffective, currentTime);
+					} else if (currentPreset === "eyespot") {
+						renderEyespotMode(dt, isLightEffective, currentTime);
+					} else if (currentPreset === "single") {
+						renderSingleMode(dt, isLightEffective, currentTime);
+					} else if (currentPreset === "circuit") {
+						renderCircuitMode(dt, isLightEffective, currentTime);
+					} else if (currentPreset === "vision") {
+						renderVisionMode(dt, isLightEffective, currentTime);
+					}
+
+					// Render secondary canvases
+					renderRasterPlot();
+					renderScopePlot(dt, isLightEffective);
+
+					animId = requestAnimationFrame(renderLoop);
+				}
+
+				// ------------------------------------------
+				// MODE 1: THE SWITCH (DEFAULT NEURON FIELD)
+				// ------------------------------------------
+				function renderSwitchMode(dt, isLightEffective, currentTime) {
+					// Draw blue beam spot
+					if (lightEnabled) {
+						const beamAlpha = strobePulseOn ? 0.85 : 0.15;
+						const grad = ctx.createRadialGradient(beamX, beamY, 5, beamX, beamY, beamRadius);
+						grad.addColorStop(0, `rgba(56, 189, 248, ${0.45 * beamAlpha})`);
+						grad.addColorStop(0.4, `rgba(2, 132, 199, ${0.25 * beamAlpha})`);
+						grad.addColorStop(0.8, `rgba(3, 105, 161, ${0.1 * beamAlpha})`);
+						grad.addColorStop(1, "rgba(2, 132, 199, 0)");
+
+						ctx.fillStyle = grad;
+						ctx.beginPath();
+						ctx.arc(beamX, beamY, beamRadius, 0, Math.PI * 2);
+						ctx.fill();
+
+						// Concentric ring guide
+						ctx.strokeStyle = `rgba(56, 189, 248, ${0.4 * beamAlpha})`;
+						ctx.lineWidth = 1;
+						ctx.setLineDash([4, 4]);
+						ctx.beginPath();
+						ctx.arc(beamX, beamY, beamRadius, 0, Math.PI * 2);
+						ctx.stroke();
+						ctx.setLineDash([]);
+
+						// Center laser pinpoint
+						ctx.fillStyle = `rgba(224, 242, 254, ${0.9 * beamAlpha})`;
+						ctx.beginPath();
+						ctx.arc(beamX, beamY, 3, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Update and draw neurons
+					let illuminatedCount = 0;
+
+					for (const n of neurons) {
+						// Distance to beam
+						const dist = Math.hypot(n.x - beamX, n.y - beamY);
+						const insideBeam = dist <= beamRadius + n.baseRadius;
+						if (insideBeam) illuminatedCount++;
+
+						// Refractory timer decrement
+						if (n.refractoryTimer > 0) {
+							n.refractoryTimer -= dt;
+						}
+
+						// Fire neuron if inside active beam and not refractory
+						if (insideBeam && isLightEffective && n.refractoryTimer <= 0) {
+							n.firing = true;
+							n.spikeProgress = 0.01;
+							n.refractoryTimer = 0.05; // 50ms refractory period (~20Hz max rate)
+							n.lastFiredTime = currentTime;
+							n.spikesCount++;
+							totalSpikesFired++;
+							if (statSpikes) statSpikes.textContent = String(totalSpikesFired);
+						}
+
+						// Update spike wave progress along neurites
+						if (n.spikeProgress > 0) {
+							n.spikeProgress += dt * 3.5; // ~280ms total animation duration
+							if (n.spikeProgress >= 1) {
+								n.spikeProgress = 0;
+								n.firing = false;
+							}
+						}
+
+						// Draw neurites / dendrites
+						for (const b of n.branches) {
+							ctx.strokeStyle = n.firing ? "rgba(96, 165, 250, 0.7)" : "rgba(51, 65, 85, 0.5)";
+							ctx.lineWidth = 1.2;
+							ctx.beginPath();
+							ctx.moveTo(n.x, n.y);
+							ctx.lineTo(n.x + b.x1, n.y + b.y1);
+							ctx.lineTo(n.x + b.x2, n.y + b.y2);
+							ctx.stroke();
+
+							// If firing, draw action potential spark traveling along neurite
+							if (n.spikeProgress > 0) {
+								const t = Math.min(n.spikeProgress, 1);
+								const sparkX = t < 0.5 ? n.x + b.x1 * (t * 2) : n.x + b.x1 + (b.x2 - b.x1) * ((t - 0.5) * 2);
+								const sparkY = t < 0.5 ? n.y + b.y1 * (t * 2) : n.y + b.y1 + (b.y2 - b.y1) * ((t - 0.5) * 2);
+
+								ctx.fillStyle = "#fbbf24";
+								ctx.shadowColor = "#f59e0b";
+								ctx.shadowBlur = 8;
+								ctx.beginPath();
+								ctx.arc(sparkX, sparkY, 2.8, 0, Math.PI * 2);
+								ctx.fill();
+								ctx.shadowBlur = 0;
+							}
+						}
+
+						// Draw soma body
+						ctx.beginPath();
+						ctx.arc(n.x, n.y, n.baseRadius, 0, Math.PI * 2);
+
+						if (n.spikeProgress > 0) {
+							// Action potential flash: warm amber/white
+							const intensity = 1 - n.spikeProgress;
+							ctx.fillStyle = `rgba(245, 158, 11, ${0.4 + intensity * 0.6})`;
+							ctx.shadowColor = "#fbbf24";
+							ctx.shadowBlur = 14;
+							ctx.fill();
+							ctx.shadowBlur = 0;
+							ctx.strokeStyle = "#ffffff";
+							ctx.lineWidth = 2;
+							ctx.stroke();
+						} else {
+							// Quiescent soma with ChR2 channel expression dot
+							ctx.fillStyle = insideBeam && lightEnabled ? "#0c2847" : "#0a1324";
+							ctx.fill();
+							ctx.strokeStyle = insideBeam && lightEnabled ? "#38bdf8" : "#334155";
+							ctx.lineWidth = 1.4;
+							ctx.stroke();
+						}
+
+						// ChR2 blue dot in the center of soma (symbolizing channelrhodopsin expression)
+						ctx.fillStyle = insideBeam && isLightEffective ? "#38bdf8" : "#0284c7";
+						ctx.beginPath();
+						ctx.arc(n.x, n.y, 2.5, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Update UI ratios
+					const activePct = (illuminatedCount / NUM_NEURONS) * 100;
+					if (statActiveRatio) statActiveRatio.textContent = `${illuminatedCount} / ${NUM_NEURONS} (${activePct.toFixed(0)}%)`;
+					if (barActivePct) barActivePct.textContent = `${activePct.toFixed(1)}%`;
+					if (barFillActive) barFillActive.style.width = `${activePct}%`;
+					if (barFillQuiescent) barFillQuiescent.style.width = `${100 - activePct}%`;
+				}
+
+				// ------------------------------------------
+				// MODE 2: EYESPOT (CHLAMYDOMONAS PHOTOTAXIS)
+				// ------------------------------------------
+				function renderEyespotMode(dt, isLightEffective) {
+					// Draw water fluid particles in background
+					ctx.fillStyle = "rgba(14, 165, 233, 0.05)";
+					ctx.fillRect(0, 0, canvasW, canvasH);
+
+					// Draw light beam target
+					if (lightEnabled) {
+						const grad = ctx.createRadialGradient(beamX, beamY, 10, beamX, beamY, 120);
+						grad.addColorStop(0, "rgba(56, 189, 248, 0.5)");
+						grad.addColorStop(0.5, "rgba(2, 132, 199, 0.2)");
+						grad.addColorStop(1, "rgba(2, 132, 199, 0)");
+						ctx.fillStyle = grad;
+						ctx.beginPath();
+						ctx.arc(beamX, beamY, 120, 0, Math.PI * 2);
+						ctx.fill();
+
+						ctx.fillStyle = "#38bdf8";
+						ctx.font = "11px monospace";
+						ctx.fillText("470 nm 光源 (LIGHT SOURCE)", beamX - 70, beamY - 130);
+					}
+
+					// Phototaxis physics: alga steers toward light beam
+					const dx = beamX - algaState.x;
+					const dy = beamY - algaState.y;
+					const dist = Math.hypot(dx, dy);
+					const targetAngle = Math.atan2(dy, dx);
+
+					// Smooth angle interpolation toward light if light effective
+					if (isLightEffective) {
+						let angleDiff = targetAngle - algaState.angle;
+						while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
+						while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
+						algaState.angle += angleDiff * dt * 3.5;
+					}
+
+					// Propulsion forward
+					const speed = isLightEffective ? (dist > 40 ? 110 : 25) : 18;
+					algaState.vx = Math.cos(algaState.angle) * speed;
+					algaState.vy = Math.sin(algaState.angle) * speed;
+					algaState.x += algaState.vx * dt;
+					algaState.y += algaState.vy * dt;
+
+					// Flagella phase
+					algaState.flagellaPhase += dt * (isLightEffective ? 14 : 5);
+
+					// Record swim trajectory
+					algaState.tailHistory.push({ x: algaState.x, y: algaState.y });
+					if (algaState.tailHistory.length > 70) algaState.tailHistory.shift();
+
+					// Draw swim trajectory path
+					ctx.strokeStyle = "rgba(16, 185, 129, 0.35)";
+					ctx.lineWidth = 2;
+					ctx.beginPath();
+					for (let i = 0; i < algaState.tailHistory.length; i++) {
+						const pt = algaState.tailHistory[i];
+						if (i === 0) ctx.moveTo(pt.x, pt.y);
+						else ctx.lineTo(pt.x, pt.y);
+					}
+					ctx.stroke();
+
+					// Draw Chlamydomonas alga body
+					ctx.save();
+					ctx.translate(algaState.x, algaState.y);
+					ctx.rotate(algaState.angle);
+
+					// Ovoid cell body (chloroplast green)
+					ctx.fillStyle = "#10b981";
+					ctx.shadowColor = "#34d399";
+					ctx.shadowBlur = 10;
+					ctx.beginPath();
+					ctx.ellipse(0, 0, 24, 15, 0, 0, Math.PI * 2);
+					ctx.fill();
+					ctx.shadowBlur = 0;
+
+					ctx.strokeStyle = "#059669";
+					ctx.lineWidth = 1.8;
+					ctx.stroke();
+
+					// Chloroplast internal texture
+					ctx.fillStyle = "#047857";
+					ctx.beginPath();
+					ctx.ellipse(-4, 0, 14, 9, 0, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Carotenoid Eye-spot (ChR2 stigma - bright orange-red spot on anterior shoulder)
+					ctx.fillStyle = "#f97316";
+					ctx.shadowColor = "#ea580c";
+					ctx.shadowBlur = 8;
+					ctx.beginPath();
+					ctx.arc(8, -8, 3.5, 0, Math.PI * 2);
+					ctx.fill();
+					ctx.shadowBlur = 0;
+
+					// Label eyespot
+					ctx.fillStyle = "#fed7aa";
+					ctx.font = "9px monospace";
+					ctx.fillText("眼点 ChR2", 14, -12);
+
+					// Two undulating flagella (anterior breaststroke)
+					const wave1 = Math.sin(algaState.flagellaPhase) * 12;
+					const wave2 = Math.cos(algaState.flagellaPhase) * 12;
+
+					ctx.strokeStyle = "#a7f3d0";
+					ctx.lineWidth = 1.6;
+					ctx.beginPath();
+					ctx.moveTo(24, -4);
+					ctx.bezierCurveTo(36, -18 + wave1, 48, -10 + wave2, 54, -22 + wave1);
+					ctx.stroke();
+
+					ctx.beginPath();
+					ctx.moveTo(24, 4);
+					ctx.bezierCurveTo(36, 18 - wave1, 48, 10 - wave2, 54, 22 - wave1);
+					ctx.stroke();
+
+					ctx.restore();
+
+					// Educational annotation HUD
+					ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+					ctx.strokeStyle = "rgba(16, 185, 129, 0.4)";
+					ctx.lineWidth = 1;
+					ctx.fillRect(20, canvasH - 75, 340, 55);
+					ctx.strokeRect(20, canvasH - 75, 340, 55);
+
+					ctx.fillStyle = "#34d399";
+					ctx.font = "bold 11px monospace";
+					ctx.fillText("衣藻正趋光性 (Positive Phototaxis)", 32, canvasH - 55);
+					ctx.fillStyle = "#94a3b8";
+					ctx.font = "10px monospace";
+					ctx.fillText("眼点 ChR2 捕获光子 → 膜去极化 → 鞭毛不对称摆动游向光源", 32, canvasH - 35);
+				}
+
+				// ------------------------------------------
+				// MODE 3: SINGLE CELL (PATCH-CLAMP CLOSEUP)
+				// ------------------------------------------
+				function renderSingleMode(isLightEffective, currentTime) {
+					const cx = canvasW * 0.45;
+					const cy = canvasH * 0.48;
+
+					// Draw single large pyramidal neuron
+					// Apical dendrite pointing up
+					ctx.strokeStyle = singleNeuronState.phase === "spike" ? "#fbbf24" : "#475569";
+					ctx.lineWidth = 4;
+					ctx.beginPath();
+					ctx.moveTo(cx, cy - 35);
+					ctx.lineTo(cx, cy - 130);
+					// branches
+					ctx.lineTo(cx - 40, cy - 180);
+					ctx.moveTo(cx, cy - 130);
+					ctx.lineTo(cx + 45, cy - 175);
+					ctx.stroke();
+
+					// Basal dendrites
+					ctx.lineWidth = 3;
+					ctx.beginPath();
+					ctx.moveTo(cx - 20, cy + 25);
+					ctx.lineTo(cx - 70, cy + 80);
+					ctx.moveTo(cx + 20, cy + 25);
+					ctx.lineTo(cx + 75, cy + 75);
+					ctx.stroke();
+
+					// Axon & Myelin Sheaths pointing right
+					ctx.lineWidth = 2.5;
+					ctx.beginPath();
+					ctx.moveTo(cx + 35, cy);
+					ctx.lineTo(cx + 220, cy);
+					ctx.stroke();
+
+					// Myelin sheaths
+					ctx.fillStyle = "#1e293b";
+					ctx.strokeStyle = "#38bdf8";
+					ctx.lineWidth = 1.2;
+					for (let i = 0; i < 4; i++) {
+						const mx = cx + 50 + i * 40;
+						ctx.fillRect(mx, cy - 6, 26, 12);
+						ctx.strokeRect(mx, cy - 6, 26, 12);
+					}
+
+					// Large Soma body
+					ctx.beginPath();
+					ctx.arc(cx, cy, 38, 0, Math.PI * 2);
+
+					if (singleNeuronState.phase === "spike") {
+						ctx.fillStyle = "rgba(245, 158, 11, 0.85)";
+						ctx.shadowColor = "#fbbf24";
+						ctx.shadowBlur = 25;
+						ctx.fill();
+						ctx.shadowBlur = 0;
+						ctx.strokeStyle = "#ffffff";
+						ctx.lineWidth = 3;
+						ctx.stroke();
+					} else {
+						ctx.fillStyle = isLightEffective ? "#0e2d4d" : "#0c182e";
+						ctx.fill();
+						ctx.strokeStyle = isLightEffective ? "#38bdf8" : "#334155";
+						ctx.lineWidth = 2;
+						ctx.stroke();
+					}
+
+					// Nucleus
+					ctx.fillStyle = "rgba(30, 58, 138, 0.7)";
+					ctx.beginPath();
+					ctx.arc(cx - 5, cy, 14, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Draw ChR2 channel gates in lipid bilayer around soma
+					const numGates = 12;
+					for (let i = 0; i < numGates; i++) {
+						const angle = (i / numGates) * Math.PI * 2;
+						const gx = cx + Math.cos(angle) * 38;
+						const gy = cy + Math.sin(angle) * 38;
+
+						ctx.fillStyle = isLightEffective ? "#38bdf8" : "#0369a1";
+						ctx.shadowColor = "#38bdf8";
+						ctx.shadowBlur = isLightEffective ? 8 : 0;
+						ctx.beginPath();
+						ctx.arc(gx, gy, 4, 0, Math.PI * 2);
+						ctx.fill();
+						ctx.shadowBlur = 0;
+
+						// If light active: draw incoming Na⁺ ions (amber dots streaming inward)
+						if (isLightEffective) {
+							const ionDist = 50 - (currentTime % 800) / 800 * 16;
+							const ix = cx + Math.cos(angle) * ionDist;
+							const iy = cy + Math.sin(angle) * ionDist;
+							ctx.fillStyle = "#fde047";
+							ctx.beginPath();
+							ctx.arc(ix, iy, 2, 0, Math.PI * 2);
+							ctx.fill();
+						}
+					}
+
+					// Draw light beam over soma
+					if (lightEnabled) {
+						const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, 90);
+						grad.addColorStop(0, "rgba(56, 189, 248, 0.4)");
+						grad.addColorStop(1, "rgba(2, 132, 199, 0)");
+						ctx.fillStyle = grad;
+						ctx.beginPath();
+						ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Membrane patch-clamp callout HUD
+					ctx.fillStyle = "rgba(2, 6, 23, 0.9)";
+					ctx.strokeStyle = "rgba(56, 189, 248, 0.5)";
+					ctx.lineWidth = 1;
+					ctx.fillRect(20, 20, 270, 75);
+					ctx.strokeRect(20, 20, 270, 75);
+
+					ctx.fillStyle = "#38bdf8";
+					ctx.font = "bold 11px monospace";
+					ctx.fillText("膜片钳单通道记录 (PATCH-CLAMP)", 32, 40);
+					ctx.fillStyle = "#e2e8f0";
+					ctx.font = "10px monospace";
+					ctx.fillText(`通道开门状态: ${isLightEffective ? "100% 开放 (OPEN)" : "0% 关闭 (CLOSED)"}`, 32, 58);
+					ctx.fillText(`电离潜伏期 Latency: ~2.1 ms (光子 → 电荷)`, 32, 74);
+				}
+
+				// ------------------------------------------
+				// MODE 4: CIRCUIT (SYNAPTIC CASCADE & PSTH)
+				// ------------------------------------------
+				function renderCircuitMode(dt, isLightEffective, currentTime) {
+					// Draw layer dividers & labels
+					ctx.strokeStyle = "rgba(51, 65, 85, 0.4)";
+					ctx.lineWidth = 1;
+					ctx.setLineDash([4, 4]);
+					ctx.beginPath();
+					ctx.moveTo(30, canvasH * 0.52);
+					ctx.lineTo(canvasW - 30, canvasH * 0.52);
+					ctx.stroke();
+					ctx.setLineDash([]);
+
+					ctx.fillStyle = "#64748b";
+					ctx.font = "10px monospace";
+					ctx.fillText("CORTICAL LAYER 2/3 (ChR2+ 兴奋性投射源)", 35, canvasH * 0.16);
+					ctx.fillText("CORTICAL LAYER 5 (突触耦联下游锥体网络)", 35, canvasH * 0.58);
+
+					// Update & draw Layer 2/3 neurons
+					for (let i = 0; i < circuitLayers.l23.length; i++) {
+						const n = circuitLayers.l23[i];
+						const dist = Math.hypot(n.x - beamX, n.y - beamY);
+						const insideBeam = dist <= beamRadius;
+
+						if (n.refractory > 0) n.refractory -= dt;
+						if (insideBeam && isLightEffective && n.refractory <= 0) {
+							n.firing = true;
+							n.spikeProgress = 0.01;
+							n.refractory = 0.08;
+							// Activate outbound synapses
+							for (const syn of circuitLayers.synapses) {
+								if (syn.fromIdx === i) {
+									syn.active = true;
+									syn.progress = 0.01;
+								}
+							}
+						}
+
+						if (n.spikeProgress > 0) {
+							n.spikeProgress += dt * 4;
+							if (n.spikeProgress >= 1) {
+								n.spikeProgress = 0;
+								n.firing = false;
+							}
+						}
+
+						ctx.fillStyle = n.firing ? "#fbbf24" : insideBeam ? "#0284c7" : "#0f172a";
+						ctx.beginPath();
+						ctx.arc(n.x, n.y, 8, 0, Math.PI * 2);
+						ctx.fill();
+						ctx.strokeStyle = insideBeam ? "#38bdf8" : "#334155";
+						ctx.lineWidth = 1.5;
+						ctx.stroke();
+					}
+
+					// Update & draw Synapses
+					for (const syn of circuitLayers.synapses) {
+						const fromN = circuitLayers.l23[syn.fromIdx];
+						const toN = circuitLayers.l5[syn.toIdx];
+
+						ctx.strokeStyle = syn.active ? "rgba(96, 165, 250, 0.6)" : "rgba(30, 41, 59, 0.4)";
+						ctx.lineWidth = 1;
+						ctx.beginPath();
+						ctx.moveTo(fromN.x, fromN.y);
+						ctx.lineTo(toN.x, toN.y);
+						ctx.stroke();
+
+						if (syn.active) {
+							syn.progress += dt * 3; // synaptic conduction delay ~3.5 ms
+							const sx = fromN.x + (toN.x - fromN.x) * syn.progress;
+							const sy = fromN.y + (toN.y - fromN.y) * syn.progress;
+
+							// Synaptic neurotransmitter packet
+							ctx.fillStyle = "#fbbf24";
+							ctx.beginPath();
+							ctx.arc(sx, sy, 2.5, 0, Math.PI * 2);
+							ctx.fill();
+
+							if (syn.progress >= 1) {
+								syn.active = false;
+								toN.firing = true;
+								toN.spikeProgress = 0.01;
+								totalSpikesFired++;
+							}
+						}
+					}
+
+					// Update & draw Layer 5 neurons
+					for (const n of circuitLayers.l5) {
+						if (n.spikeProgress > 0) {
+							n.spikeProgress += dt * 4;
+							if (n.spikeProgress >= 1) {
+								n.spikeProgress = 0;
+								n.firing = false;
+							}
+						}
+
+						ctx.fillStyle = n.firing ? "#f59e0b" : "#0f172a";
+						ctx.beginPath();
+						ctx.arc(n.x, n.y, 9, 0, Math.PI * 2);
+						ctx.fill();
+						ctx.strokeStyle = n.firing ? "#fbbf24" : "#334155";
+						ctx.lineWidth = 1.5;
+						ctx.stroke();
+					}
+
+					// Draw light beam over L2/3
+					if (lightEnabled) {
+						const grad = ctx.createRadialGradient(beamX, beamY, 10, beamX, beamY, beamRadius);
+						grad.addColorStop(0, "rgba(56, 189, 248, 0.4)");
+						grad.addColorStop(1, "rgba(2, 132, 199, 0)");
+						ctx.fillStyle = grad;
+						ctx.beginPath();
+						ctx.arc(beamX, beamY, beamRadius, 0, Math.PI * 2);
+						ctx.fill();
+					}
+				}
+
+				// ------------------------------------------
+				// MODE 5: VISION (2021 RETINITIS PIGMENTOSA)
+				// ------------------------------------------
+				function renderVisionMode(dt, isLightEffective, currentTime) {
+					const cellW = (canvasW - 120) / retinaGrid.cols;
+					const cellH = (canvasH - 120) / retinaGrid.rows;
+					const startX = 60;
+					const startY = 60;
+
+					let totalTargetCells = 0;
+					let hitTargetCells = 0;
+
+					for (const cell of retinaGrid.cells) {
+						const cx = startX + cell.col * cellW + cellW / 2;
+						const cy = startY + cell.row * cellH + cellH / 2;
+
+						// Check if illuminated by beam
+						const dist = Math.hypot(cx - beamX, cy - beamY);
+						const inBeam = dist <= beamRadius;
+
+						if (cell.isTarget) totalTargetCells++;
+
+						if (inBeam && isLightEffective) {
+							cell.charge = Math.min(1.0, cell.charge + dt * 1.5);
+							cell.lastHit = currentTime;
+						} else {
+							cell.charge = Math.max(0.0, cell.charge - dt * 0.25);
+						}
+
+						if (cell.isTarget && cell.charge > 0.4) hitTargetCells++;
+
+						// Draw retinal ganglion cell sensor pixel
+						ctx.beginPath();
+						ctx.roundRect(startX + cell.col * cellW + 2, startY + cell.row * cellH + 2, cellW - 4, cellH - 4, 4);
+
+						if (cell.charge > 0.1) {
+							ctx.fillStyle = cell.isTarget
+								? `rgba(245, 158, 11, ${cell.charge})`
+								: `rgba(56, 189, 248, ${cell.charge * 0.5})`;
+							ctx.fill();
+							ctx.strokeStyle = cell.isTarget ? "#fbbf24" : "#38bdf8";
+							ctx.lineWidth = 1.2;
+							ctx.stroke();
+						} else {
+							ctx.fillStyle = "rgba(15, 23, 42, 0.6)";
+							ctx.fill();
+							ctx.strokeStyle = "rgba(30, 41, 59, 0.4)";
+							ctx.lineWidth = 0.8;
+							ctx.stroke();
+						}
+					}
+
+					// Draw projected beam
+					if (lightEnabled) {
+						const grad = ctx.createRadialGradient(beamX, beamY, 10, beamX, beamY, beamRadius);
+						grad.addColorStop(0, "rgba(56, 189, 248, 0.45)");
+						grad.addColorStop(1, "rgba(2, 132, 199, 0)");
+						ctx.fillStyle = grad;
+						ctx.beginPath();
+						ctx.arc(beamX, beamY, beamRadius, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Recognition readout HUD
+					const reconPct = Math.min(100, (hitTargetCells / Math.max(1, totalTargetCells)) * 100);
+					ctx.fillStyle = "rgba(2, 6, 23, 0.9)";
+					ctx.strokeStyle = reconPct > 70 ? "rgba(245, 158, 11, 0.7)" : "rgba(56, 189, 248, 0.5)";
+					ctx.lineWidth = 1;
+					ctx.fillRect(startX, canvasH - 50, 400, 36);
+					ctx.strokeRect(startX, canvasH - 50, 400, 36);
+
+					ctx.fillStyle = reconPct > 70 ? "#fbbf24" : "#38bdf8";
+					ctx.font = "bold 11px monospace";
+					ctx.fillText(`视力重构识别度: ${reconPct.toFixed(0)}% · 目标: 视力表 'E' 字`, startX + 14, canvasH - 28);
+				}
+
+				// ------------------------------------------
+				// RASTER PLOT RENDERER
+				// ------------------------------------------
+				function renderRasterPlot() {
+					rasterCtx.fillStyle = "#01040a";
+					rasterCtx.fillRect(0, 0, rasterW, rasterH);
+
+					// Grid vertical time lines
+					rasterCtx.strokeStyle = "rgba(30, 41, 59, 0.35)";
+					rasterCtx.lineWidth = 1;
+					const numGrid = 8;
+					for (let i = 0; i <= numGrid; i++) {
+						const gx = (i / numGrid) * rasterW;
+						rasterCtx.beginPath();
+						rasterCtx.moveTo(gx, 0);
+						rasterCtx.lineTo(gx, rasterH);
+						rasterCtx.stroke();
+					}
+
+					// Lane divider: top lane for light stimulus
+					const stimLaneH = 34;
+					rasterCtx.strokeStyle = "rgba(56, 189, 248, 0.3)";
+					rasterCtx.beginPath();
+					rasterCtx.moveTo(0, stimLaneH);
+					rasterCtx.lineTo(rasterW, stimLaneH);
+					rasterCtx.stroke();
+
+					rasterCtx.fillStyle = "#60a5fa";
+					rasterCtx.font = "9px monospace";
+					rasterCtx.fillText("470nm LIGHT", 8, 22);
+
+					// Draw stimulus history on top lane
+					const histLen = rasterHistory.length;
+					for (let i = 0; i < histLen; i++) {
+						const item = rasterHistory[i];
+						const x = (i / histLen) * rasterW;
+						const nextX = ((i + 1) / histLen) * rasterW;
+						const w = Math.max(2, nextX - x);
+
+						if (item.light) {
+							rasterCtx.fillStyle = "#38bdf8";
+							rasterCtx.fillRect(x, 6, w, stimLaneH - 12);
+						}
+
+						// Draw neuron spike tick marks (channels 1..8)
+						const neuronLaneStart = stimLaneH + 10;
+						const laneH = (rasterH - neuronLaneStart) / 8;
+
+						for (let s = 0; s < 8; s++) {
+							const y = neuronLaneStart + s * laneH;
+							if (item.spikes && item.spikes[s]) {
+								rasterCtx.fillStyle = "#fbbf24";
+								rasterCtx.fillRect(x, y + 2, 2.5, laneH - 4);
+							}
+						}
+					}
+
+					// Channel lane labels on left
+					const neuronLaneStart = stimLaneH + 10;
+					const laneH = (rasterH - neuronLaneStart) / 8;
+					rasterCtx.fillStyle = "#64748b";
+					rasterCtx.font = "8px monospace";
+					for (let s = 0; s < 8; s++) {
+						const y = neuronLaneStart + s * laneH;
+						rasterCtx.fillText(`N#${s + 1}`, 8, y + laneH * 0.7);
+					}
+				}
+
+				// ------------------------------------------
+				// MINI OSCILLOSCOPE VOLTAGE TRACE RENDERER
+				// ------------------------------------------
+				function renderScopePlot(dt, isLightEffective) {
+					scopeCtx.fillStyle = "#02050e";
+					scopeCtx.fillRect(0, 0, scopeW, scopeH);
+
+					// Baseline grid
+					scopeCtx.strokeStyle = "rgba(30, 41, 59, 0.4)";
+					scopeCtx.lineWidth = 0.5;
+					scopeCtx.beginPath();
+					// -70mV line
+					const y70 = scopeH * 0.75;
+					scopeCtx.moveTo(0, y70);
+					scopeCtx.lineTo(scopeW, y70);
+					// 0mV line
+					const y0 = scopeH * 0.35;
+					scopeCtx.moveTo(0, y0);
+					scopeCtx.lineTo(scopeW, y0);
+					scopeCtx.stroke();
+
+					// Voltage dynamics
+					if (isLightEffective) {
+						if (singleNeuronState.phase === "rest") {
+							singleNeuronState.phase = "depol";
+							singleNeuronState.phaseTimer = 0;
+						}
+					}
+
+					// Advance membrane potential state machine
+					if (singleNeuronState.phase === "depol") {
+						singleNeuronState.phaseTimer += dt;
+						singleNeuronState.vm += dt * 450; // fast depolarization
+						if (singleNeuronState.vm >= -50) {
+							singleNeuronState.phase = "spike";
+						}
+					} else if (singleNeuronState.phase === "spike") {
+						singleNeuronState.vm += dt * 900;
+						if (singleNeuronState.vm >= 32) {
+							singleNeuronState.phase = "repol";
+						}
+					} else if (singleNeuronState.phase === "repol") {
+						singleNeuronState.vm -= dt * 650;
+						if (singleNeuronState.vm <= -78) {
+							singleNeuronState.phase = "hyperpol";
+						}
+					} else if (singleNeuronState.phase === "hyperpol") {
+						singleNeuronState.vm += dt * 80;
+						if (singleNeuronState.vm >= -70) {
+							singleNeuronState.vm = -70;
+							singleNeuronState.phase = "rest";
+						}
+					} else {
+						// small thermal noise
+						singleNeuronState.vm = -70 + (Math.random() - 0.5) * 0.6;
+					}
+
+					// Push to buffer
+					scopeBuffer.push(singleNeuronState.vm);
+					if (scopeBuffer.length > 120) scopeBuffer.shift();
+
+					if (scopeVmVal) scopeVmVal.textContent = `${singleNeuronState.vm.toFixed(1)} mV`;
+
+					// Draw waveform
+					scopeCtx.strokeStyle = singleNeuronState.phase === "spike" ? "#fbbf24" : "#38bdf8";
+					scopeCtx.lineWidth = 1.8;
+					scopeCtx.beginPath();
+
+					for (let i = 0; i < scopeBuffer.length; i++) {
+						const v = scopeBuffer[i];
+						const x = (i / (scopeBuffer.length - 1)) * scopeW;
+						// Map -90mV to +40mV into height
+						const norm = (v - (-90)) / (40 - (-90));
+						const y = scopeH - norm * scopeH;
+						if (i === 0) scopeCtx.moveTo(x, y);
+						else scopeCtx.lineTo(x, y);
+					}
+					scopeCtx.stroke();
+				}
+
+				// Start loop
+				animId = requestAnimationFrame(renderLoop);
+			}
+
+			// Clean up animation on Astro page transitions
+			window.addEventListener(
+				"astro:before-swap",
+				() => {
+					if (animId) cancelAnimationFrame(animId);
+					if (strobeInterval) clearInterval(strobeInterval);
+				},
+				{ once: true },
+			);
+
+			// Init on current load and future page transitions
+			initLightbearerLab();
+			document.addEventListener("astro:page-load", initLightbearerLab);
+		})();
+	</script>
+</MainGridLayout>
