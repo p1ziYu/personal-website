@@ -19,12 +19,16 @@ export const ENGLISH_STATIC_ROUTES: ReadonlySet<string> = new Set<string>([
 
 export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"adrift",
+	"chiral-cascade",
 	"cursed-fonts",
 	"emberhold-siege",
 	"event-horizon",
+	"ghost-catcher",
 	"goldilocks-ink",
 	"kinetic-cuisine",
+	"lightbearer-lab",
 	"snake",
+	"switchback",
 	"the-last-scan",
 	"the-smallest-triangle",
 ]);
