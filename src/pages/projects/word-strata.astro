@@ -1,0 +1,1168 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Word Strata · Etymology Excavation"
+	: "词层考古 · WORD STRATA";
+const description = isEn
+	? "Word Strata: Celebrating Anne Carson's 2026 Nobel Prize in Literature. An interactive etymology dig game excavating classical Greek roots through Latin detours down to archaic bedrock, featuring the Sweet-Bitter paradox meter and works showcase."
+	: "词层考古 · WORD STRATA：致敬安妮·卡森（Anne Carson）荣获 2026 诺贝尔文学奖。交互式古希腊词源地堑探掘游戏——凿穿现代英语与拉丁泥土直抵古风希腊词根，玩转苦甜相依量表（Sweet-Bitter Meter）、生平时间线与经典书架。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#0d0c11] text-zinc-100 border border-zinc-800/80 shadow-2xl selection:bg-red-500/30 selection:text-red-200">
+			<!-- Background Ambient Papyrus Texture & Classical Glow -->
+			<div class="absolute inset-0 pointer-events-none opacity-15 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:24px_24px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-red-700/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-80 h-80 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/4 w-96 h-96 bg-stone-700/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- 1. HERO HEADER SECTION -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+							<span class="lang-zh">★ 2026 诺贝尔文学奖 · ANNE CARSON 安妮·卡森</span>
+							<span class="lang-en">★ 2026 NOBEL PRIZE IN LITERATURE · ANNE CARSON</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono">
+							<span>📜</span>
+							<span>ΕΤΥΜΟΛΟΓΙΑ · GLUKUPRIKON</span>
+						</div>
+					</div>
+					<div class="text-xs font-mono text-zinc-400">
+						<span class="lang-zh">2026-10-08 瑞典文学院于斯德哥尔摩宣布</span>
+						<span class="lang-en">Announced 2026-10-08 by the Swedish Academy in Stockholm</span>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-serif">
+					<span class="lang-zh">词层考古 · WORD STRATA</span>
+					<span class="lang-en">Word Strata · Etymology Excavation</span>
+				</h1>
+				<p class="text-lg sm:text-xl font-bold text-amber-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">The Etymology Trench — 剥开词语的表皮，凿向古希腊词源基岩</span>
+					<span class="lang-en">The Etymology Trench — Peeling the Skin of Words Down to Greek Bedrock</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-zinc-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							2026 年 10 月 8 日，瑞典文学院在斯德哥尔摩宣布，将 2026 年诺贝尔文学奖授予现年 76 岁的加拿大诗人兼古典学者<strong>安妮·卡森（Anne Carson）</strong>，表彰她“大胆而具独创性的作品，在与古典传统的生动对话中，为当代文学创造了全新形式”（"for her bold and inventive oeuvre that, in playful dialogue with the classical tradition, has created new forms for contemporary literature"）。奖金总计 1,200 万瑞典克朗（约合 120 万美元），卡森是该奖项 123 位文学得主中的第 19 位女性。
+						</span>
+						<span class="lang-en">
+							On October 8, 2026, the Swedish Academy in Stockholm awarded Canadian poet-classicist <strong>Anne Carson</strong> (age 76) the 2026 Nobel Prize in Literature "for her bold and inventive oeuvre that, in playful dialogue with the classical tradition, has created new forms for contemporary literature". Awarded 12 million Swedish kronor (~$1.2M), she becomes the 19th woman among 123 literature laureates.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-zinc-400">
+						<span class="lang-zh">
+							诺贝尔奖评委会主席安德斯·奥尔松（Anders Olsson）在颁奖词中指出，卡森的写作矗立于“<strong>文献学家对字词的痴迷与诗人对新意义的渴求之交汇处</strong>”（"the intersection between the philologist's obsession with words and the poet's desire for new meaning"）。当获知喜讯的跨洋电话打到冰岛时，自 2022 年起便持有冰岛国籍的卡森正站在荒原风中，轻声答道自己正“<strong>在听风声</strong>”。卡森视词源为一切思想与创作的发端，她的古希腊语翻译更被文坛公认为独立的艺术结晶。
+						</span>
+						<span class="lang-en">
+							Nobel committee chair Anders Olsson observed that her oeuvre sits at "<strong>the intersection between the philologist's obsession with words and the poet's desire for new meaning</strong>". When the Academy phoned Iceland—where Carson has held citizenship since 2022—she simply replied she was "<strong>listening to the wind</strong>". Carson calls the etymology of words the starting point of all her work, and her Classical Greek translations are celebrated worldwide as independent literary masterworks.
+						</span>
+					</p>
+				</div>
+			</section>
+
+			<!-- 2. MAIN INTERACTIVE: THE WORD TRENCH (词层地堑) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-zinc-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+					<div>
+						<div class="flex items-center gap-2 mb-1">
+							<span class="text-red-400 font-mono text-xl font-bold">01/</span>
+							<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+								<span class="lang-zh">词层地堑 · The Word Trench</span>
+								<span class="lang-en">The Word Trench · Excavation Game</span>
+							</h2>
+						</div>
+						<p class="text-xs sm:text-sm text-zinc-400">
+							<span class="lang-zh">点击地堑砖块逐层深挖：第 1 层现代语境 → 第 2 层拉丁或日耳曼迂回 → 第 3 层古希腊词源基岩与卡森典故。</span>
+							<span class="lang-en">Tap excavation tiles to dig down: Layer 1 Modern Soil → Layer 2 Latin/Germanic Detour → Layer 3 Greek Bedrock & Carson Fact.</span>
+						</p>
+					</div>
+
+					<!-- Progress Counter & Quick Actions -->
+					<div class="flex flex-wrap items-center gap-3">
+						<div class="bg-zinc-900/90 border border-amber-500/30 rounded-xl px-4 py-2 flex items-center gap-3 shadow-inner">
+							<span class="text-xs font-mono text-amber-400 font-bold uppercase tracking-wider">
+								<span class="lang-zh">挖掘进度:</span>
+								<span class="lang-en">Unearthed:</span>
+							</span>
+							<div class="flex items-baseline gap-1 font-mono">
+								<span id="trench-counter" class="text-2xl font-black text-amber-300">0</span>
+								<span class="text-xs text-zinc-500">/ 8</span>
+							</div>
+						</div>
+						<button
+							id="btn-excavate-all"
+							type="button"
+							class="px-3.5 py-2 text-xs font-mono rounded-lg bg-red-950/60 hover:bg-red-900/80 text-red-200 border border-red-700/50 transition cursor-pointer"
+						>
+							<span class="lang-zh">一键全掘</span>
+							<span class="lang-en">Dig All</span>
+						</button>
+						<button
+							id="btn-reset-trench"
+							type="button"
+							class="px-3.5 py-2 text-xs font-mono rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-700/60 transition cursor-pointer"
+						>
+							<span class="lang-zh">回填地层</span>
+							<span class="lang-en">Reset</span>
+						</button>
+					</div>
+				</div>
+
+				<!-- CELEBRATORY BANNER (Revealed at 8/8) -->
+				<div
+					id="trench-celebration"
+					class="hidden mb-6 p-4 rounded-xl bg-gradient-to-r from-red-950/80 via-amber-950/70 to-stone-900/90 border border-amber-500/50 shadow-[0_0_30px_rgba(245,158,11,0.2)] animate-pulse"
+				>
+					<div class="flex items-center gap-3">
+						<span class="text-2xl">🏛️</span>
+						<div class="text-xs sm:text-sm">
+							<div class="font-bold text-amber-300 font-serif">
+								<span class="lang-zh">地堑已全数贯通！8 个词根基岩破土而出</span>
+								<span class="lang-en">Trench Fully Excavated! All 8 Archaic Roots Unearthed</span>
+							</div>
+							<div class="text-zinc-300 mt-0.5">
+								<span class="lang-zh">你已凿穿现代语言的尘垢，触及古风抒情诗的火种。如卡森在冰岛所言，此刻在字词的空隙里，“你能听见风声”。</span>
+								<span class="lang-en">You have penetrated centuries of linguistic sediment to touch archaic lyric fire. As Carson noted in Iceland, between word roots, "you can hear the wind."</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 8 EXCAVATION TILES GRID -->
+				<div id="trench-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+					<!-- Tile 1: night -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="night"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">01 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>night</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1: Modern Soil -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">夜晚，落日与破晓间的暗影帷幕，沉睡与幽隐梦境的避难所。</p>
+							<p class="lang-en leading-relaxed">Darkness between dusk and dawn; the veil of sleep and shadows.</p>
+						</div>
+
+						<!-- Layer 2: Latin/Germanic Detour -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · LATIN & GERMANIC</div>
+							<p class="lang-zh leading-relaxed">经由中古英语 <em>night</em> 与古英语 <em>niht</em>，平行同源于拉丁语 <em>nox</em>（夜之女神与阴翳）。</p>
+							<p class="lang-en leading-relaxed">Middle English <em>night</em>, Old English <em>niht</em>, cognate with Latin <em>nox</em> (noctis).</p>
+						</div>
+
+						<!-- Layer 3: Greek Bedrock -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">νύξ <span class="text-xs font-mono font-normal text-zinc-400">(nyx, gen. nyktos)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">古希腊神话中混沌（Chaos）所生的原始夜之女神，乘着乌木马车在白昼之前巡游天际。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">Primeval goddess born of Chaos whose dark chariot traverses the sky before daybreak.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>装置书《Nox》取名自该同源词；她以散落辞书卡片逐字解剖卡图卢斯 101 号挽歌，送别消逝在长夜里的哥哥。</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> Her 2010 box <em>Nox</em> derives from this root, anatomizing Catullus 101 to mourn her brother lost to the night.</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+
+					<!-- Tile 2: desire -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="desire"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">02 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>desire</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1 -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">欲望与爱恋，对那份悬空、未及之物的炽烈渴求与隐痛。</p>
+							<p class="lang-en leading-relaxed">Longing, passionate wanting, the unbearable ache for what is distant.</p>
+						</div>
+
+						<!-- Layer 2 -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · LATIN DETOUR</div>
+							<p class="lang-zh leading-relaxed">源自盎格鲁-诺曼语 <em>desir</em>，拉丁语 <em>desiderare</em>（望星兴叹，<em>de-</em> 离开 + <em>sidus</em> 星宿）。</p>
+							<p class="lang-en leading-relaxed">Via Anglo-Norman <em>desir</em>, Latin <em>desiderare</em> ("to await what the stars bring", from <em>sidus</em> "star").</p>
+						</div>
+
+						<!-- Layer 3 -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">ἔρως / ἵμερος <span class="text-xs font-mono font-normal text-zinc-400">(eros / himeros)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">古希腊严辨渴望：<em>eros</em> 是穿透性的暴烈引力，<em>himeros</em> 是在场之欲，<em>pothos</em> 是对缺席之物的悬望。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">Greek nuance: <em>eros</em> is grasping passion, <em>himeros</em> yearning for the present, <em>pothos</em> longing for the absent.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>在《苦甜之爱》中，卡森画出著名的“三角形”：爱人、被爱者，以及横亘在两者间永难弥合的留白。没有这道缺口，欲望便不复存在。</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> In <em>Eros the Bittersweet</em>, she charts the geometric triangle: lover, beloved, and the unbridgeable space in-between.</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+
+					<!-- Tile 3: sweet -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="sweet"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">03 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>sweet</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1 -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">甜美悦口，蜜糖般的芳醇，令人沉醉的感官欢愉与抒情抚慰。</p>
+							<p class="lang-en leading-relaxed">Pleasing to taste, honeyed, melodic, delightful tenderness.</p>
+						</div>
+
+						<!-- Layer 2 -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · GERMANIC & LATIN</div>
+							<p class="lang-zh leading-relaxed">经古英语 <em>swēte</em> 与原始日耳曼语 <em>swōtuz</em>，同源于拉丁语 <em>suavis</em>（甘饴、温润如初）。</p>
+							<p class="lang-en leading-relaxed">From Old English <em>swēte</em>, Proto-Germanic <em>swōtuz</em>, cognate with Latin <em>suavis</em> ("sweet, agreeable").</p>
+						</div>
+
+						<!-- Layer 3 -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">γλυκύς <span class="text-xs font-mono font-normal text-zinc-400">(glykys)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">葡萄糖（glucose）词源，古希腊人不仅用来形容蜂房蜂蜜，更用来形容抒情诗乐的清甜韵脚。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">Root of glucose and glycerin; archaic verse used it for wild honey and lyric melodies alike.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>萨福首创复合词 <em>glukuprikon</em>（亦即 <em>glukupikron</em>，甘甜发苦）。卡森将其作为自己毕生文学审美的启动飞轮。</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> Sappho coined <em>glukuprikon</em> (sweet-bitter), which Carson established as the prime engine of her critical philosophy.</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+
+					<!-- Tile 4: bitter -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="bitter"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">04 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>bitter</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1 -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">苦涩辛烈，残留于舌根与心头的尖锐灼痛，难以消解的辛酸。</p>
+							<p class="lang-en leading-relaxed">Sharp, stinging taste; lingering grief or pungent sorrow.</p>
+						</div>
+
+						<!-- Layer 2 -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · GERMANIC BITE</div>
+							<p class="lang-zh leading-relaxed">源自古英语 <em>biter</em>，出自原始日耳曼语 <em>bitraz</em>（如利齿撕咬般的刺痛）。</p>
+							<p class="lang-en leading-relaxed">From Old English <em>biter</em>, Proto-Germanic <em>bitraz</em> ("biting, cutting"), literally "having a bite".</p>
+						</div>
+
+						<!-- Layer 3 -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">πικρός <span class="text-xs font-mono font-normal text-zinc-400">(pikros)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">原始印欧语“切开、刺破”之意；在荷马史诗中特指刺入血肉的箭镝、咸涩泪水与心如刀绞。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">From PIE root for cutting; archaic Greek applies it to piercing arrows, brine, and sharp despair.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>卡森阐明：萨福并非先尝到甜头再咽下苦果；相反，希腊人体验到的是“咬啮”与“甜蜜”在欲念点燃的那一毫秒并肩降临。</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> Carson shows Greek sensation was not chronological (sweet then bitter), but simultaneous—the bite arrives inside the ecstasy.</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+
+					<!-- Tile 5: monster -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="monster"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">05 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>monster</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1 -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">怪物，令人骇怕的非人异物，庞大而具破坏性的神话造物。</p>
+							<p class="lang-en leading-relaxed">Terrifying creature, abnormal beast, legendary destructive brute.</p>
+						</div>
+
+						<!-- Layer 2 -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · LATIN PORTENT</div>
+							<p class="lang-zh leading-relaxed">经古法语 <em>monstre</em>，源自拉丁语 <em>monstrum</em>（上天示警的怪象、神兆），源自 <em>monere</em>（告诫、提醒）。</p>
+							<p class="lang-en leading-relaxed">From Old French <em>monstre</em>, Latin <em>monstrum</em> ("divine portent, unnatural omen"), from <em>monere</em> ("to warn").</p>
+						</div>
+
+						<!-- Layer 3 -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">τέρας / Γηρυών <span class="text-xs font-mono font-normal text-zinc-400">(teras / Geryon)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">希腊语 <em>teras</em> 乃令人敬畏之神迹；而斯忒西霍罗斯史诗中的革律翁（Geryon），则是长着红色羽翼、注定被赫拉克勒斯斩杀的三身红岛巨怪。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">Greek <em>teras</em> is a sacred omen; Stesichorus sang of Geryon, the winged red giant of Erytheia slain by Herakles.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>在《红的自传》中，卡森彻底颠覆英雄主义叙事，将红翼怪物革律翁塑造成一个细腻、爱好摄影、饱受初恋折磨的现代柔弱少年。</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> In <em>Autobiography of Red</em>, Carson rescues Geryon, casting the slain monster as an introverted teenage photographer in love.</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+
+					<!-- Tile 6: red -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="red"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">06 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>red</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1 -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">赤红，鲜血、熔岩、朱砂与极烈激情的原初色彩。</p>
+							<p class="lang-en leading-relaxed">The primal color of arterial blood, lava, ruby, and untamed flame.</p>
+						</div>
+
+						<!-- Layer 2 -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · GERMANIC & LATIN</div>
+							<p class="lang-zh leading-relaxed">经古英语 <em>rēad</em> 与原始日耳曼语 <em>raudaz</em>，同源于拉丁语 <em>ruber</em>（赤红岩石）。</p>
+							<p class="lang-en leading-relaxed">Old English <em>rēad</em>, Proto-Germanic <em>raudaz</em>, cognate with Latin <em>ruber</em> ("red").</p>
+						</div>
+
+						<!-- Layer 3 -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">ἐρυθρός <span class="text-xs font-mono font-normal text-zinc-400">(erythros)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">红细胞（erythrocyte）之词根；古希腊诗中用来浸染血战的尘土与落日深处的埃律提亚红岛（Erytheia）。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">Root of erythrocyte; archaic lyric applied it to bloodsoaked sand and Erytheia, the red sunset isle.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>在卡森笔下，“红色”不是形容词，而是革律翁的本体：他的红翅膀、他的羞赧与岩浆翻滚的思绪，构成了整个世界的重力场。</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> Carson transforms "red" from a pigment into Geryon's existence: his crimson wings, blushing shame, and volcanic consciousness.</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+
+					<!-- Tile 7: grief -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="grief"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">07 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>grief</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1 -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">哀恸，重压在胸口的沉重悼亡之痛，不可挽回的巨大缺损。</p>
+							<p class="lang-en leading-relaxed">Deep sorrow, crushing bereavement, mourning for what has vanished forever.</p>
+						</div>
+
+						<!-- Layer 2 -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · LATIN HEAVINESS</div>
+							<p class="lang-zh leading-relaxed">经古法语 <em>grief</em>，追溯至拉丁语 <em>gravis</em>（沉重负荷，亦是 gravity 重力 之源）。</p>
+							<p class="lang-en leading-relaxed">Via Old French <em>grief</em>, from Latin <em>gravis</em> ("heavy, burdensome"—also root of gravity).</p>
+						</div>
+
+						<!-- Layer 3 -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">ἄλγος / πένθος <span class="text-xs font-mono font-normal text-zinc-400">(algos / penthos)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">希腊语 <em>penthos</em> 乃悼亡仪式，而 <em>algos</em>（镇痛 analgesia 之根）则是沉甸甸压迫筋骨肉躯的真实生理剧痛。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">Greek <em>penthos</em> is communal mourning; <em>algos</em> (root of analgesia) is bodily ache seizing the limbs.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>在《哀伤的教课》中，卡森重译欧里庇得斯悲剧，指出古典悲剧从不安抚看客，而是教会人们在毁灭面前直视失去而绝不自我麻痹。</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> In <em>Grief Lessons</em>, she translates Euripides to demonstrate that tragedy offers no false solace, but teaches endurance without denial.</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+
+					<!-- Tile 8: word -->
+					<div
+						class="trench-tile group relative rounded-2xl bg-zinc-950/80 border border-zinc-800 p-4 transition-all duration-300 hover:border-zinc-700 cursor-pointer select-none"
+						data-word="word"
+						data-depth="1"
+					>
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-mono text-xs font-bold text-zinc-400 group-hover:text-amber-400">08 / TILE</span>
+							<span class="trench-depth-pill text-[10px] font-mono px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400">
+								L1 表层
+							</span>
+						</div>
+						<div class="text-xl font-bold font-serif text-white mb-2 flex items-center justify-between">
+							<span>word</span>
+							<span class="trench-status-icon text-xs opacity-60">⛏️</span>
+						</div>
+
+						<!-- Layer 1 -->
+						<div class="stratum stratum-1 block text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-amber-300/90 font-mono text-[11px]">STRATUM 1 · MODERN SURFACE</div>
+							<p class="lang-zh leading-relaxed">字词与言说，音节构筑的意义之砖，思维交流的最小单元与盟誓。</p>
+							<p class="lang-en leading-relaxed">Speech, utterance, promise, the fundamental atom of human language.</p>
+						</div>
+
+						<!-- Layer 2 -->
+						<div class="stratum stratum-2 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-sky-400 font-mono text-[11px]">STRATUM 2 · GERMANIC & VERBUM</div>
+							<p class="lang-zh leading-relaxed">经古英语 <em>word</em>，源自原始日耳曼语 <em>wurdą</em>，同源于拉丁语 <em>verbum</em>（动词、言辞誓约）。</p>
+							<p class="lang-en leading-relaxed">From Old English <em>word</em>, Proto-Germanic <em>wurdą</em>, cognate with Latin <em>verbum</em> ("verb, word, pledge").</p>
+						</div>
+
+						<!-- Layer 3 -->
+						<div class="stratum stratum-3 hidden text-xs space-y-1 text-zinc-300">
+							<div class="font-semibold text-red-400 font-mono text-[11px]">STRATUM 3 · GREEK BEDROCK</div>
+							<div class="text-lg font-serif font-black text-amber-200">ῥῆμα / λόγος <span class="text-xs font-mono font-normal text-zinc-400">(rhema / logos)</span></div>
+							<p class="lang-zh leading-relaxed text-zinc-300">希腊语 <em>rhema</em>（修辞 rhetoric 之源）指被出声说出之言语，而 <em>logos</em> 则是贯穿宇宙的理性法度与句法秩序。</p>
+							<p class="lang-en leading-relaxed text-zinc-300">Greek <em>rhema</em> (root of rhetoric) is what is uttered aloud; <em>logos</em> is cosmic reason and structural thought.</p>
+							<div class="p-2 rounded bg-red-950/40 border border-red-800/40 text-[11px] text-red-200 mt-2">
+								<span class="lang-zh"><strong>卡森考掘：</strong>卡森坦言词源辞典是她的第一缪斯：“我从不自抽象理念出发；我的一切写作，都始于剥开一个词语的皮肤。”</span>
+								<span class="lang-en"><strong>Carson Strata:</strong> Carson calls etymology the source of all her writing: "I never begin with an idea; I begin with the skin of a word."</span>
+							</div>
+						</div>
+
+						<div class="mt-3 pt-2 border-t border-zinc-800/60 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+							<span class="trench-action-hint">轻触继续向下挖掘</span>
+							<span class="text-amber-400 font-bold trench-level-dots">● ○ ○</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 3. SWEET-BITTER METER (苦甜量表) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-zinc-800/80">
+				<div class="mb-6">
+					<div class="flex items-center gap-2 mb-1">
+						<span class="text-red-400 font-mono text-xl font-bold">02/</span>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+							<span class="lang-zh">苦甜量表 · Sweet-Bitter Meter</span>
+							<span class="lang-en">The Sweet-Bitter Meter (Glukuprikon)</span>
+						</h2>
+					</div>
+					<p class="text-xs sm:text-sm text-zinc-400">
+						<span class="lang-zh">致敬萨福发明的 <em>glukuprikon</em>（甘甜又苦涩）。拖动滑块调节两极张力，观测 6 组卡森式悖论词对的交错相生。</span>
+						<span class="lang-en">A nod to Sappho’s coinage <em>glukuprikon</em> (sweet-bitter). Drag the slider between the poles to shift 6 paradox word-pairs.</span>
+					</p>
+				</div>
+
+				<!-- SLIDER CONTROLLER BOX -->
+				<div class="rounded-2xl bg-zinc-950/90 border border-zinc-800 p-5 sm:p-6 mb-6 shadow-xl">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+						<div class="flex items-center gap-2">
+							<span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
+								<span class="lang-zh">🍯 甘美 (SWEET / γλυκύς)</span>
+								<span class="lang-en">🍯 SWEET (γλυκύς)</span>
+							</span>
+						</div>
+						<div id="meter-status-badge" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+							⚖️ GLUKUPRIKON · 苦甜交织 50%
+						</div>
+						<div class="flex items-center gap-2">
+							<span class="text-xs font-mono font-bold text-red-400 uppercase tracking-wider">
+								<span class="lang-zh">🗡️ 苦烈 (BITTER / πικρός)</span>
+								<span class="lang-en">🗡️ BITTER (πικρός)</span>
+							</span>
+						</div>
+					</div>
+
+					<!-- Slider input -->
+					<div class="relative w-full py-2">
+						<input
+							id="sweet-bitter-slider"
+							type="range"
+							min="0"
+							max="100"
+							value="50"
+							class="w-full h-3 bg-zinc-800 rounded-lg appearance-none cursor-ew-resize accent-amber-500 hover:accent-red-500 transition-colors"
+						/>
+						<div class="flex justify-between text-[11px] font-mono text-zinc-500 mt-2">
+							<span>0% 极甜 · 欲望引力</span>
+							<span class="text-amber-400/80 font-bold">50% 苦甜平衡点 · 萨福之眼</span>
+							<span>100% 极苦 · 锋利咬噬</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- 6 PARADOX PAIR CHIPS -->
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5" id="paradox-grid">
+					<!-- Pair 1: reach / grasp -->
+					<div class="paradox-card rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 transition duration-300">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1">
+							<span>PAIR 01</span>
+							<span class="paradox-ratio text-amber-400">50% : 50%</span>
+						</div>
+						<div class="text-base font-bold font-serif text-white mb-1.5 flex items-center gap-2">
+							<span class="card-left text-amber-300 transition-opacity">reach</span>
+							<span class="text-zinc-600">⇄</span>
+							<span class="card-right text-red-300 transition-opacity">grasp</span>
+						</div>
+						<p class="paradox-desc text-xs text-zinc-300 leading-relaxed">
+							<span class="lang-zh">伸手触探与攥紧掌心：欲望唯有在触碰不到的指尖空隙中持续沸腾。</span>
+							<span class="lang-en">Reaching vs. grasping: desire endures in the gap between the reach and the hold.</span>
+						</p>
+					</div>
+
+					<!-- Pair 2: ancient / modern -->
+					<div class="paradox-card rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 transition duration-300">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1">
+							<span>PAIR 02</span>
+							<span class="paradox-ratio text-amber-400">50% : 50%</span>
+						</div>
+						<div class="text-base font-bold font-serif text-white mb-1.5 flex items-center gap-2">
+							<span class="card-left text-amber-300 transition-opacity">ancient</span>
+							<span class="text-zinc-600">⇄</span>
+							<span class="card-right text-red-300 transition-opacity">modern</span>
+						</div>
+						<p class="paradox-desc text-xs text-zinc-300 leading-relaxed">
+							<span class="lang-zh">残篇纸草与冰岛荒野：跨越两千五百年，古典神话在录音机与现代摄影里复活。</span>
+							<span class="lang-en">Papyrus fragments and Iceland wilderness: 2,500-year myths reborn in modern tapes.</span>
+						</p>
+					</div>
+
+					<!-- Pair 3: verse / prose -->
+					<div class="paradox-card rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 transition duration-300">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1">
+							<span>PAIR 03</span>
+							<span class="paradox-ratio text-amber-400">50% : 50%</span>
+						</div>
+						<div class="text-base font-bold font-serif text-white mb-1.5 flex items-center gap-2">
+							<span class="card-left text-amber-300 transition-opacity">verse</span>
+							<span class="text-zinc-600">⇄</span>
+							<span class="card-right text-red-300 transition-opacity">prose</span>
+						</div>
+						<p class="paradox-desc text-xs text-zinc-300 leading-relaxed">
+							<span class="lang-zh">跳跃诗行与学术推演：既有短歌的留白呼吸，又有文献考据的严密刀锋。</span>
+							<span class="lang-en">Lyrical line breaks and critical prose: the staccato song fused with scholarly dissection.</span>
+						</p>
+					</div>
+
+					<!-- Pair 4: night / noon -->
+					<div class="paradox-card rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 transition duration-300">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1">
+							<span>PAIR 04</span>
+							<span class="paradox-ratio text-amber-400">50% : 50%</span>
+						</div>
+						<div class="text-base font-bold font-serif text-white mb-1.5 flex items-center gap-2">
+							<span class="card-left text-amber-300 transition-opacity">night</span>
+							<span class="text-zinc-600">⇄</span>
+							<span class="card-right text-red-300 transition-opacity">noon</span>
+						</div>
+						<p class="paradox-desc text-xs text-zinc-300 leading-relaxed">
+							<span class="lang-zh">幽暗庇护与刺目暴晒：在晨昏薄暮的微光地带，词语的轮廓才彻底显现。</span>
+							<span class="lang-en">Nocturnal shadows and blinding noon: words reveal their contours in twilight edges.</span>
+						</p>
+					</div>
+
+					<!-- Pair 5: monster / hero -->
+					<div class="paradox-card rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 transition duration-300">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1">
+							<span>PAIR 05</span>
+							<span class="paradox-ratio text-amber-400">50% : 50%</span>
+						</div>
+						<div class="text-base font-bold font-serif text-white mb-1.5 flex items-center gap-2">
+							<span class="card-left text-amber-300 transition-opacity">monster</span>
+							<span class="text-zinc-600">⇄</span>
+							<span class="card-right text-red-300 transition-opacity">hero</span>
+						</div>
+						<p class="paradox-desc text-xs text-zinc-300 leading-relaxed">
+							<span class="lang-zh">红翼怪物与征伐英雄：神话被倒转，柔弱怪物的孤独比英雄的利剑更具永恒震撼。</span>
+							<span class="lang-en">Winged monster and conquering hero: myth inverted, tender beast more enduring than swords.</span>
+						</p>
+					</div>
+
+					<!-- Pair 6: silence / song -->
+					<div class="paradox-card rounded-xl bg-zinc-900/60 border border-zinc-800 p-4 transition duration-300">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1">
+							<span>PAIR 06</span>
+							<span class="paradox-ratio text-amber-400">50% : 50%</span>
+						</div>
+						<div class="text-base font-bold font-serif text-white mb-1.5 flex items-center gap-2">
+							<span class="card-left text-amber-300 transition-opacity">silence</span>
+							<span class="text-zinc-600">⇄</span>
+							<span class="card-right text-red-300 transition-opacity">song</span>
+						</div>
+						<p class="paradox-desc text-xs text-zinc-300 leading-relaxed">
+							<span class="lang-zh">里拉琴声与北大西洋寒风：最高亢的诗意吟唱，最终融于沉静的风声之中。</span>
+							<span class="lang-en">Lyre strings and Arctic squalls: the highest lyric ecstasy dissolves into listening to the wind.</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. BIO TIMELINE (生平纪年) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-zinc-800/80">
+				<div class="mb-6">
+					<div class="flex items-center gap-2 mb-1">
+						<span class="text-red-400 font-mono text-xl font-bold">03/</span>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+							<span class="lang-zh">生平编年 · The Carson Timeline</span>
+							<span class="lang-en">Biographical Timeline · Anne Carson</span>
+						</h2>
+					</div>
+					<p class="text-xs sm:text-sm text-zinc-400">
+						<span class="lang-zh">从多伦多的古典学沉潜，到冰岛的聆听风声：一位横跨半个世纪的当代古典奇才。</span>
+						<span class="lang-en">From Toronto classics to Icelandic gales: a half-century journey of lyric reinvention.</span>
+					</p>
+				</div>
+
+				<!-- VERTICAL TIMELINE -->
+				<div class="relative pl-6 sm:pl-8 border-l border-zinc-800 space-y-8">
+					<!-- 1950 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-amber-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-amber-400 mb-0.5">1950</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">多伦多诞生 · Toronto Born</span>
+							<span class="lang-en">Born in Toronto, Ontario</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">1950 年 6 月 21 日出生于加拿大多伦多。高中时代在当地二手书店偶遇古希腊抒情诗残卷，自此迷恋上希腊字母独特的书写节奏。</span>
+							<span class="lang-en">Born June 21, 1950 in Toronto. Enamored with archaic Greek lyric fragments found in secondhand bookstores as a schoolgirl.</span>
+						</p>
+					</div>
+
+					<!-- 1968 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-amber-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-amber-400 mb-0.5">1968</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">多伦多大学与平面设计插曲 · Graphic Design Detour</span>
+							<span class="lang-en">U of T & Graphic Design Detour</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">入读多伦多大学，期间曾短暂辍学进入商业设计领域尝试平面设计；这段关于留白、网格与视觉层次的训练，直接决定了她日后先锋“装置书籍”的装帧形态。</span>
+							<span class="lang-en">Enrolled at University of Toronto; briefly dropped out in 1968 to try graphic design. This visual sensitivity later shaped her collage-driven book designs.</span>
+						</p>
+					</div>
+
+					<!-- 1981 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-amber-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-amber-400 mb-0.5">1981</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">古典学博士学位 · Classics PhD</span>
+							<span class="lang-en">PhD in Classics at Toronto</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">在多伦多大学取得古典学博士学位（学士 1974，硕士 1975，博士 1981），专攻古希腊诗歌。其后受聘于麦吉尔大学、密歇根大学与普林斯顿大学任教。</span>
+							<span class="lang-en">Completed her PhD in Classics at U of T (BA 1974, MA 1975, PhD 1981), specializing in Greek poetry; subsequently taught at McGill, Michigan, and Princeton.</span>
+						</p>
+					</div>
+
+					<!-- 1986 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-amber-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-amber-400 mb-0.5">1986</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">出版《苦甜之爱》· Eros the Bittersweet</span>
+							<span class="lang-en">Published Eros the Bittersweet</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">出版学术专著散文集《苦甜之爱》，围绕萨福的“glukuprikon”论证欲望在爱人、被爱者以及中间不可逾越的间隙中滋生，一举奠定其诗哲并蓄的文名。</span>
+							<span class="lang-en">Published her seminal essay analyzing erotic desire as a triangular geometry centered on Sappho's word <em>glukuprikon</em>.</span>
+						</p>
+					</div>
+
+					<!-- 1998 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-red-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-red-400 mb-0.5">1998</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">出版《红的自传》· Autobiography of Red</span>
+							<span class="lang-en">Published Autobiography of Red</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">诗体小说《红的自传》轰动国际文坛。卡森重新翻译并改写古希腊诗人斯忒西霍罗斯的残卷，将红翅膀小巨怪革律翁重写为脆弱而敏感的现代主角。</span>
+							<span class="lang-en">Her verse novel recasting the winged red monster Geryon into an introverted modern boy obsessed with photography became an instant classic.</span>
+						</p>
+					</div>
+
+					<!-- 2010 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-amber-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-amber-400 mb-0.5">2010</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">出版悼亡盒书《Nox》· Nox</span>
+							<span class="lang-en">Published Accordion Epitaph Nox</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">推出手风琴折页装置书《Nox》。以卡图卢斯第 101 首挽歌为骨架逐词细拆，拼贴家庭旧照与信笺，纪念失联多年后猝然客死异乡的亲生兄长。</span>
+							<span class="lang-en">Published the facsimile accordion memorial box dissecting Catullus 101 alongside dictionary definitions to mourn her lost brother.</span>
+						</p>
+					</div>
+
+					<!-- 2012 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-amber-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-amber-400 mb-0.5">2012</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">出版《Antigonick》· Antigonick</span>
+							<span class="lang-en">Published Antigonick</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">对索福克勒斯经典《安提戈涅》进行激进重译，将“时间”具象为在舞台旁静默记录的测量者，手写墨迹配图打破传统戏剧脚本的阅读边界。</span>
+							<span class="lang-en">Radically reimagined Sophocles' <em>Antigone</em> with illustrations, hand-lettered text, and theatrical irreverence toward traditional stage direction.</span>
+						</p>
+					</div>
+
+					<!-- 2022 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-zinc-700 border-2 border-zinc-950 group-hover:bg-amber-400 transition"></div>
+						<div class="text-xs font-mono font-bold text-amber-400 mb-0.5">2022</div>
+						<div class="text-base font-bold text-white mb-1">
+							<span class="lang-zh">定居冰岛并获冰岛国籍 · Icelandic Citizenship</span>
+							<span class="lang-en">Granted Icelandic Citizenship</span>
+						</div>
+						<p class="text-xs text-zinc-400 leading-relaxed">
+							<span class="lang-zh">常年旅居冰岛后正式获得冰岛国籍。北大西洋严酷孤清的冰火火山与狂风地貌，成为她后期纯净凝练语言的天然居所。</span>
+							<span class="lang-en">Granted Icelandic citizenship; settled amidst the volcanic landscapes and coastal gales of the North Atlantic.</span>
+						</p>
+					</div>
+
+					<!-- 2026-10-08 -->
+					<div class="relative group">
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-zinc-950 shadow-[0_0_10px_rgba(239,68,68,0.8)] animate-ping"></div>
+						<div class="absolute -left-[31px] sm:-left-[39px] top-1 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-zinc-950"></div>
+						<div class="text-xs font-mono font-bold text-red-400 mb-0.5">2026-10-08</div>
+						<div class="text-base font-bold text-amber-300 mb-1">
+							<span class="lang-zh">荣膺 2026 诺贝尔文学奖 · "在听风声"</span>
+							<span class="lang-en">2026 Nobel Prize in Literature · "Listening to the Wind"</span>
+						</div>
+						<p class="text-xs text-zinc-300 leading-relaxed">
+							<span class="lang-zh">瑞典文学院授予其诺贝尔文学奖（第 19 位女性文学桂冠）。斯德哥尔摩电话连线时，卡森正身在冰岛家中，以一句“正在聆听风声”从容回应世界喧嚣。</span>
+							<span class="lang-en">Awarded the Nobel Prize in Literature. When the Swedish Academy called her home in Iceland, she answered serenely that she was "listening to the wind".</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. WORKS SHELF (作品书架 - 7 部核心代表作) -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-zinc-800/80">
+				<div class="mb-6">
+					<div class="flex items-center gap-2 mb-1">
+						<span class="text-red-400 font-mono text-xl font-bold">04/</span>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+							<span class="lang-zh">典籍书架 · Seven Key Works</span>
+							<span class="lang-en">Seven Key Works · Paraphrased Shelf</span>
+						</h2>
+					</div>
+					<p class="text-xs sm:text-sm text-zinc-400">
+						<span class="lang-zh">安妮·卡森七部里程碑创作概览（原创转述，严格遵从版权规范，不引述原书文本）：</span>
+						<span class="lang-en">Seven landmark publications paraphrased without copyright quotation:</span>
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+					<!-- Work 1 -->
+					<div class="p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 hover:border-amber-600/50 transition">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1.5">
+							<span>ESSAY · 1986</span>
+							<span class="text-amber-400 font-bold">01</span>
+						</div>
+						<h3 class="text-base font-bold font-serif text-white mb-2">Eros the Bittersweet</h3>
+						<p class="text-xs text-zinc-300/90 leading-relaxed">
+							<span class="lang-zh">借古希腊女诗人萨福创造的复合词 <em>glukuprikon</em>，深入探讨欲念如何在恋人与所爱之物间无法逾越的虚空中获得永生。</span>
+							<span class="lang-en">An essay investigating desire that positions love precisely in the impassable rift between lover and beloved, anchored by Sappho’s word glukuprikon.</span>
+						</p>
+					</div>
+
+					<!-- Work 2 -->
+					<div class="p-4 rounded-xl bg-zinc-950/70 border border-red-900/40 hover:border-red-500/50 transition">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1.5">
+							<span>VERSE NOVEL · 1998</span>
+							<span class="text-red-400 font-bold">02</span>
+						</div>
+						<h3 class="text-base font-bold font-serif text-white mb-2">Autobiography of Red</h3>
+						<p class="text-xs text-zinc-300/90 leading-relaxed">
+							<span class="lang-zh">颠覆古希腊诗人斯忒西霍罗斯的残简，将神话中被英雄诛杀的三身红翼异形转写为在当代迷茫成长、用胶卷记录世界的敏感少年。</span>
+							<span class="lang-en">A verse novel transforming the mythical monster Geryon into an adolescent photographer navigating heartbreak and identity in modern society.</span>
+						</p>
+					</div>
+
+					<!-- Work 3 -->
+					<div class="p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 hover:border-amber-600/50 transition">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1.5">
+							<span>TANGO POETRY · 2001</span>
+							<span class="text-amber-400 font-bold">03</span>
+						</div>
+						<h3 class="text-base font-bold font-serif text-white mb-2">The Beauty of the Husband</h3>
+						<p class="text-xs text-zinc-300/90 leading-relaxed">
+							<span class="lang-zh">以二十九幕探戈舞步的节奏推演婚姻破裂的全过程，在知识、欺瞒与美色迷恋的三重视角下审视亲密关系的解体。</span>
+							<span class="lang-en">A verse narrative arranged in twenty-nine tango movements that anatomizes the slow unraveling of a marriage bound by aesthetic obsession and betrayal.</span>
+						</p>
+					</div>
+
+					<!-- Work 4 -->
+					<div class="p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 hover:border-amber-600/50 transition">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1.5">
+							<span>TRANSLATIONS · 2006</span>
+							<span class="text-amber-400 font-bold">04</span>
+						</div>
+						<h3 class="text-base font-bold font-serif text-white mb-2">Grief Lessons</h3>
+						<p class="text-xs text-zinc-300/90 leading-relaxed">
+							<span class="lang-zh">重译欧里庇得斯四部古希腊悲剧，揭示雅典戏剧如何迫使人摒弃虚妄的自我抚慰、直面毫无征兆降临的人间灾厄。</span>
+							<span class="lang-en">Translations of four Euripidean tragedies illustrating how archaic theater refuses false consolation when confronting catastrophic sorrow.</span>
+						</p>
+					</div>
+
+					<!-- Work 5 -->
+					<div class="p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 hover:border-amber-600/50 transition">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1.5">
+							<span>BOXED EPITAPH · 2010</span>
+							<span class="text-amber-400 font-bold">05</span>
+						</div>
+						<h3 class="text-base font-bold font-serif text-white mb-2">Nox</h3>
+						<p class="text-xs text-zinc-300/90 leading-relaxed">
+							<span class="lang-zh">藏于硬匣之中的连续手风琴折页装置，将古罗马悼亡诗逐字词解与家庭拼贴融为一炉，丈量至亲猝然离世后的无言深渊。</span>
+							<span class="lang-en">A facsimile epitaph in a box folding together dictionary glosses, photos, and Roman elegy to mourn the mysterious death of an estranged sibling.</span>
+						</p>
+					</div>
+
+					<!-- Work 6 -->
+					<div class="p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 hover:border-amber-600/50 transition">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1.5">
+							<span>THEATRE COMIC · 2012</span>
+							<span class="text-amber-400 font-bold">06</span>
+						</div>
+						<h3 class="text-base font-bold font-serif text-white mb-2">Antigonick</h3>
+						<p class="text-xs text-zinc-300/90 leading-relaxed">
+							<span class="lang-zh">以手写墨字与半透明画页重述索福克勒斯的《安提戈涅》，将时间度量者具象化置于舞台角落，重构抗争与埋葬礼仪的张力。</span>
+							<span class="lang-en">A visual reinvention of Sophocles where handwritten script and transparent overlays interrogate tyranny, burial rites, and the crushing pace of time.</span>
+						</p>
+					</div>
+
+					<!-- Work 7 -->
+					<div class="p-4 rounded-xl bg-zinc-950/70 border border-zinc-800 hover:border-amber-600/50 transition">
+						<div class="flex items-center justify-between text-xs font-mono text-zinc-500 mb-1.5">
+							<span>DRAMA POEM · 2019</span>
+							<span class="text-amber-400 font-bold">07</span>
+						</div>
+						<h3 class="text-base font-bold font-serif text-white mb-2">Norma Jeane Baker of Troy</h3>
+						<p class="text-xs text-zinc-300/90 leading-relaxed">
+							<span class="lang-zh">将好莱坞巨星玛丽莲·梦露与特洛伊海伦的神话命运交织重叠，在打字机机械敲击声中追问女性美貌如何被权力与战争机器消费。</span>
+							<span class="lang-en">A poetic play interweaving Marilyn Monroe with Helen of Troy, interrogating how mythology and warfare commodify female beauty.</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- 6. FOOTER SECTION & AI DECLARATION (REPLICATED FROM LIGHTBEARER-LAB) -->
+			<div class="pt-6 border-t border-zinc-800/80 text-xs font-mono text-zinc-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+				<div>
+					<span class="lang-zh">灵感：2026 诺贝尔文学奖（Anne Carson）· 词层考古与古希腊词源探掘</span>
+					<span class="lang-en">Inspired by the 2026 Nobel Prize in Literature (Anne Carson) · Etymology Excavation</span>
+				</div>
+				<div class="text-zinc-500">
+					p1ziyu.com · 2026
+				</div>
+			</div>
+
+			<hr class="my-6 border-zinc-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-amber-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- VANILLA JS CLIENT-SIDE ENGINE -->
+	<script is:inline>
+		(() => {
+			function initWordStrata() {
+				// ----------------------------------------------------
+				// 1. THE WORD TRENCH EXCAVATION GAME ENGINE
+				// ----------------------------------------------------
+				const trenchTiles = document.querySelectorAll(".trench-tile");
+				const trenchCounter = document.getElementById("trench-counter");
+				const trenchCelebration = document.getElementById("trench-celebration");
+				const btnExcavateAll = document.getElementById("btn-excavate-all");
+				const btnResetTrench = document.getElementById("btn-reset-trench");
+
+				function updateTrenchCounter() {
+					let excavatedCount = 0;
+					trenchTiles.forEach((tile) => {
+						const depth = parseInt(tile.getAttribute("data-depth") || "1", 10);
+						if (depth === 3) excavatedCount++;
+					});
+
+					if (trenchCounter) {
+						trenchCounter.textContent = String(excavatedCount);
+					}
+
+					if (trenchCelebration) {
+						if (excavatedCount === 8) {
+							trenchCelebration.classList.remove("hidden");
+						} else {
+							trenchCelebration.classList.add("hidden");
+						}
+					}
+				}
+
+				function setTileDepth(tile, depth) {
+					tile.setAttribute("data-depth", String(depth));
+					const s1 = tile.querySelector(".stratum-1");
+					const s2 = tile.querySelector(".stratum-2");
+					const s3 = tile.querySelector(".stratum-3");
+					const pill = tile.querySelector(".trench-depth-pill");
+					const dots = tile.querySelector(".trench-level-dots");
+					const icon = tile.querySelector(".trench-status-icon");
+
+					if (s1) s1.classList.toggle("hidden", depth !== 1);
+					if (s2) s2.classList.toggle("hidden", depth !== 2);
+					if (s3) s3.classList.toggle("hidden", depth !== 3);
+
+					if (depth === 1) {
+						if (pill) pill.textContent = "L1 表层";
+						if (dots) dots.textContent = "● ○ ○";
+						if (icon) icon.textContent = "⛏️";
+						tile.classList.remove("border-amber-500/70", "bg-amber-950/20", "shadow-[0_0_15px_rgba(245,158,11,0.2)]");
+					} else if (depth === 2) {
+						if (pill) pill.textContent = "L2 迂回";
+						if (dots) dots.textContent = "● ● ○";
+						if (icon) icon.textContent = "⛏️";
+						tile.classList.remove("border-amber-500/70", "bg-amber-950/20", "shadow-[0_0_15px_rgba(245,158,11,0.2)]");
+					} else if (depth === 3) {
+						if (pill) pill.textContent = "L3 基岩 ★";
+						if (dots) dots.textContent = "● ● ●";
+						if (icon) icon.textContent = "✨";
+						tile.classList.add("border-amber-500/70", "bg-amber-950/20", "shadow-[0_0_15px_rgba(245,158,11,0.2)]");
+					}
+					updateTrenchCounter();
+				}
+
+				trenchTiles.forEach((tile) => {
+					tile.addEventListener("click", () => {
+						const currentDepth = parseInt(tile.getAttribute("data-depth") || "1", 10);
+						const nextDepth = currentDepth >= 3 ? 1 : currentDepth + 1;
+						setTileDepth(tile, nextDepth);
+					});
+				});
+
+				if (btnExcavateAll) {
+					btnExcavateAll.addEventListener("click", () => {
+						trenchTiles.forEach((tile) => setTileDepth(tile, 3));
+					});
+				}
+
+				if (btnResetTrench) {
+					btnResetTrench.addEventListener("click", () => {
+						trenchTiles.forEach((tile) => setTileDepth(tile, 1));
+					});
+				}
+
+				// ----------------------------------------------------
+				// 2. SWEET-BITTER METER ENGINE
+				// ----------------------------------------------------
+				const slider = document.getElementById("sweet-bitter-slider");
+				const statusBadge = document.getElementById("meter-status-badge");
+				const paradoxCards = document.querySelectorAll(".paradox-card");
+
+				const descriptions = [
+					// Pair 1: reach / grasp
+					{
+						low: { zh: "纯粹甘美：指尖伸展于无限距离，渴望因未曾触及而常新。", en: "Pure sweetness: reaching across boundless air; wanting stays luminous." },
+						mid: { zh: "苦甜相依：伸手与握紧的恒久拉锯，欲望栖居在将及未及的间距中。", en: "Sweet-bitter: the perennial tension between reach and grasp." },
+						high: { zh: "冷峻苦涩：五指攥紧占有，距离坍缩成实物，欲念随之消亡。", en: "Severe bitterness: grasping hard; distance collapses into possession." }
+					},
+					// Pair 2: ancient / modern
+					{
+						low: { zh: "纯粹甘美：萨福与古风抒情诗，黄金时代的残卷与里拉琴余音。", en: "Pure sweetness: Sappho and archaic lyric gold, lyres in the morning." },
+						mid: { zh: "苦甜相依：跨越时空的古今对谈，神话在打字机与录音带中借体还魂。", en: "Sweet-bitter: ancient myths breathing through 20th-century tape recorders." },
+						high: { zh: "冷峻苦涩：现代火山旅馆与冰岛寒风，剥离一切温情神话的严酷当下。", en: "Severe bitterness: volcanic motels and gales, stripped of comfort." }
+					},
+					// Pair 3: verse / prose
+					{
+						low: { zh: "纯粹甘美：音步跳跃与轻灵短句，诗歌留白的微光与喘息。", en: "Pure sweetness: lyrical staccato and crystalline line breaks." },
+						mid: { zh: "苦甜相依：长诗小说的混合体裁，叙事逻辑与韵律冲撞出新的火花。", en: "Sweet-bitter: the verse novel hybrid, narrative wrestling with rhythm." },
+						high: { zh: "冷峻苦涩：文献学家冰冷的解剖刀，古典学注释的严谨重力。", en: "Severe bitterness: the philologist's scalpel and academic rigor." }
+					},
+					// Pair 4: night / noon
+					{
+						low: { zh: "纯粹甘美：黑夜的温柔怀抱，星空下未曾言明的梦境与爱抚。", en: "Pure sweetness: night's gentle cloak, unuttered dreams under stars." },
+						mid: { zh: "苦甜相依：晨昏交接的薄暮微光，在此刻词源的古老轮廓最为清晰。", en: "Sweet-bitter: crepuscular twilight where archaic contours surface." },
+						high: { zh: "冷峻苦涩：正午烈日的无情曝晒，真相如锋利白光无处躲藏。", en: "Severe bitterness: harsh illumination under noon's unsparing sun." }
+					},
+					// Pair 5: monster / hero
+					{
+						low: { zh: "纯粹甘美：长着红羽翼的害羞少年革律翁，在黑暗中守护自己的相机。", en: "Pure sweetness: shy red-winged Geryon tending his camera in secret." },
+						mid: { zh: "苦甜相依：颠倒的神话图景，被诛戮的异类比暴烈的征服者更具人性。", en: "Sweet-bitter: inverted myth where the slain beast outlives the hero." },
+						high: { zh: "冷峻苦涩：赫拉克勒斯的青铜利刃，英雄史诗对异质生命的无情屠戮。", en: "Severe bitterness: Herakles' bronze sword, brute heroic conquest." }
+					},
+					// Pair 6: silence / song
+					{
+						low: { zh: "纯粹甘美：抒情狂喜的最高赞歌，音符拨动心弦的甘甜颤音。", en: "Pure sweetness: euphoric lyric hymn and melodic strings." },
+						mid: { zh: "苦甜相依：音节边缘的深长留白，唱罢之后空气中未散的余震。", en: "Sweet-bitter: the pregnant pause between syllables, vibrating stillness." },
+						high: { zh: "冷峻苦涩：北大西洋荒原上的沉寂，卡森在冰岛“聆听风声”。", en: "Severe bitterness: North Atlantic squalls, Carson 'listening to the wind'." }
+					}
+				];
+
+				function updateMeter(val) {
+					const sweetPct = 100 - val;
+					const bitterPct = val;
+
+					if (statusBadge) {
+						if (val < 35) {
+							statusBadge.textContent = `🍯 SWEET 甘美占优 (${sweetPct}% : ${bitterPct}%)`;
+							statusBadge.className = "px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+						} else if (val > 65) {
+							statusBadge.textContent = `🗡️ BITTER 苦烈占优 (${sweetPct}% : ${bitterPct}%)`;
+							statusBadge.className = "px-3 py-1 rounded-full text-xs font-mono font-bold bg-red-500/20 text-red-300 border border-red-500/40";
+						} else {
+							statusBadge.textContent = `⚖️ GLUKUPRIKON · 苦甜交织 (${sweetPct}% : ${bitterPct}%)`;
+							statusBadge.className = "px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40";
+						}
+					}
+
+					paradoxCards.forEach((card, idx) => {
+						const ratioElem = card.querySelector(".paradox-ratio");
+						const leftSpan = card.querySelector(".card-left");
+						const rightSpan = card.querySelector(".card-right");
+						const descElem = card.querySelector(".paradox-desc");
+
+						if (ratioElem) ratioElem.textContent = `${sweetPct}% : ${bitterPct}%`;
+
+						// Visual crossfade opacity
+						const leftOpacity = Math.max(0.2, (100 - val) / 100);
+						const rightOpacity = Math.max(0.2, val / 100);
+						if (leftSpan) leftSpan.style.opacity = String(leftOpacity);
+						if (rightSpan) rightSpan.style.opacity = String(rightOpacity);
+
+						// Switch descriptions according to pole
+						const item = descriptions[idx];
+						if (item && descElem) {
+							let tier = "mid";
+							if (val < 35) tier = "low";
+							else if (val > 65) tier = "high";
+
+							const zhSpan = descElem.querySelector(".lang-zh");
+							const enSpan = descElem.querySelector(".lang-en");
+							if (zhSpan) zhSpan.textContent = item[tier].zh;
+							if (enSpan) enSpan.textContent = item[tier].en;
+						}
+					});
+				}
+
+				if (slider) {
+					slider.addEventListener("input", (e) => {
+						const val = parseInt(e.target.value, 10);
+						updateMeter(val);
+					});
+					updateMeter(parseInt(slider.value, 10));
+				}
+			}
+
+			initWordStrata();
+			document.addEventListener("astro:page-load", initWordStrata);
+		})();
+	</script>
+</MainGridLayout>
