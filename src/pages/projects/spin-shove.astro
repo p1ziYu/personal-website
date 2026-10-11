@@ -1,0 +1,1443 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn ? "Spin Shove · The Quantum Push" : "量子推手 · SPIN SHOVE";
+const description = isEn
+	? "Spin Shove: An interactive exploration of the OIST spin-mechanics milestone (Science Advances 2026). Electron spins in a levitated NV-diamond assembly pushed a 128-milligram centimeter-scale object across 100 nanometers — leaping 8 to 9 orders of magnitude toward macroscopic quantum superposition."
+	: "量子推手 · SPIN SHOVE：探索冲绳科学技术大学院大学（OIST）2026 年自旋力学里程碑实验。激光极化金刚石 NV 色心电子自旋，首次推动 128 毫克厘米级悬浮石墨板位移 100 纳米，跨越 8 至 9 个数量级，迈向宏观量子叠加态。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#070b12] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-emerald-500/30 selection:text-emerald-200">
+			<!-- Background Ambient Laboratory Glow -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/4 w-96 h-96 bg-blue-700/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- 1. HERO HEADER SECTION -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+							<span>OIST · SCIENCE ADVANCES 2026 · NAYAK ET AL.</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+							<span>⚛</span>
+							<span>DIAMAGNETIC LEVITATION · SPIN MECHANICS</span>
+						</div>
+					</div>
+					<div class="text-xs font-mono text-slate-400">
+						<span class="lang-zh">2026-10-09 发表于《科学进展》（Science Advances）</span>
+						<span class="lang-en">Published 2026-10-09 in Science Advances</span>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">量子推手 · SPIN SHOVE</span>
+					<span class="lang-en">Spin Shove · The Quantum Push</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-emerald-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">电子自旋第一次推动了厘米级的物体——128 毫克，100 纳米。</span>
+					<span class="lang-en">Electron spins just pushed a centimeter-scale object — 128 milligrams, 100 nanometers.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							在日本冲绳科学技术大学院大学（OIST），物理学家将一块厘米尺寸的石墨薄板抗磁悬浮于由交错磁铁构成的棋盘阵列之上。石墨板下方悬吊着一颗 3 毫米大小的金刚石，其内部蕴含着可通过激光精准操控的氮-空位（NV）色心电子自旋。研究团队使用 532 纳米绿光激光极化自旋，并施加外部推力磁场将自旋极化转换为机械推力，让重达 128 毫克（相当于数颗大米）的悬浮组件移动了约 100 纳米——相当于人类头发直径的千分之一。
+						</span>
+						<span class="lang-en">
+							At the Okinawa Institute of Science and Technology (OIST), physicists levitated a centimeter-sized graphite plate above a checkerboard array of alternating magnets via diamagnetic levitation. Suspended beneath the plate was a 3-millimeter diamond containing nitrogen-vacancy (NV) centers — atomic defects whose electron spins are controllable with optical laser light. By polarizing these spins with a green laser and applying an external magnetic field, they converted spin alignment into classical movement: a 128-milligram assembly (the mass of several grains of rice) was shoved roughly 100 nanometers — about one thousandth of a human hair's width.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							这是人类历史上首次在比以往自旋力学实验重 8 至 9 个数量级的宏观物体上观测到量子自旋力引发的经典机械运动。位移本身属于牛顿经典力学范畴，但启动位移的源动力来自纯粹的量子效应。该突破为未来让宏观宏大物体进入量子叠加态、乃至检验引力本身是否遵循量子规律开辟了全新的道路。
+						</span>
+						<span class="lang-en">
+							This marks the first observation of a classical mechanical response to a quantum force on an object eight to nine orders of magnitude more massive than previous spin-mechanics experiments. While the resulting motion is classical, a quantum force triggered it. This leap lays the groundwork for placing macroscopic objects into quantum superposition, probing whether gravity itself obeys quantum rules.
+						</span>
+					</p>
+				</div>
+
+				<!-- Key Stats Row -->
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">悬浮组件质量</span>
+							<span class="lang-en">ASSEMBLY MASS</span>
+						</div>
+						<div class="text-2xl sm:text-3xl font-mono font-black text-white mt-1">128 mg</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">≈ 3 粒大米 · 厘米级石墨板 + 3mm 金刚石</span>
+							<span class="lang-en">≈ 3 grains of rice · cm graphite + 3mm diamond</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-emerald-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">经典机械位移</span>
+							<span class="lang-en">CLASSICAL PUSH</span>
+						</div>
+						<div class="text-2xl sm:text-3xl font-mono font-black text-emerald-300 mt-1">100 nm</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">头发直径千分之一（100 µm 的 1/1000）</span>
+							<span class="lang-en">1/1000th human hair width (100 µm scale)</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-rose-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">质量跨越尺度</span>
+							<span class="lang-en">MASS LEAP</span>
+						</div>
+						<div class="text-2xl sm:text-3xl font-mono font-black text-rose-300 mt-1">×10⁸–10⁹</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">相比此前微观/纳克级自旋力学纪录</span>
+							<span class="lang-en">Beyond prior micro/nanogram spin-mechanics</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. THE LAB BENCH (MAIN INTERACTIVE SVG SCENE) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB BENCH 01</span>
+							<span>·</span>
+							<span class="lang-zh">实时自旋力学实验台</span>
+							<span class="lang-en">Real-Time Spin-Mechanics Bench</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+							<span class="lang-zh">实验台与纳米显微镜 · The Lab Bench</span>
+							<span class="lang-en">The Lab Bench · Interactive Nanoscale Push</span>
+						</h2>
+					</div>
+					<p class="text-xs sm:text-sm text-slate-400 max-w-md">
+						<span class="lang-zh">拖动推力磁铁，操作激光极化或微波反转电子自旋，然后启动量子推力观测悬浮物体的 100 纳米位移。</span>
+						<span class="lang-en">Position the push magnet, polarize or flip spins with laser/microwave pulses, and trigger the quantum force to shove the levitated plate.</span>
+					</p>
+				</div>
+
+				<!-- Main Interactive SVG Bench Container -->
+				<div class="relative w-full rounded-2xl bg-[#03060b] border border-slate-800/90 p-4 sm:p-6 shadow-inner overflow-hidden mb-6">
+					<!-- Top bench status bar -->
+					<div class="flex flex-wrap items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-800/60 text-xs font-mono">
+						<div class="flex items-center gap-2">
+							<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+							<span class="text-slate-300 font-semibold">
+								<span class="lang-zh">真空室状态：抗磁悬浮就绪（室温 298 K）</span>
+								<span class="lang-en">CHAMBER: Diamagnetic Levitation Active (298 K)</span>
+							</span>
+						</div>
+						<div class="flex items-center gap-4 text-slate-400">
+							<span id="bench-state-label" class="text-cyan-400 font-bold">STATE: IDLE (DECOHERED)</span>
+							<span id="bench-magnet-dist-label">MAGNET DISTANCE: 6.0 mm</span>
+						</div>
+					</div>
+
+					<!-- SVG Side-View Scene -->
+					<div class="relative w-full flex justify-center items-center py-2">
+						<svg id="lab-bench-svg" viewBox="0 0 800 360" class="w-full h-auto select-none max-w-4xl" style="filter: drop-shadow(0 4px 20px rgba(0,0,0,0.6));">
+							<defs>
+								<!-- Laser Beam Gradient -->
+								<linearGradient id="laserBeamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+									<stop offset="0%" stop-color="#22ff88" stop-opacity="0.9" />
+									<stop offset="60%" stop-color="#6ee7b7" stop-opacity="0.95" />
+									<stop offset="100%" stop-color="#ffffff" stop-opacity="1" />
+								</linearGradient>
+								<!-- Diamond Facet Gradient -->
+								<linearGradient id="diamondFacet" x1="0%" y1="0%" x2="100%" y2="100%">
+									<stop offset="0%" stop-color="#e0f2fe" />
+									<stop offset="50%" stop-color="#38bdf8" />
+									<stop offset="100%" stop-color="#0284c7" />
+								</linearGradient>
+								<!-- Graphite Plate Gradient -->
+								<linearGradient id="graphiteSurface" x1="0%" y1="0%" x2="0%" y2="100%">
+									<stop offset="0%" stop-color="#475569" />
+									<stop offset="50%" stop-color="#334155" />
+									<stop offset="100%" stop-color="#1e293b" />
+								</linearGradient>
+								<!-- Laser Beam Filter Glow -->
+								<filter id="laserGlowEffect" x="-20%" y="-40%" width="140%" height="180%">
+									<feGaussianBlur stdDeviation="4" result="blur" />
+									<feComposite in="SourceGraphic" in2="blur" operator="over" />
+								</filter>
+								<filter id="diamondGlowEffect" x="-30%" y="-30%" width="160%" height="160%">
+									<feGaussianBlur stdDeviation="6" result="blur" />
+									<feComposite in="SourceGraphic" in2="blur" operator="over" />
+								</filter>
+							</defs>
+
+							<!-- Bench Floor / Table Frame -->
+							<rect x="20" y="325" width="760" height="15" rx="3" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+							<line x1="20" y1="330" x2="780" y2="330" stroke="#334155" stroke-width="1" stroke-dasharray="8,4" opacity="0.3" />
+
+							<!-- Magnet Checkerboard Base Strip (Alternating N/S Neodymium Magnets) -->
+							<g id="checkerboard-array" transform="translate(160, 275)">
+								<!-- Array Base Track -->
+								<rect x="-10" y="38" width="450" height="8" rx="2" fill="#1e293b" />
+								
+								<!-- Magnet 1: N (Red) -->
+								<rect x="0" y="0" width="70" height="38" rx="3" fill="#ef4444" stroke="#dc2626" stroke-width="1.5" />
+								<text x="27" y="25" fill="#ffffff" font-family="monospace" font-size="18" font-weight="bold">N</text>
+
+								<!-- Magnet 2: S (Blue) -->
+								<rect x="72" y="0" width="70" height="38" rx="3" fill="#3b82f6" stroke="#2563eb" stroke-width="1.5" />
+								<text x="99" y="25" fill="#ffffff" font-family="monospace" font-size="18" font-weight="bold">S</text>
+
+								<!-- Magnet 3: N (Red) -->
+								<rect x="144" y="0" width="70" height="38" rx="3" fill="#ef4444" stroke="#dc2626" stroke-width="1.5" />
+								<text x="171" y="25" fill="#ffffff" font-family="monospace" font-size="18" font-weight="bold">N</text>
+
+								<!-- Magnet 4: S (Blue) -->
+								<rect x="216" y="0" width="70" height="38" rx="3" fill="#3b82f6" stroke="#2563eb" stroke-width="1.5" />
+								<text x="243" y="25" fill="#ffffff" font-family="monospace" font-size="18" font-weight="bold">S</text>
+
+								<!-- Magnet 5: N (Red) -->
+								<rect x="288" y="0" width="70" height="38" rx="3" fill="#ef4444" stroke="#dc2626" stroke-width="1.5" />
+								<text x="315" y="25" fill="#ffffff" font-family="monospace" font-size="18" font-weight="bold">N</text>
+
+								<!-- Magnet 6: S (Blue) -->
+								<rect x="360" y="0" width="70" height="38" rx="3" fill="#3b82f6" stroke="#2563eb" stroke-width="1.5" />
+								<text x="387" y="25" fill="#ffffff" font-family="monospace" font-size="18" font-weight="bold">S</text>
+
+								<!-- Checkerboard Label -->
+								<text x="120" y="58" fill="#64748b" font-family="monospace" font-size="11" letter-spacing="1">
+									MAGNET CHECKERBOARD (DIAMAGNETIC LEVITATION TRAP)
+								</text>
+							</g>
+
+							<!-- Levitation Field Lines (Diamagnetic Repulsion Arcs) -->
+							<g opacity="0.3" stroke="#38bdf8" stroke-width="1.5" fill="none" stroke-dasharray="4,4">
+								<path d="M 195 275 Q 230 230 267 275" />
+								<path d="M 267 275 Q 303 230 339 275" />
+								<path d="M 339 275 Q 375 230 411 275" />
+								<path d="M 411 275 Q 447 230 483 275" />
+								<path d="M 483 275 Q 519 230 555 275" />
+							</g>
+
+							<!-- Laser Emitter Module (Left side) -->
+							<g id="laser-emitter-box" transform="translate(40, 205)">
+								<rect x="0" y="0" width="65" height="50" rx="5" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+								<rect x="58" y="16" width="12" height="18" rx="2" fill="#334155" />
+								<circle cx="28" cy="25" r="10" fill="#020617" />
+								<circle id="laser-lens-dot" cx="28" cy="25" r="5" fill="#10b981" />
+								<text x="-4" y="-8" fill="#10b981" font-family="monospace" font-size="10" font-weight="bold">532nm LASER</text>
+							</g>
+
+							<!-- Laser Beam (Active during initialization pulse) -->
+							<g id="bench-laser-beam" opacity="0" style="transition: opacity 0.3s ease;">
+								<line x1="110" y1="230" x2="375" y2="230" stroke="url(#laserBeamGrad)" stroke-width="6" filter="url(#laserGlowEffect)" />
+								<line x1="110" y1="230" x2="375" y2="230" stroke="#ffffff" stroke-width="2" />
+								<!-- Beam impact spot -->
+								<circle cx="375" cy="230" r="10" fill="#22ff88" opacity="0.7" filter="url(#laserGlowEffect)" />
+								<circle cx="375" cy="230" r="3" fill="#ffffff" />
+							</g>
+
+							<!-- Microwave Antenna Loop (Behind assembly, emits pi-pulse) -->
+							<g id="microwave-emitter" transform="translate(375, 120)">
+								<path d="M -25 0 C -25 40 25 40 25 0" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="3,3" opacity="0.6" />
+								<text x="-32" y="-6" fill="#94a3b8" font-family="monospace" font-size="9">MW COIL</text>
+							</g>
+
+							<!-- Microwave Pulse Ring (Flashes during flip) -->
+							<g id="mw-pulse-ring" opacity="0" transform="translate(375, 230)" style="transition: opacity 0.25s ease;">
+								<circle cx="0" cy="0" r="28" fill="none" stroke="#f59e0b" stroke-width="3" opacity="0.8" />
+								<circle cx="0" cy="0" r="42" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5" />
+							</g>
+
+							<!-- LEVITATING GRAPHITE & DIAMOND ASSEMBLY (Moved via JavaScript on shove) -->
+							<g id="bench-levitating-assembly" transform="translate(0, 0)" style="transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);">
+								<!-- Gentle floating CSS container -->
+								<g id="bench-floating-bob">
+									<!-- Graphite Plate (260px wide, ~1cm representation, 16px thick) -->
+									<g transform="translate(245, 165)">
+										<!-- Shadow on magnets below -->
+										<ellipse cx="130" cy="95" rx="110" ry="8" fill="#000000" opacity="0.4" />
+
+										<!-- Graphite Body -->
+										<rect x="0" y="0" width="260" height="16" rx="3" fill="url(#graphiteSurface)" stroke="#64748b" stroke-width="1.5" />
+										<!-- Top reflection streak -->
+										<line x1="6" y1="3" x2="254" y2="3" stroke="#94a3b8" stroke-width="1.5" opacity="0.5" />
+										
+										<!-- Plate Label -->
+										<text x="45" y="-10" fill="#cbd5e1" font-family="monospace" font-size="11" font-weight="bold">
+											GRAPHITE PLATE · 128 mg (LEV-GAP ≈ 1.2 mm)
+										</text>
+
+										<!-- Diamond Stem / Rigid Link -->
+										<rect x="127" y="16" width="6" height="30" fill="#334155" stroke="#475569" stroke-width="0.5" />
+										
+										<!-- 3mm NV Diamond (Faceted Polygon with 4 red NV dots) -->
+										<g id="bench-diamond-facet" transform="translate(130, 65)">
+											<!-- Diamond body -->
+											<polygon points="0,-18 22,-6 16,18 0,26 -16,18 -22,-6" fill="url(#diamondFacet)" stroke="#e0f2fe" stroke-width="1.5" filter="url(#diamondGlowEffect)" />
+											<polygon points="0,-18 0,26 16,18" fill="#bae6fd" opacity="0.5" />
+											<polygon points="0,-18 0,26 -16,18" fill="#0284c7" opacity="0.4" />
+											<polygon points="-22,-6 0,-18 22,-6 0,-4" fill="#ffffff" opacity="0.75" />
+
+											<!-- 4 Glowing NV Centers (Red defect atoms) -->
+											<g id="diamond-nv-dots">
+												<circle cx="-6" cy="-2" r="2.5" fill="#ff1744" />
+												<circle cx="-6" cy="-2" r="6" fill="#ff1744" opacity="0.4" />
+												<circle cx="7" cy="4" r="2.5" fill="#ff1744" />
+												<circle cx="7" cy="4" r="6" fill="#ff1744" opacity="0.4" />
+												<circle cx="-2" cy="12" r="2.2" fill="#ff1744" />
+												<circle cx="4" cy="-8" r="2" fill="#ff1744" />
+											</g>
+
+											<text x="30" y="8" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">
+												3mm NV DIAMOND
+											</text>
+										</g>
+									</g>
+								</g>
+							</g>
+
+							<!-- PUSH MAGNET MODULE (Draggable along horizontal rail on the right) -->
+							<g id="bench-push-magnet-group" transform="translate(640, 195)" style="cursor: grab;">
+								<!-- Track rail indicator -->
+								<line x1="-120" y1="75" x2="40" y2="75" stroke="#475569" stroke-width="3" stroke-linecap="round" />
+								<line x1="-120" y1="75" x2="40" y2="75" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4,4" />
+
+								<!-- Magnet Housing & S-Pole -->
+								<rect x="-35" y="0" width="70" height="52" rx="4" fill="#1d4ed8" stroke="#60a5fa" stroke-width="2" />
+								<rect x="-30" y="5" width="60" height="42" rx="2" fill="#2563eb" />
+								<text x="-9" y="32" fill="#ffffff" font-family="monospace" font-size="22" font-weight="bold">S</text>
+								<text x="-38" y="-10" fill="#60a5fa" font-family="monospace" font-size="10" font-weight="bold">PUSH MAGNET</text>
+								
+								<!-- Pole Gradient Field Lines -->
+								<g opacity="0.5" stroke="#60a5fa" stroke-width="1.5" fill="none">
+									<path d="M -35 15 C -55 20 -55 32 -35 37" />
+									<path d="M -35 5 C -70 12 -70 40 -35 47" />
+								</g>
+
+								<!-- Drag hint handle -->
+								<g transform="translate(0, 58)">
+									<rect x="-24" y="0" width="48" height="14" rx="7" fill="#0f172a" stroke="#64748b" stroke-width="1" />
+									<text x="-16" y="10" fill="#94a3b8" font-family="monospace" font-size="9">◀ DRAG ▶</text>
+								</g>
+							</g>
+
+							<!-- Motion Indicator Arrow (Shown during push) -->
+							<g id="motion-indicator-arrow" opacity="0" transform="translate(375, 140)" style="transition: opacity 0.3s ease;">
+								<line x1="0" y1="0" x2="-25" y2="0" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" />
+								<polygon points="-25,0 -16,-5 -16,5" fill="#38bdf8" />
+								<text x="-30" y="-8" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold">100 nm</text>
+							</g>
+						</svg>
+					</div>
+
+					<!-- Push Magnet Track Slider (Accessible alternative to SVG dragging) -->
+					<div class="mt-4 pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono">
+						<div class="flex items-center gap-2 text-slate-300">
+							<span class="text-blue-400 font-bold">🧲 推力磁铁轨道距离 / PUSH MAGNET DISTANCE:</span>
+							<span id="slider-dist-val" class="text-white font-bold">6.0 mm</span>
+							<span id="slider-dist-status" class="px-2 py-0.5 rounded text-[11px] bg-amber-500/10 border border-amber-500/30 text-amber-400">
+								<span class="lang-zh">过远（拖近以产生推力）</span>
+								<span class="lang-en">Too far (drag closer)</span>
+							</span>
+						</div>
+						<div class="flex items-center gap-3 w-full sm:w-64">
+							<span class="text-slate-500 text-[10px]">FAR (10mm)</span>
+							<input id="magnet-distance-slider" type="range" min="1" max="10" step="0.1" value="6.0" class="w-full accent-blue-500 cursor-pointer" />
+							<span class="text-blue-400 text-[10px] font-bold">NEAR (1mm)</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Dual Insets: Spin Control Panel & Nanometer Microscope -->
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+					<!-- INSET 1: SPIN CONTROL PANEL -->
+					<div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<div class="flex items-center gap-2">
+									<div class="w-3 h-3 rounded-full bg-emerald-400/20 border border-emerald-400 flex items-center justify-center">
+										<div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+									</div>
+									<h3 class="text-base font-bold text-white font-mono">
+										<span class="lang-zh">自旋调控中心 · SPIN CONTROL</span>
+										<span class="lang-en">SPIN CONTROL PANEL</span>
+									</h3>
+								</div>
+								<div id="polarization-badge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700">
+									POLARIZATION: 0%
+								</div>
+							</div>
+
+							<p class="text-xs text-slate-400 mb-4">
+								<span class="lang-zh">金刚石 NV 色心包含未成对电子自旋。绿光激光将其极化到单一量子态；微波脉冲可翻转自旋方向。</span>
+								<span class="lang-en">NV centers contain unpaired electron spins. Green laser light optically pumps spins into a pure state; a microwave π-pulse flips them.</span>
+							</p>
+
+							<!-- Circular Zoom Inset with 10 Spin Arrows -->
+							<div class="flex items-center justify-center gap-6 my-4 py-2">
+								<div class="relative w-36 h-36 rounded-full bg-[#03060c] border-2 border-slate-700 flex items-center justify-center shadow-inner overflow-hidden">
+									<!-- Reticle crosshair -->
+									<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+										<div class="w-full h-px bg-cyan-400"></div>
+										<div class="h-full w-px bg-cyan-400 absolute"></div>
+									</div>
+									<!-- Center diamond emblem -->
+									<div class="absolute w-8 h-8 rounded-full bg-cyan-950/40 border border-cyan-800/40 pointer-events-none"></div>
+
+									<!-- 10 Spin Arrows (Container for SVG arrows) -->
+									<svg id="spin-arrows-svg" viewBox="0 0 140 140" class="w-full h-full">
+										<!-- Generated via JavaScript or statically styled -->
+										<g id="spin-arrows-group">
+											<g class="spin-arrow" data-cx="70" data-cy="35" data-angle="45" transform="translate(70, 35) rotate(45)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="95" data-cy="45" data-angle="120" transform="translate(95, 45) rotate(120)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="105" data-cy="70" data-angle="260" transform="translate(105, 70) rotate(260)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="95" data-cy="95" data-angle="80" transform="translate(95, 95) rotate(80)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="70" data-cy="105" data-angle="195" transform="translate(70, 105) rotate(195)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="45" data-cy="95" data-angle="310" transform="translate(45, 95) rotate(310)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="35" data-cy="70" data-angle="150" transform="translate(35, 70) rotate(150)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="45" data-cy="45" data-angle="220" transform="translate(45, 45) rotate(220)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="58" data-cy="62" data-angle="10" transform="translate(58, 62) rotate(10)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+											<g class="spin-arrow" data-cx="82" data-cy="78" data-angle="170" transform="translate(82, 78) rotate(170)" style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);"><line x1="0" y1="8" x2="0" y2="-8" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/><polygon points="-4,-4 0,-10 4,-4" fill="#94a3b8"/></g>
+										</g>
+									</svg>
+								</div>
+
+								<!-- Polarization Meter Bar -->
+								<div class="flex flex-col items-start gap-2">
+									<div class="text-[11px] font-mono text-slate-400">
+										<span class="lang-zh">自旋极化度 ⟨S_z⟩</span>
+										<span class="lang-en">SPIN POLARIZATION ⟨S_z⟩</span>
+									</div>
+									<div class="relative w-28 h-5 bg-slate-950 rounded-full border border-slate-800 overflow-hidden flex items-center">
+										<!-- Zero centerline -->
+										<div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-700 z-10"></div>
+										<!-- Bar indicator -->
+										<div id="polarization-fill-bar" class="h-full bg-slate-700 w-0 transition-all duration-300" style="margin-left: 50%;"></div>
+									</div>
+									<div class="flex justify-between w-28 text-[10px] font-mono text-slate-500">
+										<span>−100%</span>
+										<span>0</span>
+										<span>+100%</span>
+									</div>
+									<div id="spin-state-text" class="text-xs font-mono font-bold text-slate-400 mt-1">
+										<span class="lang-zh">态：热退相干（随机自旋）</span>
+										<span class="lang-en">STATE: Decohered (Random)</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- 3 Spin Control Buttons -->
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-4 pt-3 border-t border-slate-800">
+							<button
+								id="btn-laser-init"
+								type="button"
+								class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-emerald-300 font-mono text-xs font-bold transition flex flex-col items-center gap-1 active:scale-95 cursor-pointer"
+							>
+								<span>🟢 532 nm 激光</span>
+								<span class="text-[10px] font-normal opacity-80">极化 (+100%)</span>
+							</button>
+
+							<button
+								id="btn-microwave-flip"
+								type="button"
+								class="px-3 py-2 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-mono text-xs font-bold transition flex flex-col items-center gap-1 active:scale-95 cursor-pointer"
+							>
+								<span>⚡ 微波 π 脉冲</span>
+								<span class="text-[10px] font-normal opacity-80">翻转 (−100%)</span>
+							</button>
+
+							<button
+								id="btn-decohere"
+								type="button"
+								class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-mono text-xs font-bold transition flex flex-col items-center gap-1 active:scale-95 cursor-pointer"
+							>
+								<span>🌫️ 自然退相干</span>
+								<span class="text-[10px] font-normal opacity-80">随机化 (0%)</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- INSET 2: NANOMETER MICROSCOPE -->
+					<div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-3">
+								<div class="flex items-center gap-2">
+									<div class="w-3 h-3 rounded-full bg-cyan-400/20 border border-cyan-400 flex items-center justify-center">
+										<div class="w-1.5 h-1.5 rounded-full bg-cyan-400"></div>
+									</div>
+									<h3 class="text-base font-bold text-white font-mono">
+										<span class="lang-zh">纳米显微镜 · NANOMETER MICROSCOPE</span>
+										<span class="lang-en">NANOMETER MICROSCOPE</span>
+									</h3>
+								</div>
+								<div class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-cyan-950/60 text-cyan-300 border border-cyan-800/60">
+									ZOOM: 1,000,000×
+								</div>
+							</div>
+
+							<p class="text-xs text-slate-400 mb-3">
+								<span class="lang-zh">真实实验台中 100 纳米在肉眼下几乎纹丝不动。高倍显微干涉仪将微米尺度的位移放大显示：</span>
+								<span class="lang-en">On the bench, 100 nm is invisible to the eye. High-magnification laser interferometry zooms in on the true displacement:</span>
+							</p>
+
+							<!-- Live Big Mono Readout -->
+							<div class="p-4 rounded-xl bg-[#030712] border border-cyan-900/40 text-center my-2">
+								<div class="text-[10px] font-mono tracking-widest text-slate-400 uppercase">
+									<span class="lang-zh">实时位移读数 · LIVE DISPLACEMENT</span>
+									<span class="lang-en">LIVE DISPLACEMENT READOUT</span>
+								</div>
+								<div id="microscope-digits" class="text-4xl sm:text-5xl font-mono font-black text-cyan-300 my-1 tracking-tight">
+									0.0 nm
+								</div>
+								<div id="microscope-hair-ratio" class="text-xs font-mono text-slate-400">
+									<span class="lang-zh">等待启动量子推力实验...</span>
+									<span class="lang-en">Awaiting quantum shove trigger...</span>
+								</div>
+							</div>
+
+							<!-- Zoomed Ruler with Scale Anchors -->
+							<div class="mt-4 px-2">
+								<div class="relative w-full h-8 bg-slate-950 rounded border border-slate-800 overflow-hidden flex items-end">
+									<!-- Scale ticks -->
+									<div class="absolute inset-0 flex justify-between px-2 items-end pb-1 pointer-events-none opacity-40">
+										<span class="h-3 w-px bg-cyan-400"></span>
+										<span class="h-1.5 w-px bg-slate-500"></span>
+										<span class="h-1.5 w-px bg-slate-500"></span>
+										<span class="h-1.5 w-px bg-slate-500"></span>
+										<span class="h-2 w-px bg-cyan-400"></span>
+										<span class="h-1.5 w-px bg-slate-500"></span>
+										<span class="h-1.5 w-px bg-slate-500"></span>
+										<span class="h-1.5 w-px bg-slate-500"></span>
+										<span class="h-3 w-px bg-cyan-400"></span>
+									</div>
+									<!-- Ruler Sliding Needle -->
+									<div id="microscope-needle" class="absolute top-0 bottom-0 w-0.5 bg-emerald-400 shadow-[0_0_8px_#22ff88] transition-all duration-500" style="left: 0%;"></div>
+								</div>
+								<div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+									<span>0 nm</span>
+									<span class="text-emerald-400 font-bold">50 nm</span>
+									<span class="text-cyan-300 font-bold">100 nm (THIS PUSH)</span>
+								</div>
+								<div class="mt-2 text-[11px] font-mono text-slate-400 flex items-center justify-between">
+									<span>🔬 人类头发直径：100 µm = 100,000 nm</span>
+									<span class="text-emerald-400 font-semibold">比例：1 / 1000</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- RUN THE PUSH Execution Block -->
+						<div class="mt-4 pt-3 border-t border-slate-800 flex flex-col gap-2">
+							<div id="push-hint-box" class="p-2.5 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono text-amber-300 hidden">
+								<!-- Warning message inserted dynamically -->
+							</div>
+
+							<div class="flex items-center gap-2">
+								<button
+									id="btn-run-push"
+									type="button"
+									class="flex-1 py-3 px-4 rounded-xl bg-linear-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-mono font-bold text-sm tracking-wide shadow-lg shadow-emerald-950/40 transition active:scale-98 cursor-pointer flex items-center justify-center gap-2"
+								>
+									<span>🚀</span>
+									<span class="lang-zh">启动推力实验 · RUN THE PUSH</span>
+									<span class="lang-en">RUN THE PUSH</span>
+								</button>
+								<button
+									id="btn-reset-bench"
+									type="button"
+									class="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs font-semibold transition active:scale-98 cursor-pointer"
+								>
+									<span class="lang-zh">重置</span>
+									<span class="lang-en">Reset</span>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 3. THE SCALE LEAP (HORIZONTAL LOG-SCALE SLIDER) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-rose-400 uppercase tracking-widest font-semibold mb-1">
+							<span>SCALE DIMENSION</span>
+							<span>·</span>
+							<span class="lang-zh">从原子到大米的八度质量跃迁</span>
+							<span class="lang-en">Logarithmic Mass Spectrum</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+							<span class="lang-zh">跨越 8–9 个数量级 · The Scale Leap</span>
+							<span class="lang-en">The Scale Leap · 10⁻²⁷ kg to 10⁻³ kg</span>
+						</h2>
+					</div>
+					<p class="text-xs sm:text-sm text-slate-400 max-w-md">
+						<span class="lang-zh">拖动下方对数质量滑块（从单颗氢原子到一枚回形针），体会本次实验将自旋力学载体质量推向宏观的震撼飞跃。</span>
+						<span class="lang-en">Drag the logarithmic mass slider to explore the 24-order-of-magnitude span from a single hydrogen atom to a household paperclip.</span>
+					</p>
+				</div>
+
+				<div class="p-6 rounded-2xl bg-[#03060b] border border-slate-800 shadow-inner">
+					<!-- Active Mass Inspection Card -->
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 mb-6">
+						<div>
+							<div class="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+								<span class="lang-zh">当前质量读数</span>
+								<span class="lang-en">SELECTED MASS</span>
+							</div>
+							<div id="scale-mass-value" class="text-2xl sm:text-3xl font-mono font-black text-rose-400 mt-1">
+								1.28 × 10⁻⁴ kg
+							</div>
+							<div id="scale-common-unit" class="text-xs font-mono text-slate-300 mt-0.5">
+								= 128 mg (毫克)
+							</div>
+						</div>
+
+						<div>
+							<div class="text-[10px] font-mono uppercase tracking-wider text-slate-500">
+								<span class="lang-zh">物理尺度区间</span>
+								<span class="lang-en">PHYSICAL REGIME</span>
+							</div>
+							<div id="scale-regime-title" class="text-lg font-bold text-white mt-1">
+								宏观经典物体 · 宏观自旋力学
+							</div>
+							<div id="scale-regime-desc" class="text-xs text-slate-400 mt-0.5">
+								肉眼清晰可见，曾被认为自旋力绝对无法撼动的经典领域。
+							</div>
+						</div>
+
+						<div class="flex flex-col justify-center">
+							<div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-800/40">
+								<div class="text-xs font-mono font-bold text-rose-300 flex items-center gap-1.5">
+									<span>📍</span>
+									<span class="lang-zh">OIST 跨越幅度：×10⁸–10⁹</span>
+									<span class="lang-en">OIST LEAP: ×10⁸–10⁹</span>
+								</div>
+								<div class="text-[11px] text-slate-300 mt-1">
+									<span class="lang-zh">较此前微悬臂与光镊自旋实验质量提升近 10 亿倍！</span>
+									<span class="lang-en">Near 1-billion-fold mass jump over prior cantilevers & optical traps!</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- The Interactive Log-Scale Slider -->
+					<div class="relative pt-8 pb-4 px-2">
+						<!-- "YOU ARE HERE" Floating Pin above OIST Assembly -->
+						<div
+							id="scale-oist-pin"
+							class="absolute top-0 text-center pointer-events-none transform -translate-x-1/2 transition-all duration-300"
+							style="left: 96.3%;"
+						>
+							<div class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-rose-500 text-white font-mono font-black text-[10px] shadow-lg animate-bounce">
+								<span>★ YOU ARE HERE (OIST)</span>
+							</div>
+							<div class="w-0.5 h-3 bg-rose-500 mx-auto"></div>
+						</div>
+
+						<!-- Slider Input -->
+						<input
+							id="scale-leap-slider"
+							type="range"
+							min="-27"
+							max="-3"
+							step="0.05"
+							value="-3.89"
+							class="w-full accent-rose-500 cursor-pointer h-2 bg-slate-800 rounded-lg"
+						/>
+
+						<!-- Milestone Scale Anchors -->
+						<div class="relative w-full h-12 mt-2">
+							<!-- 1. Hydrogen Atom: log = -26.77 -->
+							<button
+								type="button"
+								data-target="-26.77"
+								class="scale-milestone-btn absolute top-0 transform -translate-x-0 text-left cursor-pointer group"
+								style="left: 1%;"
+							>
+								<div class="w-1.5 h-3 bg-slate-600 group-hover:bg-cyan-400 mb-1"></div>
+								<div class="text-[10px] font-mono text-slate-400 group-hover:text-cyan-300 whitespace-nowrap">
+									<div>氢原子</div>
+									<div class="text-slate-600">1.7×10⁻²⁷ kg</div>
+								</div>
+							</button>
+
+							<!-- 2. Prior Record: log = -13 -->
+							<button
+								type="button"
+								data-target="-13"
+								class="scale-milestone-btn absolute top-0 transform -translate-x-1/2 text-center cursor-pointer group"
+								style="left: 58.3%;"
+							>
+								<div class="w-1.5 h-3 bg-amber-500 mx-auto mb-1"></div>
+								<div class="text-[10px] font-mono text-amber-400 group-hover:text-amber-200 whitespace-nowrap">
+									<div class="font-bold">以往纪录</div>
+									<div class="text-amber-500/80">≈ 10⁻¹³ kg</div>
+								</div>
+							</button>
+
+							<!-- 3. Grain of Rice: log = -4.52 -->
+							<button
+								type="button"
+								data-target="-4.52"
+								class="scale-milestone-btn absolute top-0 transform -translate-x-1/2 text-center cursor-pointer group"
+								style="left: 93.6%;"
+							>
+								<div class="w-1.5 h-3 bg-slate-600 group-hover:bg-rose-400 mx-auto mb-1"></div>
+								<div class="text-[10px] font-mono text-slate-400 group-hover:text-rose-300 whitespace-nowrap">
+									<div>1粒米</div>
+									<div class="text-slate-600">3×10⁻⁵ kg</div>
+								</div>
+							</button>
+
+							<!-- 4. OIST Assembly: log = -3.89 -->
+							<button
+								type="button"
+								data-target="-3.89"
+								class="scale-milestone-btn absolute top-0 transform -translate-x-1/2 text-center cursor-pointer group"
+								style="left: 96.3%;"
+							>
+								<div class="w-1.5 h-3 bg-rose-500 mx-auto mb-1"></div>
+								<div class="text-[10px] font-mono text-rose-400 font-bold whitespace-nowrap">
+									<div>OIST 实验</div>
+									<div>1.28×10⁻⁴ kg</div>
+								</div>
+							</button>
+
+							<!-- 5. Paperclip: log = -3 -->
+							<button
+								type="button"
+								data-target="-3"
+								class="scale-milestone-btn absolute top-0 transform -translate-x-full text-right cursor-pointer group"
+								style="left: 99.5%;"
+							>
+								<div class="w-1.5 h-3 bg-slate-600 group-hover:bg-cyan-400 ml-auto mb-1"></div>
+								<div class="text-[10px] font-mono text-slate-400 group-hover:text-cyan-300 whitespace-nowrap">
+									<div>回形针</div>
+									<div class="text-slate-600">10⁻³ kg</div>
+								</div>
+							</button>
+						</div>
+					</div>
+
+					<div class="mt-8 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-400 font-mono flex flex-col sm:flex-row items-center justify-between gap-2">
+						<span class="text-slate-300">
+							<span class="lang-zh">💡 点击上方刻度标签可一键飞跃至对应质量量级。</span>
+							<span class="lang-en">💡 Click any milestone label above to jump directly to that mass scale.</span>
+						</span>
+						<span class="text-rose-400 font-bold">
+							<span class="lang-zh">8–9 个数量级 = 100,000,000× 至 1,000,000,000× 的质量飞跃</span>
+							<span class="lang-en">8–9 orders = 100,000,000× to 1,000,000,000× mass leap</span>
+						</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. WHY IT MATTERS (3 CARDS WITH TWO ATTRIBUTED QUOTES) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase tracking-widest font-semibold mb-1">
+							<span>PHYSICS & VISION</span>
+							<span>·</span>
+							<span class="lang-zh">物理深度与科学愿景</span>
+							<span class="lang-en">Scientific Significance</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+							<span class="lang-zh">核心意义解析 · Why It Matters</span>
+							<span class="lang-en">Why It Matters · Three Pillars</span>
+						</h2>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<!-- Card 1: Why an NV diamond -->
+					<div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col justify-between hover:border-cyan-500/40 transition">
+						<div>
+							<div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center font-mono font-bold text-lg mb-4">
+								01
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">为何选用 NV 金刚石？</span>
+								<span class="lang-en">Why an NV Diamond</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+								<span class="lang-zh">
+									氮-空位（NV）色心是金刚石晶格中的点缺陷，其孤立电子自旋在室温下仍具有极长量子相干时间。科学家只需用 532 纳米绿光即可完成光学极化，用微波脉冲即可执行自旋翻转，是理想的宏观量子致动器。
+								</span>
+								<span class="lang-en">
+									Nitrogen-vacancy centers are defects in diamond lattices whose electron spins maintain long quantum coherence times even at room temperature. Green laser light polarizes them optically while microwave pulses flip them, providing ideal quantum actuators.
+								</span>
+							</p>
+						</div>
+
+						<!-- Attributed Quote 1: Daehee Kim -->
+						<blockquote class="p-3 rounded-xl bg-cyan-950/30 border-l-2 border-cyan-400 text-xs font-mono text-cyan-200">
+							<div class="italic mb-1">
+								"NV diamonds are well understood and easy to control,"
+							</div>
+							<div class="text-[11px] text-slate-400 not-italic">
+								<span class="lang-zh">— 物理学家 Daehee Kim，强调其长室温相干时间对未来宏观叠加极具吸引力</span>
+								<span class="lang-en">— Physicist Daehee Kim, noting long room-temperature coherence for superposition</span>
+							</div>
+						</blockquote>
+					</div>
+
+					<!-- Card 2: Classical motion, quantum trigger -->
+					<div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col justify-between hover:border-emerald-500/40 transition">
+						<div>
+							<div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center font-mono font-bold text-lg mb-4">
+								02
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">经典运动，量子扳机</span>
+								<span class="lang-en">Classical Motion, Quantum Trigger</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+								<span class="lang-zh">
+									128 毫克石墨板移动 100 纳米是纯粹遵循牛顿第二定律的经典位移。然而，启动并支撑这一位移的力不是机械推杆，而是数万亿个电子自旋极化后与外磁场梯度耦合的塞曼力（Zeeman force）。如果自旋处于未极化杂乱态，推力瞬间归零。
+								</span>
+								<span class="lang-en">
+									The 100-nanometer glide of a 128-milligram plate obeys classical Newtonian mechanics. Yet the motive force was not mechanical friction or pushrods, but the Zeeman gradient force acting on trillions of laser-polarized electron spins. Decohered spins yield zero motion.
+								</span>
+							</p>
+						</div>
+
+						<div class="p-3 rounded-xl bg-emerald-950/30 border-l-2 border-emerald-400 text-xs font-mono text-emerald-200">
+							<div class="font-bold mb-1">
+								<span class="lang-zh">量子微观 ➔ 宏观力矩</span>
+								<span class="lang-en">Quantum Micro ➔ Classical Force</span>
+							</div>
+							<div class="text-[11px] text-slate-300">
+								<span class="lang-zh">通过自旋系综的集体配准，原子尺度的量子特性在宏观厘米级维度爆发出了可测量的物理做功。</span>
+								<span class="lang-en">Collective alignment of spin ensembles translates subatomic quantum states into measurable work on centimeter scales.</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Card 3: The road ahead -->
+					<div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col justify-between hover:border-rose-500/40 transition">
+						<div>
+							<div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center font-mono font-bold text-lg mb-4">
+								03
+							</div>
+							<h3 class="text-lg font-bold text-white mb-2">
+								<span class="lang-zh">前方的路：宏观叠加与量子引力</span>
+								<span class="lang-en">The Road Ahead · Quantum Gravity</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+								<span class="lang-zh">
+									下一步的终极目标是将这类宏观悬浮物体冷却至量子基态，并将其置于“同时处于两个空间位置”的宏观量子叠加态，以此检验广义相对论引力是否也服从量子规律，或引力是否会导致量子波包自发坍缩。
+								</span>
+								<span class="lang-en">
+									The ultimate horizon is cooling such macroscopic levitated objects to their quantum ground state and preparing spatial superpositions to probe whether gravity itself follows quantum mechanics or triggers spontaneous collapse.
+								</span>
+							</p>
+						</div>
+
+						<!-- Attributed Quote 2: Anshuman Nayak -->
+						<blockquote class="p-3 rounded-xl bg-rose-950/30 border-l-2 border-rose-400 text-xs font-mono text-rose-200">
+							<div class="italic mb-1">
+								"We're in the opposite camp – going from large to small."
+							</div>
+							<div class="text-[11px] text-slate-400 not-italic">
+								<span class="lang-zh">— 物理学家 Anshuman Nayak，阐述团队从厘米级宏观向微观量子逼近的独特反向探索路径</span>
+								<span class="lang-en">— Physicist Anshuman Nayak, on scaling from macroscopic downwards to quantum</span>
+							</div>
+						</blockquote>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. THE SETUP, EXPLAINED (LABELED MINI-DIAGRAM & 5-PART LIST) -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+							<span>HARDWARE BREAKDOWN</span>
+							<span>·</span>
+							<span class="lang-zh">五大关键组件职能</span>
+							<span class="lang-en">Apparatus Architecture</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+							<span class="lang-zh">实验装置剖析 · The Setup, Explained</span>
+							<span class="lang-en">The Setup, Explained · Five Core Parts</span>
+						</h2>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+					<!-- Part 1 -->
+					<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+						<div class="text-xs font-mono font-bold text-slate-400 mb-1">01 · PLATFORM</div>
+						<div class="text-sm font-bold text-white mb-2">
+							<span class="lang-zh">热解石墨板 (128 mg)</span>
+							<span class="lang-en">Graphite Plate (128 mg)</span>
+						</div>
+						<p class="text-xs text-slate-400 leading-relaxed">
+							<span class="lang-zh">厘米级强抗磁材料，在室温磁场中提供完全无接触、无需能源维持的被动稳定悬浮。</span>
+							<span class="lang-en">Centimeter-scale diamagnetic sheet providing passive, cryogen-free levitation.</span>
+						</p>
+					</div>
+
+					<!-- Part 2 -->
+					<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+						<div class="text-xs font-mono font-bold text-blue-400 mb-1">02 · TRAP</div>
+						<div class="text-sm font-bold text-white mb-2">
+							<span class="lang-zh">磁铁棋盘阵列</span>
+							<span class="lang-en">Magnet Checkerboard</span>
+						</div>
+						<p class="text-xs text-slate-400 leading-relaxed">
+							<span class="lang-zh">交错排列的钕铁硼微型磁铁阵列，产生高梯度磁阱以抵消 128 毫克组件所受重力。</span>
+							<span class="lang-en">Alternating N/S magnetic grid generating high field gradients against gravity.</span>
+						</p>
+					</div>
+
+					<!-- Part 3 -->
+					<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+						<div class="text-xs font-mono font-bold text-cyan-400 mb-1">03 · ACTUATOR</div>
+						<div class="text-sm font-bold text-white mb-2">
+							<span class="lang-zh">3mm NV 金刚石</span>
+							<span class="lang-en">3mm NV Diamond</span>
+						</div>
+						<p class="text-xs text-slate-400 leading-relaxed">
+							<span class="lang-zh">悬吊于石墨板下，包含数万亿个自旋长相干缺陷，充当量子到经典力转换的致动核心。</span>
+							<span class="lang-en">Suspended below plate; trillions of coherent NV spins act as quantum actuators.</span>
+						</p>
+					</div>
+
+					<!-- Part 4 -->
+					<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+						<div class="text-xs font-mono font-bold text-emerald-400 mb-1">04 · OPTICS</div>
+						<div class="text-sm font-bold text-white mb-2">
+							<span class="lang-zh">532nm 控制激光</span>
+							<span class="lang-en">532nm Control Laser</span>
+						</div>
+						<p class="text-xs text-slate-400 leading-relaxed">
+							<span class="lang-zh">发射绿色激光脉冲照射金刚石，将杂乱的热平衡自旋瞬间泵浦极化至纯净基态。</span>
+							<span class="lang-en">Optical pumping beam initializing electron spins into the pure m_s = 0 state.</span>
+						</p>
+					</div>
+
+					<!-- Part 5 -->
+					<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+						<div class="text-xs font-mono font-bold text-rose-400 mb-1">05 · GRADIENT</div>
+						<div class="text-sm font-bold text-white mb-2">
+							<span class="lang-zh">外部推力磁铁</span>
+							<span class="lang-en">Push Magnet</span>
+						</div>
+						<p class="text-xs text-slate-400 leading-relaxed">
+							<span class="lang-zh">沿导轨逼近金刚石，通过塞曼磁场梯度抓住极化自旋磁矩，拖动整个宏观石墨板位移。</span>
+							<span class="lang-en">External gradient source exerting Zeeman force on polarized spins to push plate.</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- 6. FOOTER SECTION & AI DECLARATION -->
+			<div class="pt-6 border-t border-slate-800/80 text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
+				<div>
+					<span class="lang-zh">灵感：OIST 自旋力学实验（Science Advances 2026 · Nayak et al.）· 量子自旋宏观推力</span>
+					<span class="lang-en">Inspired by OIST spin-mechanics experiment (Science Advances 2026 · Nayak et al.)</span>
+				</div>
+				<div class="text-slate-500">
+					p1ziyu.com · 2026
+				</div>
+			</div>
+
+			<hr class="my-6 border-zinc-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-emerald-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- VANILLA JS CLIENT-SIDE ENGINE -->
+	<script is:inline>
+		(() => {
+			function initSpinShove() {
+				// State variables
+				let polarization = 0; // -100 to +100
+				let magnetDistance = 6.0; // mm, 1.0 to 10.0
+				let isPushing = false;
+				let currentDisplacement = 0; // nm, 0 to 100
+
+				// DOM elements
+				const labBenchSvg = document.getElementById("lab-bench-svg");
+				const benchStateLabel = document.getElementById("bench-state-label");
+				const benchMagnetDistLabel = document.getElementById("bench-magnet-dist-label");
+				const sliderDistVal = document.getElementById("slider-dist-val");
+				const sliderDistStatus = document.getElementById("slider-dist-status");
+				const magnetDistSlider = document.getElementById("magnet-distance-slider");
+				const benchPushMagnetGroup = document.getElementById("bench-push-magnet-group");
+				const benchLevitatingAssembly = document.getElementById("bench-levitating-assembly");
+				const benchLaserBeam = document.getElementById("bench-laser-beam");
+				const laserLensDot = document.getElementById("laser-lens-dot");
+				const mwPulseRing = document.getElementById("mw-pulse-ring");
+				const motionIndicatorArrow = document.getElementById("motion-indicator-arrow");
+
+				// Spin control DOM
+				const polarizationBadge = document.getElementById("polarization-badge");
+				const polarizationFillBar = document.getElementById("polarization-fill-bar");
+				const spinStateText = document.getElementById("spin-state-text");
+				const btnLaserInit = document.getElementById("btn-laser-init");
+				const btnMicrowaveFlip = document.getElementById("btn-microwave-flip");
+				const btnDecohere = document.getElementById("btn-decohere");
+
+				// Microscope DOM
+				const microscopeDigits = document.getElementById("microscope-digits");
+				const microscopeHairRatio = document.getElementById("microscope-hair-ratio");
+				const microscopeNeedle = document.getElementById("microscope-needle");
+				const pushHintBox = document.getElementById("push-hint-box");
+				const btnRunPush = document.getElementById("btn-run-push");
+				const btnResetBench = document.getElementById("btn-reset-bench");
+
+				// Scale leap DOM
+				const scaleLeapSlider = document.getElementById("scale-leap-slider");
+				const scaleMassValue = document.getElementById("scale-mass-value");
+				const scaleCommonUnit = document.getElementById("scale-common-unit");
+				const scaleRegimeTitle = document.getElementById("scale-regime-title");
+				const scaleRegimeDesc = document.getElementById("scale-regime-desc");
+				const scaleMilestoneBtns = document.querySelectorAll(".scale-milestone-btn");
+
+				// ----------------------------------------------------
+				// 1. GENERATE 10 SPIN ARROWS IN CIRCULAR INSET
+				// ----------------------------------------------------
+				let spinElements = [];
+				const arrowNodes = document.querySelectorAll(".spin-arrow");
+				arrowNodes.forEach((el) => {
+					const cx = parseFloat(el.getAttribute("data-cx") || "70");
+					const cy = parseFloat(el.getAttribute("data-cy") || "70");
+					const defaultAngle = parseFloat(el.getAttribute("data-angle") || "0");
+					spinElements.push({ el, cx, cy, defaultAngle });
+				});
+
+				function updateSpinVisuals() {
+					// Update polarization text and fill bar
+					if (polarizationBadge) {
+						if (polarization > 0) {
+							polarizationBadge.textContent = `POLARIZATION: +${polarization}%`;
+							polarizationBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/50";
+						} else if (polarization < 0) {
+							polarizationBadge.textContent = `POLARIZATION: ${polarization}%`;
+							polarizationBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-amber-950/80 text-amber-300 border border-amber-500/50";
+						} else {
+							polarizationBadge.textContent = "POLARIZATION: 0%";
+							polarizationBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-slate-800 text-slate-400 border border-slate-700";
+						}
+					}
+
+					if (polarizationFillBar) {
+						if (polarization === 0) {
+							polarizationFillBar.style.width = "0%";
+							polarizationFillBar.style.marginLeft = "50%";
+							polarizationFillBar.style.backgroundColor = "#64748b";
+						} else if (polarization > 0) {
+							polarizationFillBar.style.width = `${polarization / 2}%`;
+							polarizationFillBar.style.marginLeft = "50%";
+							polarizationFillBar.style.backgroundColor = "#22ff88";
+						} else {
+							polarizationFillBar.style.width = `${Math.abs(polarization) / 2}%`;
+							polarizationFillBar.style.marginLeft = `${50 - Math.abs(polarization) / 2}%`;
+							polarizationFillBar.style.backgroundColor = "#f59e0b";
+						}
+					}
+
+					if (spinStateText) {
+						if (polarization === 100) {
+							spinStateText.innerHTML = '<span class="text-emerald-400 font-bold">态：|↑⟩ 纯态极化 (+100%)</span>';
+						} else if (polarization === -100) {
+							spinStateText.innerHTML = '<span class="text-amber-400 font-bold">态：|↓⟩ 翻转极化 (−100%)</span>';
+						} else {
+							spinStateText.innerHTML = '<span class="text-slate-400">态：热退相干（随机自旋）</span>';
+						}
+					}
+
+					// Update arrow orientations
+					spinElements.forEach((item) => {
+						const shaft = item.el.querySelector("line");
+						const head = item.el.querySelector("polygon");
+						if (polarization === 100) {
+							item.el.setAttribute("transform", `translate(${item.cx}, ${item.cy}) rotate(0)`);
+							if (shaft) shaft.setAttribute("stroke", "#22ff88");
+							if (head) head.setAttribute("fill", "#22ff88");
+						} else if (polarization === -100) {
+							item.el.setAttribute("transform", `translate(${item.cx}, ${item.cy}) rotate(180)`);
+							if (shaft) shaft.setAttribute("stroke", "#f59e0b");
+							if (head) head.setAttribute("fill", "#f59e0b");
+						} else {
+							item.el.setAttribute("transform", `translate(${item.cx}, ${item.cy}) rotate(${item.defaultAngle})`);
+							if (shaft) shaft.setAttribute("stroke", "#94a3b8");
+							if (head) head.setAttribute("fill", "#94a3b8");
+						}
+					});
+
+					// Update bench status label
+					if (benchStateLabel) {
+						if (polarization === 100) {
+							benchStateLabel.textContent = "STATE: OPTICALLY POLARIZED (+100%)";
+							benchStateLabel.className = "text-emerald-400 font-bold";
+						} else if (polarization === -100) {
+							benchStateLabel.textContent = "STATE: MICROWAVE FLIPPED (-100%)";
+							benchStateLabel.className = "text-amber-400 font-bold";
+						} else {
+							benchStateLabel.textContent = "STATE: IDLE (DECOHERED)";
+							benchStateLabel.className = "text-cyan-400 font-bold";
+						}
+					}
+				}
+
+				// ----------------------------------------------------
+				// 2. SPIN BUTTON HANDLERS
+				// ----------------------------------------------------
+				if (btnLaserInit) {
+					btnLaserInit.addEventListener("click", () => {
+						if (isPushing) return;
+						// Flash laser beam
+						if (benchLaserBeam) benchLaserBeam.style.opacity = "1";
+						if (laserLensDot) laserLensDot.setAttribute("fill", "#22ff88");
+
+						setTimeout(() => {
+							polarization = 100;
+							updateSpinVisuals();
+							if (benchLaserBeam) benchLaserBeam.style.opacity = "0";
+						}, 300);
+					});
+				}
+
+				if (btnMicrowaveFlip) {
+					btnMicrowaveFlip.addEventListener("click", () => {
+						if (isPushing) return;
+						if (polarization === 0) {
+							showPushHint("⚠️ 自旋当前处于退相干无序态，请先点击 532nm 激光进行极化，再施加微波脉冲！", "⚠️ Spins are decohered. Please initialize with the 532nm laser first!");
+							return;
+						}
+						// Flash microwave pulse ring
+						if (mwPulseRing) mwPulseRing.style.opacity = "1";
+						setTimeout(() => {
+							polarization = polarization === 100 ? -100 : 100;
+							updateSpinVisuals();
+							if (mwPulseRing) mwPulseRing.style.opacity = "0";
+						}, 350);
+					});
+				}
+
+				if (btnDecohere) {
+					btnDecohere.addEventListener("click", () => {
+						if (isPushing) return;
+						polarization = 0;
+						updateSpinVisuals();
+					});
+				}
+
+				// ----------------------------------------------------
+				// 3. PUSH MAGNET DISTANCE TRACKING & DRAGGING
+				// ----------------------------------------------------
+				function setMagnetDistance(dist) {
+					magnetDistance = Math.max(1.0, Math.min(10.0, dist));
+					if (sliderDistVal) sliderDistVal.textContent = `${magnetDistance.toFixed(1)} mm`;
+					if (benchMagnetDistLabel) benchMagnetDistLabel.textContent = `MAGNET DISTANCE: ${magnetDistance.toFixed(1)} mm`;
+					if (magnetDistSlider) magnetDistSlider.value = String(magnetDistance);
+
+					// Update status badge
+					if (sliderDistStatus) {
+						if (magnetDistance <= 3.0) {
+							sliderDistStatus.className = "px-2 py-0.5 rounded text-[11px] bg-emerald-500/10 border border-emerald-500/30 text-emerald-400";
+							sliderDistStatus.innerHTML = '<span class="lang-zh">极近有效（梯度力充足）</span><span class="lang-en">Effective Range (Strong Gradient)</span>';
+						} else {
+							sliderDistStatus.className = "px-2 py-0.5 rounded text-[11px] bg-amber-500/10 border border-amber-500/30 text-amber-400";
+							sliderDistStatus.innerHTML = '<span class="lang-zh">过远（拖近以产生推力）</span><span class="lang-en">Too far (drag closer)</span>';
+						}
+					}
+
+					// Update SVG push magnet group horizontal position
+					// 10mm -> x = 680, 1mm -> x = 460
+					if (benchPushMagnetGroup) {
+						const posX = 430 + (magnetDistance / 10.0) * 230;
+						benchPushMagnetGroup.setAttribute("transform", `translate(${posX}, 195)`);
+					}
+				}
+
+				if (magnetDistSlider) {
+					magnetDistSlider.addEventListener("input", (e) => {
+						setMagnetDistance(parseFloat(e.target.value));
+					});
+				}
+
+				// Optional SVG drag interaction on the push magnet
+				if (benchPushMagnetGroup && labBenchSvg) {
+					let isDragging = false;
+					let startX = 0;
+					let initialDist = 6.0;
+
+					const startDrag = (clientX) => {
+						isDragging = true;
+						startX = clientX;
+						initialDist = magnetDistance;
+						benchPushMagnetGroup.style.cursor = "grabbing";
+					};
+
+					const moveDrag = (clientX) => {
+						if (!isDragging) return;
+						const deltaX = clientX - startX;
+						// Scale pixels to mm
+						const newDist = initialDist + deltaX * 0.03;
+						setMagnetDistance(newDist);
+					};
+
+					const endDrag = () => {
+						isDragging = false;
+						benchPushMagnetGroup.style.cursor = "grab";
+					};
+
+					benchPushMagnetGroup.addEventListener("mousedown", (e) => startDrag(e.clientX));
+					window.addEventListener("mousemove", (e) => moveDrag(e.clientX));
+					window.addEventListener("mouseup", endDrag);
+
+					benchPushMagnetGroup.addEventListener("touchstart", (e) => {
+						if (e.touches.length > 0) startDrag(e.touches[0].clientX);
+					}, { passive: true });
+					window.addEventListener("touchmove", (e) => {
+						if (e.touches.length > 0) moveDrag(e.touches[0].clientX);
+					}, { passive: true });
+					window.addEventListener("touchend", endDrag);
+				}
+
+				// Initialize magnet position
+				setMagnetDistance(6.0);
+				updateSpinVisuals();
+
+				// ----------------------------------------------------
+				// 4. PUSH SEQUENCE ENGINE & CHOREOGRAPHY
+				// ----------------------------------------------------
+				function showPushHint(msgZh, msgEn) {
+					if (!pushHintBox) return;
+					pushHintBox.innerHTML = `<div><span class="lang-zh">${msgZh}</span><span class="lang-en">${msgEn}</span></div>`;
+					pushHintBox.classList.remove("hidden");
+					pushHintBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+					setTimeout(() => {
+						pushHintBox.classList.add("hidden");
+					}, 4500);
+				}
+
+				if (btnRunPush) {
+					btnRunPush.addEventListener("click", () => {
+						if (isPushing) return;
+
+						// Interaction rule:
+						// Must have polarization != 0 AND magnetDistance <= 3.5 mm
+						if (polarization === 0) {
+							showPushHint(
+								"⚠️ 自旋未极化——外磁场无可作用的磁矩（请先点击“532 nm 激光”完成极化）！",
+								"⚠️ Spins not polarized — the magnet has nothing to grab (click 532 nm laser to initialize first)!"
+							);
+							return;
+						}
+
+						if (magnetDistance > 3.5) {
+							showPushHint(
+								"⚠️ 推力磁铁距离过远——请将右侧推力磁铁滑块拉至靠近金刚石（≤ 3.0 mm）！",
+								"⚠️ Push magnet too far away — drag the magnet slider closer (≤ 3.0 mm)!"
+							);
+							return;
+						}
+
+						// Preconditions met: run the push choreography
+						isPushing = true;
+						btnRunPush.disabled = true;
+						btnRunPush.classList.add("opacity-50", "cursor-not-allowed");
+
+						// 1. Fire laser beam pulse
+						if (benchLaserBeam) benchLaserBeam.style.opacity = "1";
+						if (laserLensDot) laserLensDot.setAttribute("fill", "#22ff88");
+
+						setTimeout(() => {
+							if (benchLaserBeam) benchLaserBeam.style.opacity = "0";
+
+							// 2. Flash motion arrow & push assembly
+							if (motionIndicatorArrow) motionIndicatorArrow.style.opacity = "1";
+
+							// Honest shift on bench view: just 6 visible pixels (barely moves!)
+							const benchShift = polarization > 0 ? -6 : 6;
+							if (benchLevitatingAssembly) {
+								benchLevitatingAssembly.style.transform = `translateX(${benchShift}px)`;
+							}
+
+							// 3. Animate Microscope counter from 0 to 100 nm (or -100 nm)
+							const targetDisplacement = 100.0;
+							const startTime = performance.now();
+							const duration = 1200; // ms
+
+							function animateDisplacement(now) {
+								const elapsed = now - startTime;
+								const progress = Math.min(1, elapsed / duration);
+								// Ease out cubic
+								const easeProgress = 1 - Math.pow(1 - progress, 3);
+								currentDisplacement = (easeProgress * targetDisplacement);
+
+								if (microscopeDigits) {
+									microscopeDigits.textContent = `${currentDisplacement.toFixed(1)} nm`;
+								}
+
+								if (microscopeNeedle) {
+									microscopeNeedle.style.left = `${(easeProgress * 100).toFixed(1)}%`;
+								}
+
+								if (progress < 1) {
+									requestAnimationFrame(animateDisplacement);
+								} else {
+									// Completion
+									isPushing = false;
+									btnRunPush.disabled = false;
+									btnRunPush.classList.remove("opacity-50", "cursor-not-allowed");
+
+									if (microscopeHairRatio) {
+										microscopeHairRatio.innerHTML = `
+											<span class="text-emerald-400 font-bold">
+												<span class="lang-zh">🎉 100 nm 达成——约一根头发直径的千分之一！</span>
+												<span class="lang-en">🎉 100 nm reached — one thousandth of a hair!</span>
+											</span>
+										`;
+									}
+								}
+							}
+
+							requestAnimationFrame(animateDisplacement);
+						}, 300);
+					});
+				}
+
+				if (btnResetBench) {
+					btnResetBench.addEventListener("click", () => {
+						if (isPushing) return;
+						if (benchLevitatingAssembly) {
+							benchLevitatingAssembly.style.transform = "translateX(0px)";
+						}
+						if (motionIndicatorArrow) motionIndicatorArrow.style.opacity = "0";
+						currentDisplacement = 0;
+						if (microscopeDigits) microscopeDigits.textContent = "0.0 nm";
+						if (microscopeNeedle) microscopeNeedle.style.left = "0%";
+						if (microscopeHairRatio) {
+							microscopeHairRatio.innerHTML = `
+								<span class="lang-zh">等待启动量子推力实验...</span>
+								<span class="lang-en">Awaiting quantum shove trigger...</span>
+							`;
+						}
+					});
+				}
+
+				// ----------------------------------------------------
+				// 5. SCALE LEAP LOG-SLIDER INTERACTIVE
+				// ----------------------------------------------------
+				const scaleData = [
+					{
+						maxLog: -20,
+						regimeZh: "亚原子与原子微观界",
+						regimeEn: "Subatomic & Atomic Regime",
+						descZh: "量子力学原生领地，单个粒子自旋无经典对应物理实体。",
+						descEn: "Native realm of quantum mechanics; single particle spins have no classical equivalent.",
+					},
+					{
+						maxLog: -10,
+						regimeZh: "介观与纳克微结构（以往纪录极限）",
+						regimeEn: "Mesoscopic & Nanogram Cantilevers",
+						descZh: "以往光镊与微悬臂自旋力学的极限范围（约 10⁻¹³ kg）。",
+						descEn: "Previous state-of-the-art cantilever and optical trap spin mechanics (≈ 10⁻¹³ kg).",
+					},
+					{
+						maxLog: -3.5,
+						regimeZh: "宏观经典物体 · OIST 自旋力学组件",
+						regimeEn: "Macroscopic Classical Object · OIST Assembly",
+						descZh: "128 毫克（1.28×10⁻⁴ kg），重约数粒大米，人类肉眼清晰可见的宏观经典世界！",
+						descEn: "128 milligrams (1.28×10⁻⁴ kg), several grains of rice — fully macroscopic and eye-visible!",
+					},
+					{
+						maxLog: 0,
+						regimeZh: "日常宏观日用品尺度",
+						regimeEn: "Household Macroscopic Objects",
+						descZh: "一枚回形针（约 1 克），经典力学与重力完全主导的日常生活世界。",
+						descEn: "A metal paperclip (≈ 1 gram); gravity and classical mechanics dominate.",
+					},
+				];
+
+				function updateScaleLeap(logVal) {
+					// 10^logVal kg
+					const massKg = Math.pow(10, logVal);
+					
+					let formattedValue = "";
+					let commonUnit = "";
+
+					if (logVal < -24) {
+						formattedValue = `${(massKg * 1e27).toFixed(2)} × 10⁻²⁷ kg`;
+						commonUnit = "≈ 氢原子 / 单核子尺度";
+					} else if (logVal < -18) {
+						formattedValue = `${(massKg * 1e21).toFixed(2)} × 10⁻²¹ kg`;
+						commonUnit = "≈ 大分子 / 病毒尺度 (zg)";
+					} else if (logVal < -12) {
+						formattedValue = `${(massKg * 1e15).toFixed(2)} × 10⁻¹⁵ kg (fg)`;
+						commonUnit = "≈ 细菌 / 纳克级悬臂梁（以往纪录）";
+					} else if (logVal < -6) {
+						formattedValue = `${(massKg * 1e9).toFixed(2)} µg (微克)`;
+						commonUnit = `≈ ${(massKg * 1e6).toFixed(3)} mg`;
+					} else if (logVal < -3) {
+						formattedValue = `${(massKg * 1e3).toFixed(1)} mg (毫克)`;
+						commonUnit = logVal >= -4.2 && logVal <= -3.6 ? "★ OIST 128 mg 悬浮石墨板组件！" : "≈ 粒级物体（数粒大米）";
+					} else {
+						formattedValue = `${(massKg * 1e3).toFixed(2)} g (克)`;
+						commonUnit = "≈ 金属回形针 / 纸张重量";
+					}
+
+					if (scaleMassValue) scaleMassValue.textContent = formattedValue;
+					if (scaleCommonUnit) scaleCommonUnit.textContent = commonUnit;
+
+					// Match regime info
+					const regime = scaleData.find(item => logVal <= item.maxLog) || scaleData[scaleData.length - 1];
+					if (scaleRegimeTitle) {
+						scaleRegimeTitle.innerHTML = `<span class="lang-zh">${regime.regimeZh}</span><span class="lang-en">${regime.regimeEn}</span>`;
+					}
+					if (scaleRegimeDesc) {
+						scaleRegimeDesc.innerHTML = `<span class="lang-zh">${regime.descZh}</span><span class="lang-en">${regime.descEn}</span>`;
+					}
+				}
+
+				if (scaleLeapSlider) {
+					scaleLeapSlider.addEventListener("input", (e) => {
+						updateScaleLeap(parseFloat(e.target.value));
+					});
+				}
+
+				scaleMilestoneBtns.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						const targetLog = parseFloat(btn.getAttribute("data-target") || "-3.89");
+						if (scaleLeapSlider) scaleLeapSlider.value = String(targetLog);
+						updateScaleLeap(targetLog);
+					});
+				});
+
+				// Initialize scale slider at OIST value
+				updateScaleLeap(-3.89);
+			}
+
+			// Run on DOMContentLoaded or immediate if loaded
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initSpinShove);
+			} else {
+				initSpinShove();
+			}
+		})();
+	</script>
+</MainGridLayout>
