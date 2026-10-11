@@ -957,7 +957,6 @@ const description = isEn
 					l5: [],
 					synapses: [],
 				};
-				let psthHistory = new Array(24).fill(0);
 
 				// Vision mode (retina pixel matrix) state
 				const retinaGrid = {
@@ -1328,9 +1327,9 @@ const description = isEn
 					} else if (currentPreset === "eyespot") {
 						renderEyespotMode(dt, isLightEffective, currentTime);
 					} else if (currentPreset === "single") {
-						renderSingleMode(dt, isLightEffective, currentTime);
+						renderSingleMode(isLightEffective, currentTime);
 					} else if (currentPreset === "circuit") {
-						renderCircuitMode(dt, isLightEffective, currentTime);
+						renderCircuitMode(dt, isLightEffective);
 					} else if (currentPreset === "vision") {
 						renderVisionMode(dt, isLightEffective, currentTime);
 					}
@@ -1739,7 +1738,7 @@ const description = isEn
 				// ------------------------------------------
 				// MODE 4: CIRCUIT (SYNAPTIC CASCADE & PSTH)
 				// ------------------------------------------
-				function renderCircuitMode(dt, isLightEffective, currentTime) {
+				function renderCircuitMode(dt, isLightEffective) {
 					// Draw layer dividers & labels
 					ctx.strokeStyle = "rgba(51, 65, 85, 0.4)";
 					ctx.lineWidth = 1;
