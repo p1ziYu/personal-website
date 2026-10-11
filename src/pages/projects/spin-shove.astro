@@ -970,6 +970,16 @@ const description = isEn
 	<script is:inline>
 		(() => {
 			function initSpinShove() {
+				const benchRoot = document.getElementById("lab-bench-svg");
+				// Initialise each rendered page once, however often this runs
+				if (!benchRoot || benchRoot.dataset.labReady === "true") return;
+				benchRoot.dataset.labReady = "true";
+
+				// swup re-runs this script on each visit; drop this run's window listeners
+				// when the page is swapped out (astro:before-swap fires on document)
+				const lifecycle = new AbortController();
+				document.addEventListener("astro:before-swap", () => lifecycle.abort(), { once: true });
+
 				// State variables
 				let polarization = 0; // -100 to +100
 				let magnetDistance = 6.0; // mm, 1.0 to 10.0
@@ -1205,16 +1215,16 @@ const description = isEn
 					};
 
 					benchPushMagnetGroup.addEventListener("mousedown", (e) => startDrag(e.clientX));
-					window.addEventListener("mousemove", (e) => moveDrag(e.clientX));
-					window.addEventListener("mouseup", endDrag);
+					window.addEventListener("mousemove", (e) => moveDrag(e.clientX), { signal: lifecycle.signal });
+					window.addEventListener("mouseup", endDrag, { signal: lifecycle.signal });
 
 					benchPushMagnetGroup.addEventListener("touchstart", (e) => {
 						if (e.touches.length > 0) startDrag(e.touches[0].clientX);
 					}, { passive: true });
 					window.addEventListener("touchmove", (e) => {
 						if (e.touches.length > 0) moveDrag(e.touches[0].clientX);
-					}, { passive: true });
-					window.addEventListener("touchend", endDrag);
+					}, { passive: true, signal: lifecycle.signal });
+					window.addEventListener("touchend", endDrag, { signal: lifecycle.signal });
 				}
 
 				// Initialize magnet position
