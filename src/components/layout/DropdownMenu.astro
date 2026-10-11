@@ -125,6 +125,11 @@ const hasChildren = processedLink.children && processedLink.children.length > 0;
 </style>
 
 <script>
+	// swup re-runs inline module scripts on every visit; the navbar dropdowns persist,
+	// so only the first run needs to wait for DOMContentLoaded and bind them.
+	const dropdownWindow = window as Window & { __dropdownKeyboardBound?: boolean };
+	if (!dropdownWindow.__dropdownKeyboardBound) {
+	dropdownWindow.__dropdownKeyboardBound = true;
 	// 键盘导航支持
 	document.addEventListener('DOMContentLoaded', function() {
 		const dropdowns = document.querySelectorAll('[data-dropdown]');
@@ -184,6 +189,7 @@ const hasChildren = processedLink.children && processedLink.children.length > 0;
 			});
 		});
 	});
+	}
 	
 	function toggleDropdown(_dropdown: Element, trigger: Element, menu: Element) {
 		const isOpen = trigger.getAttribute('aria-expanded') === 'true';

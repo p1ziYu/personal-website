@@ -249,7 +249,8 @@ const logoVariants = await Promise.all(
     </div>
 </div>
 
-<script is:inline>
+<!-- Runs once: the listeners below handle later swaps, so swup must not re-run it -->
+<script is:inline data-swup-ignore-script>
   function syncNavbarLabels() {
     const isEnglish = location.pathname === "/en" || location.pathname.startsWith("/en/");
     document.querySelectorAll("#navbar [data-label-zh][data-label-en]").forEach((node) => {
@@ -369,7 +370,13 @@ function loadButtonScript() {
     });
 }
 
-loadButtonScript();
+// swup re-runs inline module scripts on every visit. The navbar sits outside the swup
+// containers and persists, so bind its buttons and document/window/swup handlers once.
+const navbarWindow = window as Window & { __navbarButtonsBound?: boolean };
+if (!navbarWindow.__navbarButtonsBound) {
+    navbarWindow.__navbarButtonsBound = true;
+    loadButtonScript();
+}
 
 // 为semifull模式添加滚动检测逻辑
 function initSemifullScrollDetection() {

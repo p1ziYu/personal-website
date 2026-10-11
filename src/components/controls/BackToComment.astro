@@ -12,7 +12,7 @@ import { getLangFromPath, i18n } from "@/i18n/translation";
   class="hide"
 />
 
-<script is:inline define:vars={{ labelZh: i18n(I18nKey.scrollToComments, "zh_CN"), labelEn: i18n(I18nKey.scrollToComments, "en") }}>
+<script is:inline data-swup-ignore-script define:vars={{ labelZh: i18n(I18nKey.scrollToComments, "zh_CN"), labelEn: i18n(I18nKey.scrollToComments, "en") }}>
   function updateFloatingLabel() {
     const control = document.getElementById("back-to-comment-btn");
     if (!control) return;

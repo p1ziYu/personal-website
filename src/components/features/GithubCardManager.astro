@@ -141,6 +141,10 @@
 
   function init(): void {
     enhanceCards();
+    // swup re-runs inline module scripts on every visit; register the hooks once
+    const cardWindow = window as Window & { __githubCardHooksBound?: boolean };
+    if (cardWindow.__githubCardHooksBound) return;
+    cardWindow.__githubCardHooksBound = true;
     document.addEventListener("swup:content:replace", () => {
       requestAnimationFrame(enhanceCards);
     });

@@ -53,6 +53,12 @@
     return { group, index };
   }
 
+  // swup re-runs inline module scripts on every visit; these delegated handlers
+  // cover all code groups, so register them once per document.
+  const codeGroupWindow = window as Window & { __codeGroupBound?: boolean };
+  if (!codeGroupWindow.__codeGroupBound) {
+  codeGroupWindow.__codeGroupBound = true;
+
   document.addEventListener("click", (event) => {
     const found = resolveTab(event.target);
     if (found) activate(found.group, found.index);
@@ -87,4 +93,5 @@
     event.preventDefault();
     activate(found.group, next, true);
   });
+  }
 </script>
