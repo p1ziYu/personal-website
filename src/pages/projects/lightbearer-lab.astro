@@ -820,6 +820,14 @@ const description = isEn
 			let strobeInterval = null;
 
 			function initLightbearerLab() {
+				const canvas = document.getElementById("neuro-canvas");
+				const rasterCanvas = document.getElementById("raster-canvas");
+				const scopeCanvas = document.getElementById("scope-canvas");
+				if (!canvas || !rasterCanvas || !scopeCanvas) return;
+				// Initialise each rendered page once, however often this runs
+				if (canvas.dataset.labReady === "true") return;
+				canvas.dataset.labReady = "true";
+
 				// Clean up previous animations if re-initialized
 				if (animId) cancelAnimationFrame(animId);
 				if (strobeInterval) {
@@ -827,10 +835,17 @@ const description = isEn
 					strobeInterval = null;
 				}
 
-				const canvas = document.getElementById("neuro-canvas");
-				const rasterCanvas = document.getElementById("raster-canvas");
-				const scopeCanvas = document.getElementById("scope-canvas");
-				if (!canvas || !rasterCanvas || !scopeCanvas) return;
+				// swup dispatches astro:before-swap on document: stop loops and drop global listeners
+				const lifecycle = new AbortController();
+				document.addEventListener(
+					"astro:before-swap",
+					() => {
+						if (animId) cancelAnimationFrame(animId);
+						if (strobeInterval) clearInterval(strobeInterval);
+						lifecycle.abort();
+					},
+					{ once: true },
+				);
 
 				const ctx = canvas.getContext("2d");
 				const rasterCtx = rasterCanvas.getContext("2d");
@@ -1228,21 +1243,25 @@ const description = isEn
 				canvas.addEventListener("pointerdown", (e) => {
 					updateBeamPointer(e.clientX, e.clientY);
 				});
-				window.addEventListener("pointermove", (e) => {
-					const rect = canvas.getBoundingClientRect();
-					if (
-						e.clientX >= rect.left &&
-						e.clientX <= rect.right &&
-						e.clientY >= rect.top &&
-						e.clientY <= rect.bottom
-					) {
-						updateBeamPointer(e.clientX, e.clientY);
-					}
-				});
+				window.addEventListener(
+					"pointermove",
+					(e) => {
+						const rect = canvas.getBoundingClientRect();
+						if (
+							e.clientX >= rect.left &&
+							e.clientX <= rect.right &&
+							e.clientY >= rect.top &&
+							e.clientY <= rect.bottom
+						) {
+							updateBeamPointer(e.clientX, e.clientY);
+						}
+					},
+					{ signal: lifecycle.signal },
+				);
 
 				// Initialize layout
 				handleResize();
-				window.addEventListener("resize", handleResize);
+				window.addEventListener("resize", handleResize, { signal: lifecycle.signal });
 				generateNeuronNetwork();
 
 				// ==========================================
@@ -2064,19 +2083,13 @@ const description = isEn
 				animId = requestAnimationFrame(renderLoop);
 			}
 
-			// Clean up animation on Astro page transitions
-			window.addEventListener(
-				"astro:before-swap",
-				() => {
-					if (animId) cancelAnimationFrame(animId);
-					if (strobeInterval) clearInterval(strobeInterval);
-				},
-				{ once: true },
-			);
-
 			// Init on current load and future page transitions
 			initLightbearerLab();
-			document.addEventListener("astro:page-load", initLightbearerLab);
+			// swup re-runs this script on every visit; register the page-load hook only once
+			if (!window.__lightbearerLabPageLoadBound) {
+				window.__lightbearerLabPageLoadBound = true;
+				document.addEventListener("astro:page-load", initLightbearerLab);
+			}
 		})();
 	</script>
 </MainGridLayout>

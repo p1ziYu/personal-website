@@ -114,6 +114,19 @@ const description = isEn
 			const pauseBtn = document.getElementById("ad-pause");
 			const restartBtn = document.getElementById("ad-restart");
 
+			// swup re-runs this script on each visit; stop this run's loop and global
+			// listeners when the page is swapped out (astro:before-swap fires on document)
+			let rafId = 0;
+			const lifecycle = new AbortController();
+			document.addEventListener(
+				"astro:before-swap",
+				() => {
+					cancelAnimationFrame(rafId);
+					lifecycle.abort();
+				},
+				{ once: true },
+			);
+
 			const BEST_KEY = "adrift-best";
 			let W = 0, H = 0;
 			let state = "ready"; // ready | playing | paused | over
@@ -257,16 +270,16 @@ const description = isEn
 				if (e.gamma == null) return;
 				tilt = clamp(e.gamma, -45, 45);
 				tiltActive = true;
-			});
+			}, { signal: lifecycle.signal });
 
 			window.addEventListener("keydown", (e) => {
 				if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keyDir = -1;
 				if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keyDir = 1;
 				if ((e.key === " " || e.key === "Enter") && state !== "playing") startGame();
-			});
+			}, { signal: lifecycle.signal });
 			window.addEventListener("keyup", (e) => {
 				if (["ArrowLeft", "a", "A", "ArrowRight", "d", "D"].includes(e.key)) keyDir = 0;
-			});
+			}, { signal: lifecycle.signal });
 
 			function pointerX(e) {
 				const r = canvas.getBoundingClientRect();
@@ -284,7 +297,7 @@ const description = isEn
 				if (state === "playing") { state = "paused"; pauseBtn.textContent = getIsEn() ? "▶ Resume" : "▶ 继续"; }
 				else if (state === "paused") { state = "playing"; pauseBtn.textContent = getIsEn() ? "⏸ Pause" : "⏸ 暂停"; last = performance.now(); }
 			});
-			window.addEventListener("resize", resize);
+			window.addEventListener("resize", resize, { signal: lifecycle.signal });
 
 			const boatY = () => H * 0.78;
 
@@ -470,14 +483,14 @@ const description = isEn
 				if (state === "playing") step(dt);
 				if (state === "over") { overT += dt; }
 				draw();
-				requestAnimationFrame(loop);
+				rafId = requestAnimationFrame(loop);
 			}
 
 			resize();
 			reset();
 			state = "ready";
 			updateTiltUI();
-			requestAnimationFrame(loop);
+			rafId = requestAnimationFrame(loop);
 
 			// 供自动化冒烟测试
 			window.__adrift = { get state() { return state; }, startGame, step, reset, gameOver, get boat() { return boat; }, get rocks() { return rocks; }, get stars() { return stars; }, get score() { return score; } };

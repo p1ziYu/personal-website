@@ -545,6 +545,23 @@ const description = isEn
 			if (!canvas) return;
 			const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 			if (!ctx) return;
+			// Initialise each rendered page once (module run + astro:page-load both call this)
+			if (canvas.dataset.labReady === "true") return;
+			canvas.dataset.labReady = "true";
+
+			// 离开页面时停止动画并移除全局监听（swup 在 document 上派发 astro:before-swap）
+			let mainScreenFrame = 0;
+			let rszTimer: ReturnType<typeof setTimeout> | undefined;
+			const lifecycle = new AbortController();
+			document.addEventListener(
+				"astro:before-swap",
+				() => {
+					cancelAnimationFrame(mainScreenFrame);
+					clearTimeout(rszTimer);
+					lifecycle.abort();
+				},
+				{ once: true },
+			);
 
 			const ratioDisplay = document.getElementById("ratio-display") as HTMLElement;
 			const percentDisplay = document.getElementById("percent-display") as HTMLElement;
@@ -1127,7 +1144,7 @@ const description = isEn
 				}
 
 				ctx.restore();
-				requestAnimationFrame(renderMainScreen);
+				mainScreenFrame = requestAnimationFrame(renderMainScreen);
 			}
 
 			function hitTestErasableLayer(mx: number, my: number): HoverTarget | null {
@@ -1340,10 +1357,14 @@ const description = isEn
 				}
 			});
 
-			window.addEventListener("lang-change", () => {
-				eraserStatus.textContent = eraserMode ? (isEn() ? "ON" : "已开启") : (isEn() ? "OFF" : "关闭");
-				updateUI();
-			});
+			window.addEventListener(
+				"lang-change",
+				() => {
+					eraserStatus.textContent = eraserMode ? (isEn() ? "ON" : "已开启") : (isEn() ? "OFF" : "关闭");
+					updateUI();
+				},
+				{ signal: lifecycle.signal },
+			);
 
 			layerKeys.forEach((key) => {
 				const input = layerInputs[key];
@@ -1367,18 +1388,21 @@ const description = isEn
 				});
 			});
 
-			let rszTimer: ReturnType<typeof setTimeout> | undefined;
-			window.addEventListener("resize", () => {
-				clearTimeout(rszTimer);
-				rszTimer = setTimeout(() => {
-					resizeCanvas();
-					updateUI();
-				}, 100);
-			});
+			window.addEventListener(
+				"resize",
+				() => {
+					clearTimeout(rszTimer);
+					rszTimer = setTimeout(() => {
+						resizeCanvas();
+						updateUI();
+					}, 100);
+				},
+				{ signal: lifecycle.signal },
+			);
 
 			resizeCanvas();
 			updateUI();
-			requestAnimationFrame(renderMainScreen);
+			mainScreenFrame = requestAnimationFrame(renderMainScreen);
 		}
 
 		initGoldilocksLab();

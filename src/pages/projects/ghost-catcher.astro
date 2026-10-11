@@ -681,14 +681,28 @@ const description = isEn
 			let pageStartTime = Date.now();
 
 			function initGhostCatcher() {
+				const canvas = document.getElementById("icecube-canvas");
+				// Initialise each rendered page once, however often this runs
+				if (!canvas || canvas.dataset.labReady === "true") return;
+				const ctx = canvas.getContext("2d");
+				if (!ctx) return;
+				canvas.dataset.labReady = "true";
+
 				// Clean previous loops if reloading via Astro navigation
 				if (animId) cancelAnimationFrame(animId);
 				if (tickerTimer) clearInterval(tickerTimer);
 
-				const canvas = document.getElementById("icecube-canvas");
-				if (!canvas) return;
-				const ctx = canvas.getContext("2d");
-				if (!ctx) return;
+				// swup dispatches astro:before-swap on document: stop loops and drop global listeners
+				const lifecycle = new AbortController();
+				document.addEventListener(
+					"astro:before-swap",
+					() => {
+						if (animId) cancelAnimationFrame(animId);
+						if (tickerTimer) clearInterval(tickerTimer);
+						lifecycle.abort();
+					},
+					{ once: true },
+				);
 
 				// UI Elements
 				const bodyCounterEl = document.getElementById("body-counter");
@@ -1724,7 +1738,7 @@ const description = isEn
 				}
 
 				// INIT
-				window.addEventListener("resize", resizeCanvas);
+				window.addEventListener("resize", resizeCanvas, { signal: lifecycle.signal });
 				resizeCanvas();
 				updateZenithLabel(34);
 				setEnergy(100);
@@ -1754,19 +1768,13 @@ const description = isEn
 				});
 			}
 
-			// Clean up animation on Astro page transitions
-			window.addEventListener(
-				"astro:before-swap",
-				() => {
-					if (animId) cancelAnimationFrame(animId);
-					if (tickerTimer) clearInterval(tickerTimer);
-				},
-				{ once: true },
-			);
-
 			// Init on current load and future Swup page transitions
 			initGhostCatcher();
-			document.addEventListener("astro:page-load", initGhostCatcher);
+			// swup re-runs this script on every visit; register the page-load hook only once
+			if (!window.__ghostCatcherPageLoadBound) {
+				window.__ghostCatcherPageLoadBound = true;
+				document.addEventListener("astro:page-load", initGhostCatcher);
+			}
 		})();
 	</script>
 </MainGridLayout>

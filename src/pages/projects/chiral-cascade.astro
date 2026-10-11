@@ -626,6 +626,13 @@ const description = isEn
 			let autoRunTimer = null;
 
 			function initChiralCascade() {
+				const canvas = document.getElementById("chiral-canvas");
+				const chartCanvas = document.getElementById("chart-canvas");
+				if (!canvas || !chartCanvas) return;
+				// Initialise each rendered page once, however often this runs
+				if (canvas.dataset.labReady === "true") return;
+				canvas.dataset.labReady = "true";
+
 				// Clean up previous animations if re-initialized
 				if (animId) cancelAnimationFrame(animId);
 				if (autoRunTimer) {
@@ -633,9 +640,17 @@ const description = isEn
 					autoRunTimer = null;
 				}
 
-				const canvas = document.getElementById("chiral-canvas");
-				const chartCanvas = document.getElementById("chart-canvas");
-				if (!canvas || !chartCanvas) return;
+				// swup dispatches astro:before-swap on document: stop loops and drop global listeners
+				const lifecycle = new AbortController();
+				document.addEventListener(
+					"astro:before-swap",
+					() => {
+						if (animId) cancelAnimationFrame(animId);
+						if (autoRunTimer) clearInterval(autoRunTimer);
+						lifecycle.abort();
+					},
+					{ once: true },
+				);
 
 				const ctx = canvas.getContext("2d");
 				const chartCtx = chartCanvas.getContext("2d");
@@ -1321,7 +1336,7 @@ const description = isEn
 				}
 
 				// EVENT LISTENERS
-				window.addEventListener("resize", resizeCanvases);
+				window.addEventListener("resize", resizeCanvases, { signal: lifecycle.signal });
 
 				if (btnRunCycle) {
 					btnRunCycle.addEventListener("click", () => {
@@ -1440,19 +1455,13 @@ const description = isEn
 				render();
 			}
 
-			// Clean up animation on Astro page swap
-			window.addEventListener(
-				"astro:before-swap",
-				() => {
-					if (animId) cancelAnimationFrame(animId);
-					if (autoRunTimer) clearInterval(autoRunTimer);
-				},
-				{ once: true },
-			);
-
 			// Init on current load and future Swup page transitions
 			initChiralCascade();
-			document.addEventListener("astro:page-load", initChiralCascade);
+			// swup re-runs this script on every visit; register the page-load hook only once
+			if (!window.__chiralCascadePageLoadBound) {
+				window.__chiralCascadePageLoadBound = true;
+				document.addEventListener("astro:page-load", initChiralCascade);
+			}
 		})();
 	</script>
 </MainGridLayout>

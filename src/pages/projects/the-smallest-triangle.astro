@@ -612,6 +612,9 @@ const description = isEn
 		// Vanilla JavaScript (No TypeScript-only syntax in client bundle)
 		// ==========================================
 
+		// Scoped in an IIFE: swup re-runs inline scripts on every visit, and
+		// top-level const/let would throw "already been declared" the second time.
+		(() => {
 		const isEn = () =>
 			document.documentElement.lang === "en" ||
 			location.pathname.startsWith("/en") ||
@@ -640,6 +643,14 @@ const description = isEn
 		let activeResizeObserver = null;
 
 		function initPlayground() {
+			// DOM Elements
+			const canvas = document.getElementById("heilbronn-canvas");
+			// Initialise each rendered page once, however often this runs
+			if (!canvas || canvas.dataset.labReady === "true") return;
+			const ctx = canvas.getContext("2d");
+			if (!ctx) return;
+			canvas.dataset.labReady = "true";
+
 			// Cleanup previous instances if navigating via astro:page-load
 			if (activeAnimFrameId) {
 				cancelAnimationFrame(activeAnimFrameId);
@@ -650,11 +661,23 @@ const description = isEn
 				activeResizeObserver = null;
 			}
 
-			// DOM Elements
-			const canvas = document.getElementById("heilbronn-canvas");
-			if (!canvas) return;
-			const ctx = canvas.getContext("2d");
-			if (!ctx) return;
+			// swup dispatches astro:before-swap on document: stop the loop and drop global listeners
+			const lifecycle = new AbortController();
+			document.addEventListener(
+				"astro:before-swap",
+				function() {
+					if (activeAnimFrameId) {
+						cancelAnimationFrame(activeAnimFrameId);
+						activeAnimFrameId = null;
+					}
+					if (activeResizeObserver) {
+						activeResizeObserver.disconnect();
+						activeResizeObserver = null;
+					}
+					lifecycle.abort();
+				},
+				{ once: true },
+			);
 
 			const statMinArea = document.getElementById("stat-min-area");
 			const statSessionBest = document.getElementById("stat-session-best");
@@ -1264,11 +1287,16 @@ const description = isEn
 			window.addEventListener("lang-change", function() {
 				updateMetricsUI(evaluateLayout(points));
 				updateAnnealingButtonState();
-			});
+			}, { signal: lifecycle.signal });
 		}
 
 		// Initial start and Astro page transition support
 		initPlayground();
-		document.addEventListener("astro:page-load", initPlayground);
+		// swup re-runs this script on every visit; register the page-load hook only once
+		if (!window.__smallestTrianglePageLoadBound) {
+			window.__smallestTrianglePageLoadBound = true;
+			document.addEventListener("astro:page-load", initPlayground);
+		}
+		})();
 	</script>
 </MainGridLayout>

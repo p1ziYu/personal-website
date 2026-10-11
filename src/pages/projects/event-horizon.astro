@@ -129,6 +129,19 @@ const description = isEn
 			const eatenEl = document.getElementById("eh-eaten");
 			const fpsEl = document.getElementById("eh-fps");
 
+			// swup re-runs this script on each visit; stop this run's loop and global
+			// listeners when the page is swapped out (astro:before-swap fires on document)
+			let rafId = 0;
+			const lifecycle = new AbortController();
+			document.addEventListener(
+				"astro:before-swap",
+				() => {
+					cancelAnimationFrame(rafId);
+					lifecycle.abort();
+				},
+				{ once: true },
+			);
+
 			const HORIZON = 16;
 			let W = 0, H = 0;
 			const hole = { x: 0, y: 0 };
@@ -301,7 +314,7 @@ const description = isEn
 					eatenEl.textContent = eaten;
 					fpsAcc = 0; fpsN = 0; fpsT = now;
 				}
-				requestAnimationFrame(frame);
+				rafId = requestAnimationFrame(frame);
 			}
 
 			function shockwave() {
@@ -379,11 +392,11 @@ const description = isEn
 			window.addEventListener("resize", () => {
 				clearTimeout(rszT);
 				rszT = setTimeout(resize, 150);
-			});
+			}, { signal: lifecycle.signal });
 
 			resize();
 			rebuild();
-			requestAnimationFrame(frame);
+			rafId = requestAnimationFrame(frame);
 		})();
 	</script>
 </MainGridLayout>
