@@ -57,7 +57,16 @@ const search = async () => {
 			const rawResults = await Promise.all(
 				response.results.map((item) => item.data()),
 			);
-			if (currentRequest === requestId) results = rawResults.filter((item) => lang === "en" ? new URL(item.url, window.location.origin).pathname.startsWith("/en/") : !new URL(item.url, window.location.origin).pathname.startsWith("/en/"));
+			if (currentRequest === requestId)
+				results = rawResults.filter((item) =>
+					lang === "en"
+						? new URL(item.url, window.location.origin).pathname.startsWith(
+								"/en/",
+							)
+						: !new URL(item.url, window.location.origin).pathname.startsWith(
+								"/en/",
+							),
+				);
 		} else if (import.meta.env.DEV) {
 			// 开发模式下的模拟结果
 			const devResults = fakeResult.filter(

@@ -64,16 +64,16 @@ export class Sound {
 			this.tone(160, 0.35, "square", 0.035, 0, 55);
 		}
 		if (name === "wave")
-			[196, 247, 294].forEach((f, i) =>
-				this.tone(f, 0.5, "triangle", 0.06, i * 0.13),
-			);
+			[196, 247, 294].forEach((f, i) => {
+				this.tone(f, 0.5, "triangle", 0.06, i * 0.13);
+			});
 		if (name === "victory")
-			[262, 330, 392, 523, 659, 784].forEach((f, i) =>
-				this.tone(f, 0.45, "triangle", 0.07, i * 0.15),
-			);
+			[262, 330, 392, 523, 659, 784].forEach((f, i) => {
+				this.tone(f, 0.45, "triangle", 0.07, i * 0.15);
+			});
 		if (name === "defeat")
-			[294, 247, 196, 147].forEach((f, i) =>
-				this.tone(f, 0.6, "triangle", 0.06, i * 0.23),
-			);
+			[294, 247, 196, 147].forEach((f, i) => {
+				this.tone(f, 0.6, "triangle", 0.06, i * 0.23);
+			});
 	}
 }

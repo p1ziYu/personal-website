@@ -1,11 +1,13 @@
 ---
-import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
 
-const title = isEn ? "Kinetic Cuisine · Slap Cook a Chicken" : "动能厨房 · 拍熟一只鸡";
+const title = isEn
+	? "Kinetic Cuisine · Slap Cook a Chicken"
+	: "动能厨房 · 拍熟一只鸡";
 const description = isEn
 	? "If kinetic energy turns 100% into internal heat, how many slaps does it take to cook a chicken? Inspired by the viral 23,034-slap meme: calculate kinetic thermodynamic cooking, tap into palm flurries, or calculate supersonic strikes!"
 	: "如果动能全部转化为内能，要拍多少巴掌才能把一只鸡拍熟？源自 23,034 掌拍熟一只鸡的经典物理迷因：在线计算动能烹饪，体验连环神掌与超音速一击！";

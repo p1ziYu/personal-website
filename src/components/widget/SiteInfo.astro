@@ -54,13 +54,15 @@ if (pnpmMatch) {
 }
 
 // 构建时间
-const buildTime = uiLang === "en"
-	? new Date().toLocaleString("en-US", { timeZone: siteConfig.timezone })
-	: formatDateI18nWithTime(new Date());
+const buildTime =
+	uiLang === "en"
+		? new Date().toLocaleString("en-US", { timeZone: siteConfig.timezone })
+		: formatDateI18nWithTime(new Date());
 
 // 构建平台检测（使用 ci-info 自动识别 CI 环境）
 const unknownBuildPlatform =
-	widgetConfig?.specificConfig?.siteInfo?.unknownBuildPlatform || i18n(I18nKey.siteInfoUnknownCi, uiLang);
+	widgetConfig?.specificConfig?.siteInfo?.unknownBuildPlatform ||
+	i18n(I18nKey.siteInfoUnknownCi, uiLang);
 const detectedBuildPlatform = detectBuildPlatform({
 	env: process.env,
 	isCI: ci.isCI,
@@ -69,11 +71,12 @@ const detectedBuildPlatform = detectBuildPlatform({
 	unknownBuildPlatform,
 });
 
-const buildPlatform = detectedBuildPlatform === "Local"
-	? i18n(I18nKey.siteInfoLocal, uiLang)
-	: detectedBuildPlatform === "Local Dev"
-		? i18n(I18nKey.siteInfoLocalDev, uiLang)
-		: detectedBuildPlatform;
+const buildPlatform =
+	detectedBuildPlatform === "Local"
+		? i18n(I18nKey.siteInfoLocal, uiLang)
+		: detectedBuildPlatform === "Local Dev"
+			? i18n(I18nKey.siteInfoLocalDev, uiLang)
+			: detectedBuildPlatform;
 
 // 系统信息（平台 + 架构）
 const platformMap: Record<string, string> = {

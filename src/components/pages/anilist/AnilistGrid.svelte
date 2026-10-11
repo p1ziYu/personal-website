@@ -12,7 +12,14 @@ interface Props {
 let { groups, itemsPerPage = 24 }: Props = $props();
 
 // 列表排序：在看优先，其次重温/计划/搁置，已看完/已弃靠后，自定义列表最后
-const ORDER = ["Watching", "Rewatching", "Planning", "Paused", "Completed", "Dropped"];
+const ORDER = [
+	"Watching",
+	"Rewatching",
+	"Planning",
+	"Paused",
+	"Completed",
+	"Dropped",
+];
 const NAME_ZH: Record<string, string> = {
 	Watching: "在看",
 	Rewatching: "重温中",
@@ -39,7 +46,11 @@ let sorted = $derived(
 	}),
 );
 let tabs = $derived(
-	sorted.map((g) => ({ id: g.name, name: NAME_ZH[g.name] ?? g.name, count: g.entries.length })),
+	sorted.map((g) => ({
+		id: g.name,
+		name: NAME_ZH[g.name] ?? g.name,
+		count: g.entries.length,
+	})),
 );
 let activeTab = $state(untrack(() => sorted[0]?.name ?? ""));
 let searchQuery = $state("");
@@ -47,7 +58,12 @@ let sortBy = $state("default");
 let currentPage = $state(1);
 
 function titleOf(e: AnilistEntry): string {
-	return e.media.title.english || e.media.title.romaji || e.media.title.native || "未知标题";
+	return (
+		e.media.title.english ||
+		e.media.title.romaji ||
+		e.media.title.native ||
+		"未知标题"
+	);
 }
 function nativeOf(e: AnilistEntry): string {
 	return e.media.title.native || "";
@@ -61,15 +77,17 @@ function progressText(e: AnilistEntry): string {
 	return total ? `${p}/${total} 话` : `${p} 话`;
 }
 
-let activeEntries = $derived(sorted.find((g) => g.name === activeTab)?.entries ?? []);
+let activeEntries = $derived(
+	sorted.find((g) => g.name === activeTab)?.entries ?? [],
+);
 
 let filtered = $derived.by(() => {
 	const q = searchQuery.trim().toLowerCase();
 	const list = q
 		? activeEntries.filter((e) => {
 				const t = e.media.title;
-				return [t.english, t.romaji, t.native].some(
-					(x) => x && x.toLowerCase().includes(q),
+				return [t.english, t.romaji, t.native].some((x) =>
+					x?.toLowerCase().includes(q),
 				);
 			})
 		: [...activeEntries];
@@ -78,7 +96,9 @@ let filtered = $derived.by(() => {
 			list.sort((a, b) => (b.score ?? -1) - (a.score ?? -1));
 			break;
 		case "avg-desc":
-			list.sort((a, b) => (b.media.averageScore ?? -1) - (a.media.averageScore ?? -1));
+			list.sort(
+				(a, b) => (b.media.averageScore ?? -1) - (a.media.averageScore ?? -1),
+			);
 			break;
 		case "progress-desc":
 			list.sort((a, b) => (b.progress ?? 0) - (a.progress ?? 0));

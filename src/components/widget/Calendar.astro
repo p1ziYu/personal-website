@@ -55,7 +55,9 @@ const heatmapWeekTemplate = i18n(I18nKey.calendarHeatmapWeek, uiLang);
 // 获取当前语言
 const currentLang = uiLang;
 
-const calendarDataUrl = url(uiLang === "en" ? "/en/api/allPostMeta.json" : "/api/allPostMeta.json");
+const calendarDataUrl = url(
+	uiLang === "en" ? "/en/api/allPostMeta.json" : "/api/allPostMeta.json",
+);
 const postUrlPrefix = url("/posts/");
 ---
 

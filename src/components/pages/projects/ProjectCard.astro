@@ -31,7 +31,8 @@ const {
 const isEn = Astro.url.pathname.startsWith("/en");
 const lang = isEn ? "en" : "zh_CN";
 
-const primaryUrl = link.length > 0 ? link[0].value : (isEn ? "/en/projects/" : "/projects/");
+const primaryUrl =
+	link.length > 0 ? link[0].value : isEn ? "/en/projects/" : "/projects/";
 
 // 状态元数据（标准 key → 本地化 + 配色）
 const statusMeta = status ? getProjectStatusMeta(status, lang) : null;

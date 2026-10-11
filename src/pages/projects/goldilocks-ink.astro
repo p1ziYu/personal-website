@@ -5,7 +5,8 @@ interface Props {
 	lang?: string;
 }
 
-const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } = Astro.props;
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
 const isEn = lang === "en";
 
 const title = isEn

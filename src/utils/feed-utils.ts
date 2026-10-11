@@ -115,7 +115,9 @@ export async function renderFeedEntries(
 		if (post.data.password) {
 			entries.push({
 				...base,
-				content: includeContent ? i18n(I18nKey.passwordProtectedRss, post.data.lang) : "",
+				content: includeContent
+					? i18n(I18nKey.passwordProtectedRss, post.data.lang)
+					: "",
 				isPasswordProtected: true,
 			});
 			continue;

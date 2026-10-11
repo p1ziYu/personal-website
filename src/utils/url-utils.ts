@@ -37,7 +37,9 @@ export function getPostUrlBySlug(slug: string, lang?: string): string {
 	// 移除文件扩展名（如 .md, .mdx 等）以及可能存在的语言前缀
 	const isEn = lang === "en" || slug.startsWith("en/");
 	const slugWithoutExt = removeFileExtension(slug).replace(/^(en|zh_CN)\//, "");
-	return url(isEn ? `/en/posts/${slugWithoutExt}/` : `/posts/${slugWithoutExt}/`);
+	return url(
+		isEn ? `/en/posts/${slugWithoutExt}/` : `/posts/${slugWithoutExt}/`,
+	);
 }
 
 export function getTagUrl(tag: string, lang?: string): string {
@@ -51,7 +53,8 @@ export function getCategoryUrl(category: string | null, lang?: string): string {
 	if (
 		!category ||
 		category.trim() === "" ||
-		category.trim().toLowerCase() === i18n(I18nKey.uncategorized, lang).toLowerCase()
+		category.trim().toLowerCase() ===
+			i18n(I18nKey.uncategorized, lang).toLowerCase()
 	)
 		return url(`${base}?uncategorized=true`);
 	return url(`${base}?category=${encodeURIComponent(category.trim())}`);
@@ -72,7 +75,9 @@ export function getFileDirFromPath(filePath: string): string {
 }
 
 export function getSearchUrl(query: string, lang?: string): string {
-	return url(`${lang === "en" ? "/en" : ""}/search/?q=${encodeURIComponent(query.trim())}`);
+	return url(
+		`${lang === "en" ? "/en" : ""}/search/?q=${encodeURIComponent(query.trim())}`,
+	);
 }
 
 // 生成 canonical URL：仅对客户端筛选路由（/archive/ 与 /search/）剥离查询串，
@@ -80,7 +85,9 @@ export function getSearchUrl(query: string, lang?: string): string {
 // 自我 canonical。分页（/2/）、文章页等无查询串的路径保持原样。
 export function getCanonicalUrl(urlObj: URL): string {
 	const pathname = urlObj.pathname;
-	if (["/archive/", "/search/", "/en/archive/", "/en/search/"].includes(pathname)) {
+	if (
+		["/archive/", "/search/", "/en/archive/", "/en/search/"].includes(pathname)
+	) {
 		return new URL(pathname, urlObj.origin).toString();
 	}
 	return urlObj.toString();

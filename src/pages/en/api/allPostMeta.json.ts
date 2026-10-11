@@ -1,6 +1,6 @@
+import { taxonomyDisplayName } from "@/i18n/taxonomy";
 import { getPreferredPosts } from "@/utils/content-utils";
 import { getPostUrlBySlug } from "@/utils/url-utils";
-import { taxonomyDisplayName } from "@/i18n/taxonomy";
 
 export async function GET(): Promise<Response> {
 	const posts = await getPreferredPosts("en");

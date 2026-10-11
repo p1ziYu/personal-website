@@ -3,7 +3,9 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
 
-const title = isEn ? "Event Horizon · Black Hole Particle Sandbox" : "事件视界 · 黑洞粒子游乐场";
+const title = isEn
+	? "Event Horizon · Black Hole Particle Sandbox"
+	: "事件视界 · 黑洞粒子游乐场";
 const description = isEn
 	? "Thousands of stars swirl into an accretion disk. Stir particle streams with your cursor, click to spawn temporary black holes, and blast shockwaves into the void. Inspired by the Threads viral particle toy."
 	: "上千颗粒子围着黑洞打转，拖出星轨：移动鼠标搅动粒子流，点击画布扔临时黑洞，一发冲击波把内圈全部甩飞。灵感来自 Threads 上的 Event horizon 粒子玩具。";

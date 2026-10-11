@@ -1,7 +1,7 @@
 ---
-import { canonicalTaxonomyName, taxonomyDisplayName } from "@/i18n/taxonomy";
 import { siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
+import { canonicalTaxonomyName, taxonomyDisplayName } from "@/i18n/taxonomy";
 import { i18n } from "@/i18n/translation";
 import { getSortedPostsList } from "@/utils/content-utils";
 import { getPostUrlBySlug, url } from "@/utils/url-utils";
@@ -58,11 +58,18 @@ const i18nStrings = {
 const tagsBaseUrl = url(isEn ? "/en/tags/" : "/tags/");
 const categoriesBaseUrl = url(isEn ? "/en/categories/" : "/categories/");
 const foldOnFilter = collapseAllButFirst;
-const taxonomyLabels = Object.fromEntries(posts.flatMap(post =>
-	[post.data.category, ...post.data.tags].filter((name): name is string => Boolean(name)).flatMap(name =>
-		[name, canonicalTaxonomyName(name)].map(key => [key, taxonomyDisplayName(name, isEn ? "en" : undefined)]),
+const taxonomyLabels = Object.fromEntries(
+	posts.flatMap((post) =>
+		[post.data.category, ...post.data.tags]
+			.filter((name): name is string => Boolean(name))
+			.flatMap((name) =>
+				[name, canonicalTaxonomyName(name)].map((key) => [
+					key,
+					taxonomyDisplayName(name, isEn ? "en" : undefined),
+				]),
+			),
 	),
-));
+);
 ---
 
 <archive-panel

@@ -19,6 +19,8 @@ export type BackgroundWallpaperConfig = {
 			enable: boolean; // 是否在首页显示自定义文字（全局开关）
 			title?: string; // 主标题
 			subtitle?: string | string[]; // 副标题，支持单个字符串或字符串数组
+			titleEn?: string; // 英文页主标题（可选）
+			subtitleEn?: string | string[]; // 英文页副标题（可选）
 			titleSize?: string; // 主标题字体大小，如 "3.5rem"
 			subtitleSize?: string; // 副标题字体大小，如 "1.5rem"
 			typewriter?: {

@@ -533,7 +533,11 @@ async function generatePoster() {
 		ctx.textBaseline = "top";
 		ctx.fillStyle = "#9ca3af";
 		ctx.font = `${12 * scale}px 'Roboto', sans-serif`;
-		ctx.fillText(i18n(I18nKey.author, lang), authorTextX, textCenterY - 20 * scale);
+		ctx.fillText(
+			i18n(I18nKey.author, lang),
+			authorTextX,
+			textCenterY - 20 * scale,
+		);
 
 		ctx.fillStyle = "#1f2937";
 		ctx.font = `700 ${20 * scale}px 'Roboto', sans-serif`;

@@ -1,14 +1,14 @@
+import { Sound } from "./audio.js";
 import {
-	TOWERS,
-	ENEMIES,
-	WAVES,
-	ROUTES,
-	ROADS,
 	BLOCKED,
+	ENEMIES,
+	ROADS,
+	ROUTES,
 	TILE,
+	TOWERS,
+	WAVES,
 	waveQueue,
 } from "./data.js";
-import { Sound } from "./audio.js";
 
 export class Game {
 	constructor(onChange) {
@@ -211,8 +211,9 @@ export class Game {
 			phase: this.spawnIndex * 1.7,
 		});
 	}
-	damage(enemy, amount, tower) {
+	damage(enemy, rawAmount, tower) {
 		if (enemy.dead) return;
+		let amount = rawAmount;
 		if (enemy.shield > 0) {
 			const multiplier = tower.type === "sniper" ? 1.5 : 1;
 			const absorbed = Math.min(enemy.shield, amount * multiplier);
@@ -303,16 +304,16 @@ export class Game {
 			});
 		}
 	}
-	update(dt) {
+	update(frameDt) {
 		if (!this.paused) {
-			this.noticeTime = Math.max(0, this.noticeTime - dt);
+			this.noticeTime = Math.max(0, this.noticeTime - frameDt);
 			if (this.noticeTime === 0 && this.noticeQueue.length) {
 				this.notice = this.noticeQueue.shift();
 				this.changed();
 			}
 		}
 		if (!this.active || this.paused) return;
-		dt *= this.speed;
+		const dt = frameDt * this.speed;
 		this.elapsed += dt;
 		this.shake = Math.max(0, this.shake - dt);
 		for (const collection of [this.particles, this.numbers, this.rings]) {

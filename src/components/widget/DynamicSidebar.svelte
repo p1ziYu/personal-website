@@ -67,7 +67,11 @@ function updateCountBadge() {
 
 // 从 HTML 中提取纯文本摘要
 function getPlainText(html: string): string {
-	return new DOMParser().parseFromString(html, "text/html").body.textContent?.trim() || "";
+	return (
+		new DOMParser()
+			.parseFromString(html, "text/html")
+			.body.textContent?.trim() || ""
+	);
 }
 
 // 格式化日期

@@ -27,7 +27,10 @@ let fetchError = "";
 if (isConfigured) {
 	try {
 		groups = await fetchAnilistLists(ANILIST_USERNAME);
-		if (import.meta.env.DEV) console.log(`[AniList] Page data: ${groups.reduce((s, g) => s + g.entries.length, 0)} items`);
+		if (import.meta.env.DEV)
+			console.log(
+				`[AniList] Page data: ${groups.reduce((s, g) => s + g.entries.length, 0)} items`,
+			);
 	} catch (error) {
 		fetchError = error instanceof Error ? error.message : String(error);
 		console.error("[AniList] Failed to fetch data:", error);
@@ -36,10 +39,15 @@ if (isConfigured) {
 
 // 统计数据
 const totalCount = groups.reduce((s, g) => s + g.entries.length, 0);
-const watchingCount = groups.find((g) => g.name === "Watching")?.entries.length ?? 0;
-const myScores = groups.flatMap((g) => g.entries.map((e) => e.score)).filter((s) => s != null);
+const watchingCount =
+	groups.find((g) => g.name === "Watching")?.entries.length ?? 0;
+const myScores = groups
+	.flatMap((g) => g.entries.map((e) => e.score))
+	.filter((s) => s != null);
 const avgMyScore =
-	myScores.length > 0 ? (myScores.reduce((a, b) => a + b, 0) / myScores.length).toFixed(1) : "—";
+	myScores.length > 0
+		? (myScores.reduce((a, b) => a + b, 0) / myScores.length).toFixed(1)
+		: "—";
 ---
 
 <MainGridLayout title="AniList 追番" description={`${ANILIST_USERNAME} 的 AniList 追番列表`}>

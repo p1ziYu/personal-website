@@ -2,15 +2,22 @@
 import I18nKey from "@i18n/i18nKey";
 import { getLangFromPath, i18n } from "@i18n/translation";
 import { onMount } from "svelte";
+
 let { lang }: { lang?: string } = $props();
 let uiLang = $state(lang);
 onMount(() => {
-	const updateLang = () => { uiLang = getLangFromPath(window.location.pathname); };
+	const updateLang = () => {
+		uiLang = getLangFromPath(window.location.pathname);
+	};
 	updateLang();
 	document.addEventListener("astro:after-swap", updateLang);
 	window.addEventListener("lang-change", updateLang);
-	return () => { document.removeEventListener("astro:after-swap", updateLang); window.removeEventListener("lang-change", updateLang); };
+	return () => {
+		document.removeEventListener("astro:after-swap", updateLang);
+		window.removeEventListener("lang-change", updateLang);
+	};
 });
+
 import DropdownItem from "@/components/common/DropdownItem.svelte";
 import Icon from "@/components/common/Icon.svelte";
 import { DARK_MODE, LIGHT_MODE, SYSTEM_MODE } from "@/constants/constants";

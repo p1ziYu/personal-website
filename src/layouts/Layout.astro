@@ -103,7 +103,9 @@ const navbarPanelBlur = Math.max(
 
 const isEn = lang === "en" || isEnPath(Astro.url.pathname);
 const brandTitle = isEn ? "P1ziyu’s Space" : siteConfig.title;
-const brandDescription = isEn ? "P1ziyu’s personal space. What you love is how you live." : siteConfig.description;
+const brandDescription = isEn
+	? "P1ziyu’s personal space. What you love is how you live."
+	: siteConfig.description;
 let pageTitle: string;
 if (title) {
 	pageTitle = `${title} - ${brandTitle}`;

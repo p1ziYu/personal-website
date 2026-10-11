@@ -1,6 +1,6 @@
+import { ENEMIES, TOWERS, WAVES } from "./data.js";
 import { Game } from "./engine.js";
 import { Renderer } from "./render.js";
-import { TOWERS, WAVES, ENEMIES } from "./data.js";
 
 export function mount() {
 	const $ = (id) => document.getElementById(id);
@@ -26,15 +26,24 @@ export function mount() {
 		if (msg.includes("金币不足，击败敌人或等待金矿产出"))
 			return "Insufficient gold. Defeat enemies or wait for gold mines.";
 		if (msg.includes("已部署。点击另一块草地继续建造"))
-			return msg.replace(/已部署。点击另一块草地继续建造。/, " deployed. Tap another plot to build.");
+			return msg.replace(
+				/已部署。点击另一块草地继续建造。/,
+				" deployed. Tap another plot to build.",
+			);
 		if (msg.includes("升级至") && msg.includes("级"))
 			return msg.replace(/(.*)升级至 (\d+) 级。/, "$1 upgraded to Tier $2.");
 		if (msg.includes("回收") && msg.includes("金币"))
-			return msg.replace(/回收 (\d+) 金币（总投入的 70%）。/, "Recycled +$1 Gold (70% of investment).");
+			return msg.replace(
+				/回收 (\d+) 金币（总投入的 70%）。/,
+				"Recycled +$1 Gold (70% of investment).",
+			);
 		if (msg.includes("第 ") && msg.includes(" 波"))
 			return msg.replace(/第 (\d+) 波 · (.*)/, "Wave $1 · $2");
 		if (msg.includes("防守成功！获得") && msg.includes("金币补给"))
-			return msg.replace(/防守成功！获得 (\d+) 金币补给。/, "Defense successful! Earned +$1 Gold bounty.");
+			return msg.replace(
+				/防守成功！获得 (\d+) 金币补给。/,
+				"Defense successful! Earned +$1 Gold bounty.",
+			);
 		if (msg.startsWith("成就 · "))
 			return msg.replace(/^成就 · /, "Achievement Unlocked · ");
 		return msg;
@@ -49,7 +58,7 @@ export function mount() {
 	};
 	const towerButtons = {};
 	for (const [type, spec] of Object.entries(TOWERS)) {
-		const name = isEn() ? (spec.name_en || spec.name) : spec.name;
+		const name = isEn() ? spec.name_en || spec.name : spec.name;
 		const button = document.createElement("button");
 		button.type = "button";
 		button.dataset.tower = type;
@@ -73,24 +82,40 @@ export function mount() {
 		$("lives").textContent = game.lives;
 		$("wave").textContent = String(game.wave).padStart(2, "0");
 		$("kills").textContent = game.kills;
-		$("score").textContent = game.score.toLocaleString(isEn() ? "en-US" : "zh-CN");
-		$("best-score").textContent = game.best.score.toLocaleString(isEn() ? "en-US" : "zh-CN");
+		$("score").textContent = game.score.toLocaleString(
+			isEn() ? "en-US" : "zh-CN",
+		);
+		$("best-score").textContent = game.best.score.toLocaleString(
+			isEn() ? "en-US" : "zh-CN",
+		);
 		$("best-wave").textContent = game.best.wave;
 		$("notice").textContent = translateNotice(game.notice);
 		$("pause").innerHTML = game.paused
-			? (isEn() ? "▶ <span>Resume</span>" : "▶ <span>继续</span>")
-			: (isEn() ? "Ⅱ <span>Pause</span>" : "Ⅱ <span>暂停</span>");
+			? isEn()
+				? "▶ <span>Resume</span>"
+				: "▶ <span>继续</span>"
+			: isEn()
+				? "Ⅱ <span>Pause</span>"
+				: "Ⅱ <span>暂停</span>";
 		$("pause").setAttribute(
 			"aria-label",
 			game.paused
-				? (isEn() ? "Resume game" : "继续游戏")
-				: (isEn() ? "Pause game" : "暂停游戏"),
+				? isEn()
+					? "Resume game"
+					: "继续游戏"
+				: isEn()
+					? "Pause game"
+					: "暂停游戏",
 		);
 		$("pause").disabled = !game.active;
 		$("speed").textContent = `${game.speed}×`;
 		$("mute").innerHTML = game.sound.muted
-			? (isEn() ? "♪ <span>Muted</span>" : "♪ <span>音效关</span>")
-			: (isEn() ? "♪ <span>Sound On</span>" : "♪ <span>音效开</span>");
+			? isEn()
+				? "♪ <span>Muted</span>"
+				: "♪ <span>音效关</span>"
+			: isEn()
+				? "♪ <span>Sound On</span>"
+				: "♪ <span>音效开</span>";
 		$("mute").setAttribute("aria-pressed", String(game.sound.muted));
 		$("pause-overlay").hidden = !game.paused || !game.active;
 		const waveIndex = Math.min(
@@ -102,27 +127,35 @@ export function mount() {
 		const wave = WAVES[waveIndex];
 		$("next-index").textContent =
 			`${String(waveIndex + 1).padStart(2, "0")} / 15`;
-		$("wave-name").textContent = isEn() ? (wave.name_en || wave.name) : wave.name;
-		$("modifier").textContent = isEn() ? (wave.modifier_en || wave.modifier) : wave.modifier;
+		$("wave-name").textContent = isEn() ? wave.name_en || wave.name : wave.name;
+		$("modifier").textContent = isEn()
+			? wave.modifier_en || wave.modifier
+			: wave.modifier;
 		const composition = Object.entries(wave.composition)
 			.map(
 				([type, count]) =>
-					`<span>${isEn() ? (ENEMIES[type].name_en || ENEMIES[type].name) : ENEMIES[type].name}<b>×${count}</b></span>`,
+					`<span>${isEn() ? ENEMIES[type].name_en || ENEMIES[type].name : ENEMIES[type].name}<b>×${count}</b></span>`,
 			)
 			.join("");
 		if ($("composition").innerHTML !== composition)
 			$("composition").innerHTML = composition;
-		$("wave-bonus").textContent = isEn() ? `Bonus +${wave.bonus}` : `奖励 +${wave.bonus}`;
+		$("wave-bonus").textContent = isEn()
+			? `Bonus +${wave.bonus}`
+			: `奖励 +${wave.bonus}`;
 		$("send-wave").disabled = game.phase !== "build" || game.paused;
 		$("send-wave").innerHTML =
 			game.phase === "battle"
-				? (isEn() ? "Wave in Progress <span>≋</span>" : "敌军进攻中 <span>≋</span>")
-				: (isEn() ? "Start Next Wave <span>→</span>" : "开始下一波 <span>→</span>");
+				? isEn()
+					? "Wave in Progress <span>≋</span>"
+					: "敌军进攻中 <span>≋</span>"
+				: isEn()
+					? "Start Next Wave <span>→</span>"
+					: "开始下一波 <span>→</span>";
 		const tower =
 			game.selected && game.towerAt(game.selected.x, game.selected.y);
 		const type = tower?.type || game.buildType;
 		const spec = TOWERS[type];
-		const name = isEn() ? (spec.name_en || spec.name) : spec.name;
+		const name = isEn() ? spec.name_en || spec.name : spec.name;
 		const index = (tower?.level || 1) - 1;
 		for (const [key, button] of Object.entries(towerButtons)) {
 			button.classList.toggle("selected", key === type);
@@ -134,7 +167,9 @@ export function mount() {
 				? `Tier ${tower.level} / 3 · ${tower.type === "mint" ? `Yield ${tower.income}` : `Kills ${tower.kills}`}`
 				: `等级 ${tower.level} / 3 · ${tower.type === "mint" ? `产出 ${tower.income}` : `击破 ${tower.kills}`}`
 			: labels[type];
-		$("tower-description").textContent = isEn() ? (spec.description_en || spec.description) : spec.description;
+		$("tower-description").textContent = isEn()
+			? spec.description_en || spec.description
+			: spec.description;
 		$("tower-stats").innerHTML =
 			type === "mint"
 				? isEn()
@@ -148,28 +183,48 @@ export function mount() {
 		$("build-tower").disabled =
 			!game.selected || !game.active || game.paused || game.gold < spec.cost;
 		$("build-tower").textContent = !game.selected
-			? (isEn() ? "Click map to select build spot" : "点击地图选择建造位置")
+			? isEn()
+				? "Click map to select build spot"
+				: "点击地图选择建造位置"
 			: game.gold < spec.cost
-				? (isEn() ? `Insufficient Gold · Need ${spec.cost}` : `金币不足 · 需要 ${spec.cost}`)
-				: (isEn() ? `Build ${name} · ${spec.cost} Gold` : `建造${spec.name} · ${spec.cost} 金币`);
+				? isEn()
+					? `Insufficient Gold · Need ${spec.cost}`
+					: `金币不足 · 需要 ${spec.cost}`
+				: isEn()
+					? `Build ${name} · ${spec.cost} Gold`
+					: `建造${spec.name} · ${spec.cost} 金币`;
 		if (tower) {
 			const cost = spec.upgrades[index];
 			$("upgrade").textContent =
 				tower.level === 3
-					? (isEn() ? "Max Tier Reached" : "已达最高等级")
-					: (isEn() ? `Upgrade · ${cost} Gold` : `升级 · ${cost} 金币`);
+					? isEn()
+						? "Max Tier Reached"
+						: "已达最高等级"
+					: isEn()
+						? `Upgrade · ${cost} Gold`
+						: `升级 · ${cost} 金币`;
 			$("upgrade").disabled =
 				tower.level === 3 || game.gold < cost || game.paused || !game.active;
-			$("sell").textContent = isEn() ? `Sell +${Math.floor(tower.invested * 0.7)}` : `出售 +${Math.floor(tower.invested * 0.7)}`;
+			$("sell").textContent = isEn()
+				? `Sell +${Math.floor(tower.invested * 0.7)}`
+				: `出售 +${Math.floor(tower.invested * 0.7)}`;
 			$("sell").disabled = game.paused || !game.active;
 			$("tip").textContent =
 				tower.level < 3
 					? type === "mint"
-						? (isEn() ? `Next tier yields ${spec.income[index + 1]} gold every ${spec.interval[index + 1]}s.` : `下级每 ${spec.interval[index + 1]} 秒产出 ${spec.income[index + 1]} 金币。`)
-						: (isEn() ? `Next tier: damage ${spec.damage[index + 1]}, range ${(spec.range[index + 1] / 48).toFixed(1)} tiles, rate ${spec.interval[index + 1]}s.` : `下级伤害 ${spec.damage[index + 1]}，射程 ${(spec.range[index + 1] / 48).toFixed(1)} 格，攻击间隔 ${spec.interval[index + 1]} 秒。`)
-					: (isEn() ? "Fully fortified Tier 3 bastion. Place firepower and control at trail intersections." : "三级防御塔已完全强化。将火力与控制布置在道路交汇处。");
+						? isEn()
+							? `Next tier yields ${spec.income[index + 1]} gold every ${spec.interval[index + 1]}s.`
+							: `下级每 ${spec.interval[index + 1]} 秒产出 ${spec.income[index + 1]} 金币。`
+						: isEn()
+							? `Next tier: damage ${spec.damage[index + 1]}, range ${(spec.range[index + 1] / 48).toFixed(1)} tiles, rate ${spec.interval[index + 1]}s.`
+							: `下级伤害 ${spec.damage[index + 1]}，射程 ${(spec.range[index + 1] / 48).toFixed(1)} 格，攻击间隔 ${spec.interval[index + 1]} 秒。`
+					: isEn()
+						? "Fully fortified Tier 3 bastion. Place firepower and control at trail intersections."
+						: "三级防御塔已完全强化。将火力与控制布置在道路交汇处。";
 		} else
-			$("tip").textContent = isEn() ? "Deploy Cannons and Frost Spires at intersections to halt dense swarms." : "交汇处部署炮塔与寒冰塔，让密集敌军寸步难行。";
+			$("tip").textContent = isEn()
+				? "Deploy Cannons and Frost Spires at intersections to halt dense swarms."
+				: "交汇处部署炮塔与寒冰塔，让密集敌军寸步难行。";
 		$("achievements").textContent = isEn()
 			? `Achievements: ${[...game.achievements].join(", ") || "None unlocked"}`
 			: `本局成就：${[...game.achievements].join("、") || "尚未解锁"}`;
@@ -182,26 +237,46 @@ export function mount() {
 			if (finished) {
 				$("overlay-title").innerHTML =
 					game.phase === "victory"
-						? (isEn() ? "The Long Night Passes<br /><span>The Embers Burn Bright.</span>" : "长夜已尽<br /><span>余烬长明。</span>")
-						: (isEn() ? "The Beacon Fades<br /><span>The Watch Continues.</span>" : "烽火虽熄<br /><span>守望不止。</span>");
+						? isEn()
+							? "The Long Night Passes<br /><span>The Embers Burn Bright.</span>"
+							: "长夜已尽<br /><span>余烬长明。</span>"
+						: isEn()
+							? "The Beacon Fades<br /><span>The Watch Continues.</span>"
+							: "烽火虽熄<br /><span>守望不止。</span>";
 				$("overlay-description").textContent =
 					game.phase === "victory"
-						? (isEn() ? "All 15 waves repelled. The sanctuary welcomes a new dawn." : "十五波攻势已击退。要塞迎来了新的黎明。")
-						: (isEn() ? `Defenses fell at wave ${game.wave}. Rebuild your bastions and hold the night again.` : `防线在第 ${game.wave} 波失守。重整工事，再守一次长夜。`);
+						? isEn()
+							? "All 15 waves repelled. The sanctuary welcomes a new dawn."
+							: "十五波攻势已击退。要塞迎来了新的黎明。"
+						: isEn()
+							? `Defenses fell at wave ${game.wave}. Rebuild your bastions and hold the night again.`
+							: `防线在第 ${game.wave} 波失守。重整工事，再守一次长夜。`;
 				$("result-stats").textContent = isEn()
 					? `Score ${game.score.toLocaleString("en-US")} · Defended ${game.cleared} Waves · Kills ${game.kills} · Health ${game.lives}`
 					: `得分 ${game.score.toLocaleString("zh-CN")} · 守住 ${game.cleared} 波 · 击破 ${game.kills} · 耐久 ${game.lives}`;
-				$("begin").innerHTML = isEn() ? "Defend Again <span>→</span>" : "再守一次 <span>→</span>";
+				$("begin").innerHTML = isEn()
+					? "Defend Again <span>→</span>"
+					: "再守一次 <span>→</span>";
 				$("overlay-foot").textContent = game.saveSucceeded
-					? (isEn() ? "Best record saved to this device" : "最佳纪录已保存在此设备")
-					: (isEn() ? "Best record could not be saved to this device" : "最佳纪录未能保存至此设备，仅在本次游戏中保留");
+					? isEn()
+						? "Best record saved to this device"
+						: "最佳纪录已保存在此设备"
+					: isEn()
+						? "Best record could not be saved to this device"
+						: "最佳纪录未能保存至此设备，仅在本次游戏中保留";
 			} else if (game.phase === "intro") {
-				$("overlay-title").innerHTML = isEn() ? "The Long Night Approaches<br /><span>The Embers Endure.</span>" : "长夜将至<br /><span>余烬不灭。</span>";
+				$("overlay-title").innerHTML = isEn()
+					? "The Long Night Approaches<br /><span>The Embers Endure.</span>"
+					: "长夜将至<br /><span>余烬不灭。</span>";
 				$("overlay-description").innerHTML = isEn()
 					? "The horde closes through the mist. Rally your defense<br />and keep the sanctuary's last flame burning."
 					: "敌军正从雾中逼近。筑起防线，<br />让这座要塞的最后一束火光继续燃烧。";
-				$("begin").innerHTML = isEn() ? "Ignite the Beacon <span>→</span>" : "点燃烽火 <span>→</span>";
-				$("overlay-foot").textContent = isEn() ? "Initial 300 Gold · 20 Core Health · Zero Downloads" : "初始 300 金币 · 20 点耐久 · 无需联网";
+				$("begin").innerHTML = isEn()
+					? "Ignite the Beacon <span>→</span>"
+					: "点燃烽火 <span>→</span>";
+				$("overlay-foot").textContent = isEn()
+					? "Initial 300 Gold · 20 Core Health · Zero Downloads"
+					: "初始 300 金币 · 20 点耐久 · 无需联网";
 			}
 		}
 		tickUI();
@@ -219,26 +294,42 @@ export function mount() {
 		} else if (game.phase === "battle") {
 			$("phase-label").textContent =
 				game.wave % 5 === 0
-					? (isEn() ? "Lord Approaches · Full Alert" : "领主来袭 · 全线警戒")
-					: (isEn() ? "Engaged · Hold the Line" : "交战中 · 坚守防线");
+					? isEn()
+						? "Lord Approaches · Full Alert"
+						: "领主来袭 · 全线警戒"
+					: isEn()
+						? "Engaged · Hold the Line"
+						: "交战中 · 坚守防线";
 			const total = Object.values(WAVES[game.wave - 1].composition).reduce(
 				(a, b) => a + b,
 				0,
 			);
 			const remaining = game.queue.length + game.enemies.length;
-			$("wave-status").textContent = isEn() ? `Remaining Enemies ${remaining} / ${total}` : `剩余敌军 ${remaining} / ${total}`;
+			$("wave-status").textContent = isEn()
+				? `Remaining Enemies ${remaining} / ${total}`
+				: `剩余敌军 ${remaining} / ${total}`;
 			$("wave-progress-fill").style.width = `${(1 - remaining / total) * 100}%`;
 		} else {
 			$("phase-label").textContent =
 				game.phase === "intro"
-					? (isEn() ? "Awaiting Orders" : "等待指挥")
+					? isEn()
+						? "Awaiting Orders"
+						: "等待指挥"
 					: game.phase === "victory"
-						? (isEn() ? "Victory" : "防守胜利")
-						: (isEn() ? "Defeat" : "防线失守");
+						? isEn()
+							? "Victory"
+							: "防守胜利"
+						: isEn()
+							? "Defeat"
+							: "防线失守";
 			$("wave-status").textContent =
 				game.phase === "intro"
-					? (isEn() ? "Deploy your first defensive line" : "部署你的第一道防线")
-					: (isEn() ? `Fully Defended ${game.cleared} Waves` : `完整守住 ${game.cleared} 波`);
+					? isEn()
+						? "Deploy your first defensive line"
+						: "部署你的第一道防线"
+					: isEn()
+						? `Fully Defended ${game.cleared} Waves`
+						: `完整守住 ${game.cleared} 波`;
 		}
 	}
 	game = new Game(sync);

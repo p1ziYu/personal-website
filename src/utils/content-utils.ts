@@ -4,11 +4,16 @@ import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils";
 
 /** One entry per article, preferring the requested language. */
-export async function getPreferredPosts(lang?: string): Promise<CollectionEntry<"posts">[]> {
+export async function getPreferredPosts(
+	lang?: string,
+): Promise<CollectionEntry<"posts">[]> {
 	const primary = await getSortedPosts(lang);
 	if (lang !== "en") return primary;
 	const translated = new Set(primary.map((p) => p.id.replace(/^en\//, "")));
-	return [...primary, ...(await getSortedPosts()).filter((p) => !translated.has(p.id))];
+	return [
+		...primary,
+		...(await getSortedPosts()).filter((p) => !translated.has(p.id)),
+	];
 }
 
 // // Retrieve posts and sort them by publication date
@@ -33,7 +38,9 @@ async function getRawSortedPosts(lang?: string) {
 	return sorted;
 }
 
-export async function getSortedPosts(lang?: string): Promise<CollectionEntry<"posts">[]> {
+export async function getSortedPosts(
+	lang?: string,
+): Promise<CollectionEntry<"posts">[]> {
 	const sorted = await getRawSortedPosts(lang);
 
 	for (let i = 1; i < sorted.length; i++) {
@@ -51,7 +58,9 @@ export type PostForList = {
 	id: string;
 	data: CollectionEntry<"posts">["data"];
 };
-export async function getSortedPostsList(lang?: string): Promise<PostForList[]> {
+export async function getSortedPostsList(
+	lang?: string,
+): Promise<PostForList[]> {
 	const sortedFullPosts = await getRawSortedPosts(lang);
 
 	// delete post.body
@@ -68,9 +77,9 @@ export async function getSortedPostsList(lang?: string): Promise<PostForList[]> 
  * 排序规则：手动 order 降序（越大越靠前，未设置排最后）→ 发布时间降序 → 标题兜底
  * 注意：判断 order 是否设置必须用 !== undefined，否则 0 会被当作「未设置」排到最后
  */
-export async function getSortedProjects(lang?: string): Promise<
-	CollectionEntry<"projects">[]
-> {
+export async function getSortedProjects(
+	lang?: string,
+): Promise<CollectionEntry<"projects">[]> {
 	const allProjects = await getCollection("projects", ({ data, id }) => {
 		const isDraft = import.meta.env.PROD ? data.draft === true : false;
 		if (isDraft) return false;
@@ -280,12 +289,17 @@ export async function getRelatedPosts(
 	currentPost: CollectionEntry<"posts">,
 	maxCount = 5,
 ): Promise<PostForList[]> {
-	const lang = currentPost.data.lang === "en" || currentPost.id.startsWith("en/") ? "en" : undefined;
+	const lang =
+		currentPost.data.lang === "en" || currentPost.id.startsWith("en/")
+			? "en"
+			: undefined;
 	const allPosts = await getPreferredPosts(lang);
 
 	// 排除自身和加密文章
 	const candidates = allPosts.filter(
-		(p) => p.id.replace(/^en\//, "") !== currentPost.id.replace(/^en\//, "") && !p.data.password,
+		(p) =>
+			p.id.replace(/^en\//, "") !== currentPost.id.replace(/^en\//, "") &&
+			!p.data.password,
 	);
 
 	const currentTags = new Set(currentPost.data.tags || []);

@@ -1,8 +1,8 @@
 ---
-import { taxonomyDisplayName } from "@/i18n/taxonomy";
 import { Icon } from "astro-icon/components";
 import { siteConfig } from "@/config/siteConfig";
 import I18nKey from "@/i18n/i18nKey";
+import { taxonomyDisplayName } from "@/i18n/taxonomy";
 import { getLangFromPath, i18n } from "@/i18n/translation";
 import type { PostForList } from "@/utils/content-utils";
 import { formatDateToYYYYMMDD } from "@/utils/date-utils";
@@ -23,7 +23,9 @@ const {
 	showRelatedPosts = siteConfig.post.relatedPosts,
 	showRandomPosts = siteConfig.post.randomPosts,
 } = Astro.props;
-const apiUrl = url(uiLang === "en" ? "/en/api/allPostMeta.json" : "/api/allPostMeta.json");
+const apiUrl = url(
+	uiLang === "en" ? "/en/api/allPostMeta.json" : "/api/allPostMeta.json",
+);
 const relatedIds = JSON.stringify(relatedPosts.map((p) => p.id));
 const noRelatedPostsText = i18n(I18nKey.noRelatedPosts, uiLang);
 const noRandomPostsText = i18n(I18nKey.noRandomPosts, uiLang);

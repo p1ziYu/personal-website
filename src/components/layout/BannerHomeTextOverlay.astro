@@ -13,8 +13,8 @@ const { showHomeText, initialRandomSubtitle } = Astro.props;
 const homeText = backgroundWallpaper.common?.homeText;
 const homeTextLinks = homeText?.links;
 const homeTextLinksEnable = homeText?.linksEnable !== false;
-const enTitle = (homeText as any)?.titleEn || "p1ziYu's Space";
-const enSubtitle = (homeText as any)?.subtitleEn || ["Live for what you love"];
+const enTitle = homeText?.titleEn || "p1ziYu's Space";
+const enSubtitle = homeText?.subtitleEn || ["Live for what you love"];
 const enSubtitleArray = Array.isArray(enSubtitle) ? enSubtitle : [enSubtitle];
 ---
 {homeText?.enable && (

@@ -27,7 +27,8 @@ export const TOWERS = {
 		interval: [1.9, 1.7, 1.5],
 		upgrades: [125, 190],
 		description: "爆炸波及周围敌人，克制虫群与密集队列。",
-		description_en: "Area-of-effect blasts that decimate swarms and dense lines.",
+		description_en:
+			"Area-of-effect blasts that decimate swarms and dense lines.",
 	},
 	frost: {
 		name: "寒冰塔",
@@ -40,7 +41,8 @@ export const TOWERS = {
 		interval: [1.15, 1, 0.85],
 		upgrades: [110, 170],
 		description: "冰环同时击中范围内敌军，减速 40% / 48% / 56%。",
-		description_en: "Radial frost pulses slowing all nearby enemies by 40% / 48% / 56%.",
+		description_en:
+			"Radial frost pulses slowing all nearby enemies by 40% / 48% / 56%.",
 	},
 	sniper: {
 		name: "狙击塔",
@@ -53,7 +55,8 @@ export const TOWERS = {
 		interval: [3.3, 3, 2.7],
 		upgrades: [175, 260],
 		description: "超远距离精准穿甲，护盾伤害额外提高 50%。",
-		description_en: "Extreme-range piercing rounds dealing +50% bonus damage to shields.",
+		description_en:
+			"Extreme-range piercing rounds dealing +50% bonus damage to shields.",
 	},
 	mint: {
 		name: "金矿塔",
@@ -67,7 +70,8 @@ export const TOWERS = {
 		income: [14, 23, 36],
 		upgrades: [120, 180],
 		description: "战斗中定时产出金币。尽早投资，积累后期优势。",
-		description_en: "Produces gold periodically in combat. Invest early to build an advantage.",
+		description_en:
+			"Produces gold periodically in combat. Invest early to build an advantage.",
 	},
 };
 export const ENEMIES = {

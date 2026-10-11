@@ -3,7 +3,9 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 const isEn = Astro.props.lang === "en" || Astro.url.pathname.startsWith("/en");
 
-const title = isEn ? "Cursed Font Generator · Typography Nightmare" : "诅咒字体生成器";
+const title = isEn
+	? "Cursed Font Generator · Typography Nightmare"
+	: "诅咒字体生成器";
 const description = isEn
 	? "Type anything, summon typography that sends designers screaming. Inspired by Show HN sensation Bastardica (Times New Bastard)."
 	: "输入一段文字，一键生成让字体设计师血压升高的诅咒排版。灵感来自 Show HN 热门项目 Bastardica（Times New Bastard）。";

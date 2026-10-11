@@ -124,7 +124,15 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 
 			if (requestId !== searchRequestId) return;
 
-			result = searchResults.filter((item) => lang === "en" ? new URL(item.url, window.location.origin).pathname.startsWith("/en/") : !new URL(item.url, window.location.origin).pathname.startsWith("/en/"));
+			result = searchResults.filter((item) =>
+				lang === "en"
+					? new URL(item.url, window.location.origin).pathname.startsWith(
+							"/en/",
+						)
+					: !new URL(item.url, window.location.origin).pathname.startsWith(
+							"/en/",
+						),
+			);
 			setPanelVisibility(true, isDesktop);
 		} catch (error) {
 			if (requestId !== searchRequestId) return;

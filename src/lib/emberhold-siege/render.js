@@ -1,12 +1,12 @@
 import {
-	TILE,
-	WIDTH,
-	HEIGHT,
-	ROUTES,
-	ROADS,
 	BLOCKED,
-	TOWERS,
 	ENEMIES,
+	HEIGHT,
+	ROADS,
+	ROUTES,
+	TILE,
+	TOWERS,
+	WIDTH,
 } from "./data.js";
 
 const noise = (n) => {
@@ -78,9 +78,10 @@ export class Renderer {
 			ctx.strokeStyle = color;
 			for (const route of ROUTES) {
 				ctx.beginPath();
-				route.forEach((p, i) =>
-					i ? ctx.lineTo(p.x, p.y) : ctx.moveTo(p.x, p.y),
-				);
+				route.forEach((p, i) => {
+					if (i) ctx.lineTo(p.x, p.y);
+					else ctx.moveTo(p.x, p.y);
+				});
 				ctx.stroke();
 			}
 		}
