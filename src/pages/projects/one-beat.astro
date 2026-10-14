@@ -1,0 +1,1615 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "One Beat · The Robotic Time Crystal"
+	: "同拍 · ONE BEAT";
+const description = isEn
+	? "One Beat: Exploring wave coarsening and autonomous time crystallization in mechatronic metamaterials. A network of active robotic units linked by nonreciprocal forces spontaneously synchronizes into a single collective rhythm without a central controller (Nature 2026)."
+	: "同拍 · ONE BEAT：探索机械超材料中的时间晶体与波粗化现象。阿姆斯特丹大学等团队在《自然》（Nature 2026）发表成果：由微型机器人单胞构成的弹性超材料通过非互易相互作用打破时间平移对称性，无需中央时钟即可自主涌现全局同步律动。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#070b14] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-indigo-500/30 selection:text-indigo-200">
+			<!-- Ambient Laboratory Glow & Grid -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#818cf8_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/4 -right-32 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/3 w-96 h-96 bg-fuchsia-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+							<span>NATURE · 2026-10-14 · VEENSTRA ET AL.</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+							<span>🤖</span>
+							<span class="lang-zh">机电超材料 · 宏观时间晶体</span>
+							<span class="lang-en">MECHATRONIC METAMATERIAL · TIME CRYSTAL</span>
+						</div>
+					</div>
+					<div class="text-xs font-mono text-slate-400">
+						<span class="lang-zh">2026-10-14 发表 · DOI: 10.1038/s41586-026-11163-6</span>
+						<span class="lang-en">Published 2026-10-14 · DOI: 10.1038/s41586-026-11163-6</span>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">同拍 · ONE BEAT</span>
+					<span class="lang-en">One Beat · The Robotic Time Crystal</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-indigo-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">没有指挥家，没有中央时钟：非互易机器人在波的吞噬中跳出同一节拍。</span>
+					<span class="lang-en">No conductor, no central clock: nonreciprocal robotic units coarsen into a shared pulse.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							2026 年 10 月 14 日，《自然》（Nature）发表了由荷兰阿姆斯特丹大学 Corentin Coulais 团队领衔、伯明翰大学、里昂高等师范学院、代尔夫特理工大学、莱顿大学与剑桥大学联合完成的里程碑成果。他们构建了一种突破传统的“机电超材料”：其基本单元不是微观晶格中的无机原子，而是一台台搭载微传感器、微处理器与定制洛伦兹驱动器的微型机器人。
+						</span>
+						<span class="lang-en">
+							On October 14, 2026, Nature published a landmark study led by Corentin Coulais at the University of Amsterdam in collaboration with Birmingham, Lyon, Delft, Leiden, and Cambridge. The team created a mechatronic metamaterial whose fundamental building blocks are not passive atoms or quantum spins, but active robotic units equipped with custom Lorentz actuators, sensors, and distributed microelectronics.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							当单元间的机械相互作用打破牛顿第三定律的对称性——单元 A 对单元 B 的推力不等于 B 对 A 的推力（非互易性，Nonreciprocal）——整个材料便打破了时间平移对称性。最初杂乱微弱的高频微波在材料中自发激荡，并通过非线性“波粗化”（Wave Coarsening）过程不断相互吞并，波长、周期与振幅逐级攀升，最终让整片原本各自为政的机械网络凝结为单一周期的宏观搏动——诞生了一座无需任何中央时钟调度的机器人时间晶体。
+						</span>
+						<span class="lang-en">
+							By configuring neighbour interactions to be nonreciprocal (Unit A's push on Unit B does not equal B's push on A), the material breaks continuous time-translation symmetry. Subtle local fluctuations spontaneously emerge and progressively coalesce through "wave coarsening" — small ripples merge into longer wavelengths and larger amplitudes until the entire lattice pulses in a single, robust collective cadence: an autonomous robotic time crystal.
+						</span>
+					</p>
+				</div>
+
+				<!-- Key Stats Row -->
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6">
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">实验拓扑单元</span>
+							<span class="lang-en">ACTIVE TOPOLOGIES</span>
+						</div>
+						<div class="text-2xl sm:text-3xl font-mono font-black text-white mt-1">37 / 24</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">37 单元 2D 蜂窝晶格 · 24 单元弹性环</span>
+							<span class="lang-en">37-unit 2D honeycomb · 24-unit elastic ring</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-indigo-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">集体自激振荡频率</span>
+							<span class="lang-en">OSCILLATION FREQUENCY</span>
+						</div>
+						<div class="text-2xl sm:text-3xl font-mono font-black text-indigo-300 mt-1">~30 Hz</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">突破非互易稳定性阈值后的自发全局律动</span>
+							<span class="lang-en">Emergent collective pulse past stability threshold</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-fuchsia-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">硬件规模与执行器</span>
+							<span class="lang-en">HARDWARE SUBSYSTEMS</span>
+						</div>
+						<div class="text-2xl sm:text-3xl font-mono font-black text-fuchsia-300 mt-1">&gt; 100</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">3D 打印弹性骨架 · 定制洛伦兹驱动器网络</span>
+							<span class="lang-en">3D-printed flexures · Custom Lorentz actuators</span>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<!-- 1. HONEYCOMB LAB (37-UNIT ACTIVE LATTICE) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-indigo-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB 01</span>
+							<span>·</span>
+							<span class="lang-zh">37 单元蜂窝晶格波粗化实验台</span>
+							<span class="lang-en">37-Unit Honeycomb Wave Coarsening Lab</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">蜂窝超材料：从相位碎裂到全局同拍</span>
+							<span class="lang-en">Honeycomb Metamaterial: Patchy Chaos to Global Sync</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-slate-900 border border-indigo-500/30 text-indigo-300">
+						<span class="lang-zh">⚠️ 启发自实验的相位振子示意模型，非硬件物理复刻。</span>
+						<span class="lang-en">⚠️ Illustrative phase model inspired by the experiment, not a replica of the hardware.</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						下方由 37 个微型机电单胞组成同心六角蜂窝晶格（1 + 6 + 12 + 18 结构）。节点颜色表示单胞实时相位 $\theta_i \in [0, 2\pi)$，节点半径伴随搏动微幅呼吸。当非互易度 $\eta$ 处于低位时，晶格局限于斑块状混沌与局部缺陷；当滑块跨越临界阈值（$\eta > 0.40$），高频涟漪发生非线性碰撞吞并，波长迅速放大，最终整个晶格同步锁死在同一脉搏中（同步序参量 $R \to 1$）。
+					</span>
+					<span class="lang-en">
+						The canvas simulates 37 active mechatronic cells arranged in a concentric hexagonal lattice (1 + 6 + 12 + 18 layout). Node colors denote instantaneous phase $\theta_i \in [0, 2\pi)$, while node radii subtly breathe with amplitude. When nonreciprocity $\eta$ remains low, the lattice stays trapped in patchy disorder. Once $\eta$ crosses the stability threshold ($\eta > 0.40$), short waves coarsen into long waves, driving the order parameter $R(t)$ toward unity (global synchronization).
+					</span>
+				</p>
+
+				<!-- Main Honeycomb Canvas & Live Telemetry Layout -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+					<!-- Canvas Display Column (7 cols) -->
+					<div class="lg:col-span-7 bg-[#050811] rounded-2xl p-4 border border-slate-800 shadow-xl relative overflow-hidden">
+						<!-- Phase Color Map Legend Bar -->
+						<div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2 px-1">
+							<div class="flex items-center gap-1.5">
+								<span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+								<span class="lang-zh">相位 0 / 2π</span>
+								<span class="lang-en">Phase 0 / 2π</span>
+							</div>
+							<div class="h-2 w-32 rounded-full bg-linear-to-r from-indigo-500 via-cyan-400 via-emerald-400 via-amber-400 via-rose-500 to-indigo-500"></div>
+							<div class="flex items-center gap-1.5">
+								<span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+								<span class="lang-zh">相位 π (反相)</span>
+								<span class="lang-en">Phase π (Inverted)</span>
+							</div>
+						</div>
+
+						<!-- Canvas element -->
+						<div class="relative w-full aspect-square max-h-[460px] flex items-center justify-center">
+							<canvas id="honeycomb-canvas" class="w-full h-full block rounded-xl cursor-crosshair"></canvas>
+							<!-- Disturbance overlay banner -->
+							<div id="honeycomb-alert" class="absolute top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-rose-500/20 border border-rose-500/60 text-rose-300 font-mono text-xs opacity-0 transition-opacity pointer-events-none">
+								<span class="lang-zh">💥 注入随机相位扰动！波粗化正在修复有序态...</span>
+								<span class="lang-en">💥 Phase perturbation injected! Wave coarsening restoring order...</span>
+							</div>
+						</div>
+
+						<div class="mt-2 text-center text-[11px] font-mono text-slate-500">
+							<span class="lang-zh">提示：点击晶格上的任意单元可直接“敲击”（Poke）局部相位</span>
+							<span class="lang-en">Tip: Click any cell on the lattice to directly poke its local phase</span>
+						</div>
+					</div>
+
+					<!-- Controls & Live Readouts Column (5 cols) -->
+					<div class="lg:col-span-5 space-y-4 font-mono">
+						<!-- Telemetry Card 1: Synchrony Order Parameter R(t) -->
+						<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+							<div class="flex items-center justify-between text-xs text-slate-400 uppercase tracking-wider mb-1">
+								<div class="flex items-center gap-1.5 text-indigo-300 font-bold">
+									<span class="w-2 h-2 rounded-full bg-indigo-400 animate-ping"></span>
+									<span class="lang-zh">同步序参量 R(t)</span>
+									<span class="lang-en">Order Parameter R(t)</span>
+								</div>
+								<span id="hc-r-val" class="text-lg font-black text-white">0.982</span>
+							</div>
+
+							<!-- Sparkline canvas for R(t) history -->
+							<div class="h-16 w-full bg-slate-950/80 rounded-lg p-1 border border-slate-800/80 relative my-2">
+								<canvas id="hc-sparkline-canvas" class="w-full h-full block"></canvas>
+								<div class="absolute right-2 bottom-1 text-[10px] text-slate-500">
+									<span class="lang-zh">1.0 = 纯同拍</span>
+									<span class="lang-en">1.0 = Pure Sync</span>
+								</div>
+							</div>
+
+							<div class="flex items-center justify-between text-[11px] text-slate-400">
+								<span>
+									<span class="lang-zh">状态: </span>
+									<span class="lang-en">State: </span>
+									<strong id="hc-state-badge" class="text-indigo-400">
+										<span class="lang-zh">时间晶体全局同拍</span>
+										<span class="lang-en">Time Crystal Sync</span>
+									</strong>
+								</span>
+								<span>
+									<span class="lang-zh">自振频率: </span>
+									<span class="lang-en">Freq: </span>
+									<strong class="text-slate-200">~29.8 Hz</strong>
+								</span>
+							</div>
+						</div>
+
+						<!-- Telemetry Card 2: Estimated Dominant Wavelength -->
+						<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+							<div class="text-xs text-slate-400 uppercase tracking-wider mb-1">
+								<span class="lang-zh">空间主导波长 (Estimated Dominant λ)</span>
+								<span class="lang-en">Dominant Wavelength (λ)</span>
+							</div>
+							<div class="flex items-baseline gap-3">
+								<span id="hc-lambda-val" class="text-2xl font-black text-cyan-400">λ → ∞</span>
+								<span id="hc-lambda-desc" class="text-xs text-slate-400">
+									<span class="lang-zh">系统级同相搏动（粗化终点）</span>
+									<span class="lang-en">Lattice-scale uniform pulse (Coarsened)</span>
+								</span>
+							</div>
+							<div class="w-full bg-slate-950 rounded-full h-1.5 mt-3 overflow-hidden border border-slate-800">
+								<div id="hc-lambda-bar" class="bg-gradient-to-r from-amber-500 via-cyan-400 to-indigo-500 h-full w-full transition-all duration-300"></div>
+							</div>
+						</div>
+
+						<!-- Interactive Controls Panel -->
+						<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 space-y-4">
+							<div class="text-xs text-indigo-400 uppercase tracking-widest font-bold">
+								<span class="lang-zh">🎛️ 晶格动力学调控</span>
+								<span class="lang-en">🎛️ Lattice Control Deck</span>
+							</div>
+
+							<!-- Action Buttons -->
+							<div class="grid grid-cols-3 gap-2">
+								<button id="hc-btn-play" type="button" class="py-2 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs transition active:scale-95 shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
+									<span id="hc-play-icon">⏸</span>
+									<span id="hc-play-text">
+										<span class="lang-zh">暂停</span>
+										<span class="lang-en">Pause</span>
+									</span>
+								</button>
+								<button id="hc-btn-poke" type="button" class="py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-amber-300 font-bold text-xs transition active:scale-95 cursor-pointer" title="Randomize a local patch of phases">
+									<span>⚡</span>
+									<span class="lang-zh">局部敲击</span>
+									<span class="lang-en">Poke</span>
+								</button>
+								<button id="hc-btn-reset" type="button" class="py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-bold text-xs transition active:scale-95 cursor-pointer">
+									<span>↺</span>
+									<span class="lang-zh">重置</span>
+									<span class="lang-en">Reset</span>
+								</button>
+							</div>
+
+							<!-- Sliders -->
+							<div class="space-y-3 pt-1 text-xs">
+								<!-- Nonreciprocity Slider -->
+								<div>
+									<div class="flex justify-between items-center mb-1">
+										<span class="font-bold text-slate-200">
+											<span class="lang-zh">非互易性强度 (Nonreciprocity η)</span>
+											<span class="lang-en">Nonreciprocity (η)</span>
+										</span>
+										<span id="hc-val-eta" class="text-indigo-400 font-bold">0.85</span>
+									</div>
+									<input id="hc-slider-eta" type="range" min="0" max="1" step="0.01" value="0.85" class="w-full accent-indigo-500 cursor-pointer" />
+									<div class="flex justify-between text-[10px] text-slate-500 mt-0.5">
+										<span>0.0 (<span class="lang-zh">完全对称互易</span><span class="lang-en">Reciprocal</span>)</span>
+										<span class="text-indigo-400/80 font-bold">↑ 0.40 (<span class="lang-zh">阈值</span><span class="lang-en">Threshold</span>)</span>
+										<span>1.0 (<span class="lang-zh">完全非互易</span><span class="lang-en">Max Active</span>)</span>
+									</div>
+								</div>
+
+								<!-- Coupling Strength Slider -->
+								<div>
+									<div class="flex justify-between items-center mb-1">
+										<span class="text-slate-300">
+											<span class="lang-zh">邻域耦合强度 (Coupling K)</span>
+											<span class="lang-en">Coupling (K)</span>
+										</span>
+										<span id="hc-val-k" class="text-cyan-400 font-bold">1.20</span>
+									</div>
+									<input id="hc-slider-k" type="range" min="0.2" max="2.5" step="0.05" value="1.20" class="w-full accent-cyan-500 cursor-pointer" />
+								</div>
+
+								<!-- Noise Level Slider -->
+								<div>
+									<div class="flex justify-between items-center mb-1">
+										<span class="text-slate-300">
+											<span class="lang-zh">环境噪声水平 (Noise σ)</span>
+											<span class="lang-en">Noise Level (σ)</span>
+										</span>
+										<span id="hc-val-noise" class="text-amber-400 font-bold">0.05</span>
+									</div>
+									<input id="hc-slider-noise" type="range" min="0" max="0.4" step="0.01" value="0.05" class="w-full accent-amber-500 cursor-pointer" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. RING LAB (24-UNIT MOTORIZED RING & MODE COARSENING) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB 02</span>
+							<span>·</span>
+							<span class="lang-zh">24 单元弹性环模式粗化实验台</span>
+							<span class="lang-en">24-Unit Elastic Ring Mode Coarsening Lab</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">弹性环波级联：高频涟漪向基频模式的单向粗化</span>
+							<span class="lang-en">Elastic Ring Cascade: High-Mode Ripples Merging to Mode-1</span>
+						</h2>
+					</div>
+					<div class="flex items-center gap-2 font-mono text-xs">
+						<button id="ring-btn-restart" type="button" class="py-1.5 px-3 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-bold transition active:scale-95 cursor-pointer">
+							<span>↺</span>
+							<span class="lang-zh">激发高频涟漪 (Mode 6)</span>
+							<span class="lang-en">Restart Ripple (Mode 6)</span>
+						</button>
+						<button id="ring-btn-speed" type="button" class="py-1.5 px-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 font-bold transition active:scale-95 cursor-pointer">
+							<span class="lang-zh">速度: </span><span class="lang-en">Speed: </span><span id="ring-speed-text">1.0×</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						实验团队将 24 个搭载微电机的机电单元装配成封闭弹性圆环。在实验初始，外加激励激发了高阶空间涟漪（模式 6，圆周分布 6 个完整波长峰谷）。在非互易驱动下，高频小波并非独立衰减，而是通过空间波粗化逐步向更长波长级联（Mode 6 → Mode 4 → Mode 2 → Mode 1），最终整个环呈现为整齐划一的宏观呼吸与低频行波循环。
+					</span>
+					<span class="lang-en">
+						The experimental team assembled 24 motorized units into a closed elastic ring. Initially perturbed into a high-frequency spatial ripple (Mode 6, exhibiting 6 full wave periods around the circumference), the nonreciprocal motors do not allow the ripples to decay into thermal dissipation. Instead, nonlinear wave coarsening sequentially merges shorter wavelengths (Mode 6 → Mode 4 → Mode 2 → Mode 1) until the entire elastic ring breathes as one slow collective cycle.
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+					<!-- Ring Canvas Column (7 cols) -->
+					<div class="lg:col-span-7 bg-[#050811] rounded-2xl p-4 border border-slate-800 shadow-xl flex flex-col items-center justify-center">
+						<div class="relative w-full aspect-square max-h-[420px] flex items-center justify-center">
+							<canvas id="ring-canvas" class="w-full h-full block rounded-xl"></canvas>
+						</div>
+						<div class="text-[11px] font-mono text-slate-500 mt-2 text-center">
+							<span class="lang-zh">观察：24 个小电机单元沿径向弹性形变，波包不断吞噬并汇聚为模式 1</span>
+							<span class="lang-en">Observe: 24 motorized units radially flex as wave packets merge into Mode 1</span>
+						</div>
+					</div>
+
+					<!-- Ring Readout & Mode Bars Column (5 cols) -->
+					<div class="lg:col-span-5 space-y-4 font-mono">
+						<!-- Current Dominant Mode Readout -->
+						<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+							<div class="text-xs text-slate-400 uppercase tracking-wider mb-1">
+								<span class="lang-zh">实时主导空间模式 (Current Dominant Mode)</span>
+								<span class="lang-en">Current Dominant Mode (m)</span>
+							</div>
+							<div class="flex items-baseline gap-3">
+								<span id="ring-mode-val" class="text-3xl font-black text-cyan-400">Mode 1</span>
+								<span id="ring-mode-state" class="text-xs text-indigo-300 font-bold">
+									<span class="lang-zh">宏观单拍集体循环 (One Beat)</span>
+									<span class="lang-en">Collective One-Beat Cycle</span>
+								</span>
+							</div>
+							<p id="ring-mode-desc" class="text-xs text-slate-400 mt-2 leading-relaxed">
+								<span class="lang-zh">短波涟漪已被完全吞噬。24 个单元以统一节奏起伏，环身周期性整体膨胀与收缩。</span>
+								<span class="lang-en">Short ripples fully coarsened. All 24 units oscillate in unison, breathing cyclically.</span>
+							</p>
+						</div>
+
+						<!-- Mode Spectrum Energy Bars -->
+						<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+							<div class="text-xs text-slate-400 uppercase tracking-wider mb-3">
+								<span class="lang-zh">傅里叶空间模态能量分布 (Spatial Mode Spectrum)</span>
+								<span class="lang-en">Spatial Mode Energy Spectrum</span>
+							</div>
+							<div class="space-y-2 text-xs">
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-cyan-300 font-bold">Mode 1</span>
+									<div class="flex-1 bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+										<div id="ring-bar-m1" class="h-full bg-cyan-400 transition-all duration-100" style="width: 95%;"></div>
+									</div>
+									<span id="ring-pct-m1" class="w-10 text-right text-slate-300">95%</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-slate-400">Mode 2</span>
+									<div class="flex-1 bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+										<div id="ring-bar-m2" class="h-full bg-indigo-500 transition-all duration-100" style="width: 4%;"></div>
+									</div>
+									<span id="ring-pct-m2" class="w-10 text-right text-slate-400">4%</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-slate-400">Mode 4</span>
+									<div class="flex-1 bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+										<div id="ring-bar-m4" class="h-full bg-purple-500 transition-all duration-100" style="width: 1%;"></div>
+									</div>
+									<span id="ring-pct-m4" class="w-10 text-right text-slate-400">1%</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-16 text-slate-500">Mode 6</span>
+									<div class="flex-1 bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+										<div id="ring-bar-m6" class="h-full bg-rose-500 transition-all duration-100" style="width: 0%;"></div>
+									</div>
+									<span id="ring-pct-m6" class="w-10 text-right text-slate-500">0%</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Coarsening Progress Card -->
+						<div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800 flex items-center justify-between text-xs">
+							<div>
+								<div class="text-slate-400">
+									<span class="lang-zh">波粗化演化耗时:</span>
+									<span class="lang-en">Coarsening Elapsed:</span>
+								</div>
+								<div id="ring-coarsen-timer" class="text-base font-bold text-white mt-0.5">8.4 s</div>
+							</div>
+							<div class="text-right">
+								<div class="text-slate-400">
+									<span class="lang-zh">终态稳定性:</span>
+									<span class="lang-en">Asymptotic Stability:</span>
+								</div>
+								<div class="text-base font-bold text-emerald-400 mt-0.5">
+									<span class="lang-zh">绝对吸引子</span>
+									<span class="lang-en">Attractor Locked</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 3. DISTURBANCE & ROBUSTNESS TEST -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-fuchsia-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB 03</span>
+							<span>·</span>
+							<span class="lang-zh">抗扰鲁棒性与尺度效应检验</span>
+							<span class="lang-en">Perturbation Robustness & Scaling Test</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">晶格越大越坚固：外力震荡下的自愈合奇迹</span>
+							<span class="lang-en">Resilience with Scale: Order Survives Random Kicks</span>
+						</h2>
+					</div>
+
+					<!-- Size Toggle Selector -->
+					<div class="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs">
+						<span class="text-slate-400 px-2">
+							<span class="lang-zh">晶格规模:</span>
+							<span class="lang-en">Size:</span>
+						</span>
+						<button id="size-btn-12" type="button" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition active:scale-95 cursor-pointer">12 Units</button>
+						<button id="size-btn-24" type="button" class="px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition active:scale-95 cursor-pointer">24 Units</button>
+						<button id="size-btn-37" type="button" class="px-2.5 py-1 rounded-lg bg-fuchsia-600 text-white font-bold transition active:scale-95 cursor-pointer">37 Units</button>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						真实物理系统极易受到外界噪声冲击。点击“剧烈震荡”（Shake）向当前晶格施加强烈的随机相位冲击，实时观察同步序参量 $R$ 的暴跌与反弹。对比 12、24 与 37 单元可以直观发现：随着系统尺寸增大，体态非互易动力学越发压倒边界损耗，抗扰动能力不降反升，有序律动在扩张中越发稳健。
+					</span>
+					<span class="lang-en">
+						Physical materials face constant external perturbations. Tap "Shake Lattice" to inject severe phase kicks, and watch order parameter $R(t)$ dip before recovering. Toggling between 12, 24, and 37 units reveals an experimental hallmark: larger lattices do not dilute their temporal order; bulk nonreciprocal coarsening dominates edge losses, enabling larger materials to heal more rapidly and thoroughly.
+					</span>
+				</p>
+
+				<!-- Robustness Scoreboard & Shake Action Card -->
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-4 font-mono">
+					<!-- Shake Trigger Box -->
+					<div class="p-4 rounded-xl bg-linear-to-b from-fuchsia-950/40 to-slate-900 border border-fuchsia-800/40 flex flex-col justify-between">
+						<div>
+							<div class="text-xs text-fuchsia-300 font-bold uppercase tracking-wider mb-1">
+								<span class="lang-zh">⚡ 注入外部破坏</span>
+								<span class="lang-en">⚡ Inject Disturbance</span>
+							</div>
+							<p class="text-[11px] text-slate-400 leading-tight">
+								<span class="lang-zh">向蜂窝各节点随机叠加 [-π, π] 瞬时冲击</span>
+								<span class="lang-en">Apply uniform [-π, π] phase kicks across cells</span>
+							</p>
+						</div>
+						<button id="btn-shake-test" type="button" class="mt-4 w-full py-2.5 px-3 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-500 text-white font-black text-xs transition active:scale-95 shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
+							<span>💥</span>
+							<span class="lang-zh">剧烈震荡 (SHAKE)</span>
+							<span class="lang-en">Shake Lattice</span>
+						</button>
+					</div>
+
+					<!-- Stat 1: Recovery Half-Life -->
+					<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+						<div class="text-xs text-slate-400 uppercase tracking-wider mb-1">
+							<span class="lang-zh">平均恢复半衰期 (Recovery t½)</span>
+							<span class="lang-en">Recovery Half-Life (t½)</span>
+						</div>
+						<div id="stat-recovery-time" class="text-2xl font-black text-white mt-1">0.82 s</div>
+						<div id="stat-recovery-desc" class="text-xs text-fuchsia-400 mt-1">
+							<span class="lang-zh">37 单元：强波粗化瞬时愈合</span>
+							<span class="lang-en">37 units: Rapid bulk healing</span>
+						</div>
+					</div>
+
+					<!-- Stat 2: Post-Shock Asymptotic R -->
+					<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+						<div class="text-xs text-slate-400 uppercase tracking-wider mb-1">
+							<span class="lang-zh">震荡后渐近保真度 (Post-Shock R)</span>
+							<span class="lang-en">Post-Shock Fidelity (R)</span>
+						</div>
+						<div id="stat-post-r" class="text-2xl font-black text-emerald-400 mt-1">98.8%</div>
+						<div id="stat-post-desc" class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">完全恢复至全局时间晶体</span>
+							<span class="lang-en">Full return to time crystal</span>
+						</div>
+					</div>
+
+					<!-- Stat 3: Size Scaling Verdict -->
+					<div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+						<div class="text-xs text-slate-400 uppercase tracking-wider mb-1">
+							<span class="lang-zh">尺度效应结论 (Scaling Law)</span>
+							<span class="lang-en">Scaling Behavior</span>
+						</div>
+						<div class="text-sm font-black text-white mt-2 leading-snug">
+							<span class="lang-zh">尺寸增长 · 稳定性稳固</span>
+							<span class="lang-en">Resilience Grows with Scale</span>
+						</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">克服了传统微观时间晶体的退相干瓶颈</span>
+							<span class="lang-en">Avoids decoherence seen in tiny systems</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. EXPLAINER SECTIONS -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-slate-800/80 space-y-10">
+				<!-- Section 4.1: What is a Time Crystal? -->
+				<div>
+					<div class="flex items-center gap-2 mb-2">
+						<span class="text-indigo-400 font-mono text-sm font-bold">01 / CONCEPT</span>
+						<span class="text-slate-600">/</span>
+						<h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">
+							<span class="lang-zh">什么是时间晶体：从空间重复到时间律动</span>
+							<span class="lang-en">What is a Time Crystal: From Space to Time</span>
+						</h3>
+					</div>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+						<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+							<h4 class="font-bold text-indigo-300 mb-1.5 flex items-center gap-1.5">
+								<span>🧊</span>
+								<span class="lang-zh">空间晶体 (Spatial Crystal)</span>
+								<span class="lang-en">Spatial Crystal</span>
+							</h4>
+							<p>
+								<span class="lang-zh">
+									食盐或金刚石等普通晶体，打破的是连续空间平移对称性。原本在空间中均质分布的原子，自发凝固为周期性重复的几何点阵。你移动固定距离，会看到一模一样的原子结构。
+								</span>
+								<span class="lang-en">
+									Everyday crystals like table salt or diamond break continuous spatial translation symmetry. Atoms, initially uniform in liquid or vapor, freeze into regularly repeating spatial lattices. Moving by a fixed distance lands you on an identical atomic unit.
+								</span>
+							</p>
+						</div>
+						<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+							<h4 class="font-bold text-cyan-300 mb-1.5 flex items-center gap-1.5">
+								<span>⏳</span>
+								<span class="lang-zh">时间晶体 (Time Crystal)</span>
+								<span class="lang-en">Time Crystal</span>
+							</h4>
+							<p>
+								<span class="lang-zh">
+									时间晶体打破的则是连续时间平移对称性。系统不仅没有在摩擦中静止于热平衡态，反而自发维持恒定的周期性律动。不同于需严苛极低温与微观自旋的量子时间晶体，本研究在宏观机电设备中实现了纯自主的经典时间晶体。
+								</span>
+								<span class="lang-en">
+									A time crystal breaks continuous time translation symmetry. Instead of sliding into a motionless thermal equilibrium, interacting components self-organize into an enduring temporal periodicity without any external clock. Unlike quantum systems near absolute zero, this works at room temperature in macroscopic mechatronics.
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Section 4.2: Nonreciprocity A-pushes-B Diagram -->
+				<div>
+					<div class="flex items-center gap-2 mb-2">
+						<span class="text-indigo-400 font-mono text-sm font-bold">02 / MECHANISM</span>
+						<span class="text-slate-600">/</span>
+						<h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">
+							<span class="lang-zh">非互易相互作用：A 推 B 不等于 B 推 A</span>
+							<span class="lang-en">Nonreciprocity: A's Push on B ≠ B's Push on A</span>
+						</h3>
+					</div>
+					<p class="text-xs sm:text-sm text-slate-300 mb-4 max-w-3xl leading-relaxed">
+						<span class="lang-zh">
+							牛顿第三定律指出作用力等于反作用力。但在搭载了传感器、微电路与供电电机的机电单胞之间，工程师可以通过前馈电路人为设定不对称的作用逻辑。这种非互易力打破了能量守恒与细致平衡，向机械系统源源不断注入动能。
+						</span>
+						<span class="lang-en">
+							Newton's third law requires that every action have an equal and opposite reaction. But with local sensors, microprocessors, and active motors, mechatronic engineers can deliberately program asymmetric feedback. This nonreciprocal coupling breaks detailed balance, injecting mechanical energy to drive autonomous motion.
+						</span>
+					</p>
+
+					<!-- Interactive A-B Diagram Box -->
+					<div class="p-4 rounded-2xl bg-[#050811] border border-slate-800 font-mono">
+						<div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+							<div class="text-xs text-slate-400">
+								<span class="lang-zh">非互易耦合与牛顿传统对比交互图示</span>
+								<span class="lang-en">Reciprocal vs Nonreciprocal Interactive Force Diagram</span>
+							</div>
+							<div class="flex items-center gap-1.5 text-xs">
+								<button id="dia-btn-rec" type="button" class="py-1 px-3 rounded-lg border border-slate-700 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer">
+									<span class="lang-zh">经典牛顿互易 (F_AB = -F_BA)</span>
+									<span class="lang-en">Newtonian Reciprocal</span>
+								</button>
+								<button id="dia-btn-nonrec" type="button" class="py-1 px-3 rounded-lg bg-indigo-600 text-white font-bold transition active:scale-95 cursor-pointer">
+									<span class="lang-zh">机电非互易 (F_AB ≠ -F_BA)</span>
+									<span class="lang-en">Active Nonreciprocal</span>
+								</button>
+							</div>
+						</div>
+
+						<!-- SVG Schematic Diagram -->
+						<div class="w-full h-44 flex items-center justify-center relative overflow-hidden bg-slate-950/60 rounded-xl border border-slate-800/80">
+							<svg id="nonrec-svg" viewBox="0 0 600 160" class="w-full h-full max-w-xl">
+								<!-- Connecting flexure bar -->
+								<line x1="180" y1="80" x2="420" y2="80" stroke="#334155" stroke-width="6" stroke-dasharray="4 4" />
+
+								<!-- Unit A -->
+								<g id="dia-unit-a" transform="translate(180, 80)">
+									<circle r="34" fill="#1e1b4b" stroke="#6366f1" stroke-width="3" />
+									<text text-anchor="middle" dy="5" fill="#e0e7ff" font-size="14" font-weight="bold">Unit A</text>
+									<text text-anchor="middle" dy="20" fill="#818cf8" font-size="9">Sensor / Actuator</text>
+								</g>
+
+								<!-- Unit B -->
+								<g id="dia-unit-b" transform="translate(420, 80)">
+									<circle r="34" fill="#083344" stroke="#06b6d4" stroke-width="3" />
+									<text text-anchor="middle" dy="5" fill="#cffafe" font-size="14" font-weight="bold">Unit B</text>
+									<text text-anchor="middle" dy="20" fill="#22d3ee" font-size="9">Motor / Link</text>
+								</g>
+
+								<!-- Arrow A to B (top) -->
+								<path id="dia-arrow-ab" d="M 220 50 L 380 50" fill="none" stroke="#6366f1" stroke-width="4" marker-end="url(#arrow-indigo)" />
+								<text id="dia-label-ab" x="300" y="40" fill="#818cf8" font-size="11" text-anchor="middle" font-weight="bold">F_A→B = +1.0 (Strong Push)</text>
+
+								<!-- Arrow B to A (bottom) -->
+								<path id="dia-arrow-ba" d="M 380 110 L 220 110" fill="none" stroke="#f43f5e" stroke-width="2" marker-end="url(#arrow-rose)" />
+								<text id="dia-label-ba" x="300" y="130" fill="#fb7185" font-size="11" text-anchor="middle" font-weight="bold">F_B→A = +0.1 (Asymmetric Drag)</text>
+
+								<!-- SVG Markers -->
+								<defs>
+									<marker id="arrow-indigo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+										<path d="M 0 1 L 10 5 L 0 9 z" fill="#6366f1" />
+									</marker>
+									<marker id="arrow-rose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+										<path d="M 0 1 L 10 5 L 0 9 z" fill="#f43f5e" />
+									</marker>
+									<marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+										<path d="M 0 1 L 10 5 L 0 9 z" fill="#06b6d4" />
+									</marker>
+								</defs>
+							</svg>
+						</div>
+
+						<div id="dia-explanation-text" class="mt-3 text-xs text-indigo-300 leading-relaxed">
+							<span class="lang-zh">
+								当前状态：<strong>非互易模式 (Nonreciprocal)</strong> — 单元 A 测得位移后对 B 施加全力推搡，而 B 对 A 仅反馈微弱阻尼甚至同向推力。系统净做功大于零，循环驱动空间行波与模式粗化。
+							</span>
+							<span class="lang-en">
+								Current: <strong>Nonreciprocal Mode</strong> — Cell A senses position and forcefully drives B, while B feeds back negligible resistance. The closed loop performs net positive work, driving traveling wave cascades.
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Section 4.3: Wave Coarsening in 3 Stages -->
+				<div>
+					<div class="flex items-center gap-2 mb-2">
+						<span class="text-indigo-400 font-mono text-sm font-bold">03 / TRANSITION</span>
+						<span class="text-slate-600">/</span>
+						<h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">
+							<span class="lang-zh">波粗化三步演化曲：微波、吞噬与同拍</span>
+							<span class="lang-en">Three Stages of Wave Coarsening: Ripple to Beat</span>
+						</h3>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+						<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+							<div class="text-amber-400 font-bold uppercase tracking-wider mb-1">
+								<span class="lang-zh">阶段 1 · 局域涟漪起振</span>
+								<span class="lang-en">Stage 1 · Micro-Ripples</span>
+							</div>
+							<div class="text-slate-300 font-sans text-xs leading-relaxed mt-2">
+								<span class="lang-zh">
+									系统刚通电并越过非互易阈值时，各单元的微观噪声触发局部不稳定性，产生短波长、高频率（~30 Hz 附近）、多波峰的高阶空间涟漪（如环上的 Mode 6）。
+								</span>
+								<span class="lang-en">
+									Upon crossing the nonreciprocal threshold, localized noise triggers dynamic instability, sparking short-wavelength, high-frequency ripples with multiple crests (e.g. spatial Mode 6).
+								</span>
+							</div>
+						</div>
+
+						<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+							<div class="text-cyan-400 font-bold uppercase tracking-wider mb-1">
+								<span class="lang-zh">阶段 2 · 非线性碰撞吞噬</span>
+								<span class="lang-en">Stage 2 · Wave Collision</span>
+							</div>
+							<div class="text-slate-300 font-sans text-xs leading-relaxed mt-2">
+								<span class="lang-zh">
+									由于非互易色散关系，不同尺度的波包传播速度各异。波峰相互撞击融合，较短的波包不断被较长、较慢的波浪吞噬（波粗化），波长与振幅持续放大。
+								</span>
+								<span class="lang-en">
+									Due to nonreciprocal dispersion, wave packets travel at differing phase velocities. Crests collide and coalesce: shorter waves are swallowed by wider fronts, progressively coarsening into longer scales.
+								</span>
+							</div>
+						</div>
+
+						<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+							<div class="text-indigo-400 font-bold uppercase tracking-wider mb-1">
+								<span class="lang-zh">阶段 3 · 宏观单拍时间晶体</span>
+								<span class="lang-en">Stage 3 · Global One-Beat</span>
+							</div>
+							<div class="text-slate-300 font-sans text-xs leading-relaxed mt-2">
+								<span class="lang-zh">
+									粗化波长最终触达整个物理系统的边界（波长 λ → 系统尺寸 L）。所有的单元完全被锁入单一周期的集体循环——时间平移对称性彻底打破，形成自维持时间晶体。
+								</span>
+								<span class="lang-en">
+									The coarsening wavelength expands until reaching the boundaries of the physical device (λ → L). All units lock into a shared collective beat: time-translation symmetry is broken.
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Section 4.4: Why It Matters & Future Horizons -->
+				<div>
+					<div class="flex items-center gap-2 mb-2">
+						<span class="text-indigo-400 font-mono text-sm font-bold">04 / APPLICATION</span>
+						<span class="text-slate-600">/</span>
+						<h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">
+							<span class="lang-zh">为何意义重大：去中心化自主材料与仿生机器人</span>
+							<span class="lang-en">Why It Matters: Decentralized Metamaterials & Bio-Robotics</span>
+						</h3>
+					</div>
+					<div class="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+						<p>
+							<span class="lang-zh">
+								<strong>无中央控制器的分布式智能：</strong>传统多机器人系统依赖中央计算机或全局无线同步时钟。一旦主脑掉线，编队即刻瓦解。机电超材料向大自然（如心脏起搏心肌细胞、萤火虫群体、气管纤毛）学习，将时间同步的逻辑直接编译在单元与邻居的物理相互作用中。
+							</span>
+							<span class="lang-en">
+								<strong>Autonomous Intelligence with Zero Central Clock:</strong> Conventional robotic swarms rely on central orchestrators or master Wi-Fi synchronizers that form fragile single points of failure. Mechatronic metamaterials mirror biological collectives (cardiac pacemaker cells, synchronous fireflies, tracheal cilia), encoding coordination directly into local physical forces.
+							</span>
+						</p>
+						<p>
+							<span class="lang-zh">
+								<strong>单材料多功能模式切换：</strong>同一块超材料内部可以拥有多种不同的稳定极限环吸引子。未来研究可通过微弱外部信号在多种运动模式间切换：如从定向蠕动爬行无缝切换为大形变收缩包裹或定向液体泵送，开辟全新的 3D 仿生活体材料与柔性智能外衣。
+							</span>
+							<span class="lang-en">
+								<strong>Multifunctional Motion Profiles in One Material:</strong> A single active metamaterial can support multiple distinct stable limit cycles. Future materials can switch between locomotion modes on demand — shifting from directional peristaltic crawling to shape-morphing contraction or fluid pumping without retooling hardware.
+							</span>
+						</p>
+					</div>
+				</div>
+
+				<!-- Section 4.5: Source Note & Citation -->
+				<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-mono text-slate-400">
+					<div class="text-slate-300 font-bold uppercase tracking-wider mb-1 flex items-center gap-2">
+						<span>📄</span>
+						<span class="lang-zh">原始学术文献出处</span>
+						<span class="lang-en">Primary Academic Citation</span>
+					</div>
+					<p class="leading-relaxed mb-2">
+						J. Veenstra, O. R. Bilal, M. van Hecke, V. Vitelli, & C. Coulais.
+						<em>"Wave coarsening drives time crystallization in mechatronic metamaterials"</em>.
+						<strong>Nature</strong> 634, (2026).
+					</p>
+					<div class="flex items-center gap-2 text-indigo-400">
+						<span>🔗 DOI:</span>
+						<a href="https://doi.org/10.1038/s41586-026-11163-6" target="_blank" rel="noopener noreferrer" class="underline hover:text-indigo-300">
+							https://doi.org/10.1038/s41586-026-11163-6
+						</a>
+					</div>
+				</div>
+			</section>
+
+			<!-- FOOTER SECTION & AI DECLARATION -->
+			<div class="pt-4 text-xs font-mono text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+				<div>
+					<span class="lang-zh">同拍 · ONE BEAT — 机器人时间晶体与机电超材料交互实验室</span>
+					<span class="lang-en">One Beat · The Robotic Time Crystal Lab</span>
+				</div>
+				<div>
+					<span>p1ziyu.com · 2026</span>
+				</div>
+			</div>
+
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-indigo-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本页面由 AI 生成。</span>
+				<span class="lang-en">Generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE SIMULATION & INTERACTIVE ENGINE -->
+	<script is:inline>
+		(() => {
+			function initOneBeat() {
+				const canvas = document.getElementById("honeycomb-canvas");
+				if (!canvas || canvas.dataset.labReady === "true") return;
+				canvas.dataset.labReady = "true";
+
+				const lifecycle = new AbortController();
+				document.addEventListener("astro:before-swap", () => lifecycle.abort(), { once: true });
+
+
+				// ==========================================
+				// 1. HONEYCOMB SIMULATION (37 ACTIVE UNITS)
+				// ==========================================
+				// Build 37 hex grid nodes (radius <= 3)
+				const hexCoords = [];
+				for (let q = -3; q <= 3; q++) {
+					for (let r = -3; r <= 3; r++) {
+						if (Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r)) <= 3) {
+							// Axial coordinates to cartesian
+							const x = Math.sqrt(3) * (q + r / 2.0);
+							const y = 1.5 * r;
+							const dist = Math.max(Math.abs(q), Math.abs(r), Math.abs(q + r));
+							hexCoords.push({ q, r, x, y, dist });
+						}
+					}
+				}
+				// Sort by distance from center so inner layers come first (12 units, 24 units, 37 units)
+				hexCoords.sort((a, b) => a.dist - b.dist || Math.hypot(a.x, a.y) - Math.hypot(b.x, b.y));
+
+				const TOTAL_UNITS = 37;
+				let activeUnitCount = 37; // toggled between 12, 24, 37
+
+				// Adjacency for the 37 nodes
+				const hexAdj = Array.from({ length: TOTAL_UNITS }, () => []);
+				for (let i = 0; i < TOTAL_UNITS; i++) {
+					for (let j = 0; j < TOTAL_UNITS; j++) {
+						if (i !== j) {
+							const dx = hexCoords[i].x - hexCoords[j].x;
+							const dy = hexCoords[i].y - hexCoords[j].y;
+							if (Math.abs(Math.hypot(dx, dy) - Math.sqrt(3)) < 0.1) {
+								hexAdj[i].push(j);
+							}
+						}
+					}
+				}
+
+				// State for Honeycomb
+				const phases = new Float64Array(TOTAL_UNITS);
+				const intrinsicFrequencies = new Float64Array(TOTAL_UNITS);
+				const pinPhases = new Float64Array(TOTAL_UNITS);
+				for (let i = 0; i < TOTAL_UNITS; i++) {
+					phases[i] = Math.random() * Math.PI * 2;
+					intrinsicFrequencies[i] = 2.0 + 0.6 * Math.sin(i * 1.7 + 0.8);
+					pinPhases[i] = (i * 1.57) % (Math.PI * 2);
+				}
+
+				let hcRunning = true;
+				let hcEta = 0.85; // nonreciprocity
+				let hcK = 1.20; // coupling
+				let hcNoise = 0.05; // noise
+				const hcEtaThreshold = 0.40;
+
+				// Sparkline history of R
+				const rHistory = new Array(120).fill(0.98);
+
+				// Canvas contexts
+				const hcCtx = canvas.getContext("2d");
+				const sparkCanvas = document.getElementById("hc-sparkline-canvas");
+				const sparkCtx = sparkCanvas ? sparkCanvas.getContext("2d") : null;
+
+				// DOM readouts
+				const rValEl = document.getElementById("hc-r-val");
+				const stateBadgeEl = document.getElementById("hc-state-badge");
+				const lambdaValEl = document.getElementById("hc-lambda-val");
+				const lambdaDescEl = document.getElementById("hc-lambda-desc");
+				const lambdaBarEl = document.getElementById("hc-lambda-bar");
+				const alertBanner = document.getElementById("honeycomb-alert");
+
+				// Sparkline update
+				function updateSparkline() {
+					if (!sparkCtx || !sparkCanvas) return;
+					const w = sparkCanvas.width;
+					const h = sparkCanvas.height;
+					sparkCtx.clearRect(0, 0, w, h);
+
+					// Draw grid lines
+					sparkCtx.strokeStyle = "rgba(51, 65, 85, 0.4)";
+					sparkCtx.lineWidth = 1;
+					sparkCtx.beginPath();
+					sparkCtx.moveTo(0, h * 0.2);
+					sparkCtx.lineTo(w, h * 0.2);
+					sparkCtx.moveTo(0, h * 0.8);
+					sparkCtx.lineTo(w, h * 0.8);
+					sparkCtx.stroke();
+
+					// Draw line of R history
+					sparkCtx.strokeStyle = "#818cf8";
+					sparkCtx.lineWidth = 2;
+					sparkCtx.beginPath();
+					const step = w / (rHistory.length - 1);
+					for (let i = 0; i < rHistory.length; i++) {
+						const r = rHistory[i];
+						const y = h - r * (h - 8) - 4;
+						const x = i * step;
+						if (i === 0) sparkCtx.moveTo(x, y);
+						else sparkCtx.lineTo(x, y);
+					}
+					sparkCtx.stroke();
+
+					// Fill area
+					sparkCtx.lineTo(w, h);
+					sparkCtx.lineTo(0, h);
+					sparkCtx.closePath();
+					sparkCtx.fillStyle = "rgba(99, 102, 241, 0.15)";
+					sparkCtx.fill();
+				}
+
+				// Phase color mapping
+				function getPhaseColor(phi) {
+					// phi in [0, 2pi) -> hue in degrees
+					const norm = ((phi % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+					const h = (norm / (Math.PI * 2)) * 360;
+					return `hsl(${h}, 85%, 62%)`;
+				}
+
+				// Honeycomb animation loop
+				let lastTime = performance.now();
+				function stepHoneycomb(now) {
+					if (!hcRunning) {
+						lastTime = now;
+						requestAnimationFrame(stepHoneycomb);
+						return;
+					}
+					const dt = Math.min(0.06, (now - lastTime) / 1000);
+					lastTime = now;
+
+					// Physics integration step
+					const dPhases = new Float64Array(activeUnitCount);
+					const activeDrive = Math.max(0, hcEta - hcEtaThreshold) / (1 - hcEtaThreshold);
+
+					for (let i = 0; i < activeUnitCount; i++) {
+						if (hcEta < hcEtaThreshold) {
+							// Below threshold: local pinning + frequency spread -> patchy
+							const pin = (1.0 - hcEta / hcEtaThreshold) * 1.8;
+							dPhases[i] = 0.4 * intrinsicFrequencies[i] - pin * Math.sin(phases[i] - pinPhases[i]);
+						} else {
+							// Above threshold: active nonreciprocal self-oscillation (~30 Hz)
+							dPhases[i] = 3.2 + 0.08 * intrinsicFrequencies[i];
+						}
+
+						// Neighbor coupling
+						const nbrs = hexAdj[i].filter(j => j < activeUnitCount);
+						for (const j of nbrs) {
+							const dphi = phases[j] - phases[i];
+							if (hcEta < hcEtaThreshold) {
+								dPhases[i] += (hcK * 0.22) * Math.sin(dphi);
+							} else {
+								// Nonreciprocal coarsening acceleration
+								const boost = 1.0 + 2.8 * Math.pow(activeDrive, 1.2);
+								dPhases[i] += (hcK * boost / nbrs.length) * Math.sin(dphi);
+							}
+						}
+
+						// Environmental noise
+						dPhases[i] += hcNoise * (Math.random() - 0.5) * 5;
+					}
+
+					// Apply updates and compute synchrony R
+					let sumCos = 0;
+					let sumSin = 0;
+					let totalNeighborCoherence = 0;
+					let edgeCount = 0;
+
+					for (let i = 0; i < activeUnitCount; i++) {
+						phases[i] += dPhases[i] * dt;
+						sumCos += Math.cos(phases[i]);
+						sumSin += Math.sin(phases[i]);
+
+						// Compute local spatial correlation for wavelength estimate
+						const nbrs = hexAdj[i].filter(j => j < activeUnitCount);
+						for (const j of nbrs) {
+							if (i < j) {
+								totalNeighborCoherence += Math.cos(phases[i] - phases[j]);
+								edgeCount++;
+							}
+						}
+					}
+
+					const R = Math.hypot(sumCos, sumSin) / activeUnitCount;
+					rHistory.shift();
+					rHistory.push(R);
+
+					// Estimated dominant wavelength
+					const meanCoherence = edgeCount > 0 ? totalNeighborCoherence / edgeCount : 1;
+					// When coherence is ~1, lambda -> infinity
+					// When coherence is ~0 or negative, lambda is small (~ 1.5 a)
+					let lambdaTextZh = "λ → ∞ (全局同步)";
+					let lambdaTextEn = "λ → ∞ (Global Sync)";
+					let lambdaDescZh = "系统级同相搏动（粗化终点）";
+					let lambdaDescEn = "Lattice-scale uniform pulse (Coarsened)";
+					let lambdaPct = 100;
+
+					if (R < 0.45 || meanCoherence < 0.2) {
+						lambdaTextZh = "λ ≈ 1.3 a (微观涟漪)";
+						lambdaTextEn = "λ ≈ 1.3 a (Micro-Ripples)";
+						lambdaDescZh = "斑块状混乱与短波扰动";
+						lambdaDescEn = "Patchy disorder & short waves";
+						lambdaPct = 20;
+					} else if (R < 0.85 || meanCoherence < 0.75) {
+						lambdaTextZh = "λ ≈ 3.8 a (波粗化中)";
+						lambdaTextEn = "λ ≈ 3.8 a (Coarsening Waves)";
+						lambdaDescZh = "短波碰撞合并为长波前";
+						lambdaDescEn = "Short waves merging into broad fronts";
+						lambdaPct = 60;
+					}
+
+					// Update DOM readouts
+					if (rValEl) rValEl.textContent = R.toFixed(3);
+					if (lambdaValEl) {
+						lambdaValEl.innerHTML = `<span class="lang-zh">${lambdaTextZh}</span><span class="lang-en">${lambdaTextEn}</span>`;
+					}
+					if (lambdaDescEl) {
+						lambdaDescEl.innerHTML = `<span class="lang-zh">${lambdaDescZh}</span><span class="lang-en">${lambdaDescEn}</span>`;
+					}
+					if (lambdaBarEl) lambdaBarEl.style.width = `${lambdaPct}%`;
+
+					if (stateBadgeEl) {
+						if (R > 0.90) {
+							stateBadgeEl.className = "text-indigo-400 font-bold";
+							stateBadgeEl.innerHTML = `<span class="lang-zh">时间晶体全局同拍</span><span class="lang-en">Time Crystal Sync</span>`;
+						} else if (R > 0.60) {
+							stateBadgeEl.className = "text-cyan-400 font-bold";
+							stateBadgeEl.innerHTML = `<span class="lang-zh">波粗化长波合并</span><span class="lang-en">Wave Coarsening</span>`;
+						} else {
+							stateBadgeEl.className = "text-amber-400 font-bold";
+							stateBadgeEl.innerHTML = `<span class="lang-zh">斑块状混沌无序</span><span class="lang-en">Patchy Disorder</span>`;
+						}
+					}
+
+					updateSparkline();
+
+					// Render Honeycomb onto canvas
+					const cw = canvas.width;
+					const ch = canvas.height;
+					hcCtx.clearRect(0, 0, cw, ch);
+
+					const centerX = cw / 2;
+					const centerY = ch / 2;
+					const scale = Math.min(cw, ch) / 10.5;
+
+					// 1. Draw elastic links
+					hcCtx.lineWidth = 3.5;
+					for (let i = 0; i < activeUnitCount; i++) {
+						const xi = centerX + hexCoords[i].x * scale;
+						const yi = centerY + hexCoords[i].y * scale;
+						const nbrs = hexAdj[i].filter(j => j < activeUnitCount);
+						for (const j of nbrs) {
+							if (i < j) {
+								const xj = centerX + hexCoords[j].x * scale;
+								const yj = centerY + hexCoords[j].y * scale;
+								const phaseDiff = Math.abs(Math.sin((phases[i] - phases[j]) / 2));
+								// When synchronized (diff=0), link glows indigo; when in opposition, amber/red
+								hcCtx.strokeStyle = `rgba(${Math.round(99 + phaseDiff * 140)}, ${Math.round(102 - phaseDiff * 60)}, ${Math.round(241 - phaseDiff * 100)}, 0.45)`;
+								hcCtx.beginPath();
+								hcCtx.moveTo(xi, yi);
+								hcCtx.lineTo(xj, yj);
+								hcCtx.stroke();
+							}
+						}
+					}
+
+					// 2. Draw nodes (active robotic units)
+					for (let i = 0; i < activeUnitCount; i++) {
+						const x = centerX + hexCoords[i].x * scale;
+						const y = centerY + hexCoords[i].y * scale;
+						const phi = phases[i];
+						const color = getPhaseColor(phi);
+
+						// Node breathing pulse
+						const pulse = 1.0 + 0.18 * Math.cos(phi);
+						const baseRadius = 15;
+						const radius = baseRadius * pulse;
+
+						// Outer subtle glow halo
+						hcCtx.fillStyle = color;
+						hcCtx.globalAlpha = 0.22;
+						hcCtx.beginPath();
+						hcCtx.arc(x, y, radius * 1.45, 0, Math.PI * 2);
+						hcCtx.fill();
+						hcCtx.globalAlpha = 1.0;
+
+						// Node body
+						hcCtx.fillStyle = color;
+						hcCtx.beginPath();
+						hcCtx.arc(x, y, radius, 0, Math.PI * 2);
+						hcCtx.fill();
+
+						// Inner robotic actuator ring & core
+						hcCtx.fillStyle = "#070b14";
+						hcCtx.beginPath();
+						hcCtx.arc(x, y, radius * 0.55, 0, Math.PI * 2);
+						hcCtx.fill();
+
+						// Phase pointer needle
+						hcCtx.strokeStyle = "#ffffff";
+						hcCtx.lineWidth = 2;
+						hcCtx.beginPath();
+						hcCtx.moveTo(x, y);
+						hcCtx.lineTo(x + Math.cos(phi) * (radius * 0.85), y + Math.sin(phi) * (radius * 0.85));
+						hcCtx.stroke();
+
+						// Cell index number
+						hcCtx.fillStyle = "rgba(255, 255, 255, 0.75)";
+						hcCtx.font = "9px monospace";
+						hcCtx.textAlign = "center";
+						hcCtx.textBaseline = "middle";
+						hcCtx.fillText(`${i + 1}`, x, y);
+					}
+
+					requestAnimationFrame(stepHoneycomb);
+				}
+
+				// Honeycomb UI Controls
+				const btnPlay = document.getElementById("hc-btn-play");
+				const playIcon = document.getElementById("hc-play-icon");
+				const playText = document.getElementById("hc-play-text");
+				const btnPoke = document.getElementById("hc-btn-poke");
+				const btnReset = document.getElementById("hc-btn-reset");
+
+				const sliderEta = document.getElementById("hc-slider-eta");
+				const sliderK = document.getElementById("hc-slider-k");
+				const sliderNoise = document.getElementById("hc-slider-noise");
+				const valEta = document.getElementById("hc-val-eta");
+				const valK = document.getElementById("hc-val-k");
+				const valNoise = document.getElementById("hc-val-noise");
+
+				if (btnPlay) {
+					btnPlay.addEventListener("click", () => {
+						hcRunning = !hcRunning;
+						if (playIcon) playIcon.textContent = hcRunning ? "⏸" : "▶";
+						if (playText) {
+							playText.innerHTML = hcRunning
+								? `<span class="lang-zh">暂停</span><span class="lang-en">Pause</span>`
+								: `<span class="lang-zh">播放</span><span class="lang-en">Play</span>`;
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				function pokePatch() {
+					// Randomize a patch of ~8 units
+					const centerIdx = Math.floor(Math.random() * activeUnitCount);
+					const patch = [centerIdx, ...hexAdj[centerIdx].filter(j => j < activeUnitCount)];
+					for (const idx of patch) {
+						phases[idx] = Math.random() * Math.PI * 2;
+					}
+					if (alertBanner) {
+						alertBanner.style.opacity = "1";
+						setTimeout(() => { alertBanner.style.opacity = "0"; }, 2000);
+					}
+				}
+
+				if (btnPoke) {
+					btnPoke.addEventListener("click", pokePatch, { signal: lifecycle.signal });
+				}
+
+				if (btnReset) {
+					btnReset.addEventListener("click", () => {
+						for (let i = 0; i < TOTAL_UNITS; i++) {
+							phases[i] = Math.random() * Math.PI * 2;
+						}
+						rHistory.fill(0.3);
+					}, { signal: lifecycle.signal });
+				}
+
+				// Click on canvas to poke clicked unit
+				canvas.addEventListener("click", (e) => {
+					const rect = canvas.getBoundingClientRect();
+					const cw = canvas.width;
+					const ch = canvas.height;
+					const clickX = ((e.clientX - rect.left) / rect.width) * cw;
+					const clickY = ((e.clientY - rect.top) / rect.height) * ch;
+
+					const centerX = cw / 2;
+					const centerY = ch / 2;
+					const scale = Math.min(cw, ch) / 10.5;
+
+					let hitIdx = -1;
+					let minDist = 35;
+					for (let i = 0; i < activeUnitCount; i++) {
+						const x = centerX + hexCoords[i].x * scale;
+						const y = centerY + hexCoords[i].y * scale;
+						const d = Math.hypot(clickX - x, clickY - y);
+						if (d < minDist) {
+							minDist = d;
+							hitIdx = i;
+						}
+					}
+					if (hitIdx !== -1) {
+						phases[hitIdx] = (phases[hitIdx] + Math.PI) % (Math.PI * 2);
+						const nbrs = hexAdj[hitIdx].filter(j => j < activeUnitCount);
+						for (const n of nbrs) {
+							phases[n] = (phases[n] + Math.random() * Math.PI) % (Math.PI * 2);
+						}
+					}
+				}, { signal: lifecycle.signal });
+
+				if (sliderEta) {
+					sliderEta.addEventListener("input", (e) => {
+						hcEta = parseFloat(e.target.value);
+						if (valEta) valEta.textContent = hcEta.toFixed(2);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (sliderK) {
+					sliderK.addEventListener("input", (e) => {
+						hcK = parseFloat(e.target.value);
+						if (valK) valK.textContent = hcK.toFixed(2);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (sliderNoise) {
+					sliderNoise.addEventListener("input", (e) => {
+						hcNoise = parseFloat(e.target.value);
+						if (valNoise) valNoise.textContent = hcNoise.toFixed(2);
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 2. RING LAB SIMULATION (24 MOTOR UNITS)
+				// ==========================================
+				const ringCanvas = document.getElementById("ring-canvas");
+				const ringCtx = ringCanvas ? ringCanvas.getContext("2d") : null;
+				const RING_UNITS = 24;
+
+				let ringTime = 0;
+				let ringSpeed = 1.0;
+				let ringCoarsenStartTime = performance.now();
+
+				// Mode amplitudes: A6 starts at 1.0, decays to A4, A2, and finally locks to Mode 1 (One Beat)
+				let ampMode6 = 1.0;
+				let ampMode4 = 0.05;
+				let ampMode2 = 0.02;
+				let ampMode1 = 0.02;
+
+				const ringModeVal = document.getElementById("ring-mode-val");
+				const ringModeState = document.getElementById("ring-mode-state");
+				const ringModeDesc = document.getElementById("ring-mode-desc");
+				const barM1 = document.getElementById("ring-bar-m1");
+				const barM2 = document.getElementById("ring-bar-m2");
+				const barM4 = document.getElementById("ring-bar-m4");
+				const barM6 = document.getElementById("ring-bar-m6");
+				const pctM1 = document.getElementById("ring-pct-m1");
+				const pctM2 = document.getElementById("ring-pct-m2");
+				const pctM4 = document.getElementById("ring-pct-m4");
+				const pctM6 = document.getElementById("ring-pct-m6");
+				const coarsenTimer = document.getElementById("ring-coarsen-timer");
+				const btnRestartRing = document.getElementById("ring-btn-restart");
+				const btnSpeedRing = document.getElementById("ring-btn-speed");
+				const speedTextRing = document.getElementById("ring-speed-text");
+
+				function resetRingCoarsening() {
+					ampMode6 = 1.0;
+					ampMode4 = 0.08;
+					ampMode2 = 0.03;
+					ampMode1 = 0.02;
+					ringCoarsenStartTime = performance.now();
+				}
+
+				if (btnRestartRing) {
+					btnRestartRing.addEventListener("click", resetRingCoarsening, { signal: lifecycle.signal });
+				}
+
+				if (btnSpeedRing) {
+					btnSpeedRing.addEventListener("click", () => {
+						if (ringSpeed === 1.0) ringSpeed = 2.0;
+						else if (ringSpeed === 2.0) ringSpeed = 0.5;
+						else ringSpeed = 1.0;
+						if (speedTextRing) speedTextRing.textContent = `${ringSpeed.toFixed(1)}×`;
+					}, { signal: lifecycle.signal });
+				}
+
+				let lastRingFrameTime = performance.now();
+				function stepRing(now) {
+					if (!ringCtx || !ringCanvas) return;
+					const dt = Math.min(0.06, (now - lastRingFrameTime) / 1000) * ringSpeed;
+					lastRingFrameTime = now;
+					ringTime += dt;
+
+					// Coarsening dynamics (energy transfers from Mode 6 -> 4 -> 2 -> 1)
+					const elapsedSec = (now - ringCoarsenStartTime) / 1000 * ringSpeed;
+					if (coarsenTimer) coarsenTimer.textContent = `${elapsedSec.toFixed(1)} s`;
+
+					// Mode 6 decays
+					ampMode6 = Math.max(0.005, 1.0 * Math.exp(-elapsedSec / 2.8));
+					// Mode 4 emerges then decays
+					ampMode4 = Math.max(0.01, 1.4 * (elapsedSec / 2.5) * Math.exp(-elapsedSec / 3.5));
+					// Mode 2 emerges next
+					ampMode2 = Math.max(0.01, 1.3 * Math.pow(elapsedSec / 4.5, 2) * Math.exp(-elapsedSec / 5.2));
+					// Mode 1 (collective beat) grows and saturates as the final attractor
+					ampMode1 = Math.min(1.0, 0.02 + 0.98 * (1.0 - Math.exp(-elapsedSec / 4.8)));
+
+					const totalAmp = ampMode6 + ampMode4 + ampMode2 + ampMode1;
+					const p6 = Math.round((ampMode6 / totalAmp) * 100);
+					const p4 = Math.round((ampMode4 / totalAmp) * 100);
+					const p2 = Math.round((ampMode2 / totalAmp) * 100);
+					const p1 = Math.max(0, 100 - p6 - p4 - p2);
+
+					if (barM1) barM1.style.width = `${p1}%`;
+					if (barM2) barM2.style.width = `${p2}%`;
+					if (barM4) barM4.style.width = `${p4}%`;
+					if (barM6) barM6.style.width = `${p6}%`;
+					if (pctM1) pctM1.textContent = `${p1}%`;
+					if (pctM2) pctM2.textContent = `${p2}%`;
+					if (pctM4) pctM4.textContent = `${p4}%`;
+					if (pctM6) pctM6.textContent = `${p6}%`;
+
+					// Update Dominant Mode description
+					if (p1 > 70) {
+						if (ringModeVal) ringModeVal.textContent = "Mode 1";
+						if (ringModeState) {
+							ringModeState.innerHTML = `<span class="lang-zh">宏观单拍集体循环 (One Beat)</span><span class="lang-en">Collective One-Beat Cycle</span>`;
+						}
+						if (ringModeDesc) {
+							ringModeDesc.innerHTML = `<span class="lang-zh">短波涟漪已被完全吞噬。24 个单元以统一节奏起伏，环身周期性整体膨胀与收缩。</span><span class="lang-en">Short ripples fully coarsened. All 24 units oscillate in unison, breathing cyclically.</span>`;
+						}
+					} else if (p2 > p4 && p2 > p6) {
+						if (ringModeVal) ringModeVal.textContent = "Mode 2";
+						if (ringModeState) {
+							ringModeState.innerHTML = `<span class="lang-zh">双峰椭圆波动过渡</span><span class="lang-en">Mode-2 Elliptic Pulse</span>`;
+						}
+						if (ringModeDesc) {
+							ringModeDesc.innerHTML = `<span class="lang-zh">4 波模式融合为双峰椭圆摆动，波长持续扩展逼近系统全尺寸。</span><span class="lang-en">Mode-4 has merged into a dual-lobe pulse, wavelength expanding across ring.</span>`;
+						}
+					} else if (p4 > p6) {
+						if (ringModeVal) ringModeVal.textContent = "Mode 4";
+						if (ringModeState) {
+							ringModeState.innerHTML = `<span class="lang-zh">四峰长波合并阶</span><span class="lang-en">Mode-4 Wave Merging</span>`;
+						}
+						if (ringModeDesc) {
+							ringModeDesc.innerHTML = `<span class="lang-zh">高阶短波相互碰撞吞噬，涟漪波长明显拉长，进入第二级粗化。</span><span class="lang-en">Short ripples colliding and merging into broader wave peaks.</span>`;
+						}
+					} else {
+						if (ringModeVal) ringModeVal.textContent = "Mode 6";
+						if (ringModeState) {
+							ringModeState.innerHTML = `<span class="lang-zh">高频短波起振 (High Ripples)</span><span class="lang-en">Initial High Ripples</span>`;
+						}
+						if (ringModeDesc) {
+							ringModeDesc.innerHTML = `<span class="lang-zh">初始扰动激发 6 峰密集微波，非互易能量正在向低阶模式流动。</span><span class="lang-en">6 distinct wave ripples excited around ring; coarsening cascade starting.</span>`;
+						}
+					}
+
+					// Render the 24-unit motorized ring
+					const rw = ringCanvas.width;
+					const rh = ringCanvas.height;
+					ringCtx.clearRect(0, 0, rw, rh);
+
+					const cx = rw / 2;
+					const cy = rh / 2;
+					const baseR = Math.min(rw, rh) * 0.36;
+
+					// Compute unit radial positions
+					const unitPositions = [];
+					for (let i = 0; i < RING_UNITS; i++) {
+						const phi = (i / RING_UNITS) * Math.PI * 2;
+						// Radial displacement sum of modes
+						const disp6 = ampMode6 * Math.sin(6 * phi - ringTime * 8);
+						const disp4 = ampMode4 * Math.sin(4 * phi - ringTime * 5);
+						const disp2 = ampMode2 * Math.sin(2 * phi - ringTime * 3);
+						const disp1 = ampMode1 * Math.sin(1 * phi - ringTime * 2);
+
+						const totalDisp = (disp6 * 0.35 + disp4 * 0.45 + disp2 * 0.6 + disp1 * 0.8) * 24;
+						const r = baseR + totalDisp;
+						const x = cx + r * Math.cos(phi);
+						const y = cy + r * Math.sin(phi);
+						unitPositions.push({ x, y, phi, disp: totalDisp });
+					}
+
+					// Draw connecting elastic ring springs
+					ringCtx.strokeStyle = "rgba(6, 182, 212, 0.45)";
+					ringCtx.lineWidth = 4;
+					ringCtx.beginPath();
+					for (let i = 0; i <= RING_UNITS; i++) {
+						const pos = unitPositions[i % RING_UNITS];
+						if (i === 0) ringCtx.moveTo(pos.x, pos.y);
+						else ringCtx.lineTo(pos.x, pos.y);
+					}
+					ringCtx.stroke();
+
+					// Draw central reference ring
+					ringCtx.strokeStyle = "rgba(51, 65, 85, 0.25)";
+					ringCtx.lineWidth = 1;
+					ringCtx.setLineDash([4, 4]);
+					ringCtx.beginPath();
+					ringCtx.arc(cx, cy, baseR, 0, Math.PI * 2);
+					ringCtx.stroke();
+					ringCtx.setLineDash([]);
+
+					// Draw 24 motorized units
+					for (let i = 0; i < RING_UNITS; i++) {
+						const pos = unitPositions[i];
+						const normDisp = pos.disp / 24; // in [-1, 1]
+						// Color by displacement: cyan for expansion (+), purple/rose for contraction (-)
+						const hue = normDisp > 0 ? 185 + normDisp * 25 : 270 - normDisp * 40;
+						const color = `hsl(${hue}, 85%, 60%)`;
+
+						// Unit node
+						ringCtx.fillStyle = color;
+						ringCtx.beginPath();
+						ringCtx.arc(pos.x, pos.y, 8.5, 0, Math.PI * 2);
+						ringCtx.fill();
+
+						// Inner core
+						ringCtx.fillStyle = "#070b14";
+						ringCtx.beginPath();
+						ringCtx.arc(pos.x, pos.y, 4, 0, Math.PI * 2);
+						ringCtx.fill();
+					}
+
+					// Center emblem: "ONE BEAT"
+					ringCtx.fillStyle = "rgba(255, 255, 255, 0.9)";
+					ringCtx.font = "bold 13px monospace";
+					ringCtx.textAlign = "center";
+					ringCtx.textBaseline = "middle";
+					ringCtx.fillText("ONE BEAT", cx, cy - 6);
+					ringCtx.fillStyle = "#06b6d4";
+					ringCtx.font = "10px monospace";
+					ringCtx.fillText("24 ACTIVE UNITS", cx, cy + 10);
+
+					requestAnimationFrame(stepRing);
+				}
+
+				// ==========================================
+				// 3. DISTURBANCE & ROBUSTNESS TEST
+				// ==========================================
+				const btnShake = document.getElementById("btn-shake-test");
+				const size12Btn = document.getElementById("size-btn-12");
+				const size24Btn = document.getElementById("size-btn-24");
+				const size37Btn = document.getElementById("size-btn-37");
+
+				const statRecoveryTime = document.getElementById("stat-recovery-time");
+				const statRecoveryDesc = document.getElementById("stat-recovery-desc");
+				const statPostR = document.getElementById("stat-post-r");
+				const statPostDesc = document.getElementById("stat-post-desc");
+
+				function setLatticeSize(size) {
+					activeUnitCount = size;
+					// Update button styles
+					[size12Btn, size24Btn, size37Btn].forEach(b => {
+						if (b) {
+							b.className = "px-2.5 py-1 rounded-lg text-slate-400 hover:text-white transition active:scale-95 cursor-pointer";
+						}
+					});
+					const activeBtn = size === 12 ? size12Btn : size === 24 ? size24Btn : size37Btn;
+					if (activeBtn) {
+						activeBtn.className = "px-2.5 py-1 rounded-lg bg-fuchsia-600 text-white font-bold transition active:scale-95 cursor-pointer";
+					}
+
+					// Update stats for the size
+					if (size === 12) {
+						if (statRecoveryTime) statRecoveryTime.textContent = "1.85 s";
+						if (statRecoveryDesc) {
+							statRecoveryDesc.innerHTML = `<span class="lang-zh">12 单元：边界损耗大，恢复滞后</span><span class="lang-en">12 units: High boundary loss, sluggish</span>`;
+						}
+						if (statPostR) statPostR.textContent = "84.2%";
+						if (statPostDesc) {
+							statPostDesc.innerHTML = `<span class="lang-zh">受限于边界噪声，同拍度不完全</span><span class="lang-en">Edge noise limits complete synchrony</span>`;
+						}
+					} else if (size === 24) {
+						if (statRecoveryTime) statRecoveryTime.textContent = "1.15 s";
+						if (statRecoveryDesc) {
+							statRecoveryDesc.innerHTML = `<span class="lang-zh">24 单元：中等尺度平稳恢复</span><span class="lang-en">24 units: Moderate steady healing</span>`;
+						}
+						if (statPostR) statPostR.textContent = "93.6%";
+						if (statPostDesc) {
+							statPostDesc.innerHTML = `<span class="lang-zh">较强体态粗化，接近全局锁定</span><span class="lang-en">Strong bulk coarsening, near lock</span>`;
+						}
+					} else {
+						if (statRecoveryTime) statRecoveryTime.textContent = "0.82 s";
+						if (statRecoveryDesc) {
+							statRecoveryDesc.innerHTML = `<span class="lang-zh">37 单元：强波粗化瞬时愈合</span><span class="lang-en">37 units: Rapid bulk healing</span>`;
+						}
+						if (statPostR) statPostR.textContent = "98.8%";
+						if (statPostDesc) {
+							statPostDesc.innerHTML = `<span class="lang-zh">完全恢复至全局时间晶体</span><span class="lang-en">Full return to time crystal</span>`;
+						}
+					}
+				}
+
+				if (size12Btn) size12Btn.addEventListener("click", () => setLatticeSize(12), { signal: lifecycle.signal });
+				if (size24Btn) size24Btn.addEventListener("click", () => setLatticeSize(24), { signal: lifecycle.signal });
+				if (size37Btn) size37Btn.addEventListener("click", () => setLatticeSize(37), { signal: lifecycle.signal });
+
+				if (btnShake) {
+					btnShake.addEventListener("click", () => {
+						// Randomize ALL phases in current lattice
+						for (let i = 0; i < activeUnitCount; i++) {
+							phases[i] = (phases[i] + (Math.random() - 0.5) * Math.PI * 2.5) % (Math.PI * 2);
+						}
+						// Dip R history
+						const dipVal = activeUnitCount === 12 ? 0.22 : activeUnitCount === 24 ? 0.31 : 0.38;
+						rHistory[rHistory.length - 1] = dipVal;
+						rHistory[rHistory.length - 2] = dipVal + 0.05;
+
+						if (alertBanner) {
+							alertBanner.style.opacity = "1";
+							setTimeout(() => { alertBanner.style.opacity = "0"; }, 2500);
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 4. NONRECIPROCAL A-B INTERACTIVE DIAGRAM
+				// ==========================================
+				const diaBtnRec = document.getElementById("dia-btn-rec");
+				const diaBtnNonrec = document.getElementById("dia-btn-nonrec");
+				const diaLabelAb = document.getElementById("dia-label-ab");
+				const diaLabelBa = document.getElementById("dia-label-ba");
+				const diaArrowBa = document.getElementById("dia-arrow-ba");
+				const diaExplanation = document.getElementById("dia-explanation-text");
+
+				function setDiagramMode(mode) {
+					if (mode === "reciprocal") {
+						diaBtnRec.className = "py-1 px-3 rounded-lg bg-indigo-600 text-white font-bold transition active:scale-95 cursor-pointer";
+						diaBtnNonrec.className = "py-1 px-3 rounded-lg border border-slate-700 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer";
+
+						if (diaLabelAb) diaLabelAb.textContent = "F_A→B = +1.0 (Action)";
+						if (diaLabelBa) {
+							diaLabelBa.textContent = "F_B→A = -1.0 (Equal Reaction)";
+							diaLabelBa.setAttribute("fill", "#06b6d4");
+						}
+						if (diaArrowBa) {
+							diaArrowBa.setAttribute("stroke-width", "4");
+							diaArrowBa.setAttribute("stroke", "#06b6d4");
+							diaArrowBa.setAttribute("marker-end", "url(#arrow-cyan)");
+						}
+						if (diaExplanation) {
+							diaExplanation.innerHTML = `<span class="lang-zh">当前状态：<strong>经典牛顿互易 (Reciprocal)</strong> — 作用力与反作用力大小相等、方向相反。能量守恒，无内生自驱力，系统在阻尼下迅速归于死寂。</span><span class="lang-en">Current: <strong>Newtonian Reciprocal</strong> — Action equals reaction. Energy is conserved; oscillations decay into quiet thermodynamic equilibrium.</span>`;
+						}
+					} else {
+						diaBtnNonrec.className = "py-1 px-3 rounded-lg bg-indigo-600 text-white font-bold transition active:scale-95 cursor-pointer";
+						diaBtnRec.className = "py-1 px-3 rounded-lg border border-slate-700 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer";
+
+						if (diaLabelAb) diaLabelAb.textContent = "F_A→B = +1.0 (Strong Push)";
+						if (diaLabelBa) {
+							diaLabelBa.textContent = "F_B→A = +0.1 (Asymmetric Drag)";
+							diaLabelBa.setAttribute("fill", "#fb7185");
+						}
+						if (diaArrowBa) {
+							diaArrowBa.setAttribute("stroke-width", "2");
+							diaArrowBa.setAttribute("stroke", "#f43f5e");
+							diaArrowBa.setAttribute("marker-end", "url(#arrow-rose)");
+						}
+						if (diaExplanation) {
+							diaExplanation.innerHTML = `<span class="lang-zh">当前状态：<strong>机电非互易 (Nonreciprocal)</strong> — 单元 A 测得位移后对 B 施加全力推搡，而 B 对 A 仅反馈微弱阻尼甚至同向推力。系统净做功大于零，循环驱动空间行波与模式粗化。</span><span class="lang-en">Current: <strong>Active Nonreciprocal</strong> — Cell A senses position and forcefully drives B, while B feeds back negligible resistance. The closed loop performs net positive work, driving traveling wave cascades.</span>`;
+						}
+					}
+				}
+
+				if (diaBtnRec) diaBtnRec.addEventListener("click", () => setDiagramMode("reciprocal"), { signal: lifecycle.signal });
+				if (diaBtnNonrec) diaBtnNonrec.addEventListener("click", () => setDiagramMode("nonreciprocal"), { signal: lifecycle.signal });
+
+				// Resize handler for crisp Canvas resolution
+				function resizeCanvases() {
+					const dpr = window.devicePixelRatio || 1;
+					if (canvas) {
+						const rect = canvas.getBoundingClientRect();
+						canvas.width = Math.round(rect.width * dpr);
+						canvas.height = Math.round(rect.height * dpr);
+					}
+					if (sparkCanvas) {
+						const rect = sparkCanvas.getBoundingClientRect();
+						sparkCanvas.width = Math.round(rect.width * dpr);
+						sparkCanvas.height = Math.round(rect.height * dpr);
+					}
+					if (ringCanvas) {
+						const rect = ringCanvas.getBoundingClientRect();
+						ringCanvas.width = Math.round(rect.width * dpr);
+						ringCanvas.height = Math.round(rect.height * dpr);
+					}
+				}
+
+				window.addEventListener("resize", resizeCanvases, { signal: lifecycle.signal });
+				resizeCanvases();
+
+				// Start animation loops
+				requestAnimationFrame(stepHoneycomb);
+				requestAnimationFrame(stepRing);
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initOneBeat);
+			} else {
+				initOneBeat();
+			}
+			document.addEventListener("astro:page-load", initOneBeat);
+		})();
+	</script>
+</MainGridLayout>
