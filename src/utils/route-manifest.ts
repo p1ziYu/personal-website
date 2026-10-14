@@ -27,6 +27,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"goldilocks-ink",
 	"kinetic-cuisine",
 	"lightbearer-lab",
+	"one-beat",
 	"one-of-one",
 	"snake",
 	"spin-shove",
