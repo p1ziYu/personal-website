@@ -1,0 +1,1602 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Grounded Wings · The Earliest Flightless Bird"
+	: "弃飞者 · GROUNDED WINGS";
+const description = isEn
+	? "Grounded Wings: Exploring Yuezhuornis yangyuanensis, the 150-million-year-old Late Jurassic fossil bird from Fujian, China, that gave up flight for sprinting across swamps (Nature 2026)."
+	: "弃飞者 · GROUNDED WINGS：探索中国福建发现的晚侏罗世古鸟「杨源鸑鷟鸟」。《自然》2026年10月14日发表成果，揭示已知最早丧失持续飞行能力的古鸟类，前肢短于后肢，奔跑在1.5亿年前的侏罗纪沼泽。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#070b14] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-emerald-500/30 selection:text-emerald-200">
+			<!-- Ambient Jurassic Swamp & Fossil Ambient Glow -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/4 -right-32 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/3 w-96 h-96 bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+							<span>NATURE · 2026-10-14 · WANG ET AL.</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono">
+							<span>🪶</span>
+							<span class="lang-zh">晚侏罗世 · 早期鸟类弃飞演化</span>
+							<span class="lang-en">LATE JURASSIC · EARLY AVIAN FLIGHT LOSS</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language & Origin Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">福建杨源化石发现 · 距今约 1.5 亿年</span>
+							<span class="lang-en">Fujian Yangyuan Discovery · ~150 Ma</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/grounded-wings/" : "/en/projects/grounded-wings/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-emerald-500/40 text-emerald-300 hover:text-white hover:bg-emerald-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "Switch to Chinese" : "切换为英文"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">弃飞者 · GROUNDED WINGS</span>
+					<span class="lang-en">GROUNDED WINGS</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-emerald-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">谁说鸟类诞生就必须冲向天空？1.5亿年前，第一只小鸟主动收起翅膀，迈开长腿踏入泥沼。</span>
+					<span class="lang-en">Who said birds only evolved to conquer skies? 150 million years ago, an early bird packed its wings and sprinted across Jurassic mud.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							2026 年 10 月 14 日，国际顶级期刊《自然》（Nature）发表了一项改写鸟类演化教科书的里程碑发现：中国科学院古脊椎动物与古人类研究所（IVPP）王敏研究团队联合福建省地质科学研究所，在福建省政和县杨源乡晚侏罗世地层（距今约 1.48–1.5 亿年）中发掘出一件奇特古鸟类化石——<strong>杨源鸑鷟鸟（<em>Yuezhuornis yangyuanensis</em>）</strong>。其属名取自中国古代五凤神鸟之一的“鸑鷟”。
+						</span>
+						<span class="lang-en">
+							On October 14, 2026, Nature published a landmark paleontological study led by Min Wang at the Institute of Vertebrate Paleontology and Paleoanthropology (IVPP), Chinese Academy of Sciences, alongside the Fujian Institute of Geological Sciences. The team uncovered a remarkable ~148–150 million-year-old Late Jurassic fossil bird in Yangyuan village, Zhenghe County, Fujian Province, China: <strong><em>Yuezhuornis yangyuanensis</em></strong>, named after the legendary Chinese mythical bird Yuezhuo.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							这只体型与乌鸦相仿（高约 0.5 米、体重略超 800 克）的古鸟带来了一个惊天反转：与同处于晚侏罗世、前肢显著长于后肢的德国始祖鸟不同，杨源鸑鷟鸟的<strong>前肢明确短于后肢</strong>，解剖比例高度趋同于现代地栖奔跑的雉类与走鹃。它不仅是目前<strong>已知最早丧失持续飞行能力</strong>的早期鸟类，更展现出震撼的“解剖镶嵌”：鸟类特化的骨盆与长腿，搭配恐龙原始的密生锯齿牙和极度伸屈的第二脚趾。
+						</span>
+						<span class="lang-en">
+							Crow-sized (about 0.5 m tall and just over 800 g), this ancient avialan delivered a profound hook: unlike its contemporary Late Jurassic Archaeopteryx whose forelimbs were longer than its hindlimbs, Yuezhuornis possessed <strong>forelimbs distinctly shorter than its hindlimbs</strong>—a ratio matching modern ground-dwelling pheasants and roadrunners. It represents the <strong>earliest known example of a bird losing the ability to fly</strong>, built as an anatomical mosaic of advanced avian pelvis/legs alongside dinosaurian serrated teeth and a hyper-extensible second toe.
+						</span>
+					</p>
+				</div>
+
+				<!-- Attributed Researcher Quote Card -->
+				<div class="mt-6 p-4 rounded-xl bg-slate-900/90 border border-emerald-500/30 relative overflow-hidden">
+					<div class="text-xs font-mono text-emerald-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+						<span>💬</span>
+						<span class="lang-zh">领衔科学家论断 · MIN WANG (IVPP)</span>
+						<span class="lang-en">LEAD RESEARCHER PERSPECTIVE · MIN WANG (IVPP)</span>
+					</div>
+					<blockquote class="text-sm sm:text-base text-slate-200 italic font-serif leading-relaxed">
+						<span class="lang-zh">
+							王敏研究员指出：“<strong class="text-emerald-300">Yuezhuornis challenges the traditional paradigm that the avian body plan evolved almost exclusively under the selective pressures of flight.</strong>”
+							<span class="block text-xs font-sans text-slate-400 not-italic mt-1">（杨源鸑鷟鸟挑战了鸟类体型结构几乎完全在飞行选择压力下演化的传统范式。）</span>
+						</span>
+						<span class="lang-en">
+							Min Wang said, "<strong class="text-emerald-300">Yuezhuornis challenges the traditional paradigm that the avian body plan evolved almost exclusively under the selective pressures of flight.</strong>"
+						</span>
+					</blockquote>
+				</div>
+
+				<!-- Key Fossil Facts Row -->
+				<div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mt-6">
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-emerald-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">地质时代与地层</span>
+							<span class="lang-en">GEOLOGICAL AGE</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-white mt-1">~150 Ma</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">晚侏罗世 · 148–150 百万年前</span>
+							<span class="lang-en">Late Jurassic · 148–150 Ma</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-amber-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">体型高度与质量</span>
+							<span class="lang-en">BODY METRICS</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-amber-300 mt-1">~0.5 m / &gt;800 g</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">乌鸦体型 · 实测化石骨骼推算</span>
+							<span class="lang-en">Crow-sized · Fossil measurements</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-teal-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">现生鸟类解剖基准</span>
+							<span class="lang-en">COMPARATIVE DATASET</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-teal-300 mt-1">~400 种</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">横跨现生各目近 400 种鸟类测量</span>
+							<span class="lang-en">Nearly 400 living bird species</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">前肢 / 后肢比例</span>
+							<span class="lang-en">LIMB RATIO</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-cyan-300 mt-1">前肢 &lt; 后肢</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">短前肢长后肢 · 地栖奔跑型</span>
+							<span class="lang-en">Short wings, long legs · Runner</span>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<!-- 1. INTERACTIVE ELEMENT: WING SLIDER LAB -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB 01</span>
+							<span>·</span>
+							<span class="lang-zh">翼身比例动力学滑块</span>
+							<span class="lang-en">Wing-to-Leg Ratio Simulator</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">翼身比例测量台：多长的翅膀才能飞上天？</span>
+							<span class="lang-en">Wing Slider: Forelimb/Hindlimb Ratio and Flight Capacity</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-slate-900 border border-emerald-500/30 text-emerald-300">
+						<span class="lang-zh">⚠️ 示意模型，非实测数据</span>
+						<span class="lang-en">⚠️ Illustrative model, not measured data</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						在鸟类生物力学中，前肢（翅膀）与后肢（长腿）的相对比例是判断运动生活方式的核心指示器。拖动下方滑块或点击不同物种预设：观察绘制的鸟类轮廓翼长如何伸缩、飞行能力综合评分如何跳变。晚侏罗世的杨源鸑鷟鸟前肢比值仅约 0.70，与始祖鸟（~1.15）截然不同，完全落入了现代地栖快跑鸟类的范畴。
+					</span>
+					<span class="lang-en">
+						In avian biomechanics, the forelimb-to-hindlimb length ratio is a prime indicator of locomotion strategy. Drag the slider or click presets to see the silhouette's wings expand/contract and watch the Flight Score meter calibrate. Yuezhuornis (~0.70 ratio) contrasts starkly with Archaeopteryx (~1.15), aligning closely with modern ground cursors.
+					</span>
+				</p>
+
+				<!-- Wing Slider Lab Grid -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+					<!-- Interactive Silhouette Display Column (7 cols) -->
+					<div class="lg:col-span-7 bg-[#050811] rounded-2xl p-4 border border-slate-800 shadow-xl relative overflow-hidden flex flex-col items-center">
+						<div class="w-full flex items-center justify-between text-xs font-mono text-slate-400 mb-2 px-1">
+							<div class="flex items-center gap-1.5">
+								<span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+								<span class="lang-zh">鸟类躯干剪影实时变形</span>
+								<span class="lang-en">Live Silhouette Morphing</span>
+							</div>
+							<div class="text-emerald-400 font-bold" id="slider-ratio-display">
+								Ratio: 0.70 (Yuezhuornis)
+							</div>
+						</div>
+
+						<!-- Silhouette SVG Viewport -->
+						<div class="relative w-full aspect-16/10 max-h-[360px] bg-slate-950/70 rounded-xl border border-slate-800/80 flex items-center justify-center overflow-hidden">
+							<svg id="bird-silhouette-svg" viewBox="0 0 500 320" class="w-full h-full select-none">
+								<!-- Swamp Horizon Line -->
+								<line x1="20" y1="270" x2="480" y2="270" stroke="#334155" stroke-dasharray="4 4" stroke-width="1.5" />
+								<text x="25" y="290" fill="#64748b" font-size="11" font-family="monospace">
+									Swamp Ground Surface / 沼泽泥滩水平面
+								</text>
+
+								<!-- Hindlimbs (Constant Long Sturdy Legs) -->
+								<g id="svg-legs" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">
+									<!-- Left Leg (Thigh, Shin, Tarsus, Extended Second Toe) -->
+									<polyline points="230,170 215,220 235,265" />
+									<line x1="235" y1="265" x2="255" y2="267" stroke-width="4" />
+									<line x1="235" y1="265" x2="230" y2="254" stroke="#f43f5e" stroke-width="3" /> <!-- Extensible 2nd toe -->
+
+									<!-- Right Leg (Back layer) -->
+									<polyline points="245,170 260,218 250,265" opacity="0.7" />
+									<line x1="250" y1="265" x2="270" y2="267" stroke-width="4" opacity="0.7" />
+								</g>
+
+								<!-- Bird Torso & Long Tail -->
+								<g id="svg-body">
+									<!-- Feathered Tail -->
+									<path d="M 180 150 C 130 155 80 170 50 190 C 80 175 140 165 180 162 Z" fill="#10b981" opacity="0.8" />
+									<!-- Torso Oval -->
+									<ellipse cx="230" cy="155" rx="55" ry="32" fill="#0f766e" />
+									<!-- Neck & Head -->
+									<path d="M 270 145 C 295 130 310 100 325 85 C 335 75 350 78 360 85 C 345 105 325 140 280 165 Z" fill="#0f766e" />
+									<!-- Head details: Eye & Beak with teeth -->
+									<circle cx="340" cy="85" r="3.5" fill="#facc15" />
+									<polygon points="355,85 385,92 355,96" fill="#f59e0b" />
+									<!-- Tiny serrated teeth markers -->
+									<line x1="360" y1="92" x2="378" y2="92" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="1.5 2" />
+								</g>
+
+								<!-- Dynamic Forelimb Wing (Dynamically scaled via script) -->
+								<g id="svg-wing" transform="translate(240, 140)">
+									<path id="svg-wing-feathers" d="M 0 0 C -30 -60, -90 -70, -120 -60 C -90 -30, -50 -10, 0 10 Z" fill="#34d399" opacity="0.9" />
+									<polyline id="svg-wing-bone" points="0,0 -40,-40 -85,-45" stroke="#ec4899" stroke-width="3.5" fill="none" stroke-linecap="round" />
+									<!-- Wing Forelimb Label -->
+									<text id="svg-wing-label" x="-80" y="-55" fill="#a7f3d0" font-size="11" font-family="monospace" text-anchor="middle">
+										Forelimb / 前肢
+									</text>
+								</g>
+							</svg>
+
+							<!-- Floating Badge on Canvas -->
+							<div id="canvas-verdict-badge" class="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-slate-900/90 border border-emerald-500/50 text-xs font-mono text-emerald-300 font-bold">
+								<span class="lang-zh">分类：地栖快跑型古鸟</span>
+								<span class="lang-en">Verdict: Ground Runner Specialist</span>
+							</div>
+						</div>
+
+						<div class="mt-3 text-center text-[11px] font-mono text-slate-400">
+							<span class="lang-zh">粉色线为前肢骨骼；蓝色线为后肢骨骼；红色为可抬起第二脚趾</span>
+							<span class="lang-en">Pink = Forelimb skeleton; Blue = Hindlimb bones; Red = Extensible 2nd toe</span>
+						</div>
+					</div>
+
+					<!-- Controls & Flight Meter Column (5 cols) -->
+					<div class="lg:col-span-5 space-y-4 font-mono">
+						<!-- Flight Score Meter Card -->
+						<div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+							<div class="flex items-center justify-between text-xs text-slate-400 uppercase tracking-wider mb-1">
+								<div class="flex items-center gap-1.5 text-emerald-300 font-bold">
+									<span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+									<span class="lang-zh">理论飞行能力指数 (0–100)</span>
+									<span class="lang-en">Flight Score Meter (0–100)</span>
+								</div>
+								<span id="meter-score-num" class="text-2xl font-black text-emerald-400">25</span>
+							</div>
+
+							<!-- Visual Score Bar -->
+							<div class="w-full bg-slate-950 rounded-full h-3 mt-2 overflow-hidden border border-slate-800">
+								<div id="meter-score-bar" class="bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-400 h-full w-[25%] transition-all duration-300"></div>
+							</div>
+
+							<div class="mt-3 flex items-center justify-between text-xs">
+								<span class="text-slate-400">
+									<span class="lang-zh">运动生态位裁定:</span>
+									<span class="lang-en">Ecological Verdict:</span>
+								</span>
+								<strong id="meter-verdict-text" class="text-amber-300 font-bold text-right">
+									<span class="lang-zh">🏃 纯地栖敏捷奔跑 / 偶尔短突扑翼</span>
+									<span class="lang-en">🏃 Specialized Runner / Burst Flier</span>
+								</strong>
+							</div>
+						</div>
+
+						<!-- Interactive Presets Selector -->
+						<div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3">
+							<div class="text-xs text-emerald-400 uppercase tracking-widest font-bold">
+								<span class="lang-zh">🏛️ 物种对比预设 (Forelimb / Hindlimb)</span>
+								<span class="lang-en">🏛️ Species Comparison Presets</span>
+							</div>
+
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+								<button id="btn-preset-yuezhuo" type="button" class="preset-btn p-2 rounded-lg bg-emerald-950/80 border border-emerald-400 text-emerald-200 font-bold transition active:scale-95 text-left cursor-pointer">
+									<div class="flex justify-between items-center">
+										<span class="font-bold">杨源鸑鷟鸟</span>
+										<span class="text-[10px] text-emerald-300 font-mono">0.70</span>
+									</div>
+									<div class="text-[10px] text-slate-400 font-normal">
+										<span class="lang-zh">晚侏罗世 · 弃飞地栖古鸟</span>
+										<span class="lang-en">Yuezhuornis · Runner</span>
+									</div>
+								</button>
+
+								<button id="btn-preset-archaeo" type="button" class="preset-btn p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 transition active:scale-95 text-left cursor-pointer">
+									<div class="flex justify-between items-center">
+										<span class="font-bold">始祖鸟</span>
+										<span class="text-[10px] text-cyan-300 font-mono">1.15</span>
+									</div>
+									<div class="text-[10px] text-slate-400 font-normal">
+										<span class="lang-zh">晚侏罗世 · 滑翔扑翼</span>
+										<span class="lang-en">Archaeopteryx · Glider</span>
+									</div>
+								</button>
+
+								<button id="btn-preset-roadrunner" type="button" class="preset-btn p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 transition active:scale-95 text-left cursor-pointer">
+									<div class="flex justify-between items-center">
+										<span class="font-bold">走鹃</span>
+										<span class="text-[10px] text-amber-300 font-mono">0.65</span>
+									</div>
+									<div class="text-[10px] text-slate-400 font-normal">
+										<span class="lang-zh">现生 · 沙漠泥地疾跑先锋</span>
+										<span class="lang-en">Roadrunner · Ground Cursory</span>
+									</div>
+								</button>
+
+								<button id="btn-preset-pheasant" type="button" class="preset-btn p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 transition active:scale-95 text-left cursor-pointer">
+									<div class="flex justify-between items-center">
+										<span class="font-bold">雉鸡 (环颈雉)</span>
+										<span class="text-[10px] text-teal-300 font-mono">0.72</span>
+									</div>
+									<div class="text-[10px] text-slate-400 font-normal">
+										<span class="lang-zh">现生 · 灌丛快跑与短冲扑翼</span>
+										<span class="lang-en">Pheasant · Burst Flier</span>
+									</div>
+								</button>
+
+								<button id="btn-preset-crow" type="button" class="preset-btn col-span-1 sm:col-span-2 p-2 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 transition active:scale-95 text-left cursor-pointer">
+									<div class="flex justify-between items-center">
+										<span class="font-bold">渡鸦 / 乌鸦 (同等体型)</span>
+										<span class="text-[10px] text-fuchsia-300 font-mono">1.30</span>
+									</div>
+									<div class="text-[10px] text-slate-400 font-normal">
+										<span class="lang-zh">现生 · 强健空中巡航能手</span>
+										<span class="lang-en">Crow · Strong Aerial Master</span>
+									</div>
+								</button>
+							</div>
+
+							<!-- Continuous Manual Ratio Slider -->
+							<div class="pt-2">
+								<div class="flex justify-between items-center mb-1 text-xs">
+									<span class="font-bold text-slate-200">
+										<span class="lang-zh">自定义前肢 / 后肢比例 (Ratio)</span>
+										<span class="lang-en">Custom Forelimb/Hindlimb Ratio</span>
+									</span>
+									<span id="slider-val-readout" class="text-emerald-400 font-bold">0.70</span>
+								</div>
+								<input id="ratio-slider" type="range" min="0.50" max="1.50" step="0.01" value="0.70" class="w-full accent-emerald-500 cursor-pointer" />
+								<div class="flex justify-between text-[10px] text-slate-500 mt-0.5">
+									<span>0.50 (<span class="lang-zh">极短翼</span><span class="lang-en">Ultra Short</span>)</span>
+									<span class="text-emerald-400/80 font-bold">↑ 0.70 (鸑鷟鸟)</span>
+									<span class="text-cyan-400/80 font-bold">↑ 1.15 (始祖鸟)</span>
+									<span>1.50 (<span class="lang-zh">超长翼</span><span class="lang-en">Long Wings</span>)</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. INTERACTIVE ELEMENT: RUN OR FLY MINI-SIMULATOR -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB 02</span>
+							<span>·</span>
+							<span class="lang-zh">沼泽穿行实境动力学沙盒</span>
+							<span class="lang-en">Swamp Dash Mini-Simulator</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">跑还是飞？晚侏罗世沼泽泥滩大测试</span>
+							<span class="lang-en">Run or Fly: The Jurassic Swamp Test</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono text-slate-400">
+						<span class="lang-zh">物理引擎：Canvas 2D 骨骼步态与泥浆粒子模拟</span>
+						<span class="lang-en">Engine: 2D Gait & Mud Particle Physics</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						古生物学家在福建杨源发现的古鸟沉积岩层属于淡水沼泽与浅湖相。如果杨源鸑鷟鸟遭遇危险，它是应该张开小翅膀尝试起飞，还是拔腿飞奔？点击下方按钮发射小鸟：在<strong>「奔跑模式」</strong>下，它凭借强健修长的后肢在泥地飞奔并跃过泥洼；而在<strong>「扑翼飞行模式」</strong>下，受制于前肢短小升力不足，它吃力挣扎片刻便气喘吁吁地栽进泥里。在沼泽泥滩上，奔跑完胜扑翼！
+					</span>
+					<span class="lang-en">
+						Fossil sediments at Yangyuan indicate a freshwater swamp and lakeside terrain. In danger, would Yuezhuornis take to the air or sprint? Launch the simulator below: in <strong>Run Mode</strong>, strong legs dash across the marsh; in <strong>Fly Mode</strong>, short wings provide insufficient lift and cause a clumsy crash-landing. On the ground, running wins!
+					</span>
+				</p>
+
+				<!-- Simulator Canvas & HUD -->
+				<div class="bg-[#050811] rounded-2xl p-4 border border-slate-800 shadow-xl space-y-4">
+					<!-- Canvas Display -->
+					<div class="relative w-full aspect-21/9 min-h-[220px] max-h-[380px] rounded-xl overflow-hidden border border-slate-800 bg-[#071318]">
+						<canvas id="sim-canvas" class="w-full h-full block cursor-pointer"></canvas>
+
+						<!-- In-Canvas HUD overlay -->
+						<div class="absolute top-3 left-3 flex flex-wrap gap-2 text-xs font-mono pointer-events-none">
+							<div class="px-2.5 py-1 rounded bg-slate-900/80 border border-slate-800 text-slate-200">
+								<span class="text-slate-400">Mode: </span>
+								<span id="hud-mode" class="text-emerald-400 font-bold">READY / 待命</span>
+							</div>
+							<div class="px-2.5 py-1 rounded bg-slate-900/80 border border-slate-800 text-slate-200">
+								<span class="text-slate-400">Dist: </span>
+								<span id="hud-dist" class="text-cyan-300 font-bold">0.0 m</span>
+							</div>
+							<div class="px-2.5 py-1 rounded bg-slate-900/80 border border-slate-800 text-slate-200">
+								<span class="text-slate-400">Velocity: </span>
+								<span id="hud-speed" class="text-amber-300 font-bold">0.0 m/s</span>
+							</div>
+						</div>
+
+						<!-- Toast / Result Banner in Canvas -->
+						<div id="sim-banner" class="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-xl bg-slate-900/90 border border-emerald-500/50 text-xs font-mono text-emerald-300 opacity-0 transition-opacity pointer-events-none text-center max-w-[90%] shadow-lg">
+							<span id="sim-banner-text">奔跑完胜！覆盖距离 102 米。</span>
+						</div>
+					</div>
+
+					<!-- Simulator Interactive Controls -->
+					<div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+						<div class="flex flex-wrap items-center gap-2">
+							<button id="sim-btn-run" type="button" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs font-mono transition active:scale-95 shadow-md flex items-center gap-2 cursor-pointer">
+								<span>🏃</span>
+								<span class="lang-zh">启动地栖奔跑 (Run Dash)</span>
+								<span class="lang-en">Launch Ground Run</span>
+							</button>
+
+							<button id="sim-btn-fly" type="button" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs font-mono transition active:scale-95 shadow-md flex items-center gap-2 cursor-pointer">
+								<span>🪶</span>
+								<span class="lang-zh">尝试短途扑翼 (Burst Fly)</span>
+								<span class="lang-en">Attempt Burst Flight</span>
+							</button>
+
+							<button id="sim-btn-reset" type="button" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 font-mono text-xs transition active:scale-95 cursor-pointer">
+								<span>↺</span>
+								<span class="lang-zh">重置起点</span>
+								<span class="lang-en">Reset</span>
+							</button>
+						</div>
+
+						<!-- Comparison Scoreboard -->
+						<div class="flex items-center gap-4 text-xs font-mono bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
+							<div>
+								<span class="text-slate-400">🏃 <span class="lang-zh">奔跑最远</span><span class="lang-en">Run Record</span>: </span>
+								<span id="sim-record-run" class="text-emerald-400 font-bold">104.2 m</span>
+							</div>
+							<span class="text-slate-700">|</span>
+							<div>
+								<span class="text-slate-400">🪶 <span class="lang-zh">扑翼最远</span><span class="lang-en">Flight Record</span>: </span>
+								<span id="sim-record-fly" class="text-amber-400 font-bold">31.5 m</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 3. INTERACTIVE ELEMENT: MOSAIC BODY EXPLORER -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB 03</span>
+							<span>·</span>
+							<span class="lang-zh">化石解剖学镶嵌体工作台</span>
+							<span class="lang-en">Mosaic Anatomy Interactive Explorer</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">嵌合之躯：半是恐龙，半是神鸟</span>
+							<span class="lang-en">Mosaic Body: Half Dinosaur, Half Modern Bird</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono text-slate-400">
+						<span class="lang-zh">点击解剖热点查看特征与判定推论</span>
+						<span class="lang-en">Click hotspots to inspect mosaic traits</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						杨源鸑鷟鸟的骨架就像一位“解剖学剪刀手”的杰作：它并不像传统认知那样“全身均衡地迈向飞行”，而是以鲜明的<strong>镶嵌演化（Mosaic Evolution）</strong>拼接而成。点击鸟体图示中的四个核心热点，探索哪些特征遗传自凶猛的兽脚类肉食恐龙，哪些特征已率先跨入进步鸟类的殿堂。
+					</span>
+					<span class="lang-en">
+						The skeletal blueprint of Yuezhuornis embodies mosaic evolution: different systems evolved at disparate paces. Click the four hotspots on the fossil diagram to reveal which structures were inherited from fierce theropod dinosaurs and which had leaped forward into modern bird architecture.
+					</span>
+				</p>
+
+				<!-- Hotspot Explorer Layout -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+					<!-- Interactive Bird Diagram with Hotspots (6 cols) -->
+					<div class="lg:col-span-6 bg-[#050811] rounded-2xl p-4 border border-slate-800 shadow-xl relative overflow-hidden flex flex-col items-center">
+						<div class="w-full flex items-center justify-between text-xs font-mono text-slate-400 mb-2 px-1">
+							<span>FOSSIL ANATOMICAL MAP / 化石解剖点位</span>
+							<span class="text-emerald-400">Interactive Hotspots</span>
+						</div>
+
+						<div class="relative w-full aspect-4/3 max-h-[380px] bg-slate-950/80 rounded-xl border border-slate-800 flex items-center justify-center p-2">
+							<!-- Vector SVG Bird Diagram with 4 Interactive Hotspot Buttons -->
+							<svg viewBox="0 0 500 360" class="w-full h-full select-none">
+								<!-- Silhouette Body -->
+								<path d="M 120 220 C 180 200 230 190 260 170 C 290 150 320 120 340 90 C 355 70 380 75 390 85 C 380 110 350 160 300 200 C 260 230 200 240 120 220 Z" fill="#1e293b" stroke="#334155" stroke-width="2" />
+								<!-- Wings Shape -->
+								<path id="dia-wing-poly" d="M 260 180 C 220 130 180 100 140 110 C 180 150 230 170 260 180 Z" fill="#0f766e" stroke="#14b8a6" stroke-width="2" opacity="0.8" />
+								<!-- Beak & Teeth Zone -->
+								<polygon points="385,85 435,93 385,100" fill="#f59e0b" stroke="#d97706" stroke-width="1.5" />
+								<line x1="390" y1="93" x2="425" y2="93" stroke="#ffffff" stroke-width="2" stroke-dasharray="2 3" />
+								<!-- Pelvis Area Highlight -->
+								<ellipse cx="230" cy="205" rx="35" ry="20" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5" opacity="0.6" />
+								<!-- Hindlimbs -->
+								<polyline points="230,215 210,270 230,320" stroke="#38bdf8" stroke-width="4" fill="none" stroke-linecap="round" />
+								<polyline points="245,215 260,270 250,320" stroke="#0284c7" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.7" />
+								<!-- Foot and Extensible Second Toe -->
+								<line x1="230" y1="320" x2="255" y2="322" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" />
+								<!-- Raised Claw -->
+								<path d="M 230 320 C 225 305 235 295 240 298" stroke="#f43f5e" stroke-width="3.5" fill="none" stroke-linecap="round" />
+
+								<!-- HOTSPOT 1: WINGS (Forelimbs) -->
+								<g id="hotspot-wings" class="cursor-pointer group" transform="translate(180, 130)">
+									<circle r="18" fill="#10b981" fill-opacity="0.25" class="animate-ping"></circle>
+									<circle r="13" fill="#059669" stroke="#34d399" stroke-width="2"></circle>
+									<text y="4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold" font-family="monospace">1</text>
+								</g>
+
+								<!-- HOTSPOT 2: TEETH (Jaws) -->
+								<g id="hotspot-teeth" class="cursor-pointer group" transform="translate(405, 93)">
+									<circle r="18" fill="#f43f5e" fill-opacity="0.25" class="animate-ping"></circle>
+									<circle r="13" fill="#e11d48" stroke="#fb7185" stroke-width="2"></circle>
+									<text y="4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold" font-family="monospace">2</text>
+								</g>
+
+								<!-- HOTSPOT 3: SECOND TOE (Hyper-extensible claw) -->
+								<g id="hotspot-toe" class="cursor-pointer group" transform="translate(235, 305)">
+									<circle r="18" fill="#f43f5e" fill-opacity="0.25" class="animate-ping"></circle>
+									<circle r="13" fill="#e11d48" stroke="#fb7185" stroke-width="2"></circle>
+									<text y="4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold" font-family="monospace">3</text>
+								</g>
+
+								<!-- HOTSPOT 4: PELVIS & HINDLIMBS -->
+								<g id="hotspot-pelvis" class="cursor-pointer group" transform="translate(230, 210)">
+									<circle r="18" fill="#0284c7" fill-opacity="0.25" class="animate-ping"></circle>
+									<circle r="13" fill="#0369a1" stroke="#38bdf8" stroke-width="2"></circle>
+									<text y="4" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold" font-family="monospace">4</text>
+								</g>
+							</svg>
+						</div>
+
+						<!-- Hotspot quick selector buttons -->
+						<div class="grid grid-cols-4 gap-1.5 w-full mt-3 font-mono text-xs">
+							<button id="tab-spot-1" type="button" class="spot-tab-btn py-1.5 px-1 rounded bg-emerald-950/80 border border-emerald-400 text-emerald-300 font-bold transition active:scale-95 text-center cursor-pointer">
+								1. <span class="lang-zh">短前肢</span><span class="lang-en">Wings</span>
+							</button>
+							<button id="tab-spot-2" type="button" class="spot-tab-btn py-1.5 px-1 rounded bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold transition active:scale-95 text-center cursor-pointer">
+								2. <span class="lang-zh">密集齿</span><span class="lang-en">Teeth</span>
+							</button>
+							<button id="tab-spot-3" type="button" class="spot-tab-btn py-1.5 px-1 rounded bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold transition active:scale-95 text-center cursor-pointer">
+								3. <span class="lang-zh">第二趾</span><span class="lang-en">2nd Toe</span>
+							</button>
+							<button id="tab-spot-4" type="button" class="spot-tab-btn py-1.5 px-1 rounded bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold transition active:scale-95 text-center cursor-pointer">
+								4. <span class="lang-zh">骨盆腿</span><span class="lang-en">Pelvis</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- Detailed Trait Card (6 cols) -->
+					<div class="lg:col-span-6 space-y-4">
+						<div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl space-y-4">
+							<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+								<div class="flex items-center gap-2">
+									<span id="card-spot-num" class="w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-mono font-bold flex items-center justify-center text-xs">1</span>
+									<h3 id="card-trait-title" class="text-lg font-bold text-white tracking-tight">
+										<span class="lang-zh">短于后肢的退化前肢 (Forelimbs Shorter than Hindlimbs)</span>
+										<span class="lang-en">Forelimbs Shorter than Hindlimbs</span>
+									</h3>
+								</div>
+
+								<!-- Dinosaur vs Bird Badge -->
+								<span id="card-affinity-badge" class="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
+									<span class="lang-zh">🐦 鸟类地栖特化适应</span>
+									<span class="lang-en">🐦 Bird-like Ground Adaptation</span>
+								</span>
+							</div>
+
+							<!-- Plain language core sentence -->
+							<div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80">
+								<div class="text-[11px] font-mono text-slate-400 mb-1">
+									<span class="lang-zh">通俗科学阐释 (Plain-Language Explanation)</span>
+									<span class="lang-en">Plain-Language Explanation</span>
+								</div>
+								<p id="card-plain-sentence" class="text-sm text-slate-200 leading-relaxed font-sans">
+									<span class="lang-zh">
+										杨源鸑鷟鸟的前肢骨骼显著短于后肢，与始祖鸟修长双翼完全相反，说明它在侏罗纪便已彻底放弃持续飞行，将身体重心完全押注在地面快速奔跑上。
+									</span>
+									<span class="lang-en">
+										Forelimbs are notably shorter than hindlimbs—unlike Archaeopteryx—proving it had abandoned sustained flight in favor of ground life.
+									</span>
+								</p>
+							</div>
+
+							<!-- Fact vs Inference Deep Breakdown -->
+							<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+								<div class="p-3 rounded-lg bg-slate-950/60 border border-amber-500/20">
+									<div class="text-amber-400 font-bold mb-1 flex items-center gap-1.5">
+										<span>🔬</span>
+										<span class="lang-zh">化石实测证据 (Measured Fact)</span>
+										<span class="lang-en">Measured Fossil Fact</span>
+									</div>
+									<p id="card-fact-text" class="text-slate-300 leading-normal font-sans">
+										<span class="lang-zh">前肢各长骨总长显著小于后肢长骨总长（比值约 0.70），前肢发育比例与现代雉类相符。</span>
+										<span class="lang-en">Forelimb total bone length is distinctly smaller than hindlimb (ratio ~0.70), matching modern pheasants.</span>
+									</p>
+								</div>
+
+								<div class="p-3 rounded-lg bg-slate-950/60 border border-cyan-500/20">
+									<div class="text-cyan-400 font-bold mb-1 flex items-center gap-1.5">
+										<span>🧠</span>
+										<span class="lang-zh">科学逻辑推论 (Reasoned Inference)</span>
+										<span class="lang-en">Reasoned Inference</span>
+									</div>
+									<p id="card-inference-text" class="text-slate-300 leading-normal font-sans">
+										<span class="lang-zh">推论其极可能像现代走鹃或雉鸡一样，栖息于水陆沼泽泥滩中疾跑，仅在危急时刻做短促扑翼跳跃。</span>
+										<span class="lang-en">Likely a ground runner dwelling in wetlands like a modern roadrunner, relying on running rather than sustained flight.</span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. INTERACTIVE ELEMENT: TIMELINE STRIP -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+							<span>LAB 04</span>
+							<span>·</span>
+							<span class="lang-zh">非线性演化分支时空链</span>
+							<span class="lang-en">Branching Evolution Timeline</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">鸟类演化不是单行道：从晚侏罗世到今天的丛状分化</span>
+							<span class="lang-en">Evolution is a Bush, Not an Escalator: 150 Ma to Present</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono text-slate-400">
+						<span class="lang-zh">时间跨度：150 百万年</span>
+						<span class="lang-en">Timespan: 150 Million Years</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						大众常误以为鸟类是从恐龙出发、“一步步飞得越来越高越来越好”的直线性演化链条。杨源鸑鷟鸟与德国始祖鸟在晚侏罗世（约 1.5 亿年前）同时存在，却走上了完全截然相反的生态位路线：始祖鸟长臂扑翼冲向空中，而杨源鸑鷟鸟则收起短翼奔向泥地。演化从一开始就是繁茂交错的灌木丛，而非单向攀升的云梯。
+					</span>
+					<span class="lang-en">
+						A common misconception paints bird evolution as a straight line progressing toward ever-better flight. Living in the same Late Jurassic epoch (~150 Ma), Archaeopteryx and Yuezhuornis embarked on opposite paths: one spread elongated wings toward the sky, while the other retracted wings to sprint across mud. Evolution is a branching bush, not a one-way escalator.
+					</span>
+				</p>
+
+				<!-- Interactive Timeline Strip -->
+				<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+					<!-- Step 1: Yuezhuornis -->
+					<div class="p-4 rounded-xl bg-slate-900/90 border-2 border-emerald-500/50 relative overflow-hidden flex flex-col justify-between">
+						<div class="absolute -top-6 -right-6 w-16 h-16 bg-emerald-500/10 rounded-full blur-xl pointer-events-none"></div>
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300">
+									~150 Ma · 晚侏罗世
+								</span>
+								<span class="text-xs">🇨🇳 福建杨源</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1">
+								<span class="lang-zh">杨源鸑鷟鸟 (Yuezhuornis)</span>
+								<span class="lang-en">Yuezhuornis yangyuanensis</span>
+							</h3>
+							<p class="text-xs text-slate-300 leading-relaxed font-sans mb-3">
+								<span class="lang-zh">前肢短于后肢（比值 ~0.70）。已知最早弃飞走向地面的古鸟，在沼泽泥滩中疾跑。</span>
+								<span class="lang-en">Forelimb shorter than hindlimb (~0.70). Earliest known flightless bird, sprinting in wetland mud.</span>
+							</p>
+						</div>
+						<div class="pt-2 border-t border-slate-800 text-[11px] font-mono text-emerald-400 font-bold">
+							<span class="lang-zh">分支：沼泽地栖奔跑</span>
+							<span class="lang-en">Branch: Swamp Runner</span>
+						</div>
+					</div>
+
+					<!-- Step 2: Archaeopteryx -->
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-cyan-500/30 relative overflow-hidden flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/20 text-cyan-300">
+									~150 Ma · 晚侏罗世
+								</span>
+								<span class="text-xs">🇩🇪 索伦霍芬</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1">
+								<span class="lang-zh">始祖鸟 (Archaeopteryx)</span>
+								<span class="lang-en">Archaeopteryx lithographica</span>
+							</h3>
+							<p class="text-xs text-slate-300 leading-relaxed font-sans mb-3">
+								<span class="lang-zh">前肢长于后肢（比值 ~1.15）。与鸑鷟鸟同处晚侏罗世，在岛屿海岸滑翔扑翼。</span>
+								<span class="lang-en">Forelimb longer than hindlimb (~1.15). Contemporary glider and flapper across coastal lagoons.</span>
+							</p>
+						</div>
+						<div class="pt-2 border-t border-slate-800 text-[11px] font-mono text-cyan-400 font-bold">
+							<span class="lang-zh">分支：空域滑翔扑击</span>
+							<span class="lang-en">Branch: Aerial Glider</span>
+						</div>
+					</div>
+
+					<!-- Step 3: Cretaceous Bloom -->
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-slate-300">
+									~125 Ma · 白垩纪
+								</span>
+								<span class="text-xs">🇨🇳 热河生物群</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1">
+								<span class="lang-zh">孔子鸟与白垩纪古鸟</span>
+								<span class="lang-en">Confuciusornis & Avians</span>
+							</h3>
+							<p class="text-xs text-slate-300 leading-relaxed font-sans mb-3">
+								<span class="lang-zh">角质喙与尾综骨出现，动力飞行日臻成熟，但同时树栖、涉禽与水鸟分化全面爆发。</span>
+								<span class="lang-en">Toothless beaks and pygostyles emerge; sustained flapping matures into multiple niches.</span>
+							</p>
+						</div>
+						<div class="pt-2 border-t border-slate-800 text-[11px] font-mono text-slate-400 font-bold">
+							<span class="lang-zh">辐射：空陆水分工</span>
+							<span class="lang-en">Radiation: Diversified Avians</span>
+						</div>
+					</div>
+
+					<!-- Step 4: Modern Era -->
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-amber-500/30 relative overflow-hidden flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between mb-2">
+								<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300">
+									现生 · 0 Ma
+								</span>
+								<span class="text-xs">🌍 全球生态</span>
+							</div>
+							<h3 class="text-base font-bold text-white mb-1">
+								<span class="lang-zh">雉鸡 / 走鹃 vs 渡鸦 / 鹰</span>
+								<span class="lang-en">Pheasant & Roadrunner vs Crow</span>
+							</h3>
+							<p class="text-xs text-slate-300 leading-relaxed font-sans mb-3">
+								<span class="lang-zh">走鹃与环颈雉延续了短翼地栖快跑策略；渡鸦与猛禽则主宰蓝天。演化多元共存。</span>
+								<span class="lang-en">Roadrunners preserve ground sprinting while crows master flight. Coexistence of lifestyles.</span>
+							</p>
+						</div>
+						<div class="pt-2 border-t border-slate-800 text-[11px] font-mono text-amber-400 font-bold">
+							<span class="lang-zh">共存：多元演化终局</span>
+							<span class="lang-en">Branch: Multi-Niche Mastery</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. RIGOROUS SCIENCE: FACTS VS INFERENCES MATRIX -->
+			<section class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest font-semibold mb-1">
+							<span>EVIDENCE TABLE</span>
+							<span>·</span>
+							<span class="lang-zh">化石实测与推论对比矩阵</span>
+							<span class="lang-en">Fossil Facts vs. Reasoned Inferences</span>
+						</div>
+						<h3 class="text-lg sm:text-xl font-bold text-white tracking-tight">
+							<span class="lang-zh">严谨科学：哪些是铁证？哪些是科学推论？</span>
+							<span class="lang-en">Rigorous Science: Distinguishing Measured Facts from Inferences</span>
+						</h3>
+					</div>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+					<!-- Hard Facts Column -->
+					<div class="p-4 rounded-xl bg-slate-900/60 border border-emerald-500/30">
+						<div class="flex items-center gap-2 text-emerald-400 font-bold mb-3 text-sm">
+							<span>🔬</span>
+							<span class="lang-zh">化石测量铁事实 (Measured Fossil Facts)</span>
+							<span class="lang-en">Measured Fossil Facts</span>
+						</div>
+						<ul class="space-y-2.5 text-slate-300 font-sans leading-relaxed">
+							<li class="flex items-start gap-2">
+								<span class="text-emerald-400 font-mono font-bold">✓</span>
+								<span>
+									<strong class="text-white">发现地点与地层：</strong>
+									<span class="lang-zh">2024 年 8 月采自中国福建省政和县杨源乡，地质年代距今约 1.48–1.5 亿年（晚侏罗世）。</span>
+									<span class="lang-en">Excavated in August 2024 near Yangyuan village, Zhenghe County, Fujian, China (~148–150 Ma, Late Jurassic).</span>
+								</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-emerald-400 font-mono font-bold">✓</span>
+								<span>
+									<strong class="text-white">实测骨骼体量：</strong>
+									<span class="lang-zh">高约 0.5 米，体重略超 800 克，与现代中型渡鸦相当。</span>
+									<span class="lang-en">Crow-sized: about 0.5 m tall and just over 800 g.</span>
+								</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-emerald-400 font-mono font-bold">✓</span>
+								<span>
+									<strong class="text-white">肢骨长度反转：</strong>
+									<span class="lang-zh">前肢总长度显著短于后肢（比例约 0.70），与始祖鸟（前肢大于后肢）形成绝对反差。</span>
+									<span class="lang-en">Forelimbs strictly shorter than hindlimbs, unlike Archaeopteryx's elongated wings.</span>
+								</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-emerald-400 font-mono font-bold">✓</span>
+								<span>
+									<strong class="text-white">化石解剖结构：</strong>
+									<span class="lang-zh">下颌保存密集微细锯齿齿列；第二脚趾具显著向上背伸滑车关节；骨盆具鸟类特征。</span>
+									<span class="lang-en">Preserved serrated teeth, a hyper-extensible second toe, and bird-like pelvic elements.</span>
+								</span>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Reasoned Inferences Column -->
+					<div class="p-4 rounded-xl bg-slate-900/60 border border-cyan-500/30">
+						<div class="flex items-center gap-2 text-cyan-400 font-bold mb-3 text-sm">
+							<span>🧠</span>
+							<span class="lang-zh">科学逻辑推论 (Reasoned Inferences)</span>
+							<span class="lang-en">Reasoned Inferences</span>
+						</div>
+						<ul class="space-y-2.5 text-slate-300 font-sans leading-relaxed">
+							<li class="flex items-start gap-2">
+								<span class="text-cyan-400 font-mono font-bold">→</span>
+								<span>
+									<strong class="text-white">运动方式判定：</strong>
+									<span class="lang-zh">推论其极可能像现代走鹃一样擅长在地面疾跑，仅在紧急情况下做短途爆发扑击，无法持续巡航。</span>
+									<span class="lang-en">Inferred to be a capable ground runner like a roadrunner, flying only in short bursts when necessary.</span>
+								</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-cyan-400 font-mono font-bold">→</span>
+								<span>
+									<strong class="text-white">生态环境还原：</strong>
+									<span class="lang-zh">伴生湖泊沼泽相沉积显示，杨源鸑鷟鸟主要在湿地泥滩中奔走觅食，长腿可在软泥中高效迈步。</span>
+									<span class="lang-en">Associated sedimentology points to a swampy wetland biome ideal for long-legged cursorial locomotion.</span>
+								</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-cyan-400 font-mono font-bold">→</span>
+								<span>
+									<strong class="text-white">第二趾生态功能：</strong>
+									<span class="lang-zh">高抬的第二趾类似于恐爪龙类，推论其在泥泞奔跑时收起防挂蹭或陷入泥沼。</span>
+									<span class="lang-en">Extensible second toe likely lifted during marsh sprints to avoid snagging or sinking in mud.</span>
+								</span>
+							</li>
+							<li class="flex items-start gap-2">
+								<span class="text-cyan-400 font-mono font-bold">→</span>
+								<span>
+									<strong class="text-white">演化模式启示：</strong>
+									<span class="lang-zh">证明鸟类并非单向冲向天空，鸟类身体构型的形成并非完全受到飞行选择压力的驱动。</span>
+									<span class="lang-en">Proves avian body plans did not evolve exclusively under the selective pressures of flight.</span>
+								</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<!-- 6. ACADEMIC CITATION -->
+			<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-mono text-slate-400 mb-8">
+				<div class="text-slate-300 font-bold uppercase tracking-wider mb-1 flex items-center gap-2">
+					<span>📄</span>
+					<span class="lang-zh">原始学术文献出处</span>
+					<span class="lang-en">Primary Academic Citation</span>
+				</div>
+				<p class="leading-relaxed mb-2">
+					M. Wang, et al.
+					<em>"A Late Jurassic avialan with shortened forelimbs from Fujian, China"</em>.
+					<strong>Nature</strong> (published 2026-10-14).
+				</p>
+				<div class="flex items-center gap-2 text-emerald-400">
+					<span>🏛️ Affiliations:</span>
+					<span>Institute of Vertebrate Paleontology and Paleoanthropology (IVPP), CAS & Fujian Institute of Geological Sciences</span>
+				</div>
+			</div>
+
+			<!-- FOOTER SECTION & AI DECLARATION -->
+			<div class="pt-4 text-xs font-mono text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+				<div>
+					<span class="lang-zh">弃飞者 · GROUNDED WINGS — 晚侏罗世古鸟弃飞演化交互实验室</span>
+					<span class="lang-en">Grounded Wings · Avian Flight Loss Interactive Lab</span>
+				</div>
+				<div>
+					<span>p1ziyu.com · 2026</span>
+				</div>
+			</div>
+
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-emerald-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE SIMULATION & INTERACTIVE ENGINE SCRIPT -->
+	<script is:inline>
+		(() => {
+			function initGroundedWings() {
+				const ratioSlider = document.getElementById("ratio-slider");
+				if (!ratioSlider || ratioSlider.dataset.gwReady === "true") return;
+				ratioSlider.dataset.gwReady = "true";
+
+				const lifecycle = new AbortController();
+				document.addEventListener("astro:before-swap", () => lifecycle.abort(), { once: true });
+
+				const isEn = () =>
+					document.documentElement.lang === "en" ||
+					document.documentElement.getAttribute("data-lang") === "en" ||
+					window.location.pathname.startsWith("/en");
+
+				// ==========================================
+				// 1. WING SLIDER & SILHOUETTE MORPHING
+				// ==========================================
+				const svgWing = document.getElementById("svg-wing");
+				const sliderValReadout = document.getElementById("slider-val-readout");
+				const sliderRatioDisplay = document.getElementById("slider-ratio-display");
+				const meterScoreNum = document.getElementById("meter-score-num");
+				const meterScoreBar = document.getElementById("meter-score-bar");
+				const meterVerdictText = document.getElementById("meter-verdict-text");
+				const canvasVerdictBadge = document.getElementById("canvas-verdict-badge");
+
+				const btnPresetYuezhuo = document.getElementById("btn-preset-yuezhuo");
+				const btnPresetArchaeo = document.getElementById("btn-preset-archaeo");
+				const btnPresetRoadrunner = document.getElementById("btn-preset-roadrunner");
+				const btnPresetPheasant = document.getElementById("btn-preset-pheasant");
+				const btnPresetCrow = document.getElementById("btn-preset-crow");
+				const presetBtns = [btnPresetYuezhuo, btnPresetArchaeo, btnPresetRoadrunner, btnPresetPheasant, btnPresetCrow];
+
+				function updateWingRatio(ratio, presetName = null) {
+					const r = Math.max(0.50, Math.min(1.50, parseFloat(ratio)));
+					if (ratioSlider) ratioSlider.value = r.toFixed(2);
+					if (sliderValReadout) sliderValReadout.textContent = r.toFixed(2);
+
+					if (sliderRatioDisplay) {
+						if (presetName) {
+							sliderRatioDisplay.textContent = `Ratio: ${r.toFixed(2)} (${presetName})`;
+						} else {
+							sliderRatioDisplay.textContent = `Ratio: ${r.toFixed(2)}`;
+						}
+					}
+
+					// Update presets button active states
+					presetBtns.forEach((btn) => {
+						if (!btn) return;
+						btn.classList.remove("border-emerald-400", "bg-emerald-950/80", "text-emerald-200");
+						btn.classList.add("border-slate-800", "bg-slate-950", "text-slate-300");
+					});
+
+					// Morph SVG Wing
+					// At ratio 0.50: scaleX 0.55, scaleY 0.65
+					// At ratio 1.50: scaleX 1.65, scaleY 1.35
+					const scaleX = 0.55 + (r - 0.50) * 1.10;
+					const scaleY = 0.65 + (r - 0.50) * 0.70;
+
+					if (svgWing) {
+						svgWing.setAttribute("transform", `translate(240, 140) scale(${scaleX.toFixed(3)}, ${scaleY.toFixed(3)})`);
+					}
+
+					// Flight score formula (illustrative model, 0-100)
+					let score = 0;
+					if (r <= 0.60) {
+						score = Math.round(5 + (r - 0.50) * 100);
+					} else if (r <= 0.80) {
+						score = Math.round(15 + (r - 0.60) * 125);
+					} else if (r <= 1.10) {
+						score = Math.round(40 + (r - 0.80) * 100);
+					} else {
+						score = Math.round(70 + (r - 1.10) * 75);
+					}
+					score = Math.max(5, Math.min(100, score));
+
+					if (meterScoreNum) meterScoreNum.textContent = score.toString();
+					if (meterScoreBar) {
+						meterScoreBar.style.width = `${score}%`;
+						if (score < 35) {
+							meterScoreBar.className = "bg-gradient-to-r from-rose-500 to-amber-500 h-full transition-all duration-200";
+						} else if (score < 70) {
+							meterScoreBar.className = "bg-gradient-to-r from-amber-500 to-teal-400 h-full transition-all duration-200";
+						} else {
+							meterScoreBar.className = "bg-gradient-to-r from-teal-400 to-emerald-400 h-full transition-all duration-200";
+						}
+					}
+
+					// Verdict text
+					let verdictZh = "";
+					let verdictEn = "";
+					let badgeZh = "";
+					let badgeEn = "";
+
+					if (r < 0.68) {
+						verdictZh = "🏃 极速特化地栖疾跑 (无法持续起飞)";
+						verdictEn = "🏃 Specialized Ground Runner (No Sustained Flight)";
+						badgeZh = "分类：特化地栖快跑古鸟";
+						badgeEn = "Verdict: Cursorial Specialist";
+					} else if (r < 0.78) {
+						verdictZh = "🏃 泥滩奔跑为主 / 偶尔短途爆发扑跃";
+						verdictEn = "🏃 Swamp Runner / Burst Flutter Hops";
+						badgeZh = "分类：鸑鷟鸟/雉类地栖暴发型";
+						badgeEn = "Verdict: Ground Runner & Burst Flier";
+					} else if (r < 0.95) {
+						verdictZh = "🪶 过渡型扑翼与滑翔 (中等续航)";
+						verdictEn = "🪶 Intermediate Flapper & Glider";
+						badgeZh = "分类：过渡型飞跃鸟类";
+						badgeEn = "Verdict: Intermediate Avians";
+					} else if (r < 1.20) {
+						verdictZh = "🦅 开阔林冠滑翔与长肢扑翼";
+						verdictEn = "🦅 Canopy Glider & Long-Wing Flapper";
+						badgeZh = "分类：始祖鸟型海湾滑翔者";
+						badgeEn = "Verdict: Archaeopteryx Glider Type";
+					} else {
+						verdictZh = "🕊️ 强健空中巡航与开阔翱翔者";
+						verdictEn = "🕊️ Strong Aerial Cruise & Flier";
+						badgeZh = "分类：强效飞翔大师";
+						badgeEn = "Verdict: High-Performance Aerialist";
+					}
+
+					if (meterVerdictText) {
+						meterVerdictText.innerHTML = `<span class="lang-zh">${verdictZh}</span><span class="lang-en">${verdictEn}</span>`;
+					}
+					if (canvasVerdictBadge) {
+						canvasVerdictBadge.innerHTML = `<span class="lang-zh">${badgeZh}</span><span class="lang-en">${badgeEn}</span>`;
+					}
+				}
+
+				if (ratioSlider) {
+					ratioSlider.addEventListener("input", (e) => {
+						updateWingRatio(e.target.value);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetYuezhuo) {
+					btnPresetYuezhuo.addEventListener("click", () => {
+						updateWingRatio(0.70, "Yuezhuornis");
+						btnPresetYuezhuo.classList.add("border-emerald-400", "bg-emerald-950/80", "text-emerald-200");
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetArchaeo) {
+					btnPresetArchaeo.addEventListener("click", () => {
+						updateWingRatio(1.15, "Archaeopteryx");
+						btnPresetArchaeo.classList.add("border-emerald-400", "bg-emerald-950/80", "text-emerald-200");
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetRoadrunner) {
+					btnPresetRoadrunner.addEventListener("click", () => {
+						updateWingRatio(0.65, "Roadrunner");
+						btnPresetRoadrunner.classList.add("border-emerald-400", "bg-emerald-950/80", "text-emerald-200");
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetPheasant) {
+					btnPresetPheasant.addEventListener("click", () => {
+						updateWingRatio(0.72, "Pheasant");
+						btnPresetPheasant.classList.add("border-emerald-400", "bg-emerald-950/80", "text-emerald-200");
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetCrow) {
+					btnPresetCrow.addEventListener("click", () => {
+						updateWingRatio(1.30, "Crow");
+						btnPresetCrow.classList.add("border-emerald-400", "bg-emerald-950/80", "text-emerald-200");
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 2. RUN OR FLY SWAMP MINI-SIMULATOR
+				// ==========================================
+				const simCanvas = document.getElementById("sim-canvas");
+				const simBtnRun = document.getElementById("sim-btn-run");
+				const simBtnFly = document.getElementById("sim-btn-fly");
+				const simBtnReset = document.getElementById("sim-btn-reset");
+				const hudMode = document.getElementById("hud-mode");
+				const hudDist = document.getElementById("hud-dist");
+				const hudSpeed = document.getElementById("hud-speed");
+				const simBanner = document.getElementById("sim-banner");
+				const simBannerText = document.getElementById("sim-banner-text");
+
+				let simCtx = simCanvas ? simCanvas.getContext("2d") : null;
+				let simState = {
+					mode: "idle", // 'idle', 'running', 'flying', 'finished'
+					activeMode: null,
+					posX: 50,
+					posY: 0,
+					velX: 0,
+					velY: 0,
+					distanceMeters: 0,
+					animStep: 0,
+					targetDistance: 0,
+					particles: [],
+					bestRun: 104.2,
+					bestFly: 31.5,
+				};
+
+				function resizeSimCanvas() {
+					if (!simCanvas) return;
+					const rect = simCanvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					simCanvas.width = Math.round(rect.width * dpr);
+					simCanvas.height = Math.round(rect.height * dpr);
+				}
+
+				window.addEventListener("resize", resizeSimCanvas, { signal: lifecycle.signal });
+				resizeSimCanvas();
+
+				function spawnParticles(x, y, count, type) {
+					for (let i = 0; i < count; i++) {
+						simState.particles.push({
+							x,
+							y,
+							vx: (Math.random() - 0.7) * (type === "mud" ? 4 : 2),
+							vy: (Math.random() - 0.5) * (type === "mud" ? 4 : 3) - 1.5,
+							radius: Math.random() * (type === "mud" ? 3.5 : 2.5) + 1,
+							color: type === "mud"
+								? (Math.random() > 0.5 ? "#475569" : "#334155")
+								: (Math.random() > 0.5 ? "#f59e0b" : "#cbd5e1"),
+							life: 1.0,
+							decay: Math.random() * 0.03 + 0.02,
+						});
+					}
+				}
+
+				function launchSimulator(mode) {
+					simState.mode = mode;
+					simState.activeMode = mode;
+					simState.posX = 60;
+					simState.animStep = 0;
+					simState.particles = [];
+
+					if (mode === "run") {
+						simState.targetDistance = 95 + Math.random() * 15; // 95 - 110 m
+						simState.velX = 8.5;
+						if (hudMode) {
+							hudMode.className = "text-emerald-400 font-bold";
+							hudMode.textContent = isEn() ? "RUN DASH / 奔跑中" : "RUN DASH / 奔跑中";
+						}
+					} else {
+						simState.targetDistance = 26 + Math.random() * 8; // 26 - 34 m
+						simState.velX = 4.2;
+						if (hudMode) {
+							hudMode.className = "text-amber-400 font-bold";
+							hudMode.textContent = isEn() ? "BURST FLAP / 扑腾中" : "BURST FLAP / 扑腾中";
+						}
+					}
+
+					if (simBanner) simBanner.style.opacity = "0";
+				}
+
+				if (simBtnRun) {
+					simBtnRun.addEventListener("click", () => launchSimulator("run"), { signal: lifecycle.signal });
+				}
+				if (simBtnFly) {
+					simBtnFly.addEventListener("click", () => launchSimulator("fly"), { signal: lifecycle.signal });
+				}
+				if (simBtnReset) {
+					simBtnReset.addEventListener("click", () => {
+						simState.mode = "idle";
+						simState.activeMode = null;
+						simState.posX = 60;
+						simState.distanceMeters = 0;
+						simState.particles = [];
+						if (hudMode) {
+							hudMode.className = "text-slate-400 font-bold";
+							hudMode.textContent = "READY / 待命";
+						}
+						if (hudDist) hudDist.textContent = "0.0 m";
+						if (hudSpeed) hudSpeed.textContent = "0.0 m/s";
+						if (simBanner) simBanner.style.opacity = "0";
+					}, { signal: lifecycle.signal });
+				}
+
+				// Simulator Game Loop
+				let lastSimTime = performance.now();
+
+				function renderSimulator(time) {
+					if (!simCtx || !simCanvas) return;
+					const dt = Math.min((time - lastSimTime) / 1000, 0.1);
+					lastSimTime = time;
+
+					const w = simCanvas.width;
+					const h = simCanvas.height;
+					const groundY = h * 0.72;
+
+					// Clear background
+					simCtx.fillStyle = "#071318";
+					simCtx.fillRect(0, 0, w, h);
+
+					// Draw Jurassic Swamp Backing (Atmosphere Gradient)
+					const swampGrad = simCtx.createLinearGradient(0, 0, 0, groundY);
+					swampGrad.addColorStop(0, "#081c1c");
+					swampGrad.addColorStop(0.6, "#0b2628");
+					swampGrad.addColorStop(1, "#13352f");
+					simCtx.fillStyle = swampGrad;
+					simCtx.fillRect(0, 0, w, groundY);
+
+					// Distant Cycad / Jurassic Tree Silhouettes
+					simCtx.fillStyle = "#0c2522";
+					for (let i = 0; i < 7; i++) {
+						const tx = (i * w * 0.18 + 40);
+						simCtx.beginPath();
+						simCtx.moveTo(tx, groundY);
+						simCtx.lineTo(tx + 6, groundY - 60);
+						simCtx.lineTo(tx - 25, groundY - 80);
+						simCtx.lineTo(tx, groundY - 68);
+						simCtx.lineTo(tx + 30, groundY - 82);
+						simCtx.lineTo(tx + 8, groundY - 60);
+						simCtx.closePath();
+						simCtx.fill();
+					}
+
+					// Ground Surface (Muddy Swamp & Waterline)
+					simCtx.fillStyle = "#1e293b";
+					simCtx.fillRect(0, groundY, w, h - groundY);
+
+					// Marsh Water Reflection Layer
+					simCtx.fillStyle = "#042f2e";
+					simCtx.fillRect(0, groundY, w, 10);
+					simCtx.fillStyle = "#0f766e";
+					for (let i = 0; i < 5; i++) {
+						const px = (i * 220 + (time * 0.05) % 220) % w;
+						simCtx.fillRect(px, groundY + 3, 40, 2);
+					}
+
+					// Distance Markers on Ground
+					simCtx.fillStyle = "#64748b";
+					simCtx.font = `${Math.round(10 * (window.devicePixelRatio || 1))}px monospace`;
+					for (let m = 0; m <= 120; m += 20) {
+						const markX = 60 + (m / 120) * (w - 120);
+						simCtx.fillRect(markX, groundY, 2, 8);
+						simCtx.fillText(`${m}m`, markX - 10, groundY + 22);
+					}
+
+					// Update simulation physics
+					if (simState.mode === "run") {
+						simState.animStep += dt * 16;
+						const progress = simState.posX / (w - 100);
+						simState.distanceMeters = progress * 120;
+
+						// Running jump over a puddle at midpoint
+						const jumpMid = w * 0.45;
+						let jumpH = 0;
+						if (Math.abs(simState.posX - jumpMid) < 80) {
+							jumpH = Math.sin(((simState.posX - jumpMid + 80) / 160) * Math.PI) * 25;
+						}
+						simState.posY = groundY - 30 - jumpH;
+						simState.posX += simState.velX * (w / 700);
+
+						// Mud splash particles
+						if (Math.random() < 0.4) {
+							spawnParticles(simState.posX - 10, groundY, 2, "mud");
+						}
+
+						if (hudDist) hudDist.textContent = `${simState.distanceMeters.toFixed(1)} m`;
+						if (hudSpeed) hudSpeed.textContent = `${(simState.velX * 1.8).toFixed(1)} m/s`;
+
+						if (simState.distanceMeters >= simState.targetDistance || simState.posX >= w - 100) {
+							simState.mode = "finished";
+							if (hudMode) {
+								hudMode.className = "text-emerald-400 font-bold";
+								hudMode.textContent = "DASH FINISHED! / 奔跑到达";
+							}
+							if (simBanner && simBannerText) {
+								simBannerText.innerHTML = isEn()
+									? `🏃 <strong>Ground Sprint Victorious!</strong> Covered <strong>${simState.distanceMeters.toFixed(1)} m</strong> smoothly across muddy terrain. Running wins!`
+									: `🏃 <strong>沼泽地栖奔跑完胜！</strong> 疾行覆盖 <strong>${simState.distanceMeters.toFixed(1)} 米</strong>，长腿迈步轻盈高效。奔跑大胜！`;
+								simBanner.style.opacity = "1";
+							}
+						}
+					} else if (simState.mode === "fly") {
+						simState.animStep += dt * 22;
+						const progress = simState.posX / (w - 100);
+						simState.distanceMeters = progress * 120;
+
+						// Clumsy struggling flight arc: lifts, stalls, drops
+						const flightProgress = simState.distanceMeters / simState.targetDistance;
+						let altitude = 0;
+						if (flightProgress < 0.3) {
+							altitude = (flightProgress / 0.3) * 35;
+						} else if (flightProgress < 0.7) {
+							altitude = 35 - ((flightProgress - 0.3) / 0.4) * 15 + Math.sin(time * 0.02) * 5;
+						} else {
+							altitude = 20 * (1 - (flightProgress - 0.7) / 0.3);
+						}
+						altitude = Math.max(0, altitude);
+						simState.posY = groundY - 30 - altitude;
+						simState.posX += simState.velX * (w / 700);
+
+						// Clumsy feather particles
+						if (Math.random() < 0.25) {
+							spawnParticles(simState.posX, simState.posY, 1, "feather");
+						}
+
+						if (hudDist) hudDist.textContent = `${simState.distanceMeters.toFixed(1)} m`;
+						if (hudSpeed) hudSpeed.textContent = `${Math.max(1.0, (simState.velX * (1 - flightProgress * 0.6) * 1.5)).toFixed(1)} m/s`;
+
+						if (simState.distanceMeters >= simState.targetDistance) {
+							simState.mode = "finished";
+							// Splash landing
+							spawnParticles(simState.posX, groundY, 8, "mud");
+							if (hudMode) {
+								hudMode.className = "text-amber-400 font-bold";
+								hudMode.textContent = "CRASH-LANDED / 扑腾力竭";
+							}
+							if (simBanner && simBannerText) {
+								simBannerText.innerHTML = isEn()
+									? `🪶 <strong>Burst Flap Exhausted!</strong> Stalled out at <strong>${simState.distanceMeters.toFixed(1)} m</strong>. Forelimbs too short to sustain lift.`
+									: `🪶 <strong>短途扑腾力竭着陆！</strong> 仅飞出 <strong>${simState.distanceMeters.toFixed(1)} 米</strong> 便失速栽倒。前肢短小，升力难以为继！`;
+								simBanner.style.opacity = "1";
+							}
+						}
+					} else if (simState.mode === "idle") {
+						simState.posY = groundY - 30;
+					}
+
+					// Update & Draw Particles
+					for (let i = simState.particles.length - 1; i >= 0; i--) {
+						const p = simState.particles[i];
+						p.x += p.vx;
+						p.y += p.vy;
+						p.life -= p.decay;
+						if (p.life <= 0) {
+							simState.particles.splice(i, 1);
+							continue;
+						}
+						simCtx.fillStyle = p.color;
+						simCtx.globalAlpha = p.life;
+						simCtx.beginPath();
+						simCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+						simCtx.fill();
+					}
+					simCtx.globalAlpha = 1.0;
+
+					// Draw Animated Yuezhuornis Bird Sprite
+					simCtx.save();
+					simCtx.translate(simState.posX, simState.posY);
+
+					// Bird Body & Tail
+					simCtx.fillStyle = "#10b981";
+					simCtx.beginPath();
+					simCtx.ellipse(0, 0, 18, 10, 0, 0, Math.PI * 2);
+					simCtx.fill();
+
+					// Tail
+					simCtx.fillStyle = "#059669";
+					simCtx.beginPath();
+					simCtx.moveTo(-15, 0);
+					simCtx.lineTo(-32, -4);
+					simCtx.lineTo(-30, 6);
+					simCtx.closePath();
+					simCtx.fill();
+
+					// Head & Beak
+					simCtx.fillStyle = "#10b981";
+					simCtx.beginPath();
+					simCtx.arc(16, -8, 7, 0, Math.PI * 2);
+					simCtx.fill();
+
+					// Eye & Beak
+					simCtx.fillStyle = "#facc15";
+					simCtx.fillRect(18, -10, 2.5, 2.5);
+					simCtx.fillStyle = "#f59e0b";
+					simCtx.beginPath();
+					simCtx.moveTo(22, -9);
+					simCtx.lineTo(31, -7);
+					simCtx.lineTo(22, -5);
+					simCtx.closePath();
+					simCtx.fill();
+
+					// Animated Legs (Walking/Running cycle)
+					simCtx.strokeStyle = "#38bdf8";
+					simCtx.lineWidth = 2.5;
+					simCtx.lineCap = "round";
+
+					if (simState.mode === "run") {
+						const legSwing1 = Math.sin(simState.animStep) * 14;
+						const legSwing2 = Math.sin(simState.animStep + Math.PI) * 14;
+
+						// Leg 1
+						simCtx.beginPath();
+						simCtx.moveTo(-2, 6);
+						simCtx.lineTo(legSwing1, 26);
+						simCtx.stroke();
+
+						// Leg 2
+						simCtx.beginPath();
+						simCtx.moveTo(4, 6);
+						simCtx.lineTo(legSwing2, 26);
+						simCtx.stroke();
+					} else if (simState.mode === "fly") {
+						// Legs dangling back
+						simCtx.beginPath();
+						simCtx.moveTo(-2, 6);
+						simCtx.lineTo(-12, 20);
+						simCtx.stroke();
+						simCtx.beginPath();
+						simCtx.moveTo(4, 6);
+						simCtx.lineTo(-6, 22);
+						simCtx.stroke();
+					} else {
+						// Idle standing legs
+						simCtx.beginPath();
+						simCtx.moveTo(-2, 6);
+						simCtx.lineTo(-2, 26);
+						simCtx.stroke();
+						simCtx.beginPath();
+						simCtx.moveTo(4, 6);
+						simCtx.lineTo(4, 26);
+						simCtx.stroke();
+					}
+
+					// Animated Wings (Small wings!)
+					simCtx.fillStyle = "#34d399";
+					simCtx.beginPath();
+					if (simState.mode === "fly") {
+						const flapAngle = Math.sin(simState.animStep * 1.5) * 18;
+						simCtx.moveTo(2, -2);
+						simCtx.lineTo(-12, -18 + flapAngle);
+						simCtx.lineTo(-16, 2);
+					} else {
+						// Tucked short wing
+						simCtx.moveTo(4, -2);
+						simCtx.lineTo(-10, -6);
+						simCtx.lineTo(-12, 4);
+					}
+					simCtx.closePath();
+					simCtx.fill();
+
+					simCtx.restore();
+
+					requestAnimationFrame(renderSimulator);
+				}
+
+				requestAnimationFrame(renderSimulator);
+
+				// ==========================================
+				// 3. MOSAIC BODY INTERACTIVE EXPLORER
+				// ==========================================
+				const hotspotWings = document.getElementById("hotspot-wings");
+				const hotspotTeeth = document.getElementById("hotspot-teeth");
+				const hotspotToe = document.getElementById("hotspot-toe");
+				const hotspotPelvis = document.getElementById("hotspot-pelvis");
+
+				const tabSpot1 = document.getElementById("tab-spot-1");
+				const tabSpot2 = document.getElementById("tab-spot-2");
+				const tabSpot3 = document.getElementById("tab-spot-3");
+				const tabSpot4 = document.getElementById("tab-spot-4");
+
+				const cardSpotNum = document.getElementById("card-spot-num");
+				const cardTraitTitle = document.getElementById("card-trait-title");
+				const cardAffinityBadge = document.getElementById("card-affinity-badge");
+				const cardPlainSentence = document.getElementById("card-plain-sentence");
+				const cardFactText = document.getElementById("card-fact-text");
+				const cardInferenceText = document.getElementById("card-inference-text");
+
+				const mosaicData = {
+					1: {
+						num: "1",
+						titleZh: "短于后肢的退化前肢 (Forelimbs Shorter than Hindlimbs)",
+						titleEn: "Forelimbs Shorter than Hindlimbs",
+						affinityZh: "🐦 鸟类地栖特化适应",
+						affinityEn: "🐦 Bird-like Ground Adaptation",
+						affinityClass: "bg-emerald-500/10 text-emerald-300 border-emerald-500/30",
+						sentenceZh: "杨源鸑鷟鸟的前肢骨骼显著短于后肢，与始祖鸟修长双翼完全相反，说明它在侏罗纪便已彻底放弃持续飞行，将身体重心完全押注在地面快速奔跑上。",
+						sentenceEn: "Forelimbs are notably shorter than hindlimbs—unlike Archaeopteryx—proving it had abandoned sustained flight in favor of ground life.",
+						factZh: "前肢各长骨总长显著小于后肢长骨总长（比值约 0.70），前肢发育比例与现代雉类相符。",
+						factEn: "Forelimb total bone length is distinctly smaller than hindlimb (ratio ~0.70), matching modern pheasants.",
+						inferZh: "推论其极可能像现代走鹃或雉鸡一样，栖息于水陆沼泽泥滩中疾跑，仅在危急时刻做短促扑翼跳跃。",
+						inferEn: "Likely a ground runner dwelling in wetlands like a modern roadrunner, relying on running rather than sustained flight.",
+					},
+					2: {
+						num: "2",
+						titleZh: "紧密排列的微细锯齿齿列 (Closely Packed Serrated Teeth)",
+						titleEn: "Closely Packed Serrated Teeth",
+						affinityZh: "🦖 恐龙原始祖征 (Dinosaurian)",
+						affinityEn: "🦖 Dinosaur-like Ancestral Trait",
+						affinityClass: "bg-rose-500/10 text-rose-300 border-rose-500/30",
+						sentenceZh: "口中保留了一整排紧密排布且带有微细锯齿的锋利牙齿，完整保留了肉食性兽脚恐龙祖先捕食滑溜水生猎物的原始利器。",
+						sentenceEn: "Closely packed serrated teeth inside its jaws retain the ancestral theropod dinosaur toolkit for snapping up small swamp prey.",
+						factZh: "头骨颌骨内保存有清晰密集的齿列，每个牙齿边缘可见肉眼难辨但高倍显微镜下锐利的微细锯齿构造。",
+						factEn: "Jaws preserve an intact dentition featuring microscopically sharp serrations along the carinae.",
+						inferZh: "科学推论其食性偏好沼泽浅滩中的小鱼、软体动物及水生节肢动物，利用锯齿牙齿瞬间死锁滑腻猎物。",
+						inferEn: "Inferred to be adapted for seizing slippery aquatic prey like small fish, molluscs, and swamp arthropods.",
+					},
+					3: {
+						num: "3",
+						titleZh: "高度可背伸的特化第二脚趾 (Hyper-Extensible Second Toe)",
+						titleEn: "Hyper-Extensible Second Toe",
+						affinityZh: "🦖 类似恐爪龙类机制 (Deinonychosaur-like)",
+						affinityEn: "🦖 Deinonychosaur-like Mechanism",
+						affinityClass: "bg-amber-500/10 text-amber-300 border-amber-500/30",
+						sentenceZh: "第二脚趾骨节拥有超大的仰起活动度，酷似恐爪龙类的“杀戮爪”关节，可在泥泞沼泽奔跑时向上抬起以防受阻或磨损。",
+						sentenceEn: "A hyper-extensible second toe echoes deinonychosaurian raptors, lifting upward while sprinting across muddy swamp surfaces.",
+						factZh: "第二足趾的趾骨关节面呈现明显向背侧扩张的滑车弧度，具备极大的背伸仰角生理活动范围。",
+						factEn: "Phalangeal joints of digit II exhibit distinct dorsal expansion allowing extreme hyperextension.",
+						inferZh: "推论这一结构是适应沼泽软泥疾跑的“防泥陷与护爪机制”，在高速冲刺时脚爪悬空收拢，着地时展开受力。",
+						inferEn: "Inferred as a wetland running adaptation: lifting the claw prevents dragging or sinking into thick swamp mud.",
+					},
+					4: {
+						num: "4",
+						titleZh: "鸟类特化骨盆与修长奔跑后肢 (Avian Pelvis & Cursorial Hindlimbs)",
+						titleEn: "Bird-like Pelvis & Cursorial Hindlimbs",
+						affinityZh: "🐦 进步鸟类骨骼结构 (Bird-like)",
+						affinityEn: "🐦 Advanced Avian Skeletal Plan",
+						affinityClass: "bg-cyan-500/10 text-cyan-300 border-cyan-500/30",
+						sentenceZh: "骨盆结构高度特化，配合修长强劲的后肢长骨，提供了极具爆发力的地面疾跑杠杆与减震力。",
+						sentenceEn: "A bird-like pelvis joined with long, sturdy hindlimbs created powerful mechanical levers engineered for rapid ground dashes.",
+						factZh: "髂骨与坐骨愈合形态具备明确鸟类特征，股骨、胫跗骨与跗跖骨比例修长坚韧，与飞行鸟类骨盆显著有别。",
+						factEn: "Pelvic bones show avian fusion, paired with elongate, cursorially proportioned leg elements.",
+						inferZh: "推论其步态动力学已进化出极高的步频与步幅，证明鸟类体型并非全为飞行演化，地面奔跑同样能塑造精妙的身体图式。",
+						inferEn: "Inferred to support high-cadence strides, proving that ground running independently shaped advanced avian anatomy.",
+					},
+				};
+
+				function selectMosaicSpot(spotId) {
+					const data = mosaicData[spotId];
+					if (!data) return;
+
+					// Update tab buttons
+					[tabSpot1, tabSpot2, tabSpot3, tabSpot4].forEach((tab, idx) => {
+						if (!tab) return;
+						if (idx + 1 === spotId) {
+							tab.className = "spot-tab-btn py-1.5 px-1 rounded bg-emerald-950/80 border border-emerald-400 text-emerald-300 font-bold transition active:scale-95 text-center cursor-pointer";
+						} else {
+							tab.className = "spot-tab-btn py-1.5 px-1 rounded bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 font-bold transition active:scale-95 text-center cursor-pointer";
+						}
+					});
+
+					if (cardSpotNum) cardSpotNum.textContent = data.num;
+					if (cardTraitTitle) {
+						cardTraitTitle.innerHTML = `<span class="lang-zh">${data.titleZh}</span><span class="lang-en">${data.titleEn}</span>`;
+					}
+					if (cardAffinityBadge) {
+						cardAffinityBadge.className = `px-2.5 py-1 rounded-full text-xs font-mono font-bold border ${data.affinityClass}`;
+						cardAffinityBadge.innerHTML = `<span class="lang-zh">${data.affinityZh}</span><span class="lang-en">${data.affinityEn}</span>`;
+					}
+					if (cardPlainSentence) {
+						cardPlainSentence.innerHTML = `<span class="lang-zh">${data.sentenceZh}</span><span class="lang-en">${data.sentenceEn}</span>`;
+					}
+					if (cardFactText) {
+						cardFactText.innerHTML = `<span class="lang-zh">${data.factZh}</span><span class="lang-en">${data.factEn}</span>`;
+					}
+					if (cardInferenceText) {
+						cardInferenceText.innerHTML = `<span class="lang-zh">${data.inferZh}</span><span class="lang-en">${data.inferEn}</span>`;
+					}
+				}
+
+				if (hotspotWings) hotspotWings.addEventListener("click", () => selectMosaicSpot(1), { signal: lifecycle.signal });
+				if (hotspotTeeth) hotspotTeeth.addEventListener("click", () => selectMosaicSpot(2), { signal: lifecycle.signal });
+				if (hotspotToe) hotspotToe.addEventListener("click", () => selectMosaicSpot(3), { signal: lifecycle.signal });
+				if (hotspotPelvis) hotspotPelvis.addEventListener("click", () => selectMosaicSpot(4), { signal: lifecycle.signal });
+
+				if (tabSpot1) tabSpot1.addEventListener("click", () => selectMosaicSpot(1), { signal: lifecycle.signal });
+				if (tabSpot2) tabSpot2.addEventListener("click", () => selectMosaicSpot(2), { signal: lifecycle.signal });
+				if (tabSpot3) tabSpot3.addEventListener("click", () => selectMosaicSpot(3), { signal: lifecycle.signal });
+				if (tabSpot4) tabSpot4.addEventListener("click", () => selectMosaicSpot(4), { signal: lifecycle.signal });
+
+				// Initialize with default state
+				updateWingRatio(0.70, "Yuezhuornis");
+				selectMosaicSpot(1);
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initGroundedWings);
+			} else {
+				initGroundedWings();
+			}
+			document.addEventListener("astro:page-load", initGroundedWings);
+		})();
+	</script>
+</MainGridLayout>
