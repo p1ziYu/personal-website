@@ -36,6 +36,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"switchback",
 	"the-last-scan",
 	"the-smallest-triangle",
+	"verdant-star",
 	"word-strata",
 ]);
 
