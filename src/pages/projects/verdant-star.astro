@@ -1,0 +1,1785 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Verdant Star · WD J1330+6435 Lab"
+	: "幽绿星 · VERDANT STAR";
+const description = isEn
+	? "Verdant Star: Exploring WD J1330+6435, the first known genuinely green star, roughly 280 light-years away in Draco. Extreme helium-sodium collisional broadening subtracts orange and red to unveil a ghostly chartreuse glow (RAS Techniques and Instruments 2026)."
+	: "幽绿星 · VERDANT STAR：探索天文学确认的首颗真正绿色恒星——白矮星 WD J1330+6435。《皇家天文学会仪器与技术》2026年10月发表成果：超高密度富氦大气中钠原子碰撞致宽，吸收黄橙红光谱，在4000°C恒星遗骸上刻蚀出一抹不可思议的黄绿幽光。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#070b14] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-lime-500/30 selection:text-lime-200">
+			<!-- Ambient Chartreuse & Deep Space Glow -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#84cc16_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-96 h-96 bg-lime-500/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/4 -right-32 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/3 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-500/10 border border-lime-500/30 text-lime-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
+							<span>RAS TECH & INST · 2026-10-16 · HOLLANDS ET AL.</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono">
+							<span>✨</span>
+							<span class="lang-zh">天体物理 · 恒星光谱重构实验</span>
+							<span class="lang-en">ASTROPHYSICS · STELLAR COLOR RECONSTRUCTION</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">天龙座方向 · 距地约 280 光年</span>
+							<span class="lang-en">Constellation Draco · ~280 Light-Years</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/verdant-star/" : "/en/projects/verdant-star/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-lime-500/40 text-lime-300 hover:text-white hover:bg-lime-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "Switch to Chinese" : "切换为英文"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">幽绿星 · VERDANT STAR</span>
+					<span class="lang-en">VERDANT STAR · WD J1330+6435</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-lime-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">宇宙中最不可思议的一抹幽光：天文学家首次证实真正呈现绿色的恒星。</span>
+					<span class="lang-en">The most improbable glow in the cosmos: astronomers confirm the first genuinely green star.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							2026 年 10 月 15/16 日，英国华威大学（University of Warwick）马克·霍兰兹（Mark Hollands）与鲍里斯·根西克（Boris Gänsicke）等人在国际天文学术期刊《皇家天文学会仪器与技术》（<em>RAS Techniques and Instruments</em>）发表里程碑研究：在距地球约 <strong>280 光年</strong>的天龙座方向，确认了一颗表面温度约 <strong>4,000 °C</strong> 的奇特白矮星——<strong>WD J1330+6435</strong>。它是一颗低至中等质量恒星核燃料耗尽、抛离外壳后遗留下的超致密恒星遗骸，将约半个太阳的质量压缩在与地球体积相当的微小球体内。
+						</span>
+						<span class="lang-en">
+							Reported in mid-October 2026 by lead author Mark Hollands and co-author Boris Gänsicke (University of Warwick) in <em>RAS Techniques and Instruments</em>, astronomers identified an unprecedented stellar relic roughly <strong>280 light-years</strong> away in Draco at approximately <strong>4,000 °C</strong>: white dwarf <strong>WD J1330+6435</strong>. It is a stellar corpse—the dense core of a star that exhausted its nuclear fuel and shed its outer layers, compacting roughly half the Sun's mass into an Earth-sized sphere.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							这颗死寂的白矮星吞噬了曾经环绕其运转的岩石行星碎片，使得高密度富氦外层大气富集了钙、锂、尤其是大量的钠。在极端稠密的氦气包层中，钠原子受到氦原子永不停歇的高频剧烈碰撞扰动（碰撞致宽 / 压力致宽），原本狭窄的橙色钠双线（~589 nm）被极度拓宽为吞噬了黄、橙乃至部分红光的浩瀚吸收带。当这些暖色波段被悉数扣除后，残存的光芒便显露出前所未见的<strong>查特酒绿幽光（chartreuse green glow）</strong>。据研究团队所知，已知所有存活或死亡的恒星中，此前从未有过任何一颗被可靠确认为绿色。
+						</span>
+						<span class="lang-en">
+							The white dwarf accreted rocky debris from shredded former planetary bodies, enriching its helium-rich atmosphere with calcium, lithium, and especially sodium. In its ultra-dense helium envelope, sodium atoms undergo violent, incessant bombardment by helium atoms (collisional broadening). This stretches the usually narrow orange sodium D-line into colossal absorption bands engulfing yellow, orange, and some red light. With those wavelengths subtracted from its 4,000 °C continuum, what remains is an otherworldly <strong>chartreuse green glow</strong>. As far as researchers are aware, no other star, living or dead, has ever been credibly reported as green.
+						</span>
+					</p>
+				</div>
+
+				<!-- Attributed Researcher Quote Card (Hollands only) -->
+				<div class="mt-6 p-4 rounded-xl bg-slate-900/90 border border-lime-500/30 relative overflow-hidden">
+					<div class="text-xs font-mono text-lime-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+						<span>💬</span>
+						<span class="lang-zh">领衔作者论断 · MARK HOLLANDS (WARWICK)</span>
+						<span class="lang-en">LEAD AUTHOR PERSPECTIVE · MARK HOLLANDS (WARWICK)</span>
+					</div>
+					<blockquote class="text-sm sm:text-base text-slate-200 italic font-serif leading-relaxed">
+						<span class="lang-zh">
+							马克·霍兰兹指出，高密大气中的钠吸收了光谱中的橙光部分，留下了幽灵般的黄绿幽光——“<strong class="text-lime-300">Imagine standing on a planet and looking up at a green star. It feels like something out of science fiction.</strong>”
+							<span class="block text-xs font-sans text-slate-400 not-italic mt-1">（“想象一下站在一颗行星表面，抬头仰望一颗绿色的恒星。这感觉就像科幻小说里的景象。”）</span>
+						</span>
+						<span class="lang-en">
+							Mark Hollands said the sodium absorbs the orange part of the spectrum, leaving a ghostly green glow—"<strong class="text-lime-300">Imagine standing on a planet and looking up at a green star. It feels like something out of science fiction.</strong>"
+						</span>
+					</blockquote>
+				</div>
+
+				<!-- Scientific Honesty Note Card -->
+				<div class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-amber-500/30 text-xs text-slate-300 leading-relaxed">
+					<div class="text-amber-400 font-mono font-bold uppercase tracking-wider mb-1.5 flex items-center gap-2">
+						<span>🔭</span>
+						<span class="lang-zh">科学严谨性特别说明：这是重构模型，而非肉眼直视</span>
+						<span class="lang-en">SCIENTIFIC HONESTY NOTE: RECONSTRUCTED MODEL, NOT EYE OBSERVATION</span>
+					</div>
+					<p>
+						<span class="lang-zh">
+							必须诚实指出：<strong>没有任何人的眼睛真正亲眼见过这抹绿光</strong>。白矮星极其暗弱，即便在地面顶级口径望远镜中也仅仅呈现为一个毫无视面积的光斑点，绝非肉眼可见的彩色圆盘。本页面与论文展示的色彩，是基于高分辨实测光谱、恒星辐射转移大气模型以及国际照明委员会（CIE）标准人类颜色视觉系统综合还原重构的——即<strong>“如果你近距离飞临它面前时肉眼所见的样子”</strong>。
+						</span>
+						<span class="lang-en">
+							Crucial honesty note: <strong>nobody has seen this green with human eyes</strong>. White dwarfs are intensely faint, appearing as unresolved point sources even in giant telescopes, never as resolved colored discs. The color showcased here is reconstructed by marrying calibrated stellar spectra and radiative transfer atmospheric models with the CIE standard human color vision observer model: <strong>"what it would look like up close."</strong>
+						</span>
+					</p>
+				</div>
+
+				<!-- Key Discovery Facts Row -->
+				<div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mt-6">
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-lime-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">目标星体与星宿</span>
+							<span class="lang-en">TARGET & CONSTELLATION</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-white mt-1">WD J1330+6435</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">天龙座 · 距地约 280 光年</span>
+							<span class="lang-en">Constellation Draco · ~280 ly</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-amber-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">有效表面温度</span>
+							<span class="lang-en">SURFACE TEMPERATURE</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-amber-300 mt-1">~4,000 °C</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">~4,270 K · 原生橙红辐射连续谱</span>
+							<span class="lang-en">~4,270 K · Baseline orange glow</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-teal-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">恒星质量与体积</span>
+							<span class="lang-en">STELLAR DENSITY</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-teal-300 mt-1">~0.5 M☉ / 地球大小</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">半个太阳压缩至地球体积</span>
+							<span class="lang-en">Half solar mass in Earth volume</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-xs font-mono text-rose-400 font-semibold tracking-wider uppercase">
+							<span class="lang-zh">最红姐妹星发现</span>
+							<span class="lang-en">REDDEST COMPANION</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-rose-300 mt-1">WD J1011+2845</div>
+						<div class="text-xs text-slate-400 mt-1">
+							<span class="lang-zh">小狮座 48 光年 · 碳对流深肉粉</span>
+							<span class="lang-en">Leo Minor 48 ly · Salmon-pink</span>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<!-- 1. CENTERPIECE: STAR PAINTER (SPECTRUM MIXER) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-lime-400 uppercase tracking-widest mb-1">
+							<span>🎨 核心交互实验室</span>
+							<span>·</span>
+							<span class="lang-zh">恒星调色盘</span>
+							<span class="lang-en">Star Painter Spectrum Engine</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">恒星调色盘：用光谱雕琢宇宙唯一的幽绿</span>
+							<span class="lang-en">Star Painter: Sculpting the Green Glow via Absorption</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1.5 rounded-full bg-slate-900 border border-lime-500/40 text-lime-300">
+						<span class="lang-zh">⚠️ 物理学示意模型，非研究人员实测精确谱线</span>
+						<span class="lang-en">⚠️ Illustrative model of physics, not exact spectra</span>
+					</div>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						基准始于一颗约 4,000 °C 的常规冷白矮星热辐射（原本呈温暖的橙红火光）。拨动下方吸收滑块或轻点预设，模拟不同行星碎屑与大气碰撞对 380–750 nm 可见光波段的“剪裁”：<strong>唯有精准剔除黄、橙与部分红光，深藏在光谱中央的黄绿基底才能在人眼模型中脱颖而出</strong>。
+					</span>
+					<span class="lang-en">
+						Begin with the baseline 4,000 °C thermal radiation of a cooling white dwarf (an orange glow). Toggle absorption bands or choose presets below to simulate how planetary debris and collisional broadening subtract specific slices from the 380–750 nm spectrum: <strong>only by carving away yellow, orange, and red can chartreuse green emerge in human perception</strong>.
+					</span>
+				</p>
+
+				<!-- PRESET BUTTONS ROW -->
+				<div class="mb-6 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+					<div class="text-xs font-mono uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-2">
+						<span>⚡</span>
+						<span class="lang-zh">科学特征预设（一键载入恒星光谱配置）:</span>
+						<span class="lang-en">Scientific Presets (One-click Stellar Configurations):</span>
+					</div>
+					<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="preset-buttons">
+						<button
+							type="button"
+							data-preset="ordinary"
+							class="preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500"
+						>
+							<div class="flex items-center gap-1.5 text-amber-400">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#ffa652] inline-block"></span>
+								<span class="lang-zh">普通 4,000°C 恒星</span>
+								<span class="lang-en">Ordinary 4,000°C</span>
+							</div>
+							<div class="text-[10px] text-slate-400 mt-0.5">
+								<span class="lang-zh">基准橙红光</span>
+								<span class="lang-en">Orange Baseline</span>
+							</div>
+						</button>
+
+						<button
+							type="button"
+							data-preset="wd1330"
+							class="preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-lime-950/80 border-lime-400 text-lime-300 shadow-[0_0_12px_rgba(132,204,22,0.3)]"
+						>
+							<div class="flex items-center gap-1.5 text-lime-300">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#8fee40] inline-block animate-pulse"></span>
+								<span class="lang-zh">WD J1330+6435</span>
+								<span class="lang-en">WD J1330+6435</span>
+							</div>
+							<div class="text-[10px] text-lime-400/80 mt-0.5">
+								<span class="lang-zh">查特酒绿 · 钠致宽</span>
+								<span class="lang-en">Chartreuse Green</span>
+							</div>
+						</button>
+
+						<button
+							type="button"
+							data-preset="wd1011"
+							class="preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500"
+						>
+							<div class="flex items-center gap-1.5 text-rose-300">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#ff7b72] inline-block"></span>
+								<span class="lang-zh">WD J1011+2845</span>
+								<span class="lang-en">WD J1011+2845</span>
+							</div>
+							<div class="text-[10px] text-slate-400 mt-0.5">
+								<span class="lang-zh">深肉粉 · 最红恒星</span>
+								<span class="lang-en">Salmon Pink</span>
+							</div>
+						</button>
+
+						<button
+							type="button"
+							data-preset="carbon"
+							class="preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500"
+						>
+							<div class="flex items-center gap-1.5 text-fuchsia-300">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#e879f9] inline-block"></span>
+								<span class="lang-zh">富碳白矮星</span>
+								<span class="lang-en">Carbon-Rich</span>
+							</div>
+							<div class="text-[10px] text-slate-400 mt-0.5">
+								<span class="lang-zh">碳斯旺带 · 粉紫调</span>
+								<span class="lang-en">Pink / Purple</span>
+							</div>
+						</button>
+
+						<button
+							type="button"
+							data-preset="debris"
+							class="preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500"
+						>
+							<div class="flex items-center gap-1.5 text-yellow-300">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#facc15] inline-block"></span>
+								<span class="lang-zh">岩质碎屑污染</span>
+								<span class="lang-en">Debris-Polluted</span>
+							</div>
+							<div class="text-[10px] text-slate-400 mt-0.5">
+								<span class="lang-zh">铁钙吸收 · 金黄色</span>
+								<span class="lang-en">Yellow Tint</span>
+							</div>
+						</button>
+
+						<button
+							type="button"
+							data-preset="h2he"
+							class="preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500"
+						>
+							<div class="flex items-center gap-1.5 text-cyan-300">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#22d3ee] inline-block"></span>
+								<span class="lang-zh">冷氢氦碰撞星</span>
+								<span class="lang-en">H+He Cool</span>
+							</div>
+							<div class="text-[10px] text-slate-400 mt-0.5">
+								<span class="lang-zh">碰撞诱导吸收 · 青蓝</span>
+								<span class="lang-en">Cyan / Pale Blue</span>
+							</div>
+						</button>
+					</div>
+				</div>
+
+				<!-- MAIN TWO-COLUMN WORKBENCH: VISUALIZER & ABSORPTION SLIDERS -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+					<!-- LEFT: BIG GLOWING STAR DISC & COLOR CARDS (5 cols) -->
+					<div class="lg:col-span-5 flex flex-col items-center p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl relative overflow-hidden">
+						<!-- Atmospheric glow backdrop -->
+						<div id="star-corona-bg" class="absolute w-72 h-72 rounded-full blur-3xl opacity-40 pointer-events-none transition-colors duration-500 bg-lime-400"></div>
+
+						<div class="text-xs font-mono uppercase tracking-widest text-slate-400 mb-4 flex items-center justify-between w-full">
+							<span class="flex items-center gap-1.5">
+								<span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+								<span class="lang-zh">肉眼视感还原模拟</span>
+								<span class="lang-en">Perceived Color Simulation</span>
+							</span>
+							<span id="star-temp-tag" class="text-slate-400 font-mono">T = ~4,000 °C</span>
+						</div>
+
+						<!-- THE BIG GLOWING STAR DISC -->
+						<div class="relative w-56 h-56 my-4 flex items-center justify-center">
+							<!-- Multi-layer corona and flare -->
+							<div id="star-outer-halo" class="absolute inset-0 rounded-full blur-2xl opacity-60 transition-all duration-300"></div>
+							<div id="star-mid-halo" class="absolute inset-4 rounded-full blur-md opacity-80 transition-all duration-300"></div>
+							<div id="star-disc" class="relative w-36 h-36 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center border border-white/40">
+								<!-- Core blinding hot center -->
+								<div class="w-14 h-14 rounded-full bg-white/90 blur-xs"></div>
+							</div>
+							<!-- Subtle diffraction spikes -->
+							<div id="diffraction-h" class="absolute w-60 h-[1.5px] bg-white/20 pointer-events-none"></div>
+							<div id="diffraction-v" class="absolute h-60 w-[1.5px] bg-white/20 pointer-events-none"></div>
+						</div>
+
+						<!-- COLOR IDENTITY & SCIENTIFIC NAMING CARD -->
+						<div class="w-full mt-4 p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-center">
+							<div class="text-xs font-mono text-slate-400 mb-1">
+								<span class="lang-zh">重构人眼感知色度 (CIE sRGB Model)</span>
+								<span class="lang-en">Reconstructed Color (CIE sRGB)</span>
+							</div>
+							<div id="star-color-name" class="text-xl sm:text-2xl font-black tracking-tight text-lime-300 mb-1 font-mono">
+								<span class="lang-zh">查特酒绿 / 黄绿幽光 (Chartreuse)</span>
+								<span class="lang-en">Chartreuse Green Glow</span>
+							</div>
+							<div class="flex items-center justify-center gap-3 text-xs font-mono text-slate-400 mt-2">
+								<span id="star-color-hex" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-200">#8FEE40</span>
+								<span id="star-color-rgb" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-200">rgb(143, 238, 64)</span>
+							</div>
+							<p id="star-color-desc" class="text-xs text-slate-400 mt-3 leading-relaxed text-left border-t border-slate-800/80 pt-2.5">
+								<span class="lang-zh">高密氦大气中钠原子碰撞致宽吸收了橙黄光带，留存的绿色波段与微弱蓝端混合，呈现幽魅的黄绿色彩。</span>
+								<span class="lang-en">Collisional sodium broadening in dense helium removes the orange-yellow band, leaving green and blue to form a chartreuse glow.</span>
+							</p>
+						</div>
+					</div>
+
+					<!-- RIGHT: TRANSMISSION SPECTRUM GRAPH & 4 ABSORPTION BANDS (7 cols) -->
+					<div class="lg:col-span-7 space-y-5">
+						<!-- SPECTRUM CANVAS / SVG DISPLAY -->
+						<div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+							<div class="flex items-center justify-between text-xs font-mono text-slate-300 mb-2">
+								<span class="font-bold flex items-center gap-1.5">
+									<span>📊</span>
+									<span class="lang-zh">实测谱线透射曲线 (380–750 nm)</span>
+									<span class="lang-en">Transmitted Flux Curve (380–750 nm)</span>
+								</span>
+								<span class="text-slate-400 text-[11px]">
+									<span class="lang-zh">虚线：4000°C 橙黑体基准 / 实线：大气过滤透射</span>
+									<span class="lang-en">Dashed: 4000°C Planck / Solid: Transmitted</span>
+								</span>
+							</div>
+
+							<!-- SVG Spectrum Graph -->
+							<div class="relative w-full h-44 bg-slate-950 rounded-xl overflow-hidden border border-slate-800/80 p-2">
+								<svg id="spectrum-svg" class="w-full h-full overflow-visible" viewBox="0 0 500 130" preserveAspectRatio="none">
+									<!-- Background Wavelength Color Gradient -->
+									<defs>
+										<linearGradient id="spectrum-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+											<stop offset="0%" stop-color="#7c3aed" stop-opacity="0.3"/> <!-- 380 nm -->
+											<stop offset="15%" stop-color="#3b82f6" stop-opacity="0.3"/> <!-- 440 nm -->
+											<stop offset="35%" stop-color="#06b6d4" stop-opacity="0.3"/> <!-- 500 nm -->
+											<stop offset="50%" stop-color="#22c55e" stop-opacity="0.3"/> <!-- 550 nm -->
+											<stop offset="65%" stop-color="#eab308" stop-opacity="0.3"/> <!-- 600 nm -->
+											<stop offset="80%" stop-color="#f97316" stop-opacity="0.3"/> <!-- 650 nm -->
+											<stop offset="100%" stop-color="#ef4444" stop-opacity="0.3"/> <!-- 750 nm -->
+										</linearGradient>
+										<linearGradient id="transmitted-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+											<stop offset="0%" stop-color="#a3e635" stop-opacity="0.35"/>
+											<stop offset="100%" stop-color="#a3e635" stop-opacity="0.02"/>
+										</linearGradient>
+									</defs>
+
+									<!-- Wavelength Gridlines -->
+									<line x1="75" y1="0" x2="75" y2="120" stroke="#334155" stroke-dasharray="2,3" stroke-width="0.8"/>
+									<line x1="150" y1="0" x2="150" y2="120" stroke="#334155" stroke-dasharray="2,3" stroke-width="0.8"/>
+									<line x1="225" y1="0" x2="225" y2="120" stroke="#334155" stroke-dasharray="2,3" stroke-width="0.8"/>
+									<line x1="300" y1="0" x2="300" y2="120" stroke="#334155" stroke-dasharray="2,3" stroke-width="0.8"/>
+									<line x1="375" y1="0" x2="375" y2="120" stroke="#334155" stroke-dasharray="2,3" stroke-width="0.8"/>
+									<line x1="450" y1="0" x2="450" y2="120" stroke="#334155" stroke-dasharray="2,3" stroke-width="0.8"/>
+
+									<!-- Baseline 4,000°C Blackbody Curve (Dashed) -->
+									<path id="svg-baseline-path" d="" fill="none" stroke="#64748b" stroke-dasharray="3,3" stroke-width="1.5" opacity="0.6"/>
+
+									<!-- Active Transmitted Spectrum Filled Area & Line -->
+									<path id="svg-fill-path" d="" fill="url(#transmitted-fill)"/>
+									<path id="svg-transmitted-path" d="" fill="none" stroke="#84cc16" stroke-width="2.5"/>
+
+									<!-- Highlight Green Window (510-560 nm, x: 175 to 243) -->
+									<rect x="175" y="5" width="68" height="115" fill="#22c55e" opacity="0.08" pointer-events="none"/>
+									<text x="209" y="18" fill="#4ade80" font-size="8" font-family="monospace" text-anchor="middle">GREEN 510-560nm</text>
+								</svg>
+							</div>
+
+							<!-- Rainbow Spectrum Bar with dynamic transmission mask -->
+							<div class="mt-2.5">
+								<div class="relative h-6 rounded-md overflow-hidden bg-slate-950 border border-slate-800">
+									<!-- Base Rainbow -->
+									<div class="absolute inset-0 bg-gradient-to-r from-[#581c87] via-[#2563eb] via-[#06b6d4] via-[#22c55e] via-[#eab308] via-[#ea580c] to-[#dc2626]"></div>
+									<!-- Transmission overlay mask (live darkened via canvas/divs) -->
+									<div id="rainbow-mask" class="absolute inset-0 pointer-events-none transition-opacity duration-200"></div>
+								</div>
+								<!-- Wavelength ruler labels -->
+								<div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1 px-0.5">
+									<span>380nm (紫)</span>
+									<span>450nm (蓝)</span>
+									<span>500nm (青)</span>
+									<span class="text-lime-400 font-bold">550nm (绿)</span>
+									<span>589nm (Na)</span>
+									<span>650nm (红)</span>
+									<span>750nm (深红)</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- 4 DRAGGABLE / TOGGLEABLE ABSORPTION BANDS -->
+						<div class="space-y-3">
+							<!-- 1. SODIUM (Na) COLLISIONAL BROADENING -->
+							<div class="p-3.5 rounded-xl bg-slate-900/80 border border-lime-500/30 transition hover:border-lime-500/60">
+								<div class="flex items-center justify-between gap-2 mb-2">
+									<div class="flex items-center gap-2">
+										<button
+											id="toggle-na"
+											type="button"
+											class="w-5 h-5 rounded flex items-center justify-center border transition cursor-pointer bg-lime-500 border-lime-400 text-black font-bold text-xs"
+											title="Toggle Sodium Absorption"
+										>✓</button>
+										<label for="slider-na" class="text-xs font-mono font-bold text-lime-300 cursor-pointer">
+											<span class="lang-zh">钠元素碰撞致宽吸收 (Sodium Na D-Lines · 550–650 nm)</span>
+											<span class="lang-en">Sodium Collisional Broadening (Na · 550–650 nm)</span>
+										</label>
+									</div>
+									<span id="badge-na-val" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-lime-950 text-lime-300 border border-lime-800/60">95%</span>
+								</div>
+								<input
+									id="slider-na"
+									type="range"
+									min="0"
+									max="100"
+									value="95"
+									class="w-full accent-lime-400 bg-slate-800 rounded-lg cursor-pointer"
+								/>
+								<div class="flex justify-between text-[11px] text-slate-400 mt-1.5 leading-tight">
+									<span>
+										<span class="lang-zh">富氦大气剧烈碰撞，将 589nm 橙线展宽为跨越黄/橙/红的深巨吸收带。</span>
+										<span class="lang-en">High-density He collisions broaden 589nm line into a massive yellow-orange-red trough.</span>
+									</span>
+									<span class="font-mono text-lime-400/80 shrink-0 ml-2">WD J1330+6435 核心机制</span>
+								</div>
+							</div>
+
+							<!-- 2. CARBON (C2) CONVECTIVE DREDGING -->
+							<div class="p-3.5 rounded-xl bg-slate-900/80 border border-rose-500/30 transition hover:border-rose-500/60">
+								<div class="flex items-center justify-between gap-2 mb-2">
+									<div class="flex items-center gap-2">
+										<button
+											id="toggle-carbon"
+											type="button"
+											class="w-5 h-5 rounded flex items-center justify-center border transition cursor-pointer bg-slate-800 border-slate-700 text-transparent text-xs"
+											title="Toggle Carbon Absorption"
+										></button>
+										<label for="slider-carbon" class="text-xs font-mono font-bold text-rose-300 cursor-pointer">
+											<span class="lang-zh">碳元素对流翻卷吸积 (Carbon C₂ Swan Bands · &lt; 600 nm)</span>
+											<span class="lang-en">Carbon Convective Dredging (C₂ Swan · &lt; 600 nm)</span>
+										</label>
+									</div>
+									<span id="badge-carbon-val" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-rose-950 text-rose-300 border border-rose-800/60">0%</span>
+								</div>
+								<input
+									id="slider-carbon"
+									type="range"
+									min="0"
+									max="100"
+									value="0"
+									class="w-full accent-rose-400 bg-slate-800 rounded-lg cursor-pointer"
+								/>
+								<div class="flex justify-between text-[11px] text-slate-400 mt-1.5 leading-tight">
+									<span>
+										<span class="lang-zh">斯旺带强烈压制 600nm 以下波段，迫使光谱全数退守红端，形成深肉粉色。</span>
+										<span class="lang-en">Molecular C₂ Swan bands extinguish light below 600nm, squeezing output into salmon-pink.</span>
+									</span>
+									<span class="font-mono text-rose-400/80 shrink-0 ml-2">WD J1011+2845 最红星机制</span>
+								</div>
+							</div>
+
+							<!-- 3. ROCKY DEBRIS POLLUTION -->
+							<div class="p-3.5 rounded-xl bg-slate-900/80 border border-yellow-500/30 transition hover:border-yellow-500/60">
+								<div class="flex items-center justify-between gap-2 mb-2">
+									<div class="flex items-center gap-2">
+										<button
+											id="toggle-debris"
+											type="button"
+											class="w-5 h-5 rounded flex items-center justify-center border transition cursor-pointer bg-slate-800 border-slate-700 text-transparent text-xs"
+											title="Toggle Debris Absorption"
+										></button>
+										<label for="slider-debris" class="text-xs font-mono font-bold text-yellow-300 cursor-pointer">
+											<span class="lang-zh">岩质碎石小行星吸积 (Planetary Debris / Ca, Fe · &lt; 480 nm)</span>
+											<span class="lang-en">Planetary Debris Accretion (Ca, Fe, Li · &lt; 480 nm)</span>
+										</label>
+									</div>
+									<span id="badge-debris-val" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-yellow-950 text-yellow-300 border border-yellow-800/60">0%</span>
+								</div>
+								<input
+									id="slider-debris"
+									type="range"
+									min="0"
+									max="100"
+									value="0"
+									class="w-full accent-yellow-400 bg-slate-800 rounded-lg cursor-pointer"
+								/>
+								<div class="flex justify-between text-[11px] text-slate-400 mt-1.5 leading-tight">
+									<span>
+										<span class="lang-zh">碎裂小行星中的金属元素（铁、钙、锂）吸收蓝紫光，赋予白矮星金黄调。</span>
+										<span class="lang-en">Heavy elements from accreted rocky asteroids extinguish blue/UV, giving a yellow tint.</span>
+									</span>
+									<span class="font-mono text-yellow-400/80 shrink-0 ml-2">碎屑污染白矮星 (DZ型)</span>
+								</div>
+							</div>
+
+							<!-- 4. H2-HE COLLISION-INDUCED ABSORPTION (CIA) -->
+							<div class="p-3.5 rounded-xl bg-slate-900/80 border border-cyan-500/30 transition hover:border-cyan-500/60">
+								<div class="flex items-center justify-between gap-2 mb-2">
+									<div class="flex items-center gap-2">
+										<button
+											id="toggle-h2he"
+											type="button"
+											class="w-5 h-5 rounded flex items-center justify-center border transition cursor-pointer bg-slate-800 border-slate-700 text-transparent text-xs"
+											title="Toggle H2-He Absorption"
+										></button>
+										<label for="slider-h2he" class="text-xs font-mono font-bold text-cyan-300 cursor-pointer">
+											<span class="lang-zh">氢分子-氦原子碰撞吸收 (H₂–He Collision CIA · &gt; 650 nm)</span>
+											<span class="lang-en">H₂–He Collision-Induced Absorption (CIA · &gt; 650 nm)</span>
+										</label>
+									</div>
+									<span id="badge-h2he-val" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60">0%</span>
+								</div>
+								<input
+									id="slider-h2he"
+									type="range"
+									min="0"
+									max="100"
+									value="0"
+									class="w-full accent-cyan-400 bg-slate-800 rounded-lg cursor-pointer"
+								/>
+								<div class="flex justify-between text-[11px] text-slate-400 mt-1.5 leading-tight">
+									<span>
+										<span class="lang-zh">氢分子在氦碰撞下吸收红外与深红光，使低温恒星反常呈现清冷的青冰蓝色。</span>
+										<span class="lang-en">H₂ molecules colliding with He atoms absorb red and infrared, shifting the star to cyan.</span>
+									</span>
+									<span class="font-mono text-cyan-400/80 shrink-0 ml-2">冷混合大气白矮星</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. EXPLAINER: WHY IS NO STAR GREEN? -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest mb-1">
+							<span>🌡️ 经典恒星热辐射佯谬</span>
+							<span>·</span>
+							<span class="lang-zh">黑体辐射解谜</span>
+							<span class="lang-en">Blackbody Radiation Explainer</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">为什么宇宙中通常没有“绿色恒星”？</span>
+							<span class="lang-en">Why Is No Normal Star Green? The Blackbody Paradox</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-300">
+						<span>Wien's Law: λ_max = b / T</span>
+					</div>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						恒星的连续谱由黑体辐射定律决定。拖动下方温度滑块（3,000 K 到 12,000 K）：当温度处于太阳表面温度（约 5,800 K）时，辐射峰值<strong>恰好落在 500 nm 的绿光区</strong>。但为什么太阳和任何同温恒星看起来都是刺眼的暖白或淡黄，而绝非绿色？因为黑体辐射是一条极其宽阔连续的钟形曲线，人眼的红、绿、蓝三种视锥细胞被同时大量激发，在大脑中不可逆地混合为白光。
+					</span>
+					<span class="lang-en">
+						A star's continuum is governed by Planck's blackbody law. Drag the slider from 3,000 K to 12,000 K: at the Sun's surface temperature (~5,800 K), the radiation peak sits <strong>squarely at 500 nm in the green band</strong>. Yet why does the Sun look brilliant yellowish-white instead of green? Because blackbody emission is an ultra-broad continuum, simultaneously flooding human L, M, and S retinal cone cells, which the brain irreversibly sums into white.
+					</span>
+				</p>
+
+				<!-- BLACKBODY INTERACTIVE WORKBENCH -->
+				<div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
+					<!-- Slider & Quick Presets -->
+					<div class="mb-6">
+						<div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+							<label for="bb-temp-slider" class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+								<span>🔥 调节恒星表面有效温度 (T):</span>
+								<span id="bb-temp-readout" class="text-lg font-black text-amber-300">5,800 K (~5,527 °C)</span>
+							</label>
+							<div class="flex items-center gap-2 text-xs font-mono text-slate-400">
+								<span>维恩位移峰值:</span>
+								<span id="bb-wien-peak" class="font-bold text-lime-400 px-2 py-0.5 rounded bg-slate-950 border border-slate-700">λ_max = 500 nm (绿光区)</span>
+							</div>
+						</div>
+
+						<input
+							id="bb-temp-slider"
+							type="range"
+							min="3000"
+							max="12000"
+							step="100"
+							value="5800"
+							class="w-full accent-amber-400 bg-slate-950 rounded-lg cursor-pointer h-2.5"
+						/>
+
+						<div class="flex flex-wrap items-center justify-between gap-1.5 mt-3 text-xs font-mono">
+							<button type="button" data-bb-set="3000" class="bb-chip px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer">
+								3,000 K <span class="lang-zh">(红巨星)</span><span class="lang-en">(Red Star)</span>
+							</button>
+							<button type="button" data-bb-set="4273" class="bb-chip px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer">
+								4,273 K <span class="lang-zh">(幽绿星基线 4000°C)</span><span class="lang-en">(WD J1330 Base)</span>
+							</button>
+							<button type="button" data-bb-set="5800" class="bb-chip px-2.5 py-1 rounded bg-amber-950/80 border border-amber-500/80 text-amber-300 font-bold hover:text-white transition active:scale-95 cursor-pointer">
+								5,800 K <span class="lang-zh">(太阳 · 绿峰值)</span><span class="lang-en">(The Sun · Green Peak)</span>
+							</button>
+							<button type="button" data-bb-set="7500" class="bb-chip px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer">
+								7,500 K <span class="lang-zh">(天狼星A 白光)</span><span class="lang-en">(Sirius A White)</span>
+							</button>
+							<button type="button" data-bb-set="12000" class="bb-chip px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer">
+								12,000 K <span class="lang-zh">(炽热蓝白星)</span><span class="lang-en">(Hot Blue Star)</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- Visual Comparison Grid: Planck Curve vs Human Eye Cones -->
+					<div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+						<!-- Left: Planck Curve SVG (7 cols) -->
+						<div class="md:col-span-7 bg-slate-950 rounded-xl p-3 border border-slate-800/80">
+							<div class="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1.5">
+								<span>黑体普朗克辐射谱 B(λ, T)</span>
+								<span class="text-lime-400">峰值对齐绿光区并不等于视觉呈现绿色</span>
+							</div>
+							<div class="relative w-full h-36">
+								<svg id="bb-curve-svg" class="w-full h-full" viewBox="0 0 500 120" preserveAspectRatio="none">
+									<!-- Shaded visible band (380 to 750) -->
+									<rect x="0" y="0" width="500" height="120" fill="url(#spectrum-grad)" opacity="0.15"/>
+									<!-- Green band highlight (500 to 560nm) -->
+									<rect x="162" y="0" width="81" height="120" fill="#22c55e" opacity="0.1"/>
+									<!-- Planck Curve Path -->
+									<path id="bb-curve-path" d="" fill="none" stroke="#f59e0b" stroke-width="2.5"/>
+									<!-- Peak Circle Marker -->
+									<circle id="bb-peak-marker" cx="200" cy="20" r="5" fill="#a3e635" stroke="#ffffff" stroke-width="2"/>
+								</svg>
+							</div>
+							<div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+								<span>380nm (紫外端)</span>
+								<span class="text-lime-400 font-bold">500nm (绿峰位置)</span>
+								<span>750nm (红外端)</span>
+							</div>
+						</div>
+
+						<!-- Right: Human Vision Perceived Swatch & Cone Breakdown (5 cols) -->
+						<div class="md:col-span-5 p-4 rounded-xl bg-slate-950 border border-slate-800 flex flex-col justify-between h-full">
+							<div>
+								<div class="text-xs font-mono text-slate-400 mb-2">
+									<span class="lang-zh">人眼积分综合视色 (Eye Perceived Color):</span>
+									<span class="lang-en">Eye Perceived Color (Broad Spectrum):</span>
+								</div>
+								<div class="flex items-center gap-3">
+									<div id="bb-color-swatch" class="w-16 h-16 rounded-xl border border-white/40 shadow-inner flex-shrink-0 transition-colors duration-200 bg-[#fff3e7]"></div>
+									<div>
+										<div id="bb-color-name" class="font-bold text-white text-base">暖白光 (Warm White)</div>
+										<div id="bb-color-hex" class="text-xs font-mono text-slate-400 mt-0.5">#FFF3E7</div>
+										<div class="text-[11px] text-slate-500 mt-1 leading-tight">
+											<span class="lang-zh">三色视锥细胞同时饱和兴奋</span>
+											<span class="lang-en">Simultaneous L, M, S cone excitation</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- 3 Cone Bars -->
+							<div class="space-y-1.5 mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono">
+								<div class="flex items-center gap-2">
+									<span class="w-12 text-rose-400 font-bold">L 视锥(红)</span>
+									<div class="flex-1 h-2 rounded bg-slate-800 overflow-hidden">
+										<div id="cone-l" class="h-full bg-rose-500 transition-all duration-200" style="width: 88%"></div>
+									</div>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-12 text-emerald-400 font-bold">M 视锥(绿)</span>
+									<div class="flex-1 h-2 rounded bg-slate-800 overflow-hidden">
+										<div id="cone-m" class="h-full bg-emerald-500 transition-all duration-200" style="width: 95%"></div>
+									</div>
+								</div>
+								<div class="flex items-center gap-2">
+									<span class="w-12 text-sky-400 font-bold">S 视锥(蓝)</span>
+									<div class="flex-1 h-2 rounded bg-slate-800 overflow-hidden">
+										<div id="cone-s" class="h-full bg-sky-500 transition-all duration-200" style="width: 82%"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Plain-language Takeaway Callout Box -->
+					<div class="mt-5 p-4 rounded-xl bg-lime-950/40 border border-lime-500/40 text-xs sm:text-sm text-lime-200 leading-relaxed flex items-start gap-3">
+						<span class="text-xl">💡</span>
+						<div>
+							<strong class="font-bold text-white block mb-0.5">
+								<span class="lang-zh">通俗物理学核心结语 (The Takeaway):</span>
+								<span class="lang-en">Plain-Language Core Takeaway:</span>
+							</strong>
+							<span class="lang-zh">
+								普通恒星的光谱峰值哪怕落在绿光区，也必然混合出白光——<strong>唯有减法（选择性吸收）才能在宇宙中真正雕琢出一颗绿色的恒星</strong>。WD J1330+6435 恰恰通过极端的大气物理机制，把光谱中多余的黄橙红“剪裁”了出去。
+							</span>
+							<span class="lang-en">
+								A normal star's peak can sit in green, but its light still mixes to white—<strong>only subtraction (absorption) can carve out a green star</strong>. WD J1330+6435 accomplished this by violently subtracting the yellow, orange, and red wavelengths.
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 3. WHITE DWARF CENSUS (151 NEARBY STARS + 1 OUTLIER) -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-cyan-400 uppercase tracking-widest mb-1">
+							<span>📊 太阳邻域 20 秒差距巡天</span>
+							<span>·</span>
+							<span class="lang-zh">白矮星色彩普查</span>
+							<span class="lang-en">White Dwarf Census</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">白矮星家族色彩普查：三十里挑一的异色奇迹</span>
+							<span class="lang-en">White Dwarf Census: The 1-in-30 Cosmic Rarity</span>
+						</h2>
+					</div>
+					<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-mono text-slate-300">
+						<span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+						<span class="lang-zh">65 光年样本 · 151 颗恒星遗骸</span>
+						<span class="lang-en">65 ly Sample · 151 Stellar Relics</span>
+					</div>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						研究人员系统调查了地球周围约 65 光年（20 秒差距）范围内的 <strong>151 颗白矮星</strong>：绝大多数（146 颗）依然是平凡的常规白色。仅有 <strong>5 颗</strong>因奇异大气展现出非凡色彩（2 颗发黄、3 颗偏粉），即<strong>平均约每 30 颗白矮星中仅有 1 颗拥有非凡颜色（约 3.3%）</strong>。而幽绿星 WD J1330+6435 位于 ~280 光年外（不属于此 151 颗样本），更是目前宇宙中独一无二的顶级孤品。
+					</span>
+					<span class="lang-en">
+						A systematic survey of <strong>151 white dwarfs</strong> within ~65 light-years (20 parsecs) found that white remains the overwhelming norm (146 stars). Only <strong>5 stars</strong> displayed unusual chromatic profiles (2 yellow, 3 pink)—roughly <strong>1 in 30 white dwarfs (3.3%) shines with unusual color</strong>. The verdant star WD J1330+6435 lies at ~280 ly (outside this local 151-star sample), remaining an unmatched cosmic rarity.
+					</span>
+				</p>
+
+				<!-- STATISTIC HIGHLIGHT ROW -->
+				<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+					<div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800">
+						<div class="text-xs font-mono text-slate-400">
+							<span class="lang-zh">标准白色主流 (White)</span>
+							<span class="lang-en">Norm White Stars</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-white mt-1">146 / 151</div>
+						<div class="text-[11px] text-slate-500 mt-0.5">96.7% · 典型氢/氦大气</div>
+					</div>
+					<div class="p-3.5 rounded-xl bg-slate-900/60 border border-yellow-500/30">
+						<div class="text-xs font-mono text-yellow-400">
+							<span class="lang-zh">岩质碎屑金黄 (Yellow)</span>
+							<span class="lang-en">Debris Yellow</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-yellow-300 mt-1">2 / 151</div>
+						<div class="text-[11px] text-slate-400 mt-0.5">碎裂小行星重金属污染</div>
+					</div>
+					<div class="p-3.5 rounded-xl bg-slate-900/60 border border-rose-500/30">
+						<div class="text-xs font-mono text-rose-400">
+							<span class="lang-zh">碳对流深肉粉 (Pink)</span>
+							<span class="lang-en">Carbon Pink</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-rose-300 mt-1">3 / 151</div>
+						<div class="text-[11px] text-slate-400 mt-0.5">碳分子斯旺带强烈压制</div>
+					</div>
+					<div class="p-3.5 rounded-xl bg-lime-950/40 border border-lime-500/40">
+						<div class="text-xs font-mono text-lime-400 flex items-center gap-1.5">
+							<span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+							<span class="lang-zh">特别孤品 +1 幽绿星</span>
+							<span class="lang-en">+1 Verdant Outlier</span>
+						</div>
+						<div class="text-2xl font-mono font-black text-lime-300 mt-1">1 颗 (独占)</div>
+						<div class="text-[11px] text-lime-400/80 mt-0.5">WD J1330+6435 (~280 ly 样本外)</div>
+					</div>
+				</div>
+
+				<!-- INTERACTIVE GRID & STAR INSPECTOR -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+					<!-- LEFT: 151 DOTS GRID + SPECIAL +1 MARKER (8 cols) -->
+					<div class="lg:col-span-8 p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
+						<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+							<div class="text-xs font-mono text-slate-300 font-bold uppercase tracking-wider flex items-center gap-2">
+								<span>🌌</span>
+								<span class="lang-zh">太阳邻近 65 光年（20 pc）白矮星网格（点击任意圆点查看）:</span>
+								<span class="lang-en">65 ly Survey Grid (Hover/Click Any Dot):</span>
+							</div>
+
+							<!-- Filter buttons -->
+							<div class="flex items-center gap-1 text-[11px] font-mono" id="census-filters">
+								<button type="button" data-filter="all" class="census-filter-btn px-2 py-0.5 rounded bg-slate-800 text-white font-bold cursor-pointer">全部 151</button>
+								<button type="button" data-filter="white" class="census-filter-btn px-2 py-0.5 rounded bg-slate-950 text-slate-400 hover:text-white cursor-pointer">白色 146</button>
+								<button type="button" data-filter="yellow" class="census-filter-btn px-2 py-0.5 rounded bg-slate-950 text-yellow-400 hover:text-white cursor-pointer">金黄 2</button>
+								<button type="button" data-filter="pink" class="census-filter-btn px-2 py-0.5 rounded bg-slate-950 text-rose-400 hover:text-white cursor-pointer">肉粉 3</button>
+								<button type="button" data-filter="green" class="census-filter-btn px-2 py-0.5 rounded bg-lime-950 border border-lime-500/60 text-lime-300 font-bold cursor-pointer">+1 幽绿</button>
+							</div>
+						</div>
+
+						<!-- THE 151 DOTS CANVAS / CONTAINER -->
+						<div id="census-dots-grid" class="grid grid-cols-10 sm:grid-cols-16 md:grid-cols-19 gap-1.5 p-3 rounded-xl bg-slate-950/80 border border-slate-800/80 mb-4 min-h-[160px]">
+							<!-- Rendered dynamically by script -->
+						</div>
+
+						<!-- THE SPECIAL +1 OUT-OF-SAMPLE MARKER BOX -->
+						<div class="p-3 rounded-xl bg-lime-950/30 border border-lime-500/50 flex flex-wrap items-center justify-between gap-3">
+							<div class="flex items-center gap-3">
+								<div id="special-green-dot" class="w-6 h-6 rounded-full bg-[#8fee40] shadow-[0_0_12px_rgba(143,238,64,0.9)] border border-white flex items-center justify-center cursor-pointer active:scale-90 transition">
+									<span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+								</div>
+								<div>
+									<div class="text-xs font-mono font-bold text-lime-300 flex items-center gap-2">
+										<span>WD J1330+6435</span>
+										<span class="px-1.5 py-0.2 rounded bg-lime-900/80 text-[10px] text-lime-200 border border-lime-700">宇宙首颗幽绿星</span>
+									</div>
+									<div class="text-[11px] text-slate-400 mt-0.5">
+										<span class="lang-zh">距地球 ~280 光年（天龙座）· 位于 65 光年样本范围之外 · 超致密氦钠碰撞致宽</span>
+										<span class="lang-en">~280 light-years in Draco · Beyond the 65 ly boundary · Helium-sodium collisional broadening</span>
+									</div>
+								</div>
+							</div>
+							<button id="btn-inspect-green" type="button" class="px-3 py-1 text-xs font-mono font-bold rounded-lg bg-lime-500 text-black hover:bg-lime-400 transition cursor-pointer active:scale-95">
+								<span class="lang-zh">检视幽绿星数据</span>
+								<span class="lang-en">Inspect Green Star</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- RIGHT: STAR INSPECTOR CARD (4 cols) -->
+					<div class="lg:col-span-4 p-5 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-xl">
+						<div class="text-xs font-mono uppercase tracking-widest text-slate-400 mb-2 flex items-center gap-1.5">
+							<span>🔍</span>
+							<span class="lang-zh">星体光谱档案检视器</span>
+							<span class="lang-en">Stellar Profile Inspector</span>
+						</div>
+
+						<div id="inspector-card" class="space-y-3">
+							<div class="flex items-center gap-3 pb-3 border-b border-slate-800">
+								<div id="inspect-dot-preview" class="w-10 h-10 rounded-full border border-white/40 shadow-lg flex-shrink-0 bg-[#8fee40]"></div>
+								<div>
+									<div id="inspect-name" class="font-mono font-bold text-white text-base">WD J1330+6435</div>
+									<div id="inspect-category" class="text-xs font-mono text-lime-300">查特酒绿星 (Chartreuse)</div>
+								</div>
+							</div>
+
+							<div class="grid grid-cols-2 gap-2 text-xs font-mono">
+								<div class="p-2 rounded bg-slate-950 border border-slate-800">
+									<div class="text-slate-500 text-[10px]">测定距离 (Distance)</div>
+									<div id="inspect-dist" class="font-bold text-slate-200 mt-0.5">~280 ly (86 pc)</div>
+								</div>
+								<div class="p-2 rounded bg-slate-950 border border-slate-800">
+									<div class="text-slate-500 text-[10px]">有效温度 (Temp)</div>
+									<div id="inspect-temp" class="font-bold text-slate-200 mt-0.5">~4,000 °C</div>
+								</div>
+								<div class="p-2 rounded bg-slate-950 border border-slate-800 col-span-2">
+									<div class="text-slate-500 text-[10px]">大气主导成分 (Atmosphere)</div>
+									<div id="inspect-atmo" class="font-bold text-lime-300 mt-0.5">高密度富氦 + 钠/钙/锂岩质碎屑</div>
+								</div>
+							</div>
+
+							<p id="inspect-desc" class="text-xs text-slate-300 leading-relaxed pt-2 border-t border-slate-800">
+								人类已知唯一一颗被可靠光谱重构确认为绿色的恒星。富氦大气中剧烈碰撞拓宽钠吸收带，雕琢出如科幻般不可思议的黄绿辉光。
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. DISTANCE STRIP: COSMIC SCALE OF COLORS -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 text-xs font-mono text-amber-400 uppercase tracking-widest mb-1">
+							<span>📏 宇宙空间尺度刻度尺</span>
+							<span>·</span>
+							<span class="lang-zh">异色白矮星距离带</span>
+							<span class="lang-en">Cosmic Distance Strip</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">宇宙距离带：这些奇异色彩究竟栖息在多远处？</span>
+							<span class="lang-en">Cosmic Distance Strip: How Far Away Do These Colors Live?</span>
+						</h2>
+					</div>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						从太阳出发，以光年为标尺横穿银河系猎户旋臂：最红恒星 WD J1011+2845 栖息在距我们 48 光年的小狮座深空；而独一无二的幽绿星 WD J1330+6435 则伫立在 280 光年外的天龙座苍穹，远超太阳系邻域的 65 光年常规巡天边界。
+					</span>
+					<span class="lang-en">
+						Starting from our Sun, spanning light-years across the Orion Arm: the reddest star WD J1011+2845 lies 48 light-years away in Leo Minor; whereas the solitary green star WD J1330+6435 resides roughly 280 light-years away in Draco, far beyond our local 65 ly survey radius.
+					</span>
+				</p>
+
+				<!-- HORIZONTAL INTERACTIVE SCALE STRIP -->
+				<div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
+					<!-- Visual strip line -->
+					<div class="relative py-8">
+						<!-- The continuous cosmic rail -->
+						<div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden relative">
+							<!-- Local 65ly census zone highlight -->
+							<div class="absolute left-0 top-0 bottom-0 w-[23.2%] bg-gradient-to-r from-blue-500/20 via-cyan-500/30 to-amber-500/30 border-r-2 border-dashed border-amber-400"></div>
+							<!-- Full gradient track -->
+							<div class="h-full w-full bg-gradient-to-r from-yellow-400/20 via-rose-500/30 via-amber-400/20 to-lime-500/40"></div>
+						</div>
+
+						<!-- Marker: Sun (0 ly) -->
+						<div class="absolute top-1/2 -translate-y-1/2 left-[1%] flex flex-col items-center">
+							<div class="w-4 h-4 rounded-full bg-yellow-400 shadow-[0_0_8px_#facc15] border border-white cursor-pointer" title="Sun (0 ly)"></div>
+							<div class="text-[10px] font-mono text-yellow-300 font-bold mt-2">太阳 Sun</div>
+							<div class="text-[9px] font-mono text-slate-400">0 ly</div>
+						</div>
+
+						<!-- Marker: Proxima Centauri (4.2 ly, ~1.5%) -->
+						<div class="absolute top-1/2 -translate-y-1/2 left-[4%] flex flex-col items-center hidden sm:flex">
+							<div class="w-2.5 h-2.5 rounded-full bg-red-400/80 cursor-pointer" title="Proxima Centauri (4.2 ly)"></div>
+							<div class="text-[9px] font-mono text-slate-400 mt-2">比邻星</div>
+							<div class="text-[8px] font-mono text-slate-400">4.2 ly</div>
+						</div>
+
+						<!-- Marker: WD J1011+2845 (48 ly, ~17.1%) -->
+						<div class="absolute top-1/2 -translate-y-1/2 left-[17.1%] flex flex-col items-center">
+							<div class="w-5 h-5 rounded-full bg-[#ff7b72] shadow-[0_0_12px_rgba(255,123,114,0.8)] border border-white cursor-pointer active:scale-95" title="WD J1011+2845 (48 ly)"></div>
+							<div class="text-[10px] font-mono text-rose-300 font-bold mt-2 text-center">
+								<span>WD J1011</span>
+								<span class="block text-[8px] text-rose-400/80">最红星 · 48 ly</span>
+							</div>
+						</div>
+
+						<!-- Marker: 65 ly Census Boundary (~23.2%) -->
+						<div class="absolute top-1/2 -translate-y-1/2 left-[23.2%] flex flex-col items-center">
+							<div class="w-3 h-3 rounded-full bg-amber-400 border border-slate-900 cursor-pointer" title="65 ly Census Boundary"></div>
+							<div class="text-[9px] font-mono text-amber-300 font-bold mt-2 text-center">
+								<span>65 ly 界限</span>
+								<span class="block text-[8px] text-amber-400/70">151 颗样本圈</span>
+							</div>
+						</div>
+
+						<!-- Marker: WD J1330+6435 (280 ly, 100%) -->
+						<div class="absolute top-1/2 -translate-y-1/2 right-[1%] flex flex-col items-center">
+							<div class="w-6 h-6 rounded-full bg-[#8fee40] shadow-[0_0_16px_rgba(143,238,64,1)] border border-white cursor-pointer animate-pulse" title="WD J1330+6435 (~280 ly)"></div>
+							<div class="text-[11px] font-mono text-lime-300 font-black mt-2 text-center">
+								<span>WD J1330+6435</span>
+								<span class="block text-[9px] text-lime-400 font-normal">幽绿星 · ~280 ly</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Legend and details row -->
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-slate-800 text-xs font-mono">
+						<div class="p-3 rounded-lg bg-slate-950 border border-slate-800/80">
+							<div class="text-slate-400 font-bold flex items-center gap-1.5 mb-1">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#ff7b72]"></span>
+								<span>WD J1011+2845 · 小狮座 (Leo Minor)</span>
+							</div>
+							<div class="text-slate-300 text-[11px] leading-relaxed">
+								距地约 48 光年。深层碳对流斯旺分子带完全扼杀 600nm 以下波长，呈现极深肉粉色。
+							</div>
+						</div>
+
+						<div class="p-3 rounded-lg bg-slate-950 border border-slate-800/80">
+							<div class="text-amber-300 font-bold flex items-center gap-1.5 mb-1">
+								<span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+								<span>65 光年范围 · 20 秒差距局部样本</span>
+							</div>
+							<div class="text-slate-300 text-[11px] leading-relaxed">
+								天文学家完成普查的 151 颗白矮星样本圈。仅 5 颗显现出异常色彩（1 in 30 概率）。
+							</div>
+						</div>
+
+						<div class="p-3 rounded-lg bg-lime-950/40 border border-lime-500/40">
+							<div class="text-lime-300 font-bold flex items-center gap-1.5 mb-1">
+								<span class="w-2.5 h-2.5 rounded-full bg-[#8fee40]"></span>
+								<span>WD J1330+6435 · 天龙座 (Draco)</span>
+							</div>
+							<div class="text-slate-300 text-[11px] leading-relaxed">
+								距地约 280 光年。远离 65 光年近邻网，首颗证实钠致宽减法产生绿色幽光。
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. ACADEMIC CITATION & AUTHORS -->
+			<div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-mono text-slate-400 mb-8">
+				<div class="text-slate-300 font-bold uppercase tracking-wider mb-1 flex items-center gap-2">
+					<span>📄</span>
+					<span class="lang-zh">原始学术研究文献出处</span>
+					<span class="lang-en">Primary Academic Citation</span>
+				</div>
+				<p class="leading-relaxed mb-2 text-slate-300">
+					M. Hollands, B. Gänsicke, et al.
+					<em>"Discovery of an ultra-cool green white dwarf via extreme sodium line broadening"</em>.
+					<strong>RAS Techniques and Instruments</strong> (published October 2026).
+				</p>
+				<div class="flex flex-wrap items-center gap-3 text-lime-400">
+					<span>🏛️ Affiliation: Department of Physics, University of Warwick, Coventry, UK</span>
+					<span>•</span>
+					<span>Lead Author: Mark Hollands</span>
+					<span>•</span>
+					<span>Co-author: Boris Gänsicke</span>
+				</div>
+			</div>
+
+			<!-- FOOTER SECTION & AI DECLARATION -->
+			<div class="pt-4 text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+				<div>
+					<span class="lang-zh">幽绿星 · VERDANT STAR — 2026 天文学首颗绿色恒星交互发现实验室</span>
+					<span class="lang-en">Verdant Star · Humanity's First Green Star Discovery Lab</span>
+				</div>
+				<div>
+					<span>p1ziyu.com · 2026</span>
+				</div>
+			</div>
+
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-lime-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE SIMULATION & INTERACTIVE ENGINE SCRIPT -->
+	<script is:inline>
+		(() => {
+			function initVerdantStar() {
+				const sliderNa = document.getElementById("slider-na");
+				if (!sliderNa || sliderNa.dataset.vsReady === "true") return;
+				sliderNa.dataset.vsReady = "true";
+
+				// Lifecycle abort controller for clean listener cleanup on page navigation
+				const lifecycle = new AbortController();
+				const cleanup = () => {
+					lifecycle.abort();
+					document.removeEventListener("astro:before-swap", cleanup);
+				};
+				document.addEventListener("astro:before-swap", cleanup, { once: true });
+
+				// ==========================================
+				// 1. STAR PAINTER INTERACTIVE ENGINE
+				// ==========================================
+				const sliderCarbon = document.getElementById("slider-carbon");
+				const sliderDebris = document.getElementById("slider-debris");
+				const sliderH2he = document.getElementById("slider-h2he");
+
+				const toggleNa = document.getElementById("toggle-na");
+				const toggleCarbon = document.getElementById("toggle-carbon");
+				const toggleDebris = document.getElementById("toggle-debris");
+				const toggleH2he = document.getElementById("toggle-h2he");
+
+				const badgeNa = document.getElementById("badge-na-val");
+				const badgeCarbon = document.getElementById("badge-carbon-val");
+				const badgeDebris = document.getElementById("badge-debris-val");
+				const badgeH2he = document.getElementById("badge-h2he-val");
+
+				const starDisc = document.getElementById("star-disc");
+				const starMidHalo = document.getElementById("star-mid-halo");
+				const starOuterHalo = document.getElementById("star-outer-halo");
+				const starCoronaBg = document.getElementById("star-corona-bg");
+				const starColorName = document.getElementById("star-color-name");
+				const starColorHex = document.getElementById("star-color-hex");
+				const starColorRgb = document.getElementById("star-color-rgb");
+				const starColorDesc = document.getElementById("star-color-desc");
+
+				const svgTransmitted = document.getElementById("svg-transmitted-path");
+				const svgBaseline = document.getElementById("svg-baseline-path");
+				const svgFill = document.getElementById("svg-fill-path");
+				const rainbowMask = document.getElementById("rainbow-mask");
+
+				const presetButtons = document.querySelectorAll(".preset-btn");
+
+				// Model state
+				const state = {
+					na: 95,
+					carbon: 0,
+					debris: 0,
+					h2he: 0,
+					naActive: true,
+					carbonActive: false,
+					debrisActive: false,
+					h2heActive: false,
+				};
+
+				// Presets data definitions
+				const presets = {
+					ordinary: { na: 0, carbon: 0, debris: 0, h2he: 0 },
+					wd1330: { na: 95, carbon: 0, debris: 0, h2he: 0 },
+					wd1011: { na: 0, carbon: 92, debris: 0, h2he: 0 },
+					carbon: { na: 0, carbon: 98, debris: 0, h2he: 25 },
+					debris: { na: 10, carbon: 0, debris: 85, h2he: 0 },
+					h2he: { na: 0, carbon: 0, debris: 0, h2he: 88 },
+				};
+
+				// Planck blackbody helper at ~4273 K (normalized across 380 to 750 nm)
+				function planck4000(lambda) {
+					// Approximate curve peaking around 680-720 nm
+					const x = (lambda - 380) / 370; // 0 to 1
+					// Smooth rising curve with slight plateau
+					return 0.35 + 0.65 * Math.sin(x * Math.PI * 0.65);
+				}
+
+				// Calculate transmission across wavelength
+				function getTransmission(lambda) {
+					let t = 1.0;
+					const naVal = state.naActive ? state.na / 100 : 0;
+					const carbonVal = state.carbonActive ? state.carbon / 100 : 0;
+					const debrisVal = state.debrisActive ? state.debris / 100 : 0;
+					const h2heVal = state.h2heActive ? state.h2he / 100 : 0;
+
+					// 1. Sodium collisional broadening: broad trough across 550 to 650 nm, centered at 600 nm
+					if (naVal > 0) {
+						const dist = Math.abs(lambda - 600);
+						const width = 45; // Broadened
+						const notch = Math.exp(-0.5 * (dist / width) * (dist / width));
+						t *= (1.0 - 0.94 * naVal * notch);
+					}
+
+					// 2. Carbon Swan bands: extinguishes wavelengths below 600 nm
+					if (carbonVal > 0 && lambda < 605) {
+						const cut = 1.0 / (1.0 + Math.exp((lambda - 580) / 12));
+						t *= (1.0 - 0.95 * carbonVal * cut);
+					}
+
+					// 3. Debris: planetary metals (Ca, Fe, Li) absorb blue/UV < 490 nm
+					if (debrisVal > 0 && lambda < 500) {
+						const blueCut = (500 - lambda) / 120;
+						t *= Math.max(0.05, 1.0 - 0.90 * debrisVal * Math.min(1.0, blueCut));
+					}
+
+					// 4. H2-He collision-induced absorption: absorbs red/infrared > 640 nm
+					if (h2heVal > 0 && lambda > 620) {
+						const redCut = (lambda - 620) / 130;
+						t *= Math.max(0.08, 1.0 - 0.88 * h2heVal * Math.min(1.0, redCut));
+					}
+
+					return Math.max(0.02, t);
+				}
+
+				// Compute perceived RGB color based on transmitted spectrum and blackbody continuum
+				function computeStarColor() {
+					const naVal = state.naActive ? state.na / 100 : 0;
+					const carbonVal = state.carbonActive ? state.carbon / 100 : 0;
+					const debrisVal = state.debrisActive ? state.debris / 100 : 0;
+					const h2heVal = state.h2heActive ? state.h2he / 100 : 0;
+
+					// Calibrated RGB synthesis from spectral transmission
+					let r = 1.0 * (1.0 - 0.86 * naVal) * (1.0 - 0.76 * h2heVal) + 0.18 * carbonVal + 0.20 * debrisVal;
+					let g = 0.65 * (1.0 - 0.82 * carbonVal) * (1.0 - 0.25 * naVal * (1.0 - debrisVal)) * (1.0 - 0.15 * debrisVal) + 0.35 * naVal;
+					let b = 0.35 * (1.0 - 0.92 * carbonVal) * (1.0 - 0.85 * debrisVal) * (1.0 + 0.25 * h2heVal);
+
+					// When sodium is active and carbon is zero, enforce green-dominant chartreuse
+					if (naVal > 0.5 && carbonVal < 0.2) {
+						r = Math.min(r, 0.58);
+						g = Math.max(g, 0.92);
+						b = Math.min(b, 0.30);
+					}
+
+					// Normalize
+					const maxChannel = Math.max(r, g, b, 0.001);
+					r = Math.min(255, Math.max(0, Math.round((r / maxChannel) * 255)));
+					g = Math.min(255, Math.max(0, Math.round((g / maxChannel) * 255)));
+					b = Math.min(255, Math.max(0, Math.round((b / maxChannel) * 255)));
+
+					const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+
+					// Color naming & scientific description
+					let nameZh = "普通橙红光 (Orange)";
+					let nameEn = "Ordinary Orange Glow";
+					let descZh = "4,000 °C 恒星常规热辐射，呈温暖橙红连续谱。";
+					let descEn = "Baseline 4,000 °C stellar thermal radiation with continuous orange continuum.";
+
+					if (naVal > 0.5 && carbonVal < 0.3) {
+						nameZh = "查特酒绿 / 黄绿幽光 (Chartreuse)";
+						nameEn = "Chartreuse Green Glow";
+						descZh = "高密氦气碰撞致宽剧烈吸收橙黄红光，残存绿蓝波段，在人眼模型中呈现不可思议的黄绿幽光。";
+						descEn = "Helium-sodium collisional broadening removes orange and red, leaving green and blue to form chartreuse.";
+					} else if (carbonVal > 0.5) {
+						nameZh = "深肉粉色 (Salmon Pink)";
+						nameEn = "Deep Salmon Pink";
+						descZh = "碳分子斯旺带彻底扼杀 600nm 以下波段，迫使全部光芒聚集于深红，形成极度深沉的肉粉色。";
+						descEn = "Molecular carbon Swan bands choke light below 600nm, concentrating radiance into salmon-pink.";
+					} else if (debrisVal > 0.5) {
+						nameZh = "碎屑金黄色 (Yellow Tint)";
+						nameEn = "Golden Yellow Tint";
+						descZh = "吸积破碎岩质行星的金属元素（铁、钙）吸收蓝紫端，赋予白矮星金黄色泽。";
+						descEn = "Accreted planetary debris with heavy elements absorbs blue/UV, casting a golden-yellow hue.";
+					} else if (h2heVal > 0.5) {
+						nameZh = "冷青冰蓝光 (Cyan / Pale Blue)";
+						nameEn = "Cyan / Pale Blue";
+						descZh = "低温氢氦混合大气中碰撞诱导吸收（CIA）压制红外与红光，使恒星显露清冷青蓝。";
+						descEn = "Collision-induced absorption (CIA) suppresses red/infrared in cool H+He atmospheres, leaving cyan.";
+					}
+
+					return { r, g, b, hex, nameZh, nameEn, descZh, descEn };
+				}
+
+				// Render spectrum graph & star disc
+				function updateStarPainter() {
+					const col = computeStarColor();
+
+					// 1. Update Glowing Star Disc
+					if (starDisc) {
+						starDisc.style.backgroundColor = col.hex;
+						starDisc.style.boxShadow = `0 0 50px ${col.hex}, inset 0 0 20px #ffffff`;
+					}
+					if (starMidHalo) {
+						starMidHalo.style.backgroundColor = col.hex;
+						starMidHalo.style.boxShadow = `0 0 80px ${col.hex}`;
+					}
+					if (starOuterHalo) {
+						starOuterHalo.style.backgroundColor = col.hex;
+					}
+					if (starCoronaBg) {
+						starCoronaBg.style.backgroundColor = col.hex;
+					}
+
+					// 2. Update color names and values
+					if (starColorName) {
+						starColorName.innerHTML = `<span class="lang-zh">${col.nameZh}</span><span class="lang-en">${col.nameEn}</span>`;
+						starColorName.style.color = col.hex;
+					}
+					if (starColorHex) starColorHex.textContent = col.hex;
+					if (starColorRgb) starColorRgb.textContent = `rgb(${col.r}, ${col.g}, ${col.b})`;
+					if (starColorDesc) {
+						starColorDesc.innerHTML = `<span class="lang-zh">${col.descZh}</span><span class="lang-en">${col.descEn}</span>`;
+					}
+
+					// 3. Render SVG Curves (500x120 viewBox)
+					// Sample 50 points from 380 to 750 nm
+					const pointsBase = [];
+					const pointsTrans = [];
+					const widthPx = 500;
+					const heightPx = 110;
+
+					for (let i = 0; i <= 50; i++) {
+						const lambda = 380 + (i / 50) * 370;
+						const x = (i / 50) * widthPx;
+						const baseFlux = planck4000(lambda);
+						const trans = getTransmission(lambda);
+						const transFlux = baseFlux * trans;
+
+						const yBase = heightPx - baseFlux * 90;
+						const yTrans = heightPx - transFlux * 90;
+
+						pointsBase.push(`${x.toFixed(1)},${yBase.toFixed(1)}`);
+						pointsTrans.push(`${x.toFixed(1)},${yTrans.toFixed(1)}`);
+					}
+
+					if (svgBaseline) {
+						svgBaseline.setAttribute("d", `M ${pointsBase.join(" L ")}`);
+					}
+					if (svgTransmitted) {
+						svgTransmitted.setAttribute("d", `M ${pointsTrans.join(" L ")}`);
+						svgTransmitted.setAttribute("stroke", col.hex);
+					}
+					if (svgFill) {
+						const fillD = `M ${pointsTrans[0]} L ${pointsTrans.join(" L ")} L ${widthPx},${heightPx} L 0,${heightPx} Z`;
+						svgFill.setAttribute("d", fillD);
+					}
+
+					// 4. Update Rainbow Mask: darken regions of high absorption
+					if (rainbowMask) {
+						// Build simple linear-gradient opacity mask
+
+						const gradStops = [];
+						for (let s = 0; s <= 10; s++) {
+							const lam = 380 + (s / 10) * 370;
+							const trans = getTransmission(lam);
+							const darkness = Math.max(0, 1.0 - trans) * 0.85;
+							gradStops.push(`rgba(7, 11, 20, ${darkness.toFixed(2)}) ${(s * 10)}%`);
+						}
+						rainbowMask.style.background = `linear-gradient(to right, ${gradStops.join(", ")})`;
+					}
+				}
+
+				// Slider Event Listeners
+				function bindSlider(slider, badge, key) {
+					if (!slider) return;
+					slider.addEventListener("input", (e) => {
+						const val = parseInt(e.target.value, 10);
+						state[key] = val;
+						if (badge) badge.textContent = `${val}%`;
+						state[`${key}Active`] = val > 0;
+						updateToggleBtn(key);
+						highlightActivePreset(null);
+						updateStarPainter();
+					}, { signal: lifecycle.signal });
+				}
+
+				bindSlider(sliderNa, badgeNa, "na");
+				bindSlider(sliderCarbon, badgeCarbon, "carbon");
+				bindSlider(sliderDebris, badgeDebris, "debris");
+				bindSlider(sliderH2he, badgeH2he, "h2he");
+
+				// Toggle buttons
+				function updateToggleBtn(key) {
+					const btn = document.getElementById(`toggle-${key}`);
+					if (!btn) return;
+					const active = state[`${key}Active`];
+					if (active) {
+						btn.className = "w-5 h-5 rounded flex items-center justify-center border transition cursor-pointer bg-lime-500 border-lime-400 text-black font-bold text-xs";
+						btn.textContent = "✓";
+					} else {
+						btn.className = "w-5 h-5 rounded flex items-center justify-center border transition cursor-pointer bg-slate-800 border-slate-700 text-transparent text-xs";
+						btn.textContent = "";
+					}
+				}
+
+				function bindToggle(btn, slider, badge, key) {
+					if (!btn) return;
+					btn.addEventListener("click", () => {
+						state[`${key}Active`] = !state[`${key}Active`];
+						if (state[`${key}Active`] && state[key] === 0) {
+							state[key] = key === "na" ? 95 : 85;
+							if (slider) slider.value = state[key];
+							if (badge) badge.textContent = `${state[key]}%`;
+						}
+						updateToggleBtn(key);
+						highlightActivePreset(null);
+						updateStarPainter();
+					}, { signal: lifecycle.signal });
+				}
+
+				bindToggle(toggleNa, sliderNa, badgeNa, "na");
+				bindToggle(toggleCarbon, sliderCarbon, badgeCarbon, "carbon");
+				bindToggle(toggleDebris, sliderDebris, badgeDebris, "debris");
+				bindToggle(toggleH2he, sliderH2he, badgeH2he, "h2he");
+
+				// Preset Buttons
+				function applyPreset(presetKey) {
+					const p = presets[presetKey];
+					if (!p) return;
+
+					state.na = p.na;
+					state.carbon = p.carbon;
+					state.debris = p.debris;
+					state.h2he = p.h2he;
+
+					state.naActive = p.na > 0;
+					state.carbonActive = p.carbon > 0;
+					state.debrisActive = p.debris > 0;
+					state.h2heActive = p.h2he > 0;
+
+					if (sliderNa) sliderNa.value = p.na;
+					if (sliderCarbon) sliderCarbon.value = p.carbon;
+					if (sliderDebris) sliderDebris.value = p.debris;
+					if (sliderH2he) sliderH2he.value = p.h2he;
+
+					if (badgeNa) badgeNa.textContent = `${p.na}%`;
+					if (badgeCarbon) badgeCarbon.textContent = `${p.carbon}%`;
+					if (badgeDebris) badgeDebris.textContent = `${p.debris}%`;
+					if (badgeH2he) badgeH2he.textContent = `${p.h2he}%`;
+
+					updateToggleBtn("na");
+					updateToggleBtn("carbon");
+					updateToggleBtn("debris");
+					updateToggleBtn("h2he");
+
+					highlightActivePreset(presetKey);
+					updateStarPainter();
+				}
+
+				function highlightActivePreset(activeKey) {
+					presetButtons.forEach((btn) => {
+						const key = btn.dataset.preset;
+						if (key === activeKey) {
+							btn.className = "preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-lime-950/80 border-lime-400 text-lime-300 shadow-[0_0_12px_rgba(132,204,22,0.3)]";
+						} else {
+							btn.className = "preset-btn px-2.5 py-2 rounded-lg text-xs font-mono font-bold border transition text-left cursor-pointer active:scale-95 bg-slate-900 text-slate-300 border-slate-700 hover:border-slate-500";
+						}
+					});
+				}
+
+				presetButtons.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						applyPreset(btn.dataset.preset);
+					}, { signal: lifecycle.signal });
+				});
+
+				// Initialize with WD J1330+6435
+				applyPreset("wd1330");
+
+				// ==========================================
+				// 2. "WHY IS NO STAR GREEN?" BLACKBODY ENGINE
+				// ==========================================
+				const bbSlider = document.getElementById("bb-temp-slider");
+				const bbTempReadout = document.getElementById("bb-temp-readout");
+				const bbWienPeak = document.getElementById("bb-wien-peak");
+				const bbCurvePath = document.getElementById("bb-curve-path");
+				const bbPeakMarker = document.getElementById("bb-peak-marker");
+				const bbColorSwatch = document.getElementById("bb-color-swatch");
+				const bbColorName = document.getElementById("bb-color-name");
+				const bbColorHex = document.getElementById("bb-color-hex");
+				const coneL = document.getElementById("cone-l");
+				const coneM = document.getElementById("cone-m");
+				const coneS = document.getElementById("cone-s");
+				const bbChips = document.querySelectorAll(".bb-chip");
+
+				function computeBlackbody(T) {
+					const temp = T / 100.0;
+					let r = 255;
+					let g = 255;
+					let b = 255;
+
+					// Red
+					if (temp <= 66) {
+						r = 255;
+					} else {
+						r = temp - 60;
+						r = 329.698727446 * Math.pow(r, -0.1332047592);
+						r = Math.max(0, Math.min(255, r));
+					}
+
+					// Green
+					if (temp <= 66) {
+						g = temp;
+						g = 99.4708025861 * Math.log(g) - 161.1195681661;
+						g = Math.max(0, Math.min(255, g));
+					} else {
+						g = temp - 60;
+						g = 288.1221695283 * Math.pow(g, -0.0755148492);
+						g = Math.max(0, Math.min(255, g));
+					}
+
+					// Blue
+					if (temp >= 66) {
+						b = 255;
+					} else if (temp <= 19) {
+						b = 0;
+					} else {
+						b = temp - 10;
+						b = 138.5177312231 * Math.log(b) - 305.0447927307;
+						b = Math.max(0, Math.min(255, b));
+					}
+
+					r = Math.round(r);
+					g = Math.round(g);
+					b = Math.round(b);
+
+					const hex = `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+					const peakNm = Math.round(2897772 / T);
+
+					// Color naming
+					let name = "暖白光 (Warm White)";
+					if (T < 3500) name = "深橙红 (Red / Orange)";
+					else if (T < 4800) name = "暖橙光 (Warm Orange-Yellow)";
+					else if (T <= 6200) name = "耀眼暖白光 (Yellow-White / Sun)";
+					else if (T <= 8500) name = "纯白光 (Pure White / Sirius)";
+					else name = "炽烈蓝白光 (Blue-White)";
+
+					return { r, g, b, hex, peakNm, name };
+				}
+
+				function updateBlackbody(T) {
+					const bb = computeBlackbody(T);
+					const cDeg = Math.round(T - 273.15);
+
+					if (bbTempReadout) {
+						bbTempReadout.textContent = `${T.toLocaleString()} K (~${cDeg.toLocaleString()} °C)`;
+					}
+					if (bbWienPeak) {
+						let band = "红外区 (Infrared)";
+						if (bb.peakNm < 380) band = "紫外区 (UV)";
+						else if (bb.peakNm < 450) band = "紫光区 (Violet)";
+						else if (bb.peakNm < 490) band = "蓝光区 (Blue)";
+						else if (bb.peakNm < 560) band = "绿光区 (Green)";
+						else if (bb.peakNm < 590) band = "黄光区 (Yellow)";
+						else if (bb.peakNm < 620) band = "橙光区 (Orange)";
+						else if (bb.peakNm <= 750) band = "红光区 (Red)";
+
+						bbWienPeak.textContent = `λ_max = ${bb.peakNm} nm (${band})`;
+					}
+
+					if (bbColorSwatch) {
+						bbColorSwatch.style.backgroundColor = bb.hex;
+						bbColorSwatch.style.boxShadow = `0 0 20px ${bb.hex}`;
+					}
+					if (bbColorName) bbColorName.textContent = bb.name;
+					if (bbColorHex) bbColorHex.textContent = bb.hex;
+
+					// Retinal Cone responses
+					if (coneL) coneL.style.width = `${Math.min(100, Math.round((bb.r / 255) * 100))}%`;
+					if (coneM) coneM.style.width = `${Math.min(100, Math.round((bb.g / 255) * 100))}%`;
+					if (coneS) coneS.style.width = `${Math.min(100, Math.round((bb.b / 255) * 100))}%`;
+
+					// Update Planck Curve SVG in 500x120 viewBox
+					if (bbCurvePath && bbPeakMarker) {
+						const points = [];
+						let maxVal = 0;
+						const vals = [];
+
+						// Visible range 380 to 750 mapped to x: 0 to 500
+						for (let i = 0; i <= 50; i++) {
+							const lam = 380 + (i / 50) * 370;
+							// Planck formula simplified relative
+							const xNorm = lam / bb.peakNm;
+							// Form: (1/x^5) / (exp(5/x) - 1)
+							const v = (1 / Math.pow(xNorm, 5)) / (Math.exp(Math.min(60, 5 / xNorm)) - 1);
+							vals.push({ lam, v });
+							if (v > maxVal) maxVal = v;
+						}
+
+						for (let i = 0; i <= 50; i++) {
+							const x = (i / 50) * 500;
+							const normV = vals[i].v / (maxVal || 1);
+							const y = 110 - normV * 95;
+							points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+						}
+
+						bbCurvePath.setAttribute("d", `M ${points.join(" L ")}`);
+
+						// Peak marker placement
+						const peakX = ((bb.peakNm - 380) / 370) * 500;
+						const clampedX = Math.max(10, Math.min(490, peakX));
+						bbPeakMarker.setAttribute("cx", clampedX.toFixed(1));
+						bbPeakMarker.setAttribute("cy", (15).toFixed(1));
+					}
+				}
+
+				if (bbSlider) {
+					bbSlider.addEventListener("input", (e) => {
+						const val = parseInt(e.target.value, 10);
+						updateBlackbody(val);
+					}, { signal: lifecycle.signal });
+				}
+
+				bbChips.forEach((chip) => {
+					chip.addEventListener("click", () => {
+						const val = parseInt(chip.dataset.bbSet, 10);
+						if (bbSlider) bbSlider.value = val;
+						updateBlackbody(val);
+					}, { signal: lifecycle.signal });
+				});
+
+				// Initialize at Sun's temperature (5,800 K)
+				updateBlackbody(5800);
+
+				// ==========================================
+				// 3. WHITE DWARF CENSUS (151 + 1 OUTLIER)
+				// ==========================================
+				const censusDotsGrid = document.getElementById("census-dots-grid");
+				const inspectDotPreview = document.getElementById("inspect-dot-preview");
+				const inspectName = document.getElementById("inspect-name");
+				const inspectCategory = document.getElementById("inspect-category");
+				const inspectDist = document.getElementById("inspect-dist");
+				const inspectTemp = document.getElementById("inspect-temp");
+				const inspectAtmo = document.getElementById("inspect-atmo");
+				const inspectDesc = document.getElementById("inspect-desc");
+
+				const specialGreenDot = document.getElementById("special-green-dot");
+				const btnInspectGreen = document.getElementById("btn-inspect-green");
+				const censusFilters = document.querySelectorAll(".census-filter-btn");
+
+				// Generate 151 white dwarfs dataset
+				// 146 white, 2 yellow, 3 pink
+				const whiteDwarfs = [];
+				for (let i = 1; i <= 151; i++) {
+					if (i === 42) {
+						whiteDwarfs.push({
+							id: "WD J0644+375",
+							type: "yellow",
+							color: "#facc15",
+							nameZh: "金黄碎屑星 (Debris-Polluted)",
+							nameEn: "Debris-Polluted Yellow",
+							dist: "52 ly (16 pc)",
+							temp: "~5,100 °C",
+							atmoZh: "DZ 型 · 碎裂小行星重金属污染（铁、钙、镁）",
+							atmoEn: "DZ Type · Accreted rocky asteroid debris (Fe, Ca, Mg)",
+							descZh: "吸积了被引力撕碎的岩石行星或小行星碎片，重金属吸收蓝紫光，使其呈现温润的金黄色泽。",
+							descEn: "Accreted heavy elements from disrupted rocky planetary bodies extinguish blue/UV light into yellow.",
+						});
+					} else if (i === 88) {
+						whiteDwarfs.push({
+							id: "WD J1953-011",
+							type: "yellow",
+							color: "#eab308",
+							nameZh: "金黄碎屑星 (DZ Type)",
+							nameEn: "Debris Yellow DZ",
+							dist: "61 ly (18.7 pc)",
+							temp: "~4,800 °C",
+							atmoZh: "DAZ 型 · 氢主导叠加剧烈岩石碎屑污染",
+							atmoEn: "DAZ Type · Hydrogen with rocky planetary pollution",
+							descZh: "表面被剧烈的岩质小行星尘埃覆盖，是 65 光年内仅存的两颗金黄色白矮星之一。",
+							descEn: "One of only two yellow white dwarfs within 65 light-years, polluted by asteroid fallout.",
+						});
+					} else if (i === 17) {
+						whiteDwarfs.push({
+							id: "WD J1011+2845",
+							type: "pink",
+							color: "#ff7b72",
+							nameZh: "深肉粉色星 (Salmon Pink)",
+							nameEn: "Salmon Pink Star",
+							dist: "48 ly (14.7 pc)",
+							temp: "~3,800 °C",
+							atmoZh: "DQ 型 · 深层对流翻卷碳元素 (C₂ Swan)",
+							atmoEn: "DQ Type · Convectively dredged carbon (C₂ Swan)",
+							descZh: "深层对流把内核心的碳元素翻卷至表面，碳分子斯旺带彻底扼制 600nm 以下波长，呈现极为罕见的深肉粉色。",
+							descEn: "Deep convective dredging brought carbon to the surface, where C₂ bands extinguish light < 600nm into salmon-pink.",
+						});
+					} else if (i === 73) {
+						whiteDwarfs.push({
+							id: "WD J1403-082",
+							type: "pink",
+							color: "#f43f5e",
+							nameZh: "碳分子粉红星 (DQ Type)",
+							nameEn: "Carbon Pink Star",
+							dist: "59 ly (18.1 pc)",
+							temp: "~4,100 °C",
+							atmoZh: "DQ 型 · 碳斯旺分子吸收带",
+							atmoEn: "DQ Type · Molecular Carbon Swan Bands",
+							descZh: "65 光年样本圈内的第 2 颗碳吸收粉红星，光谱在绿黄端被大幅削弱。",
+							descEn: "Second carbon-dredged pink star in the local 65 ly sample, heavily suppressed in green/yellow.",
+						});
+					} else if (i === 120) {
+						whiteDwarfs.push({
+							id: "WD J2140+189",
+							type: "pink",
+							color: "#fb7185",
+							nameZh: "冷碳粉红星 (DQ Cold)",
+							nameEn: "Cool Carbon Pink",
+							dist: "64 ly (19.6 pc)",
+							temp: "~3,600 °C",
+							atmoZh: "DQ 混合型 · 冷却深粉色调",
+							atmoEn: "DQ Mixed · Cool deep pink tone",
+							descZh: "位于 65 光年普查边界附近的第 3 颗粉红白矮星，表面碳分子丰度极高。",
+							descEn: "Third pink star lying near the 65 ly boundary with prominent molecular carbon signatures.",
+						});
+					} else {
+						// Normal white stars (146 of them)
+						const distLy = (8 + (i * 0.38)).toFixed(1);
+						const tempC = Math.round(4000 + ((i * 137) % 8000));
+						whiteDwarfs.push({
+							id: `WD J${String(i).padStart(4, "0")}+${String((i * 17) % 90).padStart(2, "0")}`,
+							type: "white",
+							color: "#e2e8f0",
+							nameZh: "常规白色白矮星 (Normal White)",
+							nameEn: "Ordinary White Star",
+							dist: `${distLy} ly (${(distLy / 3.26).toFixed(1)} pc)`,
+							temp: `~${tempC.toLocaleString()} °C`,
+							atmoZh: i % 2 === 0 ? "DA 型 · 纯净氢大气" : "DB 型 · 纯净氦大气",
+							atmoEn: i % 2 === 0 ? "DA Type · Pure Hydrogen" : "DB Type · Pure Helium",
+							descZh: "65 光年内典型的白矮星，表面纯净，黑体热辐射在人眼中混合为平凡的白色光芒。",
+							descEn: "A typical white dwarf within 65 light-years. Broad continuum mixes into ordinary white.",
+						});
+					}
+				}
+
+				// The Green Outlier Data
+				const greenStarData = {
+					id: "WD J1330+6435",
+					type: "green",
+					color: "#8fee40",
+					nameZh: "幽绿星 (Chartreuse Green)",
+					nameEn: "Verdant Star (Chartreuse)",
+					dist: "~280 ly (86 pc)",
+					temp: "~4,000 °C",
+					atmoZh: "超致密富氦 + 钠碰撞致宽 (超高压碰撞)",
+					atmoEn: "Ultra-dense Helium + Collisional Na Broadening",
+					descZh: "人类已知唯一确认呈现绿色的恒星！高密富氦大气中钠原子受到疯狂碰撞扰动，将原本狭窄的橙线展宽为横跨黄橙红的深巨吸收带，唯独透出幽绿之光。",
+					descEn: "Humanity's first confirmed green star! In ultra-dense helium, sodium collisional broadening carves out yellow-orange-red to unveil a chartreuse green glow.",
+				};
+
+				function inspectStar(star) {
+					if (!inspectDotPreview) return;
+					inspectDotPreview.style.backgroundColor = star.color;
+					inspectDotPreview.style.boxShadow = `0 0 15px ${star.color}`;
+					if (inspectName) inspectName.textContent = star.id;
+					if (inspectCategory) {
+						inspectCategory.textContent = star.nameZh;
+						inspectCategory.style.color = star.color;
+					}
+					if (inspectDist) inspectDist.textContent = star.dist;
+					if (inspectTemp) inspectTemp.textContent = star.temp;
+					if (inspectAtmo) inspectAtmo.textContent = star.atmoZh;
+					if (inspectDesc) inspectDesc.textContent = star.descZh;
+				}
+
+				// Render 151 dots in grid
+				function renderCensusGrid(filter = "all") {
+					if (!censusDotsGrid) return;
+					censusDotsGrid.innerHTML = "";
+
+					whiteDwarfs.forEach((star) => {
+						const dot = document.createElement("button");
+						dot.type = "button";
+						dot.className = "w-3 h-3 rounded-full transition-all duration-200 cursor-pointer active:scale-75 hover:scale-125 focus:outline-none";
+						dot.style.backgroundColor = star.color;
+
+						// Apply filter opacity
+						if (filter !== "all" && star.type !== filter) {
+							dot.style.opacity = "0.15";
+						} else {
+							dot.style.opacity = "0.9";
+							if (star.type === "yellow" || star.type === "pink") {
+								dot.style.boxShadow = `0 0 6px ${star.color}`;
+							}
+						}
+
+						dot.setAttribute("title", `${star.id} (${star.nameZh})`);
+						dot.addEventListener("mouseenter", () => inspectStar(star), { signal: lifecycle.signal });
+						dot.addEventListener("click", () => inspectStar(star), { signal: lifecycle.signal });
+
+						censusDotsGrid.appendChild(dot);
+					});
+				}
+
+				censusFilters.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						const filter = btn.dataset.filter;
+						censusFilters.forEach((b) => {
+							b.className = "census-filter-btn px-2 py-0.5 rounded bg-slate-950 text-slate-400 hover:text-white cursor-pointer";
+						});
+						btn.className = "census-filter-btn px-2 py-0.5 rounded bg-slate-800 text-white font-bold cursor-pointer";
+
+						if (filter === "green") {
+							renderCensusGrid("none");
+							inspectStar(greenStarData);
+						} else {
+							renderCensusGrid(filter);
+						}
+					}, { signal: lifecycle.signal });
+				});
+
+				if (specialGreenDot) {
+					specialGreenDot.addEventListener("click", () => inspectStar(greenStarData), { signal: lifecycle.signal });
+				}
+				if (btnInspectGreen) {
+					btnInspectGreen.addEventListener("click", () => inspectStar(greenStarData), { signal: lifecycle.signal });
+				}
+
+				// Initial render of census
+				renderCensusGrid("all");
+				inspectStar(greenStarData);
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initVerdantStar);
+			} else {
+				initVerdantStar();
+			}
+			document.addEventListener("astro:page-load", initVerdantStar);
+		})();
+	</script>
+</MainGridLayout>
