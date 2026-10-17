@@ -30,6 +30,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"lightbearer-lab",
 	"one-beat",
 	"one-of-one",
+	"sliding-graphene",
 	"snake",
 	"spin-shove",
 	"steady-hand",
