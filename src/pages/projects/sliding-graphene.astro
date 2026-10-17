@@ -1,0 +1,1675 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Sliding Graphene · Cornell Lab"
+	: "滑出磁性 · SLIDING GRAPHENE";
+const description = isEn
+	? "Sliding Graphene: Voltage-driven interlayer sliding in tetralayer graphene switches between nonmagnetic Bernal and magnetic rhombohedral stacking, locking in the state nonvolatilely (Nature Nanotechnology 2026)."
+	: "滑出磁性 · SLIDING GRAPHENE：探索康奈尔大学 2026 年在《自然·纳米技术》发表的里程碑发现——电压驱动四层石墨烯层间原子滑移，在非磁性伯纳尔构型与磁性菱方构型之间实现非易失电重写。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#060913] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-indigo-500/30 selection:text-indigo-200">
+			<!-- Ambient Quantum Lattice Glow -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/4 -right-32 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/3 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+							<span>NAT. NANOTECHNOL. · 2026-10-14 · DOI: 10.1038/s41565-026-02306-x</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+							<span>⚛</span>
+							<span class="lang-zh">凝聚态物理 · 四层石墨烯滑移</span>
+							<span class="lang-en">CONDENSED MATTER · TETRALAYER GRAPHENE SLIDING</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">康奈尔大学安田健治实验室 · 2026-10-17</span>
+							<span class="lang-en">Cornell University · Yasuda Lab · 2026-10-17</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/sliding-graphene/" : "/en/projects/sliding-graphene/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-indigo-500/40 text-indigo-300 hover:text-white hover:bg-indigo-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "Switch to Chinese" : "切换为英文"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">滑出磁性 · SLIDING GRAPHENE</span>
+					<span class="lang-en">SLIDING GRAPHENE · Cornell Lab</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-indigo-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">给四层石墨烯加点电压，原子侧滑入位，磁性应声而起——撤去电压，磁性依然锁定。</span>
+					<span class="lang-en">Push atoms sideways with voltage and magnetism turns on — cut the power, and the state stays locked.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							2026 年 10 月 14 日发表于《自然·纳米技术》（<em>Nature Nanotechnology</em>，DOI: 10.1038/s41565-026-02306-x），并于 10 月 17 日广泛报道：美国康奈尔大学（Cornell University）应用与工程物理学助理教授安田健治（Kenji Yasuda）团队，由博士生丹尼尔·布兰登（Daniel Brandon）领衔，发现给一个恰好由<strong>四层单原子厚度石墨烯（tetralayer graphene）</strong>叠成的纳米器件施加微弱横向电压，各原子层便会发生微小的侧向“滑移”（sliding）。
+						</span>
+						<span class="lang-en">
+							Reported in mid-October 2026 (published Oct. 14, 2026 in <em>Nature Nanotechnology</em>, DOI: 10.1038/s41565-026-02306-x), physicists at Cornell University in the laboratory of Assistant Professor Kenji Yasuda (School of Applied and Engineering Physics), led by doctoral researcher Daniel Brandon, discovered that applying a voltage pulse to a stack of exactly <strong>four layers of graphene (tetralayer graphene)</strong> causes the atomic sheets to slide sideways relative to one another.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							石墨烯内部每一个单层由碳原子在蜂窝状六角晶格中以强共价键紧密连结，但层与层之间仅由微弱的<strong>范德华力（van der Waals bonds）</strong>维系。电压诱导的滑移改变了原子的垂直堆叠顺序——将材料从最稳定、最常见的<strong>伯纳尔构型（Bernal, ABAB）</strong>，滑移切换至罕见的<strong>菱方构型（Rhombohedral, ABCA）</strong>。伯纳尔态完全非磁，而菱方构型引发电子平带强关联，瞬间点亮强烈的自发<strong>铁磁性</strong>。更为重要的是，这种切换具有<strong>非易失性（nonvolatile）</strong>：电压撤去后，堆垛状态持久锁定；施加反向电压，即可平滑复原。
+						</span>
+						<span class="lang-en">
+							Within each one-atom-thick sheet, carbon atoms are locked in a honeycomb lattice by strong covalent bonds. Between sheets, however, they are bound only by whisper-weak <strong>van der Waals bonds</strong>. Voltage-driven sliding shifts the vertical atomic alignment from the standard, stable <strong>Bernal configuration (ABAB)</strong> to the rarer, metastable <strong>rhombohedral configuration (ABCA)</strong>. Bernal stacking is strictly nonmagnetic; rhombohedral stacking induces flat electronic bands that switch on spontaneous <strong>magnetism</strong>. Crucially, the switching is <strong>nonvolatile</strong>: once slid, the structure persists long after the voltage drops to zero, and reverses reliably with a reverse pulse.
+						</span>
+					</p>
+				</div>
+
+				<!-- Attributed Quotes Section (Yasuda and Brandon only) -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-indigo-500/30 relative overflow-hidden">
+						<div class="text-xs font-mono text-indigo-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>💬</span>
+							<span class="lang-zh">领衔导师观点 · KENJI YASUDA (CORNELL)</span>
+							<span class="lang-en">LEAD INVESTIGATOR · KENJI YASUDA (CORNELL)</span>
+						</div>
+						<blockquote class="text-xs sm:text-sm text-slate-200 italic font-serif leading-relaxed">
+							<span class="lang-zh">
+								安田健治教授指出：“<strong class="text-indigo-300">By electrically rewriting the structure, we may be able to switch not only magnetism, but also superconductivity and other quantum states, opening a path toward reconfigurable quantum materials and new forms of nonvolatile memory.</strong>”
+								<span class="block text-xs font-sans text-slate-400 not-italic mt-1">（“通过电学手段重写结构，我们不仅可能调控磁性，还可能切换超导态与其他量子态，为可重构量子材料和新型非易失存储开辟了道路。”）</span>
+							</span>
+							<span class="lang-en">
+								Kenji Yasuda stated: "<strong class="text-indigo-300">By electrically rewriting the structure, we may be able to switch not only magnetism, but also superconductivity and other quantum states, opening a path toward reconfigurable quantum materials and new forms of nonvolatile memory.</strong>"
+							</span>
+						</blockquote>
+					</div>
+
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-cyan-500/30 relative overflow-hidden">
+						<div class="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>💬</span>
+							<span class="lang-zh">第一作者观察 · DANIEL BRANDON (CORNELL)</span>
+							<span class="lang-en">FIRST AUTHOR OBSERVATION · DANIEL BRANDON (CORNELL)</span>
+						</div>
+						<blockquote class="text-xs sm:text-sm text-slate-200 italic font-serif leading-relaxed">
+							<span class="lang-zh">
+								丹尼尔·布兰登强调：“<strong class="text-cyan-300">Once the material is in that state, it persists for a long time and it can go back and forth between the two fairly consistently.</strong>”
+								<span class="block text-xs font-sans text-slate-400 not-italic mt-1">（“一旦材料进入该状态，它会持久保持很长时间，并且能够在两种构型之间相当一致地来回切换。”）</span>
+							</span>
+							<span class="lang-en">
+								Daniel Brandon noted: "<strong class="text-cyan-300">Once the material is in that state, it persists for a long time and it can go back and forth between the two fairly consistently.</strong>"
+							</span>
+						</blockquote>
+					</div>
+				</div>
+
+				<!-- Scientific Honesty Note Card -->
+				<div class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-amber-500/30 text-xs text-slate-300 leading-relaxed">
+					<div class="text-amber-400 font-mono font-bold uppercase tracking-wider mb-1.5 flex items-center gap-2">
+						<span>🔬</span>
+						<span class="lang-zh">科学严谨性特别说明：微观实验原型与图解示意</span>
+						<span class="lang-en">SCIENTIFIC HONESTY NOTE: RESEARCH DEVICE & SCHEMATIC VISUALS</span>
+					</div>
+					<p>
+						<span class="lang-zh">
+							必须诚实指出：本发现是在极低温与超高真空微纳器件中完成的<strong>实验室原型验证</strong>，而非已经上市的商业化芯片产品，绝不能声称其已投入商业制造。此外，原子层滑移的真实物理位移仅为化学键长的分数倍（约 <strong>0.14 纳米</strong>）；本交互页面中的所有层间滑移动态均为<strong>示意性图解（schematic illustrations）</strong>，方便观察层间相对位错与对称性转变，绝非真实比例的物理原子运动。
+						</span>
+						<span class="lang-en">
+							This breakthrough is an experimental laboratory demonstration conducted on a 4-layer micro-device, not a commercial memory chip in products. It must not be mistaken for existing consumer silicon. Furthermore, the true atomic sliding distance spans only a fraction of a bond length (~0.14 nm); all layer-sliding animations on this page are clearly labeled <strong>schematic illustrations</strong> designed for human comprehension, not to-scale atomic trajectories.
+						</span>
+					</p>
+				</div>
+			</header>
+
+			<!-- 5. FACTS STRIP SECTION -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex items-center gap-2 mb-4">
+					<span class="text-indigo-400 font-mono text-xs font-bold uppercase tracking-wider">
+						<span class="lang-zh">核心物理事实一览</span>
+						<span class="lang-en">CORE PHYSICAL FACTS STRIP</span>
+					</span>
+				</div>
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition">
+						<div class="text-indigo-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">原子层堆叠数</span>
+							<span class="lang-en">LAYER COUNT</span>
+						</div>
+						<div class="text-2xl font-black text-white mt-1">4 层</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">四层石墨烯 (Tetralayer)</span>
+							<span class="lang-en">Exactly 4 atomic sheets</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition">
+						<div class="text-cyan-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">单层物理厚度</span>
+							<span class="lang-en">SHEET THICKNESS</span>
+						</div>
+						<div class="text-2xl font-black text-white mt-1">1 个原子</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">六角蜂窝碳单层 (~0.34nm)</span>
+							<span class="lang-en">Single carbon atom plane</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition">
+						<div class="text-amber-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">层间结合作用</span>
+							<span class="lang-en">INTERLAYER FORCE</span>
+						</div>
+						<div class="text-2xl font-black text-amber-300 mt-1">弱范德华力</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">弱范德华键 (非面内强共价)</span>
+							<span class="lang-en">Weak van der Waals bonds</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition">
+						<div class="text-emerald-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">伯纳尔基态</span>
+							<span class="lang-en">BERNAL STACK</span>
+						</div>
+						<div class="text-2xl font-black text-emerald-300 mt-1">ABAB · 非磁</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">天然石墨稳定态，零净磁</span>
+							<span class="lang-en">Stable baseline, nonmagnetic</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition">
+						<div class="text-purple-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">菱方滑移态</span>
+							<span class="lang-en">RHOMBOHEDRAL</span>
+						</div>
+						<div class="text-2xl font-black text-purple-300 mt-1">ABCA · 磁性</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">平带关联激发育出自发磁性</span>
+							<span class="lang-en">Flat bands, spontaneous ferromagnetism</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition">
+						<div class="text-rose-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">发表时间与刊物</span>
+							<span class="lang-en">DATE & JOURNAL</span>
+						</div>
+						<div class="text-xl font-black text-rose-300 mt-1">2026-10-14</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">Nature Nanotechnology</span>
+							<span class="lang-en">Nat. Nanotechnol. 2026</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 1. CENTERPIECE: SLIDE THE LAYERS & HYSTERESIS -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-indigo-400 text-xs font-mono font-bold tracking-wider uppercase mb-1">
+							<span>01</span>
+							<span>·</span>
+							<span class="lang-zh">核心实验交互模拟</span>
+							<span class="lang-en">Flagship Interactive Experiment</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">滑移原子层：加压侧移，磁性涌现与非易失保持</span>
+							<span class="lang-en">Slide the Layers: Voltage-Driven Switch & Nonvolatile Memory</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1.5 rounded-full bg-slate-900 border border-amber-500/40 text-amber-300">
+						<span class="lang-zh">⚠️ 示意性图解，非真实尺度原子位移</span>
+						<span class="lang-en">⚠️ Schematic visual, not to-scale atomic trajectory</span>
+					</div>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						拖动电压滑块施加横向电场驱动四层石墨烯侧滑。当正向电压越过阈值（+1.5V）时，第三、四层原子从 B 站位滑移进入 C 站位，构型由<strong>伯纳尔（ABAB，非磁性）</strong>突变至<strong>菱方（ABCA，磁性）</strong>。<strong>最核心的物理学现象在于“非易失性”（Nonvolatility）</strong>：此时将电压归零（0V），磁性与晶格构型<strong>完好锁定保持</strong>，绝不丢失！唯有施加反向负电压越过阈值（-1.5V），原子层才会滑回初始非磁性态。
+					</span>
+					<span class="lang-en">
+						Drag the voltage slider to apply an electric field that slides the tetralayer graphene. Crossing the positive threshold (+1.5V) shifts layers from B positions to C positions, morphing from <strong>Bernal (ABAB, nonmagnetic)</strong> to <strong>rhombohedral (ABCA, magnetic)</strong>. <strong>The defining physics is nonvolatility</strong>: returning voltage to 0V leaves the magnetic state <strong>permanently locked</strong>! Only a reverse threshold pulse (-1.5V) slides the sheets back to nonmagnetic Bernal.
+					</span>
+				</p>
+
+				<!-- Controls Bar -->
+				<div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 mb-6">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+						<div class="flex items-center gap-2 text-xs font-mono font-bold text-slate-300">
+							<span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+							<span class="lang-zh">外加栅极电压 (Gate Voltage):</span>
+							<span class="lang-en">Applied Gate Voltage:</span>
+							<span id="slider-volts-val" class="text-indigo-400 font-mono text-base font-black ml-1">+0.00 V</span>
+						</div>
+						<div class="flex flex-wrap items-center gap-2">
+							<button id="btn-pulse-plus" type="button" class="px-2.5 py-1 text-xs font-mono font-semibold rounded-lg bg-indigo-900/60 border border-indigo-500/50 text-indigo-200 hover:bg-indigo-600 hover:text-white transition cursor-pointer active:scale-95">
+								<span class="lang-zh">⚡ +2.0V 脉冲 (滑移至菱方·开启磁性)</span>
+								<span class="lang-en">⚡ +2.0V Pulse (Slide to Rhombohedral)</span>
+							</button>
+							<button id="btn-pulse-zero" type="button" class="px-2.5 py-1 text-xs font-mono font-semibold rounded-lg bg-slate-950 border border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white transition cursor-pointer active:scale-95">
+								<span class="lang-zh">🔌 归零 0.0V (验证非易失锁定)</span>
+								<span class="lang-en">🔌 0.0V (Verify Nonvolatile Hold)</span>
+							</button>
+							<button id="btn-pulse-minus" type="button" class="px-2.5 py-1 text-xs font-mono font-semibold rounded-lg bg-slate-900 border border-rose-500/40 text-rose-300 hover:bg-rose-900/60 hover:text-white transition cursor-pointer active:scale-95">
+								<span class="lang-zh">🔄 -2.0V 脉冲 (复位伯纳尔·熄灭磁性)</span>
+								<span class="lang-en">🔄 -2.0V Pulse (Reset to Bernal)</span>
+							</button>
+							<button id="btn-auto-cycle" type="button" class="px-2.5 py-1 text-xs font-mono font-semibold rounded-lg bg-cyan-950/60 border border-cyan-500/50 text-cyan-200 hover:bg-cyan-600 hover:text-white transition cursor-pointer active:scale-95">
+								<span class="lang-zh">🔁 自动回线循环</span>
+								<span class="lang-en">🔁 Auto Cycle Loop</span>
+							</button>
+						</div>
+					</div>
+
+					<div class="relative flex items-center">
+						<input
+							type="range"
+							id="voltage-slider"
+							min="-2.5"
+							max="2.5"
+							step="0.05"
+							value="0"
+							aria-label="Gate Voltage Slider"
+							class="w-full h-2.5 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+						/>
+					</div>
+					<div class="flex justify-between text-[11px] font-mono text-slate-400 mt-2">
+						<span class="text-rose-400 font-bold">-2.5 V (复位阈值)</span>
+						<span class="text-slate-400">-1.5 V 阈值</span>
+						<span class="text-indigo-300 font-bold">0.0 V (无外电场保持点)</span>
+						<span class="text-slate-400">+1.5 V 阈值</span>
+						<span class="text-indigo-400 font-bold">+2.5 V (翻转阈值)</span>
+					</div>
+				</div>
+
+				<!-- Main Visuals Split: Left = Side View Stack, Right = Hysteresis Loop -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+					<!-- LEFT: Side-View Stack (7 cols) -->
+					<div class="lg:col-span-7 p-5 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+								<div class="flex items-center gap-2">
+									<span class="w-3 h-3 rounded-full bg-indigo-500 animate-pulse"></span>
+									<span class="font-mono text-xs font-bold text-slate-200 uppercase tracking-wider">
+										<span class="lang-zh">四层石墨烯侧视截面模型 (Side View)</span>
+										<span class="lang-en">Tetralayer Graphene Stack (Side View)</span>
+									</span>
+								</div>
+								<div class="flex items-center gap-2 text-xs font-mono">
+									<span id="badge-stacking" class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/50 text-emerald-300 font-bold">
+										ABAB (Bernal)
+									</span>
+									<span id="badge-magnetism" class="px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-bold">
+										MAGNETISM: OFF
+									</span>
+								</div>
+							</div>
+
+							<!-- SVG Stack Visualization -->
+							<div class="relative w-full aspect-16/10 rounded-xl bg-[#03060c] border border-slate-800/80 overflow-hidden flex items-center justify-center">
+								<!-- Field Lines Background (Dynamic) -->
+								<div id="magnetic-field-overlay" class="absolute inset-0 pointer-events-none transition-opacity duration-300 opacity-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.25)_0%,transparent_70%)]"></div>
+
+								<svg id="svg-stack-view" viewBox="0 0 600 360" class="w-full h-full select-none">
+									<defs>
+										<!-- Gradients for sheets -->
+										<linearGradient id="grad-layer1" x1="0" y1="0" x2="1" y2="0">
+											<stop offset="0%" stop-color="#0284c7" stop-opacity="0.8"/>
+											<stop offset="50%" stop-color="#38bdf8" stop-opacity="0.9"/>
+											<stop offset="100%" stop-color="#0284c7" stop-opacity="0.8"/>
+										</linearGradient>
+										<linearGradient id="grad-layer2" x1="0" y1="0" x2="1" y2="0">
+											<stop offset="0%" stop-color="#059669" stop-opacity="0.8"/>
+											<stop offset="50%" stop-color="#34d399" stop-opacity="0.9"/>
+											<stop offset="100%" stop-color="#059669" stop-opacity="0.8"/>
+										</linearGradient>
+										<linearGradient id="grad-layer3" x1="0" y1="0" x2="1" y2="0">
+											<stop offset="0%" stop-color="#d97706" stop-opacity="0.8"/>
+											<stop offset="50%" stop-color="#fbbf24" stop-opacity="0.9"/>
+											<stop offset="100%" stop-color="#d97706" stop-opacity="0.8"/>
+										</linearGradient>
+										<linearGradient id="grad-layer4" x1="0" y1="0" x2="1" y2="0">
+											<stop offset="0%" stop-color="#7c3aed" stop-opacity="0.8"/>
+											<stop offset="50%" stop-color="#c084fc" stop-opacity="0.9"/>
+											<stop offset="100%" stop-color="#7c3aed" stop-opacity="0.8"/>
+										</linearGradient>
+										<!-- Glow filters -->
+										<filter id="glow-mag" x="-30%" y="-30%" width="160%" height="160%">
+											<feGaussianBlur stdDeviation="4" result="blur" />
+											<feMerge>
+												<feMergeNode in="blur" />
+												<feMergeNode in="SourceGraphic" />
+											</feMerge>
+										</filter>
+									</defs>
+
+									<!-- Top Electrode (Gate) -->
+									<rect x="60" y="22" width="480" height="12" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+									<text x="300" y="32" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle" font-weight="bold">TOP GATE ELECTRODE (V_gate)</text>
+
+									<!-- Bottom Substrate / Back Gate -->
+									<rect x="60" y="326" width="480" height="16" rx="4" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+									<text x="300" y="338" fill="#64748b" font-size="10" font-family="monospace" text-anchor="middle">SUBSTRATE (SiO₂ / hBN / BACK GATE)</text>
+
+									<!-- Magnetic Spin Flux Arrows (Rendered in Rhombohedral state) -->
+									<g id="spin-arrows-group" opacity="0" class="transition-opacity duration-300">
+										<!-- Spatially distributed spin up arrows -->
+										<g transform="translate(140, 50)" fill="#818cf8" filter="url(#glow-mag)">
+											<path d="M0,25 L0,5 M-5,10 L0,0 L5,10" stroke="#818cf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+											<circle cx="0" cy="25" r="2.5" fill="#818cf8"/>
+										</g>
+										<g transform="translate(220, 50)" fill="#818cf8" filter="url(#glow-mag)">
+											<path d="M0,25 L0,5 M-5,10 L0,0 L5,10" stroke="#818cf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+											<circle cx="0" cy="25" r="2.5" fill="#818cf8"/>
+										</g>
+										<g transform="translate(300, 50)" fill="#818cf8" filter="url(#glow-mag)">
+											<path d="M0,25 L0,5 M-5,10 L0,0 L5,10" stroke="#818cf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+											<circle cx="0" cy="25" r="2.5" fill="#818cf8"/>
+										</g>
+										<g transform="translate(380, 50)" fill="#818cf8" filter="url(#glow-mag)">
+											<path d="M0,25 L0,5 M-5,10 L0,0 L5,10" stroke="#818cf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+											<circle cx="0" cy="25" r="2.5" fill="#818cf8"/>
+										</g>
+										<g transform="translate(460, 50)" fill="#818cf8" filter="url(#glow-mag)">
+											<path d="M0,25 L0,5 M-5,10 L0,0 L5,10" stroke="#818cf8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+											<circle cx="0" cy="25" r="2.5" fill="#818cf8"/>
+										</g>
+										<text x="300" y="55" fill="#c084fc" font-size="11" font-family="monospace" text-anchor="middle" font-weight="black" letter-spacing="2">
+											↑ ↑ ↑ SPONTANEOUS FERROMAGNETISM (FERMI SURFACE FLAT BAND) ↑ ↑ ↑
+										</text>
+									</g>
+
+									<!-- Weak Interlayer van der Waals dashed springs -->
+									<!-- Between 1 & 2 -->
+									<g stroke="#475569" stroke-width="1.2" stroke-dasharray="3,3" opacity="0.6">
+										<line x1="120" y1="290" x2="120" y2="230"/>
+										<line x1="200" y1="290" x2="200" y2="230"/>
+										<line x1="280" y1="290" x2="280" y2="230"/>
+										<line x1="360" y1="290" x2="360" y2="230"/>
+										<line x1="440" y1="290" x2="440" y2="230"/>
+									</g>
+									<!-- Between 2 & 3 -->
+									<g id="vdw-springs-23" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6">
+										<line x1="120" y1="230" x2="120" y2="170"/>
+										<line x1="200" y1="230" x2="200" y2="170"/>
+										<line x1="280" y1="230" x2="280" y2="170"/>
+										<line x1="360" y1="230" x2="360" y2="170"/>
+										<line x1="440" y1="230" x2="440" y2="170"/>
+									</g>
+									<!-- Between 3 & 4 -->
+									<g id="vdw-springs-34" stroke="#818cf8" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6">
+										<line x1="120" y1="170" x2="120" y2="110"/>
+										<line x1="200" y1="170" x2="200" y2="110"/>
+										<line x1="280" y1="170" x2="280" y2="110"/>
+										<line x1="360" y1="170" x2="360" y2="110"/>
+										<line x1="440" y1="170" x2="440" y2="110"/>
+									</g>
+
+									<!-- LAYER 1: BOTTOM (Fixed at Sublattice A) -->
+									<g id="layer-group-1">
+										<rect x="80" y="284" width="440" height="12" rx="6" fill="url(#grad-layer1)"/>
+										<!-- Carbon atoms at vertices -->
+										<circle cx="100" cy="290" r="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+										<circle cx="160" cy="290" r="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+										<circle cx="220" cy="290" r="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+										<circle cx="280" cy="290" r="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+										<circle cx="340" cy="290" r="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+										<circle cx="400" cy="290" r="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+										<circle cx="460" cy="290" r="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+										<text x="530" y="294" fill="#38bdf8" font-size="11" font-family="monospace" font-weight="bold">L1 [A]</text>
+									</g>
+
+									<!-- LAYER 2: (Position B, fixed reference) -->
+									<g id="layer-group-2">
+										<rect x="100" y="224" width="440" height="12" rx="6" fill="url(#grad-layer2)"/>
+										<circle cx="120" cy="230" r="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+										<circle cx="180" cy="230" r="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+										<circle cx="240" cy="230" r="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+										<circle cx="300" cy="230" r="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+										<circle cx="360" cy="230" r="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+										<circle cx="420" cy="230" r="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+										<circle cx="480" cy="230" r="5" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+										<text x="550" y="234" fill="#34d399" font-size="11" font-family="monospace" font-weight="bold">L2 [B]</text>
+									</g>
+
+									<!-- LAYER 3: (Slides between A and C) -->
+									<g id="layer-group-3" class="transition-transform duration-100 ease-out">
+										<rect x="80" y="164" width="440" height="12" rx="6" fill="url(#grad-layer3)"/>
+										<circle cx="100" cy="170" r="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+										<circle cx="160" cy="170" r="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+										<circle cx="220" cy="170" r="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+										<circle cx="280" cy="170" r="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+										<circle cx="340" cy="170" r="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+										<circle cx="400" cy="170" r="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+										<circle cx="460" cy="170" r="5" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+										<text id="lbl-l3-pos" x="530" y="174" fill="#fbbf24" font-size="11" font-family="monospace" font-weight="bold">L3 [A]</text>
+									</g>
+
+									<!-- LAYER 4: TOP (Slides between B and A) -->
+									<g id="layer-group-4" class="transition-transform duration-100 ease-out">
+										<rect x="100" y="104" width="440" height="12" rx="6" fill="url(#grad-layer4)"/>
+										<circle cx="120" cy="110" r="5" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+										<circle cx="180" cy="110" r="5" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+										<circle cx="240" cy="110" r="5" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+										<circle cx="300" cy="110" r="5" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+										<circle cx="360" cy="110" r="5" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+										<circle cx="420" cy="110" r="5" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+										<circle cx="480" cy="110" r="5" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+										<text id="lbl-l4-pos" x="550" y="114" fill="#c084fc" font-size="11" font-family="monospace" font-weight="bold">L4 [B]</text>
+									</g>
+
+									<!-- Lateral Sliding Direction Vectors (Schematic) -->
+									<g id="slide-arrow-overlay" opacity="0.8">
+										<path d="M40,110 L55,110 M50,105 L58,110 L50,115" stroke="#a855f7" stroke-width="2" stroke-linecap="round"/>
+										<path d="M40,170 L55,170 M50,165 L58,170 L50,175" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+									</g>
+								</svg>
+							</div>
+						</div>
+
+						<div class="mt-4 pt-3 border-t border-slate-800 text-xs font-mono text-slate-400 flex flex-wrap items-center justify-between gap-2">
+							<div class="flex items-center gap-2">
+								<span class="text-indigo-400 font-bold">● Layer Offset:</span>
+								<span id="txt-layer-offset" class="text-slate-200">0.00 nm (ABAB Bernal Baseline)</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="text-indigo-400 font-bold">● Interlayer Bond:</span>
+								<span class="text-emerald-400">van der Waals (~3 meV/atom)</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- RIGHT: Hysteresis Loop Plot (5 cols) -->
+					<div class="lg:col-span-5 p-5 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+								<div class="flex items-center gap-2">
+									<span class="w-3 h-3 rounded-full bg-cyan-400"></span>
+									<span class="font-mono text-xs font-bold text-slate-200 uppercase tracking-wider">
+										<span class="lang-zh">电滞回线与非易失保持 (Hysteresis Loop)</span>
+										<span class="lang-en">Hysteresis & Nonvolatility Plot</span>
+									</span>
+								</div>
+								<div class="text-[11px] font-mono text-slate-400">
+									M vs V_gate
+								</div>
+							</div>
+
+							<!-- SVG Hysteresis Chart -->
+							<div class="relative w-full aspect-square rounded-xl bg-[#03060c] border border-slate-800/80 overflow-hidden p-2 flex items-center justify-center">
+								<svg id="svg-hysteresis" viewBox="0 0 320 280" class="w-full h-full select-none">
+									<!-- Grid lines -->
+									<g stroke="#1e293b" stroke-width="0.8">
+										<!-- Horizontals -->
+										<line x1="40" y1="40" x2="290" y2="40" stroke-dasharray="2,2"/>
+										<line x1="40" y1="90" x2="290" y2="90" stroke-dasharray="2,2"/>
+										<line x1="40" y1="140" x2="290" y2="140"/>
+										<line x1="40" y1="190" x2="290" y2="190" stroke-dasharray="2,2"/>
+										<line x1="40" y1="240" x2="290" y2="240"/>
+										<!-- Verticals -->
+										<line x1="40" y1="40" x2="40" y2="240"/>
+										<line x1="90" y1="40" x2="90" y2="240" stroke-dasharray="2,2"/>
+										<line x1="165" y1="40" x2="165" y2="240" stroke="#334155" stroke-width="1.2"/>
+										<line x1="240" y1="40" x2="240" y2="240" stroke-dasharray="2,2"/>
+										<line x1="290" y1="40" x2="290" y2="240"/>
+									</g>
+
+									<!-- Nonvolatile Holding Zone Highlight (Around V=0) -->
+									<rect x="90" y="40" width="150" height="200" fill="#6366f1" fill-opacity="0.04" stroke="#6366f1" stroke-width="0.8" stroke-dasharray="4,4"/>
+									<text x="165" y="55" fill="#818cf8" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">
+										NONVOLATILE HOLD ZONE (0V)
+									</text>
+
+									<!-- Threshold Markers -->
+									<line x1="240" y1="40" x2="240" y2="240" stroke="#10b981" stroke-width="1.2" stroke-dasharray="3,2"/>
+									<text x="240" y="255" fill="#10b981" font-size="9" font-family="monospace" text-anchor="middle">+1.5V</text>
+
+									<line x1="90" y1="40" x2="90" y2="240" stroke="#f43f5e" stroke-width="1.2" stroke-dasharray="3,2"/>
+									<text x="90" y="255" fill="#f43f5e" font-size="9" font-family="monospace" text-anchor="middle">-1.5V</text>
+
+									<!-- Axis Labels -->
+									<text x="165" y="270" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">Gate Voltage (V)</text>
+									<text x="165" y="255" fill="#cbd5e1" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">0V</text>
+
+									<text x="18" y="44" fill="#c084fc" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">ON</text>
+									<text x="18" y="244" fill="#64748b" font-size="9" font-family="monospace" text-anchor="middle" font-weight="bold">OFF</text>
+									<text x="15" y="145" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle" transform="rotate(-90 15 145)">Magnetism (M)</text>
+
+									<!-- Static Hysteresis Loop Path -->
+									<!-- Lower branch: from -2.5V (x=40, y=240) to +1.5V (x=240, y=240), then jumps up to +2.5V (x=290, y=40) -->
+									<path d="M40,240 L240,240 Q265,240 275,140 T290,40" fill="none" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+									<!-- Upper branch: from +2.5V (x=290, y=40) to -1.5V (x=90, y=40), then jumps down to -2.5V (x=40, y=240) -->
+									<path d="M290,40 L90,40 Q65,40 55,140 T40,240" fill="none" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+
+									<!-- Dynamic Trajectory Glow Loop -->
+									<path id="hysteresis-loop-glow" d="M40,240 L240,240 Q265,240 275,140 T290,40 L90,40 Q65,40 55,140 T40,240 Z" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+
+									<!-- V=0 Nonvolatile Branch Markers -->
+									<circle cx="165" cy="40" r="4" fill="#a855f7" stroke="#ffffff" stroke-width="1.5"/>
+									<text x="175" y="38" fill="#c084fc" font-size="8" font-family="monospace">0V [ABCA / Locked ON]</text>
+
+									<circle cx="165" cy="240" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+									<text x="175" y="238" fill="#34d399" font-size="8" font-family="monospace">0V [ABAB / Locked OFF]</text>
+
+									<!-- Current State Tracer Point -->
+									<circle id="tracer-point" cx="165" cy="240" r="7" fill="#38bdf8" stroke="#ffffff" stroke-width="2" filter="url(#glow-mag)"/>
+								</svg>
+							</div>
+						</div>
+
+						<!-- Real-Time State Readout -->
+						<div class="mt-4 p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs font-mono space-y-1.5">
+							<div class="flex items-center justify-between">
+								<span class="text-slate-400">
+									<span class="lang-zh">瞬时磁化状态:</span>
+									<span class="lang-en">Instant Magnetization:</span>
+								</span>
+								<span id="txt-mag-state" class="font-bold text-slate-300">M = 0.00 (非磁性 / Off)</span>
+							</div>
+							<div class="flex items-center justify-between">
+								<span class="text-slate-400">
+									<span class="lang-zh">原子堆垛晶相:</span>
+									<span class="lang-en">Atomic Crystal Phase:</span>
+								</span>
+								<span id="txt-stack-phase" class="font-bold text-emerald-300">Bernal (ABAB)</span>
+							</div>
+							<div class="flex items-center justify-between">
+								<span class="text-slate-400">
+									<span class="lang-zh">0V 非易失性:</span>
+									<span class="lang-en">0V Nonvolatility:</span>
+								</span>
+								<span id="txt-retention" class="font-bold text-indigo-400">锁定保持 (LOCKED)</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. TWO STACKINGS, TWO PERSONALITIES: TOP VIEW HONEYCOMB & PROPERTY CARDS -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-indigo-400 text-xs font-mono font-bold tracking-wider uppercase mb-1">
+							<span>02</span>
+							<span>·</span>
+							<span class="lang-zh">原子堆叠微观对称性</span>
+							<span class="lang-en">Atomic Stacking Symmetry</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">两种堆垛，两种“性格”：俯视蜂窝晶格对撞</span>
+							<span class="lang-en">Two Stackings, Two Personalities: Top-View Honeycomb</span>
+						</h2>
+					</div>
+					<div class="flex items-center gap-2">
+						<button id="toggle-stack-bernal" type="button" class="px-3 py-1 text-xs font-mono font-bold rounded-lg bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 cursor-pointer transition active:scale-95">
+							<span>ABAB · 伯纳尔 (Bernal)</span>
+						</button>
+						<button id="toggle-stack-rhombo" type="button" class="px-3 py-1 text-xs font-mono font-bold rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white cursor-pointer transition active:scale-95">
+							<span>ABCA · 菱方 (Rhombohedral)</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						从正上方俯视四层石墨烯：六角碳蜂窝晶格拥有三个几何等价的平面站位（A、B、C）。在<strong>伯纳尔堆垛（ABAB）</strong>中，第 1 与第 3 层完全重合、第 2 与第 4 层完全重合，属于双层周期的镜面对称；而在<strong>菱方堆垛（ABCA）</strong>中，第 3 层侧滑至原本悬空的中心站位（C），形成螺旋阶梯式的三重对称。这一微小的原子几何重排，直接孕育出完全不同的量子世界。
+					</span>
+					<span class="lang-en">
+						Looking down from the top: the carbon honeycomb lattice features three geometrically equivalent lateral positions (A, B, C). In <strong>Bernal stacking (ABAB)</strong>, layers 1 & 3 overlap directly, and layers 2 & 4 overlap, preserving two-layer inversion symmetry. In <strong>rhombohedral stacking (ABCA)</strong>, Layer 3 slides into the hollow center position (C), generating a chiral spiral sequence. This subtle shift opens an entirely different quantum domain.
+					</span>
+				</p>
+
+				<!-- Honeycomb Interactive Canvas & Layer Selectors -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+					<!-- Top-View SVG Lattice (7 cols) -->
+					<div class="lg:col-span-7 p-5 rounded-2xl bg-slate-950/90 border border-slate-800 flex flex-col justify-between">
+						<div>
+							<div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3 mb-4">
+								<div class="text-xs font-mono font-bold text-slate-300">
+									<span class="lang-zh">四层原子俯视图 (Top-View Honeycomb Lattices)</span>
+									<span class="lang-en">4-Layer Top-Down Honeycomb Lattice</span>
+								</div>
+								<!-- Layer Toggles -->
+								<div class="flex items-center gap-3 text-[11px] font-mono">
+									<label class="flex items-center gap-1.5 cursor-pointer text-sky-400">
+										<input type="checkbox" id="chk-layer1" checked class="rounded border-slate-700 accent-sky-500"/>
+										<span>L1 [A]</span>
+									</label>
+									<label class="flex items-center gap-1.5 cursor-pointer text-emerald-400">
+										<input type="checkbox" id="chk-layer2" checked class="rounded border-slate-700 accent-emerald-500"/>
+										<span>L2 [B]</span>
+									</label>
+									<label class="flex items-center gap-1.5 cursor-pointer text-amber-400">
+										<input type="checkbox" id="chk-layer3" checked class="rounded border-slate-700 accent-amber-500"/>
+										<span id="lbl-chk-l3">L3 [A]</span>
+									</label>
+									<label class="flex items-center gap-1.5 cursor-pointer text-purple-400">
+										<input type="checkbox" id="chk-layer4" checked class="rounded border-slate-700 accent-purple-500"/>
+										<span id="lbl-chk-l4">L4 [B]</span>
+									</label>
+								</div>
+							</div>
+
+							<!-- Lattice SVG -->
+							<div class="relative w-full aspect-16/10 rounded-xl bg-[#040813] border border-slate-800/80 overflow-hidden flex items-center justify-center p-2">
+								<svg id="svg-topview-lattice" viewBox="0 0 540 320" class="w-full h-full select-none">
+									<defs>
+										<pattern id="hex-base-pattern" width="60" height="103.92" patternUnits="userSpaceOnUse">
+											<path d="M 30,0 L 60,17.32 L 60,51.96 L 30,69.28 L 0,51.96 L 0,17.32 Z M 30,69.28 L 60,86.6 L 60,121.24 L 30,138.56 L 0,121.24 L 0,86.6 Z" fill="none" stroke="#1e293b" stroke-width="0.7"/>
+										</pattern>
+									</defs>
+
+									<!-- Subtle Background Guide Hexagon Grid -->
+									<rect width="100%" height="100%" fill="url(#hex-base-pattern)" opacity="0.35"/>
+
+									<!-- Layer 1: Position A (Sky Blue) -->
+									<g id="top-layer-1" stroke="#0284c7" stroke-width="1.8" fill="none" opacity="0.8">
+										<!-- Honeycomb networks -->
+									</g>
+
+									<!-- Layer 2: Position B (Emerald Green) -->
+									<g id="top-layer-2" stroke="#059669" stroke-width="1.8" fill="none" opacity="0.8">
+										<!-- Shifted by bond vector -->
+									</g>
+
+									<!-- Layer 3: Dynamic shift between A and C (Amber Orange) -->
+									<g id="top-layer-3" stroke="#d97706" stroke-width="1.8" fill="none" opacity="0.8" class="transition-transform duration-500 ease-out">
+										<!-- Rendered in JS -->
+									</g>
+
+									<!-- Layer 4: Dynamic shift between B and A (Purple Orchid) -->
+									<g id="top-layer-4" stroke="#7c3aed" stroke-width="1.8" fill="none" opacity="0.8" class="transition-transform duration-500 ease-out">
+										<!-- Rendered in JS -->
+									</g>
+
+									<!-- Sublattice Anchor Annotations -->
+									<g font-family="monospace" font-size="11" font-weight="bold" opacity="0.9">
+										<circle cx="90" cy="50" r="12" fill="#0369a1" fill-opacity="0.2" stroke="#38bdf8"/>
+										<text x="90" y="54" fill="#38bdf8" text-anchor="middle">A</text>
+
+										<circle cx="110" cy="85" r="12" fill="#047857" fill-opacity="0.2" stroke="#34d399"/>
+										<text x="110" y="89" fill="#34d399" text-anchor="middle">B</text>
+
+										<circle cx="130" cy="50" r="12" fill="#b45309" fill-opacity="0.2" stroke="#fbbf24"/>
+										<text x="130" y="54" fill="#fbbf24" text-anchor="middle">C</text>
+									</g>
+								</svg>
+							</div>
+						</div>
+
+						<div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-mono text-slate-400">
+							<div class="flex items-center gap-2">
+								<span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+								<span class="lang-zh">第3层位移焦点：伯纳尔叠在 A，菱方侧滑至 C（镂空中心）</span>
+								<span class="lang-en">Layer 3 Focus: Bernal sits on A, Rhombohedral slides to C</span>
+							</div>
+							<span class="text-indigo-400">120° 碳-碳蜂窝对称</span>
+						</div>
+					</div>
+
+					<!-- Comparative Personality Cards (5 cols) -->
+					<div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+						<!-- Bernal Card -->
+						<div id="card-bernal" class="p-4 rounded-xl bg-slate-900/90 border-2 border-emerald-500/60 transition-all duration-300">
+							<div class="flex items-center justify-between mb-2">
+								<span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+									ABAB · 伯纳尔构型 (BERNAL)
+								</span>
+								<span class="text-xs font-mono text-emerald-400 font-bold">天然稳定基态</span>
+							</div>
+							<div class="space-y-2 text-xs font-mono text-slate-300">
+								<div class="flex items-center justify-between border-b border-slate-800/80 pb-1">
+									<span class="text-slate-400">
+										<span class="lang-zh">热力学稳定性:</span>
+										<span class="lang-en">Thermodynamic:</span>
+									</span>
+									<span class="text-white font-bold">全局极小态 (自然界 >85%)</span>
+								</div>
+								<div class="flex items-center justify-between border-b border-slate-800/80 pb-1">
+									<span class="text-slate-400">
+										<span class="lang-zh">自发磁性:</span>
+										<span class="lang-en">Magnetism:</span>
+									</span>
+									<span class="text-slate-400 font-bold">严格非磁性 (M = 0)</span>
+								</div>
+								<div class="flex items-center justify-between border-b border-slate-800/80 pb-1">
+									<span class="text-slate-400">
+										<span class="lang-zh">电子能带色散:</span>
+										<span class="lang-en">Band Structure:</span>
+									</span>
+									<span class="text-slate-300">常规抛物线重叠能带 (狄拉克)</span>
+								</div>
+								<div class="flex items-center justify-between">
+									<span class="text-slate-400">
+										<span class="lang-zh">电子关联效应:</span>
+										<span class="lang-en">Correlations:</span>
+									</span>
+									<span class="text-slate-400">微弱 (传统费米液体)</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Rhombohedral Card -->
+						<div id="card-rhombo" class="p-4 rounded-xl bg-slate-900/50 border border-slate-800 transition-all duration-300 opacity-60">
+							<div class="flex items-center justify-between mb-2">
+								<span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40">
+									ABCA · 菱方构型 (RHOMBOHEDRAL)
+								</span>
+								<span class="text-xs font-mono text-purple-400 font-bold">滑移激发态</span>
+							</div>
+							<div class="space-y-2 text-xs font-mono text-slate-300">
+								<div class="flex items-center justify-between border-b border-slate-800/80 pb-1">
+									<span class="text-slate-400">
+										<span class="lang-zh">热力学稳定性:</span>
+										<span class="lang-en">Thermodynamic:</span>
+									</span>
+									<span class="text-amber-300 font-bold">亚稳态 (自然界 &lt;15%)</span>
+								</div>
+								<div class="flex items-center justify-between border-b border-slate-800/80 pb-1">
+									<span class="text-slate-400">
+										<span class="lang-zh">自发磁性:</span>
+										<span class="lang-en">Magnetism:</span>
+									</span>
+									<span class="text-purple-300 font-black">自发铁磁性 (SPONTANEOUS ON)</span>
+								</div>
+								<div class="flex items-center justify-between border-b border-slate-800/80 pb-1">
+									<span class="text-slate-400">
+										<span class="lang-zh">电子能带色散:</span>
+										<span class="lang-en">Band Structure:</span>
+									</span>
+									<span class="text-purple-300 font-bold">费米面附近极平平带 (Flat Band)</span>
+								</div>
+								<div class="flex items-center justify-between">
+									<span class="text-slate-400">
+										<span class="lang-zh">前沿量子潜力:</span>
+										<span class="lang-en">Quantum Horizon:</span>
+									</span>
+									<span class="text-cyan-300 font-bold">强关联态 · 非常规超导候选</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 3. WHY SLIDING IS CHEAP: ENERGY BAR COMPARISON -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-indigo-400 text-xs font-mono font-bold tracking-wider uppercase mb-1">
+							<span>03</span>
+							<span>·</span>
+							<span class="lang-zh">能量壁垒与重写成本</span>
+							<span class="lang-en">Energy Cost & Rewrite Efficiency</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">为什么“滑移”如此廉价？能耗对决实验</span>
+							<span class="lang-en">Why Sliding is Cheap: Energy-Bar Comparison</span>
+						</h2>
+					</div>
+					<button id="btn-trigger-rewrite" type="button" class="px-3.5 py-1.5 text-xs font-mono font-bold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 cursor-pointer transition active:scale-95 flex items-center gap-2">
+						<span>⚡</span>
+						<span class="lang-zh">执行晶格重构对比测试</span>
+						<span class="lang-en">Execute Rewrite Test</span>
+					</button>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						改写常规固态晶体的原子排布，必须强行扯断原子间坚固的共价化学键，必须施加高达数十吉帕（数十万个大气压）的极限压力和上千度高温，这在微型芯片上无异于毁灭。然而，四层石墨烯滑移仅作用于极其微弱的层间范德华势阱：面内强共价键完好无损，仅需微伏/伏特级电场便能顺畅滑移，<strong>能耗相比传统途径剧降上千倍</strong>。
+					</span>
+					<span class="lang-en">
+						Rewriting crystal structures conventionally demands shattering stubborn covalent bonds—requiring intense diamond-anvil pressures (>10 GPa) and white-hot furnaces (>1000 °C), an impossibility for solid-state microchips. In contrast, tetralayer sliding only perturbs frail interlayer van der Waals potentials. The in-plane covalent lattice remains 100% unscathed, slumping the switching energy cost by <strong>more than three orders of magnitude</strong>.
+					</span>
+				</p>
+
+				<!-- Energy Comparison Cards -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<!-- Conventional Route -->
+					<div class="p-5 rounded-2xl bg-slate-950/80 border border-rose-900/40 relative overflow-hidden">
+						<div class="flex items-center justify-between mb-3">
+							<span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-rose-950/80 text-rose-300 border border-rose-500/30">
+								<span class="lang-zh">传统路径：破坏强共价键</span>
+								<span class="lang-en">Conventional: Breaking Covalent Bonds</span>
+							</span>
+							<span id="badge-conv-status" class="text-xs font-mono text-rose-400">待机 (Standby)</span>
+						</div>
+						<div class="space-y-4">
+							<div>
+								<div class="flex justify-between text-xs font-mono text-slate-400 mb-1">
+									<span class="lang-zh">单键结合断裂能量:</span>
+									<span class="lang-en">Bond Breaking Energy:</span>
+									<span class="text-rose-400 font-bold font-mono">~4.5 eV / bond (~430 kJ/mol)</span>
+								</div>
+								<div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden p-0.5 border border-slate-800">
+									<div id="bar-conv-energy" class="h-full bg-gradient-to-r from-rose-600 to-red-500 rounded-full transition-all duration-1000" style="width: 98%;"></div>
+								</div>
+							</div>
+							<div class="grid grid-cols-2 gap-3 text-xs font-mono">
+								<div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+									<div class="text-slate-400">
+										<span class="lang-zh">环境温度需求:</span>
+										<span class="lang-en">Required Temp:</span>
+									</div>
+									<div id="txt-conv-temp" class="text-lg font-black text-rose-400 mt-0.5">> 1,200 °C</div>
+								</div>
+								<div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+									<div class="text-slate-400">
+										<span class="lang-zh">极限外界压强:</span>
+										<span class="lang-en">Required Pressure:</span>
+									</div>
+									<div id="txt-conv-press" class="text-lg font-black text-rose-400 mt-0.5">> 10 GPa (10万大气压)</div>
+								</div>
+							</div>
+							<div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-800/40 text-[11px] text-rose-300 leading-relaxed font-mono">
+								<span class="lang-zh">⚠️ 严重芯片热损伤 · 高度不可逆 · 纳秒级重写无法实现</span>
+								<span class="lang-en">⚠️ Destructive thermal shock · Irreversible · Incompatible with chips</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- van der Waals Sliding Route -->
+					<div class="p-5 rounded-2xl bg-slate-950/80 border border-indigo-900/40 relative overflow-hidden">
+						<div class="flex items-center justify-between mb-3">
+							<span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-indigo-950/80 text-indigo-300 border border-indigo-500/30">
+								<span class="lang-zh">康奈尔新机制：弱范德华层间滑移</span>
+								<span class="lang-en">Cornell Discovery: van der Waals Sliding</span>
+							</span>
+							<span id="badge-vdw-status" class="text-xs font-mono text-emerald-400">待机 (Standby)</span>
+						</div>
+						<div class="space-y-4">
+							<div>
+								<div class="flex justify-between text-xs font-mono text-slate-400 mb-1">
+									<span class="lang-zh">层间相对滑移能量:</span>
+									<span class="lang-en">Interlayer Sliding Energy:</span>
+									<span class="text-indigo-300 font-bold font-mono">~0.003 eV / atom (~3 meV)</span>
+								</div>
+								<div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden p-0.5 border border-slate-800">
+									<div id="bar-vdw-energy" class="h-full bg-gradient-to-r from-indigo-500 to-cyan-400 rounded-full transition-all duration-1000" style="width: 3%;"></div>
+								</div>
+							</div>
+							<div class="grid grid-cols-2 gap-3 text-xs font-mono">
+								<div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+									<div class="text-slate-400">
+										<span class="lang-zh">环境温度需求:</span>
+										<span class="lang-en">Required Temp:</span>
+									</div>
+									<div id="txt-vdw-temp" class="text-lg font-black text-emerald-400 mt-0.5">25 °C (常规室温)</div>
+								</div>
+								<div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+									<div class="text-slate-400">
+										<span class="lang-zh">外界压强需求:</span>
+										<span class="lang-en">Required Pressure:</span>
+									</div>
+									<div id="txt-vdw-press" class="text-lg font-black text-cyan-400 mt-0.5">0 GPa (常压电场驱动)</div>
+								</div>
+							</div>
+							<div class="p-2.5 rounded-lg bg-indigo-950/30 border border-indigo-800/40 text-[11px] text-indigo-300 leading-relaxed font-mono">
+								<span class="lang-zh">✨ 降耗超 1,500 倍 · 面内共价键完好无损 · 原生支持纳秒级电气反复擦写</span>
+								<span class="lang-en">✨ >1,500x energy saving · Covalent sheets intact · High-speed electrical rewrites</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. MEMORY THAT STAYS: 4-BIT NONVOLATILE DEMO -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-indigo-400 text-xs font-mono font-bold tracking-wider uppercase mb-1">
+							<span>04</span>
+							<span>·</span>
+							<span class="lang-zh">非易失存储原理原型</span>
+							<span class="lang-en">Nonvolatile Memory Prototype</span>
+						</div>
+						<h2 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">断电不丢数据：4-Bit 滑移存储器实机演示</span>
+							<span class="lang-en">Memory That Stays: 4-Bit Nonvolatile Demo</span>
+						</h2>
+					</div>
+					<div class="flex items-center gap-2">
+						<button id="btn-toggle-power" type="button" class="px-3 py-1.5 text-xs font-mono font-bold rounded-lg bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 cursor-pointer transition active:scale-95 flex items-center gap-2">
+							<span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+							<span class="lang-zh">🔌 切断供电电源 (0.0V)</span>
+							<span class="lang-en">🔌 CUT POWER (0.0V)</span>
+						</button>
+						<button id="btn-read-memory" type="button" class="px-3 py-1.5 text-xs font-mono font-bold rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white cursor-pointer transition active:scale-95">
+							<span class="lang-zh">🔍 读取数据 (READ)</span>
+							<span class="lang-en">🔍 READ BITS</span>
+						</button>
+						<button id="btn-erase-all" type="button" class="px-3 py-1.5 text-xs font-mono font-bold rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white cursor-pointer transition active:scale-95">
+							<span class="lang-zh">🧹 全局擦除 (0000)</span>
+							<span class="lang-en">🧹 ERASE ALL</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						下方是由 4 个独立四层石墨烯单元构建的 4-bit 存储阵列。点击任意 Bit 执行电压脉冲写入（<strong>0 = 伯纳尔非磁 / 1 = 菱方滑移磁性</strong>）。写入任意数据组合后，轻点顶部的<strong>“切断供电电源（0.0V）”</strong>：模拟传统易失性内存（SRAM/DRAM）彻底断电的瞬间——请仔细观察：<strong>所有比特位的数据依然被晶格堆垛物理锁存，丝毫未损！</strong>再次轻点“读取数据”，即刻精确读回。
+					</span>
+					<span class="lang-en">
+						Below is an interactive 4-bit memory register built from four tetralayer graphene cells. Click any bit to pulse it between states (<strong>0 = Bernal nonmagnetic / 1 = Rhombohedral magnetic</strong>). After writing data, click <strong>"CUT POWER (0.0V)"</strong> to simulate a total power loss. Observe: <strong>every single bit remains firmly locked in its mechanical stacking configuration</strong>. Press "READ BITS" anytime to verify nonvolatile retention.
+					</span>
+				</p>
+
+				<!-- Power Status Banner -->
+				<div id="banner-power-status" class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-xs font-mono text-slate-300 mb-6 flex flex-wrap items-center justify-between gap-2">
+					<div class="flex items-center gap-2">
+						<span id="power-indicator-dot" class="w-3 h-3 rounded-full bg-emerald-400"></span>
+						<span class="text-slate-400">POWER STATUS:</span>
+						<span id="txt-power-status" class="font-bold text-emerald-300">ONLINE (V_supply = 2.5 V)</span>
+					</div>
+					<div class="flex items-center gap-2">
+						<span class="text-slate-400">RETENTION GUARANTEE:</span>
+						<span class="text-indigo-400 font-bold">100% NONVOLATILE LOCK</span>
+					</div>
+				</div>
+
+				<!-- 4 Memory Cells -->
+				<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+					<!-- Cell 3 -->
+					<div class="bit-card p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition cursor-pointer select-none" data-bit="3">
+						<div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+							<span class="font-bold">BIT 3 (MSB)</span>
+							<span class="bit-stack-label text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400">ABAB</span>
+						</div>
+						<div class="bit-val-display text-4xl sm:text-5xl font-mono font-black text-center py-3 text-slate-500 transition-colors">
+							0
+						</div>
+						<div class="bit-status-desc text-center text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-900">
+							<span class="lang-zh">非磁性 · 0V 保持</span>
+							<span class="lang-en">Nonmag · 0V Hold</span>
+						</div>
+					</div>
+
+					<!-- Cell 2 -->
+					<div class="bit-card p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition cursor-pointer select-none" data-bit="2">
+						<div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+							<span class="font-bold">BIT 2</span>
+							<span class="bit-stack-label text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400">ABAB</span>
+						</div>
+						<div class="bit-val-display text-4xl sm:text-5xl font-mono font-black text-center py-3 text-slate-500 transition-colors">
+							0
+						</div>
+						<div class="bit-status-desc text-center text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-900">
+							<span class="lang-zh">非磁性 · 0V 保持</span>
+							<span class="lang-en">Nonmag · 0V Hold</span>
+						</div>
+					</div>
+
+					<!-- Cell 1 -->
+					<div class="bit-card p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition cursor-pointer select-none" data-bit="1">
+						<div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+							<span class="font-bold">BIT 1</span>
+							<span class="bit-stack-label text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400">ABAB</span>
+						</div>
+						<div class="bit-val-display text-4xl sm:text-5xl font-mono font-black text-center py-3 text-slate-500 transition-colors">
+							0
+						</div>
+						<div class="bit-status-desc text-center text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-900">
+							<span class="lang-zh">非磁性 · 0V 保持</span>
+							<span class="lang-en">Nonmag · 0V Hold</span>
+						</div>
+					</div>
+
+					<!-- Cell 0 -->
+					<div class="bit-card p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition cursor-pointer select-none" data-bit="0">
+						<div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
+							<span class="font-bold">BIT 0 (LSB)</span>
+							<span class="bit-stack-label text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400">ABAB</span>
+						</div>
+						<div class="bit-val-display text-4xl sm:text-5xl font-mono font-black text-center py-3 text-slate-500 transition-colors">
+							0
+						</div>
+						<div class="bit-status-desc text-center text-[11px] font-mono text-slate-400 pt-2 border-t border-slate-900">
+							<span class="lang-zh">非磁性 · 0V 保持</span>
+							<span class="lang-en">Nonmag · 0V Hold</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Readout Register Panel & Preset Buttons -->
+				<div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 flex flex-wrap items-center justify-between gap-4">
+					<div class="flex flex-wrap items-center gap-4 text-xs font-mono">
+						<div>
+							<span class="text-slate-400">BINARY:</span>
+							<span id="readout-bin" class="font-bold text-white text-base ml-1">0000</span>
+						</div>
+						<div>
+							<span class="text-slate-400">HEX:</span>
+							<span id="readout-hex" class="font-bold text-indigo-400 text-base ml-1">0x0</span>
+						</div>
+						<div>
+							<span class="text-slate-400">DECIMAL:</span>
+							<span id="readout-dec" class="font-bold text-cyan-400 text-base ml-1">0</span>
+						</div>
+					</div>
+
+					<!-- Presets -->
+					<div class="flex items-center gap-1.5 text-xs font-mono">
+						<span class="text-slate-400 hidden sm:inline">PRESETS:</span>
+						<button type="button" class="btn-preset-mem px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 hover:text-white cursor-pointer active:scale-95" data-val="1010">1010</button>
+						<button type="button" class="btn-preset-mem px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 hover:text-white cursor-pointer active:scale-95" data-val="1100">1100</button>
+						<button type="button" class="btn-preset-mem px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 hover:text-white cursor-pointer active:scale-95" data-val="1111">1111</button>
+						<button type="button" class="btn-preset-mem px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-300 hover:text-white cursor-pointer active:scale-95" data-val="0000">0000</button>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. CITATION & CO-AUTHORS SECTION -->
+			<div class="p-5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs font-mono text-slate-400 mb-8">
+				<div class="text-slate-300 font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
+					<span>📄</span>
+					<span class="lang-zh">原始学术文献引用与科研团队</span>
+					<span class="lang-en">Academic Citation & Author Information</span>
+				</div>
+				<p class="leading-relaxed mb-3 text-slate-300">
+					D. Brandon, Y. Ai, A. Gandhi, L. Min, K. Nadel, P. Golemis, K. Yasuda, et al.
+					<em>"Voltage-controlled interlayer sliding and nonvolatile magnetic switching in tetralayer graphene"</em>.
+					<strong>Nature Nanotechnology</strong> (published October 14, 2026). DOI: 10.1038/s41565-026-02306-x.
+				</p>
+				<div class="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-indigo-400 text-[11px]">
+					<span>🏛️ Affiliation: School of Applied & Engineering Physics, Cornell University, Ithaca, NY, USA</span>
+					<span>•</span>
+					<span>PI: Kenji Yasuda (Assistant Professor)</span>
+					<span>•</span>
+					<span>Lead Author: Daniel Brandon (Doctoral Student)</span>
+					<span>•</span>
+					<span>Collaborators: Stanford University, Stony Brook University, National Institute for Materials Science (NIMS)</span>
+				</div>
+			</div>
+
+			<!-- FOOTER SECTION & AI DECLARATION -->
+			<div class="pt-4 text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+				<div>
+					<span class="lang-zh">滑出磁性 · SLIDING GRAPHENE — 2026 四层石墨烯原子滑移与非易失磁性交互实验室</span>
+					<span class="lang-en">Sliding Graphene · Cornell 2026 Nonvolatile Atomic Sliding Lab</span>
+				</div>
+				<div>
+					<span>p1ziyu.com · 2026</span>
+				</div>
+			</div>
+
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-indigo-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE SIMULATION ENGINE -->
+	<script is:inline>
+		(() => {
+			let cleanup = null;
+
+			function initSlidingGraphene() {
+				if (cleanup) {
+					cleanup();
+					cleanup = null;
+				}
+
+				const lifecycle = new AbortController();
+				cleanup = () => lifecycle.abort();
+
+				// ==========================================
+				// 1. CENTERPIECE: SLIDE THE LAYERS & HYSTERESIS
+				// ==========================================
+				const voltageSlider = document.getElementById("voltage-slider");
+				const sliderVoltsVal = document.getElementById("slider-volts-val");
+				const btnPulsePlus = document.getElementById("btn-pulse-plus");
+				const btnPulseZero = document.getElementById("btn-pulse-zero");
+				const btnPulseMinus = document.getElementById("btn-pulse-minus");
+				const btnAutoCycle = document.getElementById("btn-auto-cycle");
+
+				const layerGroup3 = document.getElementById("layer-group-3");
+				const layerGroup4 = document.getElementById("layer-group-4");
+				const lblL3Pos = document.getElementById("lbl-l3-pos");
+				const lblL4Pos = document.getElementById("lbl-l4-pos");
+				const badgeStacking = document.getElementById("badge-stacking");
+				const badgeMagnetism = document.getElementById("badge-magnetism");
+				const spinArrowsGroup = document.getElementById("spin-arrows-group");
+				const magFieldOverlay = document.getElementById("magnetic-field-overlay");
+				const txtLayerOffset = document.getElementById("txt-layer-offset");
+
+				const tracerPoint = document.getElementById("tracer-point");
+				const txtMagState = document.getElementById("txt-mag-state");
+				const txtStackPhase = document.getElementById("txt-stack-phase");
+				const txtRetention = document.getElementById("txt-retention");
+
+				// State Machine: isRhombohedral indicates the current locked branch
+				let isRhombohedral = false; // start in Bernal基态
+				let autoCycleInterval = null;
+
+				function updateHysteresisState(voltage) {
+					// Hysteresis threshold logic:
+					// Positive threshold: +1.5V switches to Rhombohedral (magnetic)
+					// Negative threshold: -1.5V resets to Bernal (nonmagnetic)
+					// Between -1.5V and +1.5V, the state remains unchanged (nonvolatile retention!)
+					if (voltage >= 1.5) {
+						isRhombohedral = true;
+					} else if (voltage <= -1.5) {
+						isRhombohedral = false;
+					}
+
+					// Stacking & Magnetism
+					const isMag = isRhombohedral;
+					// UI Labels
+					if (sliderVoltsVal) {
+						sliderVoltsVal.textContent = `${voltage >= 0 ? "+" : ""}${voltage.toFixed(2)} V`;
+					}
+
+					// Update Side-View Stack Graphic
+					// Lateral offset in pixels: 0px when Bernal (A/B), 30px when Rhombohedral (C/A)
+					const targetShift = isMag ? 32 : 0;
+					if (layerGroup3) {
+						layerGroup3.style.transform = `translateX(${targetShift}px)`;
+					}
+					if (layerGroup4) {
+						layerGroup4.style.transform = `translateX(${targetShift}px)`;
+					}
+
+					if (lblL3Pos) {
+						lblL3Pos.textContent = isMag ? "L3 [C]" : "L3 [A]";
+						lblL3Pos.setAttribute("fill", isMag ? "#fbbf24" : "#f59e0b");
+					}
+					if (lblL4Pos) {
+						lblL4Pos.textContent = isMag ? "L4 [A]" : "L4 [B]";
+						lblL4Pos.setAttribute("fill", isMag ? "#c084fc" : "#a855f7");
+					}
+
+					if (badgeStacking) {
+						if (isMag) {
+							badgeStacking.className = "px-2 py-0.5 rounded bg-purple-950 border border-purple-500/50 text-purple-300 font-bold";
+							badgeStacking.textContent = "ABCA (Rhombohedral)";
+						} else {
+							badgeStacking.className = "px-2 py-0.5 rounded bg-emerald-950 border border-emerald-500/50 text-emerald-300 font-bold";
+							badgeStacking.textContent = "ABAB (Bernal)";
+						}
+					}
+
+					if (badgeMagnetism) {
+						if (isMag) {
+							badgeMagnetism.className = "px-2 py-0.5 rounded bg-indigo-900 border border-indigo-400 text-indigo-200 font-bold shadow-lg shadow-indigo-500/30";
+							badgeMagnetism.textContent = "MAGNETISM: ON (1.2 µB)";
+						} else {
+							badgeMagnetism.className = "px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-bold";
+							badgeMagnetism.textContent = "MAGNETISM: OFF (0 µB)";
+						}
+					}
+
+					if (spinArrowsGroup) {
+						spinArrowsGroup.style.opacity = isMag ? "1" : "0";
+					}
+					if (magFieldOverlay) {
+						magFieldOverlay.style.opacity = isMag ? "1" : "0";
+					}
+
+					if (txtLayerOffset) {
+						txtLayerOffset.textContent = isMag ? "0.14 nm (ABCA Rhombohedral Stacking)" : "0.00 nm (ABAB Bernal Baseline)";
+					}
+
+					// Update Tracer Point on Hysteresis Plot
+					// Graph geometry:
+					// V in [-2.5, +2.5] -> X in [40, 290]. Span = 250px.
+					// Zero V is at x = 165px.
+					// X(V) = 165 + (V / 2.5) * 125.
+					const ptX = 165 + (voltage / 2.5) * 125;
+					// Y: M=0 is y=240, M=1 is y=40.
+					const ptY = isMag ? 40 : 240;
+
+					if (tracerPoint) {
+						tracerPoint.setAttribute("cx", ptX.toFixed(1));
+						tracerPoint.setAttribute("cy", ptY.toFixed(1));
+						tracerPoint.setAttribute("fill", isMag ? "#c084fc" : "#10b981");
+					}
+
+					// Readout Text
+					if (txtMagState) {
+						txtMagState.textContent = isMag ? "M = 1.00 (自发铁磁性 / On)" : "M = 0.00 (非磁性 / Off)";
+						txtMagState.className = isMag ? "font-bold text-purple-300" : "font-bold text-slate-300";
+					}
+					if (txtStackPhase) {
+						txtStackPhase.textContent = isMag ? "Rhombohedral (ABCA)" : "Bernal (ABAB)";
+						txtStackPhase.className = isMag ? "font-bold text-purple-300" : "font-bold text-emerald-300";
+					}
+					if (txtRetention) {
+						if (Math.abs(voltage) < 0.2) {
+							txtRetention.textContent = isMag ? "0V 非易失磁性锁定 (LOCKED ON)" : "0V 非易失非磁保持 (LOCKED OFF)";
+							txtRetention.className = "font-bold text-cyan-300";
+						} else {
+							txtRetention.textContent = "电场调谐中 (Tuning)";
+							txtRetention.className = "font-bold text-indigo-400";
+						}
+					}
+				}
+
+				if (voltageSlider) {
+					voltageSlider.addEventListener("input", (e) => {
+						if (autoCycleInterval) {
+							clearInterval(autoCycleInterval);
+							autoCycleInterval = null;
+						}
+						updateHysteresisState(parseFloat(e.target.value));
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPulsePlus) {
+					btnPulsePlus.addEventListener("click", () => {
+						if (autoCycleInterval) clearInterval(autoCycleInterval);
+						if (voltageSlider) voltageSlider.value = "2.0";
+						updateHysteresisState(2.0);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPulseZero) {
+					btnPulseZero.addEventListener("click", () => {
+						if (autoCycleInterval) clearInterval(autoCycleInterval);
+						if (voltageSlider) voltageSlider.value = "0.0";
+						updateHysteresisState(0.0);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPulseMinus) {
+					btnPulseMinus.addEventListener("click", () => {
+						if (autoCycleInterval) clearInterval(autoCycleInterval);
+						if (voltageSlider) voltageSlider.value = "-2.0";
+						updateHysteresisState(-2.0);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnAutoCycle) {
+					btnAutoCycle.addEventListener("click", () => {
+						if (autoCycleInterval) {
+							clearInterval(autoCycleInterval);
+							autoCycleInterval = null;
+							return;
+						}
+						let curV = voltageSlider ? parseFloat(voltageSlider.value) : 0;
+						let step = 0.1;
+						autoCycleInterval = setInterval(() => {
+							curV += step;
+							if (curV >= 2.4) {
+								curV = 2.4;
+								step = -0.1;
+							} else if (curV <= -2.4) {
+								curV = -2.4;
+								step = 0.1;
+							}
+							if (voltageSlider) voltageSlider.value = curV.toFixed(2);
+							updateHysteresisState(curV);
+						}, 60);
+					}, { signal: lifecycle.signal });
+				}
+
+				// Initialize centerpiece at 0V Bernal
+				updateHysteresisState(0.0);
+
+
+				// ==========================================
+				// 2. TWO STACKINGS, TWO PERSONALITIES: TOP-VIEW LATTICE
+				// ==========================================
+				const toggleStackBernal = document.getElementById("toggle-stack-bernal");
+				const toggleStackRhombo = document.getElementById("toggle-stack-rhombo");
+				const cardBernal = document.getElementById("card-bernal");
+				const cardRhombo = document.getElementById("card-rhombo");
+
+				const chkLayer1 = document.getElementById("chk-layer1");
+				const chkLayer2 = document.getElementById("chk-layer2");
+				const chkLayer3 = document.getElementById("chk-layer3");
+				const chkLayer4 = document.getElementById("chk-layer4");
+				const lblChkL3 = document.getElementById("lbl-chk-l3");
+				const lblChkL4 = document.getElementById("lbl-chk-l4");
+
+				const topLayer1 = document.getElementById("top-layer-1");
+				const topLayer2 = document.getElementById("top-layer-2");
+				const topLayer3 = document.getElementById("top-layer-3");
+				const topLayer4 = document.getElementById("top-layer-4");
+
+				// Render Top-View Honeycomb paths
+				function createHexagonRings(group, offsetX, offsetY, dotColor) {
+					if (!group) return;
+					const a = 24; // hex side length
+					const dx = a * Math.sqrt(3); // ~41.57
+					const dy = a * 1.5; // 36
+					const markup = [];
+
+					for (let row = 0; row < 5; row++) {
+						for (let col = 0; col < 8; col++) {
+							const cx = col * dx + (row % 2 ? dx / 2 : 0) + offsetX;
+							const cy = row * dy + offsetY;
+
+							// Draw 6-sided hexagon
+							const pts = [];
+							for (let i = 0; i < 6; i++) {
+								const angle = (Math.PI / 180) * (60 * i - 30);
+								pts.push(`${(cx + a * Math.cos(angle)).toFixed(1)},${(cy + a * Math.sin(angle)).toFixed(1)}`);
+							}
+							markup.push(`<polygon points="${pts.join(" ")}" fill="none" stroke-width="1.5"/>`);
+
+							// Atom dots at vertices
+							for (let i = 0; i < 6; i++) {
+								const angle = (Math.PI / 180) * (60 * i - 30);
+								const px = (cx + a * Math.cos(angle)).toFixed(1);
+								const py = (cy + a * Math.sin(angle)).toFixed(1);
+								markup.push(`<circle cx="${px}" cy="${py}" r="3" fill="${dotColor}"/>`);
+							}
+						}
+					}
+					group.innerHTML = markup.join("");
+				}
+
+				// Build fixed layers: Layer 1 (A) at (40, 30), Layer 2 (B) shifted by (14, 24)
+				createHexagonRings(topLayer1, 40, 30, "#38bdf8");
+				createHexagonRings(topLayer2, 54, 54, "#34d399");
+				// Initial Layer 3 (A) at (40, 30)
+				createHexagonRings(topLayer3, 40, 30, "#fbbf24");
+				// Initial Layer 4 (B) at (54, 54)
+				createHexagonRings(topLayer4, 54, 54, "#c084fc");
+
+				function setTopStackMode(mode) {
+					const isR = mode === "rhombo";
+
+					if (isR) {
+						// Shift Layer 3 to C position: offset vector (+28, 0)
+						// Shift Layer 4 to A position: offset vector (-14, -24)
+						if (topLayer3) topLayer3.style.transform = "translate(24px, 12px)";
+						if (topLayer4) topLayer4.style.transform = "translate(-14px, -24px)";
+
+						if (lblChkL3) lblChkL3.textContent = "L3 [C]";
+						if (lblChkL4) lblChkL4.textContent = "L4 [A]";
+
+						if (toggleStackRhombo) {
+							toggleStackRhombo.className = "px-3 py-1 text-xs font-mono font-bold rounded-lg bg-purple-600 text-white shadow-lg shadow-purple-500/20 cursor-pointer transition active:scale-95";
+						}
+						if (toggleStackBernal) {
+							toggleStackBernal.className = "px-3 py-1 text-xs font-mono font-bold rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white cursor-pointer transition active:scale-95";
+						}
+
+						if (cardRhombo) {
+							cardRhombo.className = "p-4 rounded-xl bg-slate-900/90 border-2 border-purple-500/60 transition-all duration-300 opacity-100";
+						}
+						if (cardBernal) {
+							cardBernal.className = "p-4 rounded-xl bg-slate-900/40 border border-slate-800 transition-all duration-300 opacity-50";
+						}
+					} else {
+						if (topLayer3) topLayer3.style.transform = "translate(0px, 0px)";
+						if (topLayer4) topLayer4.style.transform = "translate(0px, 0px)";
+
+						if (lblChkL3) lblChkL3.textContent = "L3 [A]";
+						if (lblChkL4) lblChkL4.textContent = "L4 [B]";
+
+						if (toggleStackBernal) {
+							toggleStackBernal.className = "px-3 py-1 text-xs font-mono font-bold rounded-lg bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 cursor-pointer transition active:scale-95";
+						}
+						if (toggleStackRhombo) {
+							toggleStackRhombo.className = "px-3 py-1 text-xs font-mono font-bold rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-white cursor-pointer transition active:scale-95";
+						}
+
+						if (cardBernal) {
+							cardBernal.className = "p-4 rounded-xl bg-slate-900/90 border-2 border-emerald-500/60 transition-all duration-300 opacity-100";
+						}
+						if (cardRhombo) {
+							cardRhombo.className = "p-4 rounded-xl bg-slate-900/40 border border-slate-800 transition-all duration-300 opacity-50";
+						}
+					}
+				}
+
+				if (toggleStackBernal) {
+					toggleStackBernal.addEventListener("click", () => setTopStackMode("bernal"), { signal: lifecycle.signal });
+				}
+				if (toggleStackRhombo) {
+					toggleStackRhombo.addEventListener("click", () => setTopStackMode("rhombo"), { signal: lifecycle.signal });
+				}
+
+				// Checkboxes for individual layers
+				if (chkLayer1 && topLayer1) {
+					chkLayer1.addEventListener("change", (e) => {
+						topLayer1.style.display = e.target.checked ? "block" : "none";
+					}, { signal: lifecycle.signal });
+				}
+				if (chkLayer2 && topLayer2) {
+					chkLayer2.addEventListener("change", (e) => {
+						topLayer2.style.display = e.target.checked ? "block" : "none";
+					}, { signal: lifecycle.signal });
+				}
+				if (chkLayer3 && topLayer3) {
+					chkLayer3.addEventListener("change", (e) => {
+						topLayer3.style.display = e.target.checked ? "block" : "none";
+					}, { signal: lifecycle.signal });
+				}
+				if (chkLayer4 && topLayer4) {
+					chkLayer4.addEventListener("change", (e) => {
+						topLayer4.style.display = e.target.checked ? "block" : "none";
+					}, { signal: lifecycle.signal });
+				}
+
+
+				// ==========================================
+				// 3. WHY SLIDING IS CHEAP: ENERGY TEST
+				// ==========================================
+				const btnTriggerRewrite = document.getElementById("btn-trigger-rewrite");
+				const barConvEnergy = document.getElementById("bar-conv-energy");
+				const barVdwEnergy = document.getElementById("bar-vdw-energy");
+				const txtConvTemp = document.getElementById("txt-conv-temp");
+				const txtConvPress = document.getElementById("txt-conv-press");
+				const badgeConvStatus = document.getElementById("badge-conv-status");
+				const badgeVdwStatus = document.getElementById("badge-vdw-status");
+
+				let rewriteTesting = false;
+
+				if (btnTriggerRewrite) {
+					btnTriggerRewrite.addEventListener("click", () => {
+						if (rewriteTesting) return;
+						rewriteTesting = true;
+
+						if (badgeConvStatus) badgeConvStatus.textContent = "重构执行中 (Simulating...)";
+						if (badgeVdwStatus) badgeVdwStatus.textContent = "电脉冲微滑 (Sliding...)";
+
+						// Animate conventional bar up and down
+						if (barConvEnergy) barConvEnergy.style.width = "10%";
+						if (barVdwEnergy) barVdwEnergy.style.width = "0%";
+
+						setTimeout(() => {
+							if (barConvEnergy) barConvEnergy.style.width = "100%";
+							if (barVdwEnergy) barVdwEnergy.style.width = "3%";
+							if (txtConvTemp) txtConvTemp.textContent = "1,650 °C (极端热裂解)";
+							if (txtConvPress) txtConvPress.textContent = "14.2 GPa (金刚石砧顶压)";
+						}, 300);
+
+						setTimeout(() => {
+							if (badgeConvStatus) {
+								badgeConvStatus.textContent = "化学键强行断裂 / 芯片损毁";
+								badgeConvStatus.className = "text-xs font-mono text-rose-400 font-bold";
+							}
+							if (badgeVdwStatus) {
+								badgeVdwStatus.textContent = "原子顺滑到位 / 完好锁定";
+								badgeVdwStatus.className = "text-xs font-mono text-emerald-400 font-bold";
+							}
+							rewriteTesting = false;
+						}, 1200);
+					}, { signal: lifecycle.signal });
+				}
+
+
+				// ==========================================
+				// 4. MEMORY THAT STAYS: 4-BIT NONVOLATILE DEMO
+				// ==========================================
+				const bitCards = document.querySelectorAll(".bit-card");
+				const btnTogglePower = document.getElementById("btn-toggle-power");
+				const btnReadMemory = document.getElementById("btn-read-memory");
+				const btnEraseAll = document.getElementById("btn-erase-all");
+				const btnPresetMems = document.querySelectorAll(".btn-preset-mem");
+
+				const powerIndicatorDot = document.getElementById("power-indicator-dot");
+				const txtPowerStatus = document.getElementById("txt-power-status");
+				const readoutBin = document.getElementById("readout-bin");
+				const readoutHex = document.getElementById("readout-hex");
+				const readoutDec = document.getElementById("readout-dec");
+
+				// 4 bits: index 3, 2, 1, 0
+				const memBits = [0, 0, 0, 0];
+				let powerOnline = true;
+
+				function renderBitCards() {
+					bitCards.forEach((card) => {
+						const bitIdx = parseInt(card.dataset.bit, 10);
+						const val = memBits[bitIdx];
+						const valDisplay = card.querySelector(".bit-val-display");
+						const stackLabel = card.querySelector(".bit-stack-label");
+						const statusDesc = card.querySelector(".bit-status-desc");
+
+						if (valDisplay) {
+							valDisplay.textContent = val.toString();
+							if (val === 1) {
+								valDisplay.className = "bit-val-display text-4xl sm:text-5xl font-mono font-black text-center py-3 text-purple-400 transition-colors";
+								card.className = "bit-card p-4 rounded-xl bg-slate-900 border-2 border-purple-500/80 shadow-lg shadow-purple-500/20 hover:border-purple-400 transition cursor-pointer select-none";
+							} else {
+								valDisplay.className = "bit-val-display text-4xl sm:text-5xl font-mono font-black text-center py-3 text-slate-500 transition-colors";
+								card.className = "bit-card p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/50 transition cursor-pointer select-none";
+							}
+						}
+
+						if (stackLabel) {
+							if (val === 1) {
+								stackLabel.className = "bit-stack-label text-[10px] px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-500/50";
+								stackLabel.textContent = "ABCA (Mag)";
+							} else {
+								stackLabel.className = "bit-stack-label text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400";
+								stackLabel.textContent = "ABAB (Non)";
+							}
+						}
+
+						if (statusDesc) {
+							if (val === 1) {
+								statusDesc.innerHTML = `<span class="lang-zh text-purple-300">菱方铁磁 · 0V 保持</span><span class="lang-en text-purple-300">Rhombo Mag · 0V Hold</span>`;
+							} else {
+								statusDesc.innerHTML = `<span class="lang-zh text-slate-400">伯纳尔非磁 · 0V 保持</span><span class="lang-en text-slate-400">Bernal Non · 0V Hold</span>`;
+							}
+						}
+					});
+				}
+
+				function updateReadoutDisplays() {
+					const binStr = `${memBits[3]}${memBits[2]}${memBits[1]}${memBits[0]}`;
+					const intVal = parseInt(binStr, 2);
+					if (readoutBin) readoutBin.textContent = binStr;
+					if (readoutHex) readoutHex.textContent = `0x${intVal.toString(16).toUpperCase()}`;
+					if (readoutDec) readoutDec.textContent = intVal.toString();
+				}
+
+				// Click bit to toggle / pulse
+				bitCards.forEach((card) => {
+					card.addEventListener("click", () => {
+						const bitIdx = parseInt(card.dataset.bit, 10);
+						memBits[bitIdx] = memBits[bitIdx] === 0 ? 1 : 0;
+						renderBitCards();
+						updateReadoutDisplays();
+					}, { signal: lifecycle.signal });
+				});
+
+				if (btnTogglePower) {
+					btnTogglePower.addEventListener("click", () => {
+						powerOnline = !powerOnline;
+						if (powerOnline) {
+							if (powerIndicatorDot) powerIndicatorDot.className = "w-3 h-3 rounded-full bg-emerald-400";
+							if (txtPowerStatus) {
+								txtPowerStatus.textContent = "ONLINE (V_supply = 2.5 V)";
+								txtPowerStatus.className = "font-bold text-emerald-300";
+							}
+							btnTogglePower.className = "px-3 py-1.5 text-xs font-mono font-bold rounded-lg bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 cursor-pointer transition active:scale-95 flex items-center gap-2";
+							btnTogglePower.innerHTML = `<span class="w-2 h-2 rounded-full bg-white animate-ping"></span><span class="lang-zh">🔌 切断供电电源 (0.0V)</span><span class="lang-en">🔌 CUT POWER (0.0V)</span>`;
+						} else {
+							// POWER CUT TO 0V!
+							if (powerIndicatorDot) powerIndicatorDot.className = "w-3 h-3 rounded-full bg-slate-600";
+							if (txtPowerStatus) {
+								txtPowerStatus.textContent = "OFFLINE (0.00 V — DATA SECURELY LOCKED!)";
+								txtPowerStatus.className = "font-bold text-cyan-400 animate-pulse";
+							}
+							btnTogglePower.className = "px-3 py-1.5 text-xs font-mono font-bold rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-700/30 cursor-pointer transition active:scale-95 flex items-center gap-2";
+							btnTogglePower.innerHTML = `<span>⚡</span><span class="lang-zh">恢复电源供电 (RESTORE)</span><span class="lang-en">RESTORE POWER</span>`;
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnReadMemory) {
+					btnReadMemory.addEventListener("click", () => {
+						updateReadoutDisplays();
+						// Flash readout container
+						if (readoutBin) {
+							readoutBin.classList.add("scale-110", "text-cyan-300");
+							setTimeout(() => {
+								readoutBin.classList.remove("scale-110", "text-cyan-300");
+							}, 300);
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnEraseAll) {
+					btnEraseAll.addEventListener("click", () => {
+						memBits[0] = 0;
+						memBits[1] = 0;
+						memBits[2] = 0;
+						memBits[3] = 0;
+						renderBitCards();
+						updateReadoutDisplays();
+					}, { signal: lifecycle.signal });
+				}
+
+				btnPresetMems.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						const val = btn.dataset.val;
+						if (val && val.length === 4) {
+							memBits[3] = parseInt(val[0], 10);
+							memBits[2] = parseInt(val[1], 10);
+							memBits[1] = parseInt(val[2], 10);
+							memBits[0] = parseInt(val[3], 10);
+							renderBitCards();
+							updateReadoutDisplays();
+						}
+					}, { signal: lifecycle.signal });
+				});
+
+				// Initialize memory displays
+				renderBitCards();
+				updateReadoutDisplays();
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initSlidingGraphene);
+			} else {
+				initSlidingGraphene();
+			}
+			document.addEventListener("astro:page-load", initSlidingGraphene);
+		})();
+	</script>
+</MainGridLayout>
