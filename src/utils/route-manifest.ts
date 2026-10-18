@@ -28,6 +28,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"grounded-wings",
 	"kinetic-cuisine",
 	"lightbearer-lab",
+	"lopsided-world",
 	"one-beat",
 	"one-of-one",
 	"sliding-graphene",
