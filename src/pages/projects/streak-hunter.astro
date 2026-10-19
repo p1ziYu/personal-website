@@ -1,0 +1,2224 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Streak Hunter · C/2026 S1 (Euclid)"
+	: "拖影猎手 · STREAK HUNTER";
+const description = isEn
+	? "A space telescope designed to map billions of galaxies across 10 billion light-years accidentally caught its first brand-new comet — because a fast-moving icy visitor smeared into a streak across its deep-sky images (ESA / Euclid Consortium 2026)."
+	: "一台旨在丈量百亿光年星系与暗物质的巡天望远镜，意外在深空底片里捕获了人类此前未知的全新彗星——C/2026 S1 (Euclid)。长达 560.52 秒曝光下拉出的移动拖影与彗发，揭开了这场意料之外的天文发现。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#030712] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-cyan-500/30 selection:text-cyan-200">
+			<!-- Ambient Space Glow -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:32px_32px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+							<span>ESA / EUCLID CONSORTIUM · 2026-10-19</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-mono">
+							<span>☄️</span>
+							<span class="lang-zh">欧几里得深空北场 · 首颗新彗星 C/2026 S1</span>
+							<span class="lang-en">DEEP FIELD NORTH · FIRST NEW COMET C/2026 S1</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">赫尔辛基大学 × 欧几里得联盟 · 2026-10-19</span>
+							<span class="lang-en">Univ. of Helsinki × Euclid · 2026-10-19</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/streak-hunter/" : "/en/projects/streak-hunter/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-cyan-500/40 text-cyan-300 hover:text-white hover:bg-cyan-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "切换为中文" : "Switch to English"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">拖影猎手 · STREAK HUNTER</span>
+					<span class="lang-en">STREAK HUNTER · C/2026 S1 (Euclid)</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-cyan-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">一台旨在丈量百亿光年星系的巡天望远镜，意外捕获了它的第一颗全新彗星——只因为它在底片上拉出了一道拖影。</span>
+					<span class="lang-en">A telescope built to photograph billions of distant galaxies accidentally caught a comet — because it left a streak.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							2026 年 10 月 19 日，欧洲航天局（ESA）与欧几里得科学合作联盟（Euclid Consortium）宣布了一项富有戏剧色彩的天文发现：专为测绘百亿光年遥远星系、探索暗能量与暗物质而设计的<strong>欧几里得空间望远镜（Euclid）</strong>，在深空底片中独立发现了其运行以来的<strong>第一颗此前从未被人类记录过的全新彗星</strong>——已被国际天文学联合会小行星中心（MPC）正式赋予永久编号 <strong>C/2026 S1 (Euclid)</strong>。
+						</span>
+						<span class="lang-en">
+							On October 19, 2026, the European Space Agency (ESA) and the Euclid Consortium announced a delightfully serendipitous milestone: the <strong>Euclid space telescope</strong>, designed to map shapes and motions of billions of distant galaxies across 10 billion light-years to decode dark matter and dark energy, discovered its very first previously unknown comet: officially catalogued by the Minor Planet Center (MPC) as <strong>C/2026 S1 (Euclid)</strong>.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							欧几里得绝非为了追踪太阳系天体而造，并且刻意避开了小行星密集的黄道面。然而在 2026 年 9 月 16 日至 24 日深空北场巡天期间，由赫尔辛基大学在读博士生<strong>米科·彭蒂宁（Mikko Pöntinen）</strong>自主编写的移动天体探测算法，在一张长达 <strong>560.52 秒</strong>的可见光（VIS）曝光中敏锐捕捉到了一条被拉长的虚影——不仅是一条直线光痕，其外围更包裹着冰雪升华形成的朦胧<strong>彗发（coma）</strong>。
+						</span>
+						<span class="lang-en">
+							Euclid was not built to track Solar System rocks, intentionally avoiding the dust-rich ecliptic plane. Yet between September 16 and 24, 2026 during the Euclid Deep Field North survey, automated detection software developed by University of Helsinki PhD student <strong>Mikko Pöntinen</strong> flagged an anomalous "streak" smeared across a <strong>560.52-second</strong> VIS exposure — accompanied by a telltale fuzzy halo of outgassing dust and gas: the <strong>coma</strong>.
+						</span>
+					</p>
+				</div>
+
+				<!-- Attributed Quotes Section (Exactly the two permitted quotes) -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-cyan-500/30 relative overflow-hidden">
+						<div class="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>💬</span>
+							<span class="lang-zh">软件开发者与发现者 · MIKKO PÖNTINEN (赫尔辛基大学)</span>
+							<span class="lang-en">SOFTWARE DEVELOPER · MIKKO PÖNTINEN (UNIV. OF HELSINKI)</span>
+						</div>
+						<blockquote class="text-xs sm:text-sm text-slate-200 italic font-serif leading-relaxed">
+							<span class="lang-zh">
+								米科·彭蒂宁回忆道：“<strong class="text-cyan-300">I was excited to see my software flag a 'streak' smeared across several images – the result of a fast-moving object.</strong>”
+								<span class="block text-xs font-sans text-slate-400 not-italic mt-1">（“看到我的软件在多幅图像中标记出一条拖影时，我感到无比兴奋——这是快速移动天体留下的直接痕迹。”）</span>
+							</span>
+							<span class="lang-en">
+								Mikko Pöntinen recalled: "<strong class="text-cyan-300">I was excited to see my software flag a 'streak' smeared across several images – the result of a fast-moving object.</strong>"
+							</span>
+						</blockquote>
+					</div>
+
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-indigo-500/30 relative overflow-hidden">
+						<div class="text-xs font-mono text-indigo-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>💬</span>
+							<span class="lang-zh">欧几里得档案科学家 · BRUNO ALTIERI (ESA)</span>
+							<span class="lang-en">EUCLID ARCHIVE SCIENTIST · BRUNO ALTIERI (ESA)</span>
+						</div>
+						<blockquote class="text-xs sm:text-sm text-slate-200 italic font-serif leading-relaxed">
+							<span class="lang-zh">
+								布鲁诺·阿尔蒂埃里指出：“<strong class="text-indigo-300">Very few comets are expected to be discovered by Euclid so it was a happy coincidence that the combination of the comet's orbit and Euclid's scanning over those days captured the object in multiple images.</strong>”
+								<span class="block text-xs font-sans text-slate-400 not-italic mt-1">（“欧几里得望远镜预计发现的彗星极度稀少，因此这完全是一次美妙的巧合：彗星独特的运行轨道与欧几里得在那些日子里的扫描路径完美交汇，使我们在多幅图像中记录下了它。”）</span>
+							</span>
+							<span class="lang-en">
+								Bruno Altieri noted: "<strong class="text-indigo-300">Very few comets are expected to be discovered by Euclid so it was a happy coincidence that the combination of the comet's orbit and Euclid's scanning over those days captured the object in multiple images.</strong>"
+							</span>
+						</blockquote>
+					</div>
+				</div>
+
+				<!-- Scientific Honesty Note Card -->
+				<div class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-amber-500/30 text-xs text-slate-300 leading-relaxed">
+					<div class="text-amber-400 font-mono font-bold uppercase tracking-wider mb-1.5 flex items-center gap-2">
+						<span>🔬</span>
+						<span class="lang-zh">科学严谨性与示意图解特别声明</span>
+						<span class="lang-en">SCIENTIFIC HONESTY & SCHEMATIC ILLUSTRATION NOTE</span>
+					</div>
+					<p>
+						<span class="lang-zh">
+							必须明确强调：本页面呈现的所有星空底片、星点分布、移动拖影、闪烁对比器与轨道模型均为用于互动演示与教学解析的<strong>示意性图解（schematic illustrations）</strong>，绝非欧几里得望远镜的真实科学原始图像。C/2026 S1 (Euclid) 处于远在各大行星轨道平面之外的高倾角轨道，<strong>绝不朝向地球移动，对地球没有任何威胁</strong>。本页面绝不虚构其彗核尺寸、彗尾长度或精确轨道周期（已知周期长达数千年，精确数值有待未来观测累积后修正）；提及的“约 13 亿公里”严格代表其在被发现时的瞬时日地距离，而非恒定属性。
+						</span>
+						<span class="lang-en">
+							All simulated star fields, streaks, comparator animations, and orbit models on this page are <strong>schematic illustrations</strong> built for conceptual explanation — they are NOT Euclid's real raw images. Comet C/2026 S1 (Euclid) is on an orbit arching far above the planetary disc and <strong>is NOT heading toward Earth and poses zero threat</strong>. We do not invent an orbital period, nucleus size, or tail length (its period is known only to span thousands of years, to be refined with future data). The ~1.3 billion km figure reflects its distance at discovery, not a fixed constant.
+						</span>
+					</p>
+				</div>
+			</header>
+
+			<!-- 6. FACTS STRIP SECTION -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex items-center gap-2 mb-4">
+					<span class="text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider">
+						<span class="lang-zh">核心物理事实一览 · FACTS STRIP</span>
+						<span class="lang-en">CORE ASTROPHYSICAL FACTS STRIP</span>
+					</span>
+				</div>
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition">
+						<div class="text-cyan-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">永久国际编号</span>
+							<span class="lang-en">DESIGNATION</span>
+						</div>
+						<div class="text-lg sm:text-xl font-black text-white mt-1">C/2026 S1</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">欧几里得独立首发</span>
+							<span class="lang-en">First Euclid comet</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition">
+						<div class="text-indigo-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">巡天发现窗口</span>
+							<span class="lang-en">SURVEY WINDOW</span>
+						</div>
+						<div class="text-lg sm:text-xl font-black text-indigo-300 mt-1">09.16–09.24</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">2026 年深空北场</span>
+							<span class="lang-en">Deep Field North 2026</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition">
+						<div class="text-emerald-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">视场与曝光次数</span>
+							<span class="lang-en">FIELDS & EXPOSURES</span>
+						</div>
+						<div class="text-lg sm:text-xl font-black text-emerald-300 mt-1">5 视场 · 16 次</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">每视场 2–4 次连续曝光</span>
+							<span class="lang-en">5 fields · 16 exposures</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition">
+						<div class="text-amber-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">关键定性曝光</span>
+							<span class="lang-en">SMOKING GUN EXP.</span>
+						</div>
+						<div class="text-lg sm:text-xl font-black text-amber-300 mt-1">560.52 s</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">9 月 20 日 VIS 可见光</span>
+							<span class="lang-en">20 Sept 2026 VIS</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition">
+						<div class="text-sky-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">发现时日地距离</span>
+							<span class="lang-en">DISTANCE AT DISCOVERY</span>
+						</div>
+						<div class="text-lg sm:text-xl font-black text-sky-300 mt-1">~1.3B km</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">约木星与土星轨道间</span>
+							<span class="lang-en">~1.3 billion km from Earth</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition">
+						<div class="text-purple-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">MPC 确认与公转</span>
+							<span class="lang-en">MPC & ORBIT</span>
+						</div>
+						<div class="text-lg sm:text-xl font-black text-purple-300 mt-1">2026-10-08</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">轨道周期：数千年</span>
+							<span class="lang-en">Orbit: thousands of years</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 1. CENTERPIECE: STREAK HUNTER GAME -->
+			<section class="relative z-10 mb-14">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 font-mono text-xs mb-1">
+							<span>🎮</span>
+							<span class="lang-zh">核心互动实验室 · 拖影猎手挑战</span>
+							<span class="lang-en">CENTERPIECE GAME · STREAK HUNTER CHALLENGE</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">在欧几里得深空底片里，揪出那颗暗弱的移动彗星</span>
+							<span class="lang-en">Hunt the Faint Moving Comet in Euclid's Deep Field</span>
+						</h2>
+					</div>
+					<div class="flex items-center gap-2 font-mono text-xs">
+						<span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+							<span class="lang-zh">视场进度：</span>
+							<span class="lang-en">Progress: </span>
+							<strong id="game-round-badge" class="text-cyan-400">1 / 5</strong>
+						</span>
+						<span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
+							<span class="lang-zh">得分：</span>
+							<span class="lang-en">Score: </span>
+							<strong id="game-score-badge" class="text-amber-400">0</strong>
+						</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-4 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						模拟欧几里得望远镜单次 560.52 秒曝光拍摄的高敏度星野：背景中布满了数百颗恒星与遥远星系。其中<strong>仅潜藏着唯一一道</strong>极细、极淡且边缘带有微弱彗发弥散的斜向移动拖影！请在画面上点击你认为彗星所在的位置。测试你的肉眼辨识力是否能媲美米科·彭蒂宁的探测算法！
+					</span>
+					<span class="lang-en">
+						Simulating a 560.52s Euclid VIS field: the sky is strewn with static stars and fuzzy distant galaxies. Hidden among them is <strong>exactly ONE</strong> faint, thin diagonal streak with a subtle glowing coma. Click on the canvas where you think the comet is! Can your human vision match Mikko Pöntinen's automated pipeline?
+					</span>
+				</p>
+
+				<!-- Game Canvas Container -->
+				<div class="p-3 sm:p-5 rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl relative overflow-hidden">
+					<div class="relative w-full aspect-[16/10] sm:aspect-[16/9] max-h-[520px] rounded-xl overflow-hidden bg-[#02040a] cursor-crosshair border border-slate-900">
+						<canvas id="canvas-game" class="w-full h-full block"></canvas>
+
+						<!-- Overlay Feedback Banner -->
+						<div id="game-feedback-banner" class="absolute top-3 left-3 right-3 sm:left-4 sm:right-auto pointer-events-none transition-all duration-300 opacity-0 translate-y-[-8px]">
+							<div class="px-3.5 py-2 rounded-xl backdrop-blur-md text-xs font-mono border shadow-lg inline-flex items-center gap-2" id="game-feedback-pill">
+								<span id="game-feedback-icon">🎯</span>
+								<span id="game-feedback-text">Candidate Detected</span>
+							</div>
+						</div>
+
+						<!-- Software Scan Crosshairs Guide HUD -->
+						<div class="absolute bottom-3 left-3 pointer-events-none text-[10px] font-mono text-cyan-400/80 bg-slate-950/80 px-2 py-1 rounded border border-cyan-900/50 backdrop-blur-xs">
+							<span>EUCLID-VIS-SIM // DFN-FIELD-<span id="hud-field-id">01</span> // 560.52s // FOV 0.53 deg²</span>
+						</div>
+
+						<!-- Final Verdict Modal (Hidden initially) -->
+						<div id="game-verdict-overlay" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 z-20 hidden">
+							<div class="max-w-md w-full p-6 rounded-2xl bg-slate-900 border border-cyan-500/40 text-center shadow-2xl">
+								<div class="text-4xl mb-2">🔭</div>
+								<h3 class="text-xl font-bold text-white mb-1">
+									<span class="lang-zh">5 组深空视场巡查完毕！</span>
+									<span class="lang-en">5 Deep Fields Survey Complete!</span>
+								</h3>
+								<div class="text-xs font-mono text-cyan-400 mb-4" id="verdict-rank-title">
+									[ RANK: SENIOR COMET HUNTER ]
+								</div>
+								<div class="grid grid-cols-3 gap-2 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono mb-4">
+									<div>
+										<div class="text-slate-400 text-[10px]"><span class="lang-zh">命中率</span><span class="lang-en">HITS</span></div>
+										<div class="text-base font-bold text-white mt-0.5" id="verdict-hits">5 / 5</div>
+									</div>
+									<div>
+										<div class="text-slate-400 text-[10px]"><span class="lang-zh">总得分</span><span class="lang-en">SCORE</span></div>
+										<div class="text-base font-bold text-amber-400 mt-0.5" id="verdict-score">4850</div>
+									</div>
+									<div>
+										<div class="text-slate-400 text-[10px]"><span class="lang-zh">平均耗时</span><span class="lang-en">AVG TIME</span></div>
+										<div class="text-base font-bold text-cyan-300 mt-0.5" id="verdict-time">3.2s</div>
+									</div>
+								</div>
+								<p class="text-xs text-slate-300 mb-5 leading-relaxed text-left" id="verdict-description">
+									<!-- Dynamic narrative -->
+								</p>
+								<button
+									id="btn-game-replay"
+									class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-mono text-xs font-bold transition shadow-lg shadow-cyan-900/30 active:scale-95 cursor-pointer"
+								>
+									<span class="lang-zh">重新启动 5 视场巡天猎捕</span>
+									<span class="lang-en">Restart 5-Field Comet Hunt</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Game Control Bar -->
+					<div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+						<div class="flex items-center gap-2">
+							<button
+								id="btn-game-next"
+								class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold transition active:scale-95 disabled:opacity-40 disabled:pointer-events-none cursor-pointer flex items-center gap-1.5"
+								disabled
+							>
+								<span>➡️</span>
+								<span class="lang-zh">前往下一个视场</span>
+								<span class="lang-en">Next Deep Field</span>
+							</button>
+							<button
+								id="btn-game-hint"
+								class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition active:scale-95 cursor-pointer flex items-center gap-1.5"
+								title="Blink contrast filter to help spot the streak"
+							>
+								<span>💡</span>
+								<span class="lang-zh">对比度增强闪烁 (提示)</span>
+								<span class="lang-en">Contrast Boost (Hint)</span>
+							</button>
+							<button
+								id="btn-game-reset"
+								class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-400 hover:text-white transition active:scale-95 cursor-pointer"
+							>
+								<span class="lang-zh">重置此局</span>
+								<span class="lang-en">Reset Run</span>
+							</button>
+						</div>
+
+						<div class="text-[11px] text-slate-400 flex items-center gap-3">
+							<span class="flex items-center gap-1.5">
+								<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+								<span class="lang-zh">绿色：算法锁定框</span>
+								<span class="lang-en">Green: Software flag</span>
+							</span>
+							<span class="flex items-center gap-1.5">
+								<span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+								<span class="lang-zh">青色：恒星/星系底片</span>
+								<span class="lang-en">Cyan: Deep-sky frame</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. BLINK COMPARATOR SECTION -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="mb-4">
+					<div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 font-mono text-xs mb-1">
+						<span>🎞️</span>
+						<span class="lang-zh">天文经典绝技 · 闪烁对比器</span>
+						<span class="lang-en">CLASSICAL ASTRONOMY · BLINK COMPARATOR</span>
+					</div>
+					<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+						<span class="lang-zh">静止的是百亿光年深空，跃动的是太阳系访客</span>
+						<span class="lang-en">What Stays is Deep Space; What Jumps is the Solar System</span>
+					</h2>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						这是天文学家搜寻移动天体百年不衰的“杀手锏”：克莱德·汤博（Clyde Tombaugh）在 1930 年正是用机械闪烁对比器发现了冥王星。在数小时或数天间隔拍摄的两幅底片中，数十亿光年外的恒星与星系位置完全恒定不动，而只有太阳系内部的天体会在底片上<strong>发生空间位移跳变</strong>。
+					</span>
+					<span class="lang-en">
+						The golden technique of observational astronomy: Clyde Tombaugh used a mechanical blink comparator in 1930 to discover Pluto. Between two exposures taken hours apart, background stars and galaxies stay absolutely frozen, while closer Solar System objects <strong>jump across the detector</strong>.
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+					<!-- Comparator Canvas View -->
+					<div class="lg:col-span-8 p-3 sm:p-4 rounded-2xl bg-slate-950 border border-slate-800 relative">
+						<div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#02040a] border border-slate-900">
+							<canvas id="canvas-blink" class="w-full h-full block"></canvas>
+
+							<!-- Timestamp Stamp Top Left -->
+							<div class="absolute top-3 left-3 font-mono text-xs px-2.5 py-1 rounded bg-slate-950/80 border border-slate-800 backdrop-blur-xs flex items-center gap-2">
+								<span id="blink-frame-indicator" class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+								<span id="blink-timestamp" class="text-cyan-300 font-bold">2026-09-20 02:15 UTC (FRAME A)</span>
+							</div>
+
+							<!-- Shift Vector Annotation Layer -->
+							<div id="blink-jump-annotation" class="absolute bottom-3 right-3 font-mono text-[10px] text-amber-300 bg-slate-950/80 px-2 py-1 rounded border border-amber-900/50 backdrop-blur-xs hidden">
+								<span class="lang-zh">位移矢量：Δx=+42.8px, Δy=-18.4px (视速度显著)</span>
+								<span class="lang-en">Displacement: Δx=+42.8px, Δy=-18.4px (High proper motion)</span>
+							</div>
+						</div>
+
+						<!-- Comparator Buttons -->
+						<div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+							<div class="flex items-center gap-2">
+								<button
+									id="btn-blink-auto"
+									class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold transition active:scale-95 cursor-pointer flex items-center gap-1.5"
+								>
+									<span id="icon-blink-play">⏸️</span>
+									<span id="text-blink-play" class="lang-zh">暂停自动交替闪烁</span>
+									<span id="text-blink-play-en" class="lang-en">Pause Auto Blink</span>
+								</button>
+								<button
+									id="btn-blink-manual"
+									class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition active:scale-95 cursor-pointer"
+								>
+									<span class="lang-zh">手动切换帧 (A ↔ B)</span>
+									<span class="lang-en">Manual Toggle (A ↔ B)</span>
+								</button>
+								<button
+									id="btn-blink-reveal"
+									class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-amber-500/40 text-amber-300 transition active:scale-95 cursor-pointer"
+								>
+									<span>🎯</span>
+									<span class="lang-zh">圈出跳跃天体</span>
+									<span class="lang-en">Highlight Jumper</span>
+								</button>
+							</div>
+
+							<div class="flex items-center gap-2">
+								<span class="text-slate-400 text-[11px]"><span class="lang-zh">闪烁频率：</span><span class="lang-en">Rate: </span></span>
+								<input
+									type="range"
+									id="slider-blink-speed"
+									min="200"
+									max="1200"
+									step="50"
+									value="500"
+									class="w-24 accent-indigo-400 cursor-pointer"
+								/>
+								<span id="txt-blink-speed" class="text-slate-300 w-12 text-right">500ms</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Comparator Explanation Card -->
+					<div class="lg:col-span-4 p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 text-xs">
+						<div class="font-mono text-indigo-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+							<span>🔍</span>
+							<span class="lang-zh">自动检测算法的底层逻辑</span>
+							<span class="lang-en">ALGORITHM DETECTION LOGIC</span>
+						</div>
+						<p class="text-slate-300 leading-relaxed">
+							<span class="lang-zh">
+								人类天文学家很难通过单张底片一眼区分数万个星点中哪一个是小行星或彗星。但如果将两张相隔数小时对齐坐标的底片高速交替切换（例如每秒 2 次），<strong>人类视觉皮层的大脑运动传感器会自动感知跳动</strong>。
+							</span>
+							<span class="lang-en">
+								Differentiating a single moving dot among tens of thousands of stationary stars on a static plate is near impossible. But rapid alternation (e.g. 2 Hz) triggers human motion perception neurons immediately.
+							</span>
+						</p>
+						<div class="p-3 rounded-xl bg-slate-950 border border-indigo-900/40 text-slate-400 space-y-2 font-mono text-[11px]">
+							<div class="text-indigo-300 font-bold">
+								<span class="lang-zh">欧几里得的 16 次曝光追踪</span>
+								<span class="lang-en">Euclid's 16-Exposure Track</span>
+							</div>
+							<div>
+								<span class="lang-zh">• 5 组独立视场天区连续覆盖</span>
+								<span class="lang-en">• 5 independent overlapping sky fields</span>
+							</div>
+							<div>
+								<span class="lang-zh">• 每组视场 2 至 4 次多时相曝光</span>
+								<span class="lang-en">• 2 to 4 multi-epoch exposures per field</span>
+							</div>
+							<div>
+								<span class="lang-zh">• 彻底排除单帧宇宙线或相机坏点</span>
+								<span class="lang-en">• Completely filters single-frame cosmic rays</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 3. EXPOSURE SLIDER SECTION -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="mb-4">
+					<div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30 font-mono text-xs mb-1">
+						<span>⏱️</span>
+						<span class="lang-zh">曝光时长交互探针 · 560.52 秒之谜</span>
+						<span class="lang-en">EXPOSURE SLIDER · THE 560.52s MYSTERY</span>
+					</div>
+					<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+						<span class="lang-zh">为什么恒星是圆点，而彗星被拉成了一道弥散长弧？</span>
+						<span class="lang-en">Why Stars Stay Round Points While the Comet Smeared Out</span>
+					</h2>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						在 2026 年 9 月 20 日的决定性图像中，欧几里得 VIS 探测器进行了长达 <strong>560.52 秒</strong>的曝光。拖曳滑块，从 10 秒短曝光一直调节至真实的 560.52 秒：观察由于天体相对望远镜的视速度移动，静止恒星如何保持凝聚，而移动彗星如何逐渐拉伸成线状，且彗核周围的受热升华<strong>气体尘埃云（彗发）</strong>如何逐渐显露真容！
+					</span>
+					<span class="lang-en">
+						On 20 September 2026, Euclid's VIS camera executed a <strong>560.52-second</strong> exposure. Drag the slider from a 10s quick snapshot up to the real 560.52 seconds: observe how stationary stars remain round pinpoints while the moving comet stretches linearly, and its diffuse <strong>coma</strong> fades into prominent visibility!
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+					<!-- Exposure Canvas Simulation -->
+					<div class="lg:col-span-7 p-3 sm:p-4 rounded-2xl bg-slate-950 border border-slate-800">
+						<div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#02040a] border border-slate-900">
+							<canvas id="canvas-exposure" class="w-full h-full block"></canvas>
+
+							<div class="absolute top-3 left-3 font-mono text-xs px-2.5 py-1 rounded bg-slate-950/80 border border-slate-800 backdrop-blur-xs">
+								<span class="text-amber-400 font-bold"><span class="lang-zh">单次曝光时长：</span><span class="lang-en">Exposure Time: </span></span>
+								<span id="disp-exp-seconds" class="text-white font-black text-sm">560.52 s</span>
+							</div>
+
+							<div class="absolute top-3 right-3 font-mono text-[11px] px-2.5 py-1 rounded bg-slate-950/80 border border-amber-900/50 text-amber-300">
+								<span id="badge-real-exposure-marker">🎯 欧几里得真实 VIS 单帧曝光</span>
+							</div>
+						</div>
+
+						<!-- Slider Control -->
+						<div class="mt-4 space-y-3 font-mono text-xs">
+							<div class="flex items-center justify-between text-slate-400">
+								<span>10 s (短快照)</span>
+								<span class="text-amber-400 font-bold">560.52 s (真实曝光锚点)</span>
+								<span>700 s (极端长曝光)</span>
+							</div>
+							<div class="relative flex items-center">
+								<input
+									type="range"
+									id="slider-exposure"
+									min="10"
+									max="700"
+									step="0.5"
+									value="560.52"
+									class="w-full accent-amber-400 cursor-pointer"
+								/>
+							</div>
+							<div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+								<div class="flex items-center gap-2">
+									<button
+										id="btn-exp-snap-30"
+										class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-[11px] transition cursor-pointer"
+									>
+										30 s 快照
+									</button>
+									<button
+										id="btn-exp-snap-180"
+										class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 text-[11px] transition cursor-pointer"
+									>
+										180 s 巡视
+									</button>
+									<button
+										id="btn-exp-snap-real"
+										class="px-2.5 py-1 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/50 text-amber-300 text-[11px] font-bold transition cursor-pointer"
+									>
+										⚡ 560.52 s (真实参数)
+									</button>
+								</div>
+								<div class="text-[11px] text-slate-400">
+									<span class="lang-zh">视位移与曝光时间正比：$L \propto \Delta t$</span>
+									<span class="lang-en">Streak length scales linearly with time</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Exposure Metrics & Scientific Telemetry -->
+					<div class="lg:col-span-5 space-y-3 text-xs font-mono">
+						<div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
+							<div class="text-amber-400 font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
+								<span>📊</span>
+								<span class="lang-zh">像元延展度与光学信噪比测算</span>
+								<span class="lang-en">PIXEL TRAIL & COMETARY METRICS</span>
+							</div>
+							<div class="space-y-2 text-slate-300">
+								<div class="flex justify-between items-center py-1 border-b border-slate-800">
+									<span class="text-slate-400"><span class="lang-zh">彗核拖影长度 (Trail Length)</span><span class="lang-en">Streak Length</span></span>
+									<span id="metric-trail-len" class="font-bold text-white">46.5 px</span>
+								</div>
+								<div class="flex justify-between items-center py-1 border-b border-slate-800">
+									<span class="text-slate-400"><span class="lang-zh">彗发弥散光强 (Coma Flux)</span><span class="lang-en">Coma Detection SNR</span></span>
+									<span id="metric-coma-snr" class="font-bold text-cyan-300">8.9 σ (显著包层)</span>
+								</div>
+								<div class="flex justify-between items-center py-1 border-b border-slate-800">
+									<span class="text-slate-400"><span class="lang-zh">背景恒星像质 (PSF FWHM)</span><span class="lang-en">Stellar PSF FWHM</span></span>
+									<span class="font-bold text-emerald-400">0.18" (衍射极限无形变)</span>
+								</div>
+								<div class="flex justify-between items-center py-1">
+									<span class="text-slate-400"><span class="lang-zh">天体分类判定 (Classification)</span><span class="lang-en">Status</span></span>
+									<span id="metric-status-verdict" class="font-bold text-amber-300">活跃彗星 (彗发明确)</span>
+								</div>
+							</div>
+						</div>
+
+						<div class="p-4 rounded-xl bg-slate-900/60 border border-amber-900/30 text-slate-400 leading-relaxed text-[11px] font-sans">
+							<span class="lang-zh">
+								💡 <strong>为何彗发是判据？</strong> 如果只是光秃秃的小行星，即便长曝光也只是一条尖锐的细线；而彗星在靠近太阳时内部水冰和挥发物受热升华，形成包裹着彗核的庞大气体尘埃云，在长时间曝光中累积出柔和的“雾状晕轮”，这是证明其彗星身份无可撼动的铁证！
+							</span>
+							<span class="lang-en">
+								💡 <strong>Why the coma matters:</strong> A bare asteroid produces only a sharp, razor-thin line. But an active comet vents volatile ices under solar warmth, creating an envelope of dust and gas that integrates over 560 seconds into a soft, glowing fuzz.
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. COMET OR NOT? CLASSIFICATION LAB -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="mb-4">
+					<div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 font-mono text-xs mb-1">
+						<span>🧪</span>
+						<span class="lang-zh">天文学家的显微镜 · 彗星甄别考核</span>
+						<span class="lang-en">ASTRONOMER'S LAB · "COMET OR NOT?"</span>
+					</div>
+					<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+						<span class="lang-zh">彗星、小行星还是宇宙线噪声？三道实战鉴别题</span>
+						<span class="lang-en">Comet, Asteroid, or Cosmic Ray? Three Real Scientific Checks</span>
+					</h2>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						当移动目标检测算法在底片上圈出异常亮斑后，天文学家必须执行三步严格鉴别：① 是否包裹彗发（区分彗星与小行星）；② 是否在相邻曝光帧中持续存在（排除单像素宇宙线碰撞）；③ 是否匹配已知天体轨道（确认是否为人类未知的全新天体）。试着点击分类下方 3 个模拟目标：
+					</span>
+					<span class="lang-en">
+						When software flags an optical anomaly, scientists perform three key checks: ① Is there a fuzzy coma (comet vs. bare asteroid)? ② Does it appear across consecutive exposures (ruling out single-frame cosmic ray hits)? ③ Does it match existing orbit catalogues? Test your judgment on these three candidate cutouts:
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<!-- Candidate A: Comet -->
+					<div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col justify-between" id="card-cand-a">
+						<div>
+							<div class="flex items-center justify-between mb-2 font-mono text-xs">
+								<span class="text-cyan-400 font-bold">目标 A (CANDIDATE 01)</span>
+								<span class="text-slate-500 text-[10px]">VIS 560s CUTOUT</span>
+							</div>
+							<div class="w-full aspect-square rounded-xl bg-[#010308] border border-slate-900 relative overflow-hidden mb-3 flex items-center justify-center">
+								<!-- Simulated Canvas Cutout A -->
+								<canvas id="canvas-cand-a" class="w-full h-full block"></canvas>
+								<div class="absolute bottom-2 left-2 text-[9px] font-mono text-slate-400 bg-slate-950/80 px-1.5 py-0.5 rounded">
+									多帧连续存在 · 拖影周围具弥散气团
+								</div>
+							</div>
+							<div class="space-y-1.5 mb-3 font-mono text-xs">
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-emerald-950 border border-slate-700 hover:border-emerald-500 text-slate-200 hover:text-emerald-300 transition text-left cursor-pointer btn-quiz" data-card="a" data-choice="comet">
+									☄️ <span class="lang-zh">活跃彗星 (Active Comet)</span><span class="lang-en">Active Comet</span>
+								</button>
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-rose-950 border border-slate-700 hover:border-rose-500 text-slate-200 hover:text-rose-300 transition text-left cursor-pointer btn-quiz" data-card="a" data-choice="asteroid">
+									🪨 <span class="lang-zh">光裸小行星 (Bare Asteroid)</span><span class="lang-en">Bare Asteroid</span>
+								</button>
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-amber-950 border border-slate-700 hover:border-amber-500 text-slate-200 hover:text-amber-300 transition text-left cursor-pointer btn-quiz" data-card="a" data-choice="cosmic">
+									⚡ <span class="lang-zh">单帧宇宙线噪声 (Cosmic Ray)</span><span class="lang-en">Cosmic Ray Noise</span>
+								</button>
+							</div>
+						</div>
+						<div id="feedback-cand-a" class="text-[11px] p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 min-h-[58px] flex items-center">
+							<span class="lang-zh">请在上方选择你的分类结论。</span>
+							<span class="lang-en">Select your verdict above.</span>
+						</div>
+					</div>
+
+					<!-- Candidate B: Asteroid -->
+					<div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col justify-between" id="card-cand-b">
+						<div>
+							<div class="flex items-center justify-between mb-2 font-mono text-xs">
+								<span class="text-amber-400 font-bold">目标 B (CANDIDATE 02)</span>
+								<span class="text-slate-500 text-[10px]">VIS 560s CUTOUT</span>
+							</div>
+							<div class="w-full aspect-square rounded-xl bg-[#010308] border border-slate-900 relative overflow-hidden mb-3 flex items-center justify-center">
+								<!-- Simulated Canvas Cutout B -->
+								<canvas id="canvas-cand-b" class="w-full h-full block"></canvas>
+								<div class="absolute bottom-2 left-2 text-[9px] font-mono text-slate-400 bg-slate-950/80 px-1.5 py-0.5 rounded">
+									多帧连续存在 · 极度锐利直线无光晕
+								</div>
+							</div>
+							<div class="space-y-1.5 mb-3 font-mono text-xs">
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-emerald-950 border border-slate-700 hover:border-emerald-500 text-slate-200 hover:text-emerald-300 transition text-left cursor-pointer btn-quiz" data-card="b" data-choice="comet">
+									☄️ <span class="lang-zh">活跃彗星 (Active Comet)</span><span class="lang-en">Active Comet</span>
+								</button>
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-rose-950 border border-slate-700 hover:border-rose-500 text-slate-200 hover:text-rose-300 transition text-left cursor-pointer btn-quiz" data-card="b" data-choice="asteroid">
+									🪨 <span class="lang-zh">光裸小行星 (Bare Asteroid)</span><span class="lang-en">Bare Asteroid</span>
+								</button>
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-amber-950 border border-slate-700 hover:border-amber-500 text-slate-200 hover:text-amber-300 transition text-left cursor-pointer btn-quiz" data-card="b" data-choice="cosmic">
+									⚡ <span class="lang-zh">单帧宇宙线噪声 (Cosmic Ray)</span><span class="lang-en">Cosmic Ray Noise</span>
+								</button>
+							</div>
+						</div>
+						<div id="feedback-cand-b" class="text-[11px] p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 min-h-[58px] flex items-center">
+							<span class="lang-zh">请在上方选择你的分类结论。</span>
+							<span class="lang-en">Select your verdict above.</span>
+						</div>
+					</div>
+
+					<!-- Candidate C: Cosmic Ray -->
+					<div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col justify-between" id="card-cand-c">
+						<div>
+							<div class="flex items-center justify-between mb-2 font-mono text-xs">
+								<span class="text-purple-400 font-bold">目标 C (CANDIDATE 03)</span>
+								<span class="text-slate-500 text-[10px]">VIS SINGLE HIT</span>
+							</div>
+							<div class="w-full aspect-square rounded-xl bg-[#010308] border border-slate-900 relative overflow-hidden mb-3 flex items-center justify-center">
+								<!-- Simulated Canvas Cutout C -->
+								<canvas id="canvas-cand-c" class="w-full h-full block"></canvas>
+								<div class="absolute bottom-2 left-2 text-[9px] font-mono text-slate-400 bg-slate-950/80 px-1.5 py-0.5 rounded">
+									仅出现在第 1 帧 · 第 2 帧同坐标彻底消失
+								</div>
+							</div>
+							<div class="space-y-1.5 mb-3 font-mono text-xs">
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-emerald-950 border border-slate-700 hover:border-emerald-500 text-slate-200 hover:text-emerald-300 transition text-left cursor-pointer btn-quiz" data-card="c" data-choice="comet">
+									☄️ <span class="lang-zh">活跃彗星 (Active Comet)</span><span class="lang-en">Active Comet</span>
+								</button>
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-rose-950 border border-slate-700 hover:border-rose-500 text-slate-200 hover:text-rose-300 transition text-left cursor-pointer btn-quiz" data-card="c" data-choice="asteroid">
+									🪨 <span class="lang-zh">光裸小行星 (Bare Asteroid)</span><span class="lang-en">Bare Asteroid</span>
+								</button>
+								<button class="w-full py-1.5 px-3 rounded-lg bg-slate-900 hover:bg-amber-950 border border-slate-700 hover:border-amber-500 text-slate-200 hover:text-amber-300 transition text-left cursor-pointer btn-quiz" data-card="c" data-choice="cosmic">
+									⚡ <span class="lang-zh">单帧宇宙线噪声 (Cosmic Ray)</span><span class="lang-en">Cosmic Ray Noise</span>
+								</button>
+							</div>
+						</div>
+						<div id="feedback-cand-c" class="text-[11px] p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 min-h-[58px] flex items-center">
+							<span class="lang-zh">请在上方选择你的分类结论。</span>
+							<span class="lang-en">Select your verdict above.</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. "OVER THE TOP" ORBIT DIAGRAM -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="mb-4">
+					<div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 font-mono text-xs mb-1">
+						<span>🌌</span>
+						<span class="lang-zh">三维太阳系侧剖图 · 跃过黄道之上</span>
+						<span class="lang-en">3D ORBITAL PROJECTION · "OVER THE TOP"</span>
+					</div>
+					<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+						<span class="lang-zh">不在行星盘面之内：直立拱起于太阳之上的数千年轨道</span>
+						<span class="lang-en">Not in the Planetary Disc: Arching "Straight Up" Over the Sun</span>
+					</h2>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						太阳系各大行星（地球、木星、土星）几乎都在同一个平坦的“黄道盘面”内公转。而 C/2026 S1 (Euclid) 展现出极其陡峭的高轨道倾角：从太阳的角度看，它目前几乎正处于行星盘面的“正上方”（straight up），以一道巨大的抛物状拱桥跨越整个太阳系上空，绕日运行周期长达数千年。这也解释了为什么欧几里得望远镜在刻意回避黄道面时，依然撞见了这颗高悬于北天极天区的罕见访客！
+					</span>
+					<span class="lang-en">
+						The major planets (Earth, Jupiter, Saturn) orbit within a flat disc: the ecliptic. C/2026 S1 (Euclid) possesses an exceptionally steep orbital inclination: arching almost "straight up" above the Solar System on a multi-thousand-year trajectory. This explains why Euclid caught it despite avoiding the ecliptic!
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+					<!-- Orbit Canvas -->
+					<div class="lg:col-span-8 p-3 sm:p-4 rounded-2xl bg-slate-950 border border-slate-800">
+						<div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#02040b] border border-slate-900">
+							<canvas id="canvas-orbit" class="w-full h-full block"></canvas>
+
+							<!-- HUD Overlay -->
+							<div class="absolute top-3 left-3 font-mono text-[11px] px-2.5 py-1.5 rounded bg-slate-950/80 border border-slate-800 text-slate-300 backdrop-blur-xs space-y-0.5">
+								<div><span class="text-purple-400 font-bold">C/2026 S1 (Euclid)</span> · 高倾角长周期轨道</div>
+								<div><span class="text-slate-400">发现时日地距离：</span><strong class="text-white font-bold">~13 亿公里 (~1.3 billion km)</strong></div>
+							</div>
+
+							<!-- Perspective Switch Badge -->
+							<div class="absolute bottom-3 right-3 flex items-center gap-1.5">
+								<button
+									id="btn-orbit-view-side"
+									class="px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 border border-purple-500/50 text-purple-300 font-mono text-[10px] transition cursor-pointer"
+								>
+									侧面剖视 (Side View)
+								</button>
+								<button
+									id="btn-orbit-view-iso"
+									class="px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-400 font-mono text-[10px] transition cursor-pointer"
+								>
+									3D 俯视斜角 (Isometric)
+								</button>
+							</div>
+						</div>
+
+						<!-- Controls Bar -->
+						<div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+							<div class="flex items-center gap-2">
+								<button
+									id="btn-orbit-toggle-play"
+									class="px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold transition active:scale-95 cursor-pointer flex items-center gap-1.5"
+								>
+									<span id="icon-orbit-play">⏸️</span>
+									<span id="text-orbit-play" class="lang-zh">暂停轨道公转动画</span>
+									<span id="text-orbit-play-en" class="lang-en">Pause Orbit Sim</span>
+								</button>
+								<button
+									id="btn-orbit-reset-pos"
+									class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 transition active:scale-95 cursor-pointer"
+								>
+									<span class="lang-zh">重置回发现点 (~1.3B km)</span>
+									<span class="lang-en">Reset to Discovery Point</span>
+								</button>
+							</div>
+
+							<div class="flex items-center gap-2">
+								<span class="text-slate-400 text-[11px]"><span class="lang-zh">动画速率：</span><span class="lang-en">Speed: </span></span>
+								<input
+									type="range"
+									id="slider-orbit-speed"
+									min="0.2"
+									max="3"
+									step="0.1"
+									value="1"
+									class="w-24 accent-purple-400 cursor-pointer"
+								/>
+								<span id="txt-orbit-speed" class="text-slate-300 w-10 text-right">1.0×</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Orbit Legend & Explanation -->
+					<div class="lg:col-span-4 p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-4 text-xs font-mono">
+						<div class="text-purple-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+							<span>📐</span>
+							<span class="lang-zh">轨道几何与发现深度解析</span>
+							<span class="lang-en">ORBITAL GEOMETRY & CONTEXT</span>
+						</div>
+
+						<div class="space-y-2.5 text-slate-300">
+							<div class="flex items-center gap-2">
+								<span class="w-3 h-3 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b]"></span>
+								<span><strong>太阳 (Sun)</strong> · 太阳系引力中心</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="w-3 h-0.5 bg-blue-400"></span>
+								<span><strong>地球轨道 (Earth)</strong> · 1 AU (1.5 亿 km)</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="w-3 h-0.5 bg-cyan-400"></span>
+								<span><strong>木星轨道 (Jupiter)</strong> · 5.2 AU (7.8 亿 km)</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="w-3 h-0.5 bg-amber-300"></span>
+								<span><strong>土星轨道 (Saturn)</strong> · 9.5 AU (14.3 亿 km)</span>
+							</div>
+							<div class="flex items-center gap-2">
+								<span class="w-3 h-1 bg-purple-400 rounded-full"></span>
+								<span class="text-purple-300"><strong>C/2026 S1 轨迹</strong> · 直立跃出黄道面</span>
+							</div>
+						</div>
+
+						<hr class="border-slate-800" />
+
+						<div class="text-slate-400 text-[11px] leading-relaxed font-sans">
+							<span class="lang-zh">
+								📌 <strong>为什么不给出具体公转周期？</strong> 科学界目前仅能通过 16 次短基线观测确定其高偏心率与数千年的量级。精确的半长轴与离心率需待后续数月甚至数年的全球天文台协同精测后由小行星中心最终校准。本页面恪守科学真实性，不编造未经证实的虚假周期数据。
+							</span>
+							<span class="lang-en">
+								📌 <strong>Why no exact orbital period?</strong> Short-baseline data from 16 exposures confirms a multi-thousand-year timescale. The exact semi-major axis will be determined only after months of ground- and space-based follow-up. We do not invent unverified periods.
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- IN-DEPTH SCIENCE NARRATIVE SECTION -->
+			<section class="relative z-10 mb-10 max-w-4xl space-y-8 text-sm sm:text-base text-slate-300 leading-relaxed">
+				<div>
+					<h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+						<span class="lang-zh">一、宏伟使命的意外侧影：欧几里得望远镜的星系测绘蓝图</span>
+						<span class="lang-en">1. The Serendipitous Side of a Grand Mission: Euclid's Galaxy Atlas</span>
+					</h3>
+					<p class="mb-3">
+						<span class="lang-zh">
+							欧几里得（Euclid）是欧洲航天局（ESA）主导的旗舰中型宇宙学空间任务。自 2023 年发射至日地第二拉格朗日点（L2）以来，它的核心科学目标只有一个：在长达六年的任务期内，测量横跨 100 亿光年时空范围内的数十亿个遥远星系的精细三维形态与红移退行速度，绘制有史以来最广袤的宇宙 3D 地图，揭开暗物质与驱动宇宙加速膨胀的暗能量之谜。
+						</span>
+						<span class="lang-en">
+							Euclid is the European Space Agency's flagship cosmology observatory. Stationed at Sun-Earth Lagrange point 2 (L2), its singular mission over six years is to measure the shapes and motions of billions of galaxies across 10 billion light-years to decode dark matter and dark energy.
+						</span>
+					</p>
+					<p class="text-slate-400 text-xs sm:text-sm">
+						<span class="lang-zh">
+							为了实现对百亿光年遥弱星系极其微弱的弱引力透镜形变（weak gravitational lensing）的测量，欧几里得的视场规划极度严苛。然而，正是在其超高灵敏度的可见光相机（VIS）底片中，来自我们太阳系近邻的古老冰块悄然闯入，拉出了一条划破深邃宇宙的亮丽拖影。
+						</span>
+						<span class="lang-en">
+							To detect subtle weak gravitational lensing across cosmological epochs, Euclid's optical performance is extraordinarily refined. Yet into these very detectors, an ancient icy relic from our own Solar System backyard drifted, etching an unmistakable streak across the deep cosmos.
+						</span>
+					</p>
+				</div>
+
+				<div>
+					<h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+						<span class="lang-zh">二、为什么这次发现极其困难与罕见？</span>
+						<span class="lang-en">2. Why Catching This Comet Was Exceptionally Hard</span>
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-sans text-xs sm:text-sm">
+						<div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+							<div class="text-amber-400 font-bold font-mono mb-1.5">01 · 黄道面规避策略</div>
+							<p class="text-slate-400 leading-relaxed">
+								<span class="lang-zh">大部分彗星与小行星聚集于太阳系各大行星绕行的黄道面。然而黄道面内弥散着高密度的行星际尘埃，会散射太阳光形成“黄道光”眩光。为了追求最纯净的深空星系对比度，欧几里得在轨道设计上刻意回避黄道面。</span>
+								<span class="lang-en">Most Solar System bodies hug the ecliptic plane, where dense dust causes blinding zodiacal glare. To preserve extragalactic contrast, Euclid deliberately steers away from the ecliptic.</span>
+							</p>
+						</div>
+						<div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+							<div class="text-cyan-400 font-bold font-mono mb-1.5">02 · 步进凝视无法复测</div>
+							<p class="text-slate-400 leading-relaxed">
+								<span class="lang-zh">欧几里得采用“步进式凝视”（step-and-stare）模式，通常每块天区仅凝视一次即快速转向下一天区，绝不轻易回头。彗星能够恰好连续落在 9 月 16 至 24 日深空北场相互重叠的视场中，属于万载难逢的几何巧合。</span>
+								<span class="lang-en">Euclid uses a "step-and-stare" scanning strategy, typically imaging each sky patch once without revisits. The comet passing through overlapping Deep Field North footprints was pure observational luck.</span>
+							</p>
+						</div>
+						<div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+							<div class="text-emerald-400 font-bold font-mono mb-1.5">03 · 剔除噪声反哺宇宙学</div>
+							<p class="text-slate-400 leading-relaxed">
+								<span class="lang-zh">追踪这些太阳系小天体绝非不务正业：移动天体拉出的拖影和额外光晕若不加标识，会被误判为变形星系或透镜效应。彭蒂宁的算法自动识别并剔除这些拖影，直接保障了主任务弱透镜测量的纯净度！</span>
+								<span class="lang-en">Detecting moving objects is vital for cosmology: unidentified trails contaminate galaxy shape catalogs. Pöntinen's pipeline cleans transient optical noise directly from precision maps.</span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+						<span class="lang-zh">三、未来的演练：与彗星截击机（Comet Interceptor）的协同契机</span>
+						<span class="lang-en">3. A Rehearsal for ESA's Comet Interceptor</span>
+					</h3>
+					<p class="mb-3">
+						<span class="lang-zh">
+							欧洲航天局正在研制一项突破性的行星探测任务——<strong>彗星截击机（Comet Interceptor）</strong>。以往的彗星飞越探测任务（如罗塞塔号、乔托号）访问的都是已经在太阳系内部绕转无数圈、表面已被太阳烤熟的“熟客彗星”。彗星截击机将先期部署在第二拉格朗日点（L2）静止待命，一旦全球巡天望远镜在木星轨道以外发现一颗从未受热过的、真正从奥尔特云初次跌入的“处女彗星”（dynamically new comet），截击机将紧急点火出击飞掠！
+						</span>
+						<span class="lang-en">
+							ESA is developing a groundbreaking mission: <strong>Comet Interceptor</strong>. Past missions visited short-period comets baked by billions of years near the Sun. Comet Interceptor will loiter at L2 in dormant parking orbit, awaiting alert of a dynamically new, pristine comet entering from the deep Oort Cloud.
+						</span>
+					</p>
+					<p class="text-slate-400 text-xs sm:text-sm">
+						<span class="lang-zh">
+							虽然 C/2026 S1 (Euclid) 因极陡倾角与过远距离并不是截击机适合的拦截对象，但从欧几里得底片快速提取、算法报警到 MPC 全球公报确认的完整链条，为欧几里得巡天团队与未来彗星截击机地面指挥中心的预警协同，提供了绝无仅有的实战检验！
+						</span>
+						<span class="lang-en">
+							While C/2026 S1's steep orbit and distance make it unsuitable for interception, this rapid pipeline — from automated flag to MPC confirmation — provided a real-world rehearsal for how Euclid will alert the Comet Interceptor network.
+						</span>
+					</p>
+				</div>
+
+				<div>
+					<h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+						<span class="lang-zh">四、彗星的本质：46 亿年前太阳系诞生的冷冻胶囊</span>
+						<span class="lang-en">4. What Comets Truly Are: 4.6-Billion-Year-Old Cryogenic Capsules</span>
+					</h3>
+					<p class="mb-3">
+						<span class="lang-zh">
+							彗星是约 46 亿年前太阳系原始行星盘形成时残留下的冰质碎块，常年贮存在冥王星之外寒冷的柯伊伯带以及延伸至光年尺度的奥尔特云。当受到邻近恒星引力扰动跌向太阳时，强烈的太阳辐射促使表面水冰、一氧化碳与甲烷升华为气体，向外喷射带出大量微米级尘埃颗粒，形成延展数十万公里的彗发与上百万公里的彗尾。
+						</span>
+						<span class="lang-en">
+							Comets are pristine, icy planetesimals left over from the formation of the Solar System ~4.6 billion years ago, stored in the frigid Kuiper Belt and Oort Cloud. Approaching the Sun, solar radiation vaporizes water, CO, and methane ice, puffing dust into a glowing coma and million-kilometer tails.
+						</span>
+					</p>
+					<p class="text-slate-400 text-xs sm:text-sm">
+						<span class="lang-zh">
+							因为它们在漫长的数十亿年岁月中几乎未曾经历过行星内部的高温熔融与板块重塑，彗星完整封存了太阳系最初始的化学同位素指纹。研究彗星不仅让我们洞悉行星形成的原材料，甚至关乎地球上的海洋之水与有机生命先驱物质从何而来的终极谜题。
+						</span>
+						<span class="lang-en">
+							Because their interiors avoided planetary melting and tectonic reprocessing, comets preserve the raw chemical fingerprints of the protoplanetary nebula — offering crucial clues to the origin of Earth's oceans and the building blocks of life.
+						</span>
+					</p>
+				</div>
+			</section>
+
+			<!-- CITATION & ATTRIBUTION BLOCK -->
+			<section class="relative z-10 mb-8 p-6 rounded-2xl bg-slate-900/70 border border-slate-800 text-xs font-mono text-slate-400">
+				<div class="text-sm font-bold text-slate-200 mb-2 flex items-center gap-2">
+					<span>📚</span>
+					<span class="lang-zh">学术公报与国际权威发布引用</span>
+					<span class="lang-en">Official Bulletin & Scientific Reference</span>
+				</div>
+				<p class="leading-relaxed mb-3 text-slate-300">
+					International Astronomical Union (IAU) Minor Planet Center (MPC). <em>MPEC 2026-T: COMET C/2026 S1 (Euclid)</em>, issued October 8, 2026. European Space Agency (ESA) & Euclid Consortium Science Release, October 19, 2026.
+				</p>
+				<p class="leading-relaxed text-[11px] text-slate-400">
+					<span class="lang-zh">
+						发现机构：欧洲航天局（ESA）欧几里得国际科学合作联盟。自主探测算法开发：米科·彭蒂宁（Mikko Pöntinen，芬兰赫尔辛基大学在读博士生）。协同工作组：欧几里得太阳系小天体科学工作组（Solar System Objects Science Working Group）。巡天数据：欧几里得深空北场（Euclid Deep Field North）VIS 可见光成像仪。
+					</span>
+					<span class="lang-en">
+						Observing Agency: European Space Agency (ESA) / Euclid Consortium. Moving-object pipeline development: Mikko Pöntinen (PhD Researcher, University of Helsinki). Coordination: Euclid Solar System Objects Science Working Group. Survey dataset: Euclid Deep Field North VIS Instrument.
+					</span>
+				</p>
+			</section>
+
+			<!-- AI GENERATION DISCLOSURE -->
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-cyan-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE SIMULATION ENGINE -->
+	<script is:inline>
+		(() => {
+			let cleanup = null;
+
+			function initStreakHunter() {
+				if (cleanup) {
+					cleanup();
+					cleanup = null;
+				}
+
+				const lifecycle = new AbortController();
+				let animFrameIds = [];
+				let timerIds = [];
+
+				cleanup = () => {
+					lifecycle.abort();
+					animFrameIds.forEach((id) => cancelAnimationFrame(id));
+					timerIds.forEach((id) => clearInterval(id));
+				};
+
+				const isEnPage = window.location.pathname.startsWith("/en");
+
+				// ==========================================
+				// 1. CENTERPIECE: STREAK HUNTER GAME
+				// ==========================================
+				const gameCanvas = document.getElementById("canvas-game");
+				const gameRoundBadge = document.getElementById("game-round-badge");
+				const gameScoreBadge = document.getElementById("game-score-badge");
+				const btnGameNext = document.getElementById("btn-game-next");
+				const btnGameHint = document.getElementById("btn-game-hint");
+				const btnGameReset = document.getElementById("btn-game-reset");
+				const feedbackBanner = document.getElementById("game-feedback-banner");
+				const feedbackPill = document.getElementById("game-feedback-pill");
+				const feedbackIcon = document.getElementById("game-feedback-icon");
+				const feedbackText = document.getElementById("game-feedback-text");
+				const hudFieldId = document.getElementById("hud-field-id");
+
+				const verdictOverlay = document.getElementById("game-verdict-overlay");
+				const verdictRankTitle = document.getElementById("verdict-rank-title");
+				const verdictHits = document.getElementById("verdict-hits");
+				const verdictScore = document.getElementById("verdict-score");
+				const verdictTime = document.getElementById("verdict-time");
+				const verdictDesc = document.getElementById("verdict-description");
+				const btnGameReplay = document.getElementById("btn-game-replay");
+
+				let currentRound = 1;
+				const maxRounds = 5;
+				let totalScore = 0;
+				let roundAnswered = false;
+				let roundStartTime = performance.now();
+				let roundReactionTimes = [];
+				let totalHits = 0;
+				let hintActive = false;
+
+				// Procedural field data
+				let stars = [];
+				let galaxies = [];
+				let cometStreak = {
+					x: 0,
+					y: 0,
+					len: 0,
+					angle: 0,
+					alpha: 0.6,
+					revealed: false,
+					hit: false,
+					guessX: 0,
+					guessY: 0,
+				};
+
+				function generateField(roundNum) {
+					roundAnswered = false;
+					roundStartTime = performance.now();
+					if (btnGameNext) btnGameNext.disabled = true;
+					if (gameRoundBadge) gameRoundBadge.textContent = `${roundNum} / ${maxRounds}`;
+					if (hudFieldId) hudFieldId.textContent = roundNum < 10 ? `0${roundNum}` : `${roundNum}`;
+					if (feedbackBanner) feedbackBanner.classList.add("opacity-0", "translate-y-[-8px]");
+
+					// Generate 140 background stars
+					stars = [];
+					for (let i = 0; i < 150; i++) {
+						stars.push({
+							x: Math.random(),
+							y: Math.random(),
+							radius: Math.random() < 0.85 ? Math.random() * 0.9 + 0.5 : Math.random() * 1.6 + 1.2,
+							alpha: Math.random() * 0.7 + 0.3,
+							color: Math.random() < 0.2 ? "rgba(186, 230, 253, " : Math.random() < 0.15 ? "rgba(254, 240, 138, " : "rgba(248, 250, 252, ",
+						});
+					}
+
+					// Generate 14 faint distant galaxies (ellipses/fuzzies)
+					galaxies = [];
+					for (let i = 0; i < 14; i++) {
+						galaxies.push({
+							x: Math.random() * 0.85 + 0.07,
+							y: Math.random() * 0.85 + 0.07,
+							rx: Math.random() * 5 + 3,
+							ry: Math.random() * 3 + 1.5,
+							angle: Math.random() * Math.PI,
+							alpha: Math.random() * 0.22 + 0.08,
+							isSpiral: Math.random() < 0.4,
+						});
+					}
+
+					// Generate ONE subtle comet streak
+					// Difficulty adjusted: faint, thin, but visible if looked at attentively
+					const angle = (Math.random() * 50 + 20) * (Math.random() < 0.5 ? 1 : -1) * (Math.PI / 180);
+					cometStreak = {
+						x: Math.random() * 0.7 + 0.15,
+						y: Math.random() * 0.7 + 0.15,
+						len: Math.random() * 16 + 26, // 26 to 42 px
+						angle: angle,
+						alpha: Math.random() * 0.15 + 0.55, // faint!
+						revealed: false,
+						hit: false,
+						guessX: 0,
+						guessY: 0,
+					};
+
+					renderGame();
+				}
+
+				function renderGame() {
+					if (!gameCanvas) return;
+					const rect = gameCanvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					const w = rect.width;
+					const h = rect.height;
+
+					if (gameCanvas.width !== Math.round(w * dpr) || gameCanvas.height !== Math.round(h * dpr)) {
+						gameCanvas.width = Math.round(w * dpr);
+						gameCanvas.height = Math.round(h * dpr);
+					}
+
+					const ctx = gameCanvas.getContext("2d");
+					ctx.save();
+					ctx.scale(dpr, dpr);
+
+					// Background: Deep Field Dark Void
+					ctx.fillStyle = hintActive ? "#1e293b" : "#02040b";
+					ctx.fillRect(0, 0, w, h);
+
+					// Subtle sensor noise grid
+					ctx.fillStyle = hintActive ? "rgba(255, 255, 255, 0.04)" : "rgba(255, 255, 255, 0.015)";
+					for (let i = 0; i < 60; i++) {
+						const nx = Math.random() * w;
+						const ny = Math.random() * h;
+						ctx.fillRect(nx, ny, 1, 1);
+					}
+
+					// Draw galaxies
+					galaxies.forEach((g) => {
+						ctx.save();
+						ctx.translate(g.x * w, g.y * h);
+						ctx.rotate(g.angle);
+						const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.max(g.rx, g.ry) * 2);
+						grad.addColorStop(0, `rgba(224, 231, 255, ${g.alpha * (hintActive ? 1.8 : 1)})`);
+						grad.addColorStop(0.5, `rgba(165, 180, 252, ${g.alpha * 0.4 * (hintActive ? 1.8 : 1)})`);
+						grad.addColorStop(1, "rgba(99, 102, 241, 0)");
+						ctx.fillStyle = grad;
+						ctx.beginPath();
+						ctx.ellipse(0, 0, g.rx * 2, g.ry * 2, 0, 0, Math.PI * 2);
+						ctx.fill();
+						ctx.restore();
+					});
+
+					// Draw background stars
+					stars.forEach((s) => {
+						const sx = s.x * w;
+						const sy = s.y * h;
+						ctx.fillStyle = `${s.color}${s.alpha * (hintActive ? 1.5 : 1)})`;
+						ctx.beginPath();
+						ctx.arc(sx, sy, s.radius, 0, Math.PI * 2);
+						ctx.fill();
+
+						// Tiny diffraction spike for brighter stars
+						if (s.radius > 1.8 && !hintActive) {
+							ctx.strokeStyle = `rgba(255, 255, 255, 0.25)`;
+							ctx.lineWidth = 0.5;
+							ctx.beginPath();
+							ctx.moveTo(sx - 4, sy);
+							ctx.lineTo(sx + 4, sy);
+							ctx.moveTo(sx, sy - 4);
+							ctx.lineTo(sx, sy + 4);
+							ctx.stroke();
+						}
+					});
+
+					// Draw THE COMET STREAK
+					const cx = cometStreak.x * w;
+					const cy = cometStreak.y * h;
+					const halfL = cometStreak.len / 2;
+					const dx = Math.cos(cometStreak.angle) * halfL;
+					const dy = Math.sin(cometStreak.angle) * halfL;
+					const x1 = cx - dx;
+					const y1 = cy - dy;
+					const x2 = cx + dx;
+					const y2 = cy + dy;
+
+					// Faint diffuse coma envelope along the streak
+					const comaGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, halfL * 1.3);
+					comaGrad.addColorStop(0, `rgba(186, 230, 253, ${cometStreak.alpha * 0.4 * (hintActive ? 2.5 : 1)})`);
+					comaGrad.addColorStop(0.6, `rgba(125, 211, 252, ${cometStreak.alpha * 0.15 * (hintActive ? 2.5 : 1)})`);
+					comaGrad.addColorStop(1, "rgba(56, 189, 248, 0)");
+					ctx.fillStyle = comaGrad;
+					ctx.beginPath();
+					ctx.ellipse(cx, cy, halfL * 1.2, 7, cometStreak.angle, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Moving nucleus streak line
+					ctx.strokeStyle = hintActive ? "#38bdf8" : `rgba(224, 242, 254, ${cometStreak.alpha})`;
+					ctx.lineWidth = hintActive ? 2.4 : 1.3;
+					ctx.beginPath();
+					ctx.moveTo(x1, y1);
+					ctx.lineTo(x2, y2);
+					ctx.stroke();
+
+					// If revealed (by guess or round completion): Draw Pöntinen software detection box
+					if (cometStreak.revealed) {
+						const boxColor = cometStreak.hit ? "#34d399" : "#fbbf24";
+						ctx.strokeStyle = boxColor;
+						ctx.lineWidth = 1.5;
+						ctx.setLineDash([4, 3]);
+
+						const pad = halfL + 12;
+						ctx.strokeRect(cx - pad, cy - pad, pad * 2, pad * 2);
+						ctx.setLineDash([]);
+
+						// Corner brackets
+						const cLen = 6;
+						ctx.strokeStyle = boxColor;
+						ctx.lineWidth = 2;
+						// Top Left
+						ctx.beginPath();
+						ctx.moveTo(cx - pad, cy - pad + cLen);
+						ctx.lineTo(cx - pad, cy - pad);
+						ctx.lineTo(cx - pad + cLen, cy - pad);
+						ctx.stroke();
+						// Top Right
+						ctx.beginPath();
+						ctx.moveTo(cx + pad - cLen, cy - pad);
+						ctx.lineTo(cx + pad, cy - pad);
+						ctx.lineTo(cx + pad, cy - pad + cLen);
+						ctx.stroke();
+						// Bottom Left
+						ctx.beginPath();
+						ctx.moveTo(cx - pad, cy + pad - cLen);
+						ctx.lineTo(cx - pad, cy + pad);
+						ctx.lineTo(cx - pad + cLen, cy + pad);
+						ctx.stroke();
+						// Bottom Right
+						ctx.beginPath();
+						ctx.moveTo(cx + pad - cLen, cy + pad);
+						ctx.lineTo(cx + pad, cy + pad);
+						ctx.lineTo(cx + pad, cy + pad - cLen);
+						ctx.stroke();
+
+						// Detection flag label
+						ctx.fillStyle = boxColor;
+						ctx.font = "10px monospace";
+						const tagText = cometStreak.hit
+							? (isEnPage ? "[FLAGGED: TRANSIENT STREAK HIT]" : "[算法锁定: 移动天体拖影命中]")
+							: (isEnPage ? "[SOFTWARE REVEAL: MISSED]" : "[算法标记: 目标拖影在此]");
+						ctx.fillText(tagText, cx - pad, cy - pad - 6);
+
+						// If missed, draw an arrow from user click to the comet
+						if (!cometStreak.hit && cometStreak.guessX) {
+							ctx.strokeStyle = "rgba(244, 63, 94, 0.7)";
+							ctx.lineWidth = 1.2;
+							ctx.setLineDash([3, 3]);
+							ctx.beginPath();
+							ctx.moveTo(cometStreak.guessX, cometStreak.guessY);
+							ctx.lineTo(cx, cy);
+							ctx.stroke();
+							ctx.setLineDash([]);
+
+							ctx.fillStyle = "#f43f5e";
+							ctx.beginPath();
+							ctx.arc(cometStreak.guessX, cometStreak.guessY, 3, 0, Math.PI * 2);
+							ctx.fill();
+						}
+					}
+
+					ctx.restore();
+				}
+
+				function distToSegment(px, py, x1, y1, x2, y2) {
+					const l2 = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+					if (l2 === 0) return Math.hypot(px - x1, py - y1);
+					let t = ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / l2;
+					t = Math.max(0, Math.min(1, t));
+					const projX = x1 + t * (x2 - x1);
+					const projY = y1 + t * (y2 - y1);
+					return Math.hypot(px - projX, py - projY);
+				}
+
+				if (gameCanvas) {
+					gameCanvas.addEventListener("click", (e) => {
+						if (roundAnswered) return;
+						const rect = gameCanvas.getBoundingClientRect();
+						const clickX = e.clientX - rect.left;
+						const clickY = e.clientY - rect.top;
+						const w = rect.width;
+						const h = rect.height;
+
+						const cx = cometStreak.x * w;
+						const cy = cometStreak.y * h;
+						const halfL = cometStreak.len / 2;
+						const dx = Math.cos(cometStreak.angle) * halfL;
+						const dy = Math.sin(cometStreak.angle) * halfL;
+						const x1 = cx - dx;
+						const y1 = cy - dy;
+						const x2 = cx + dx;
+						const y2 = cy + dy;
+
+						const dist = distToSegment(clickX, clickY, x1, y1, x2, y2);
+						const reactionTimeSec = (performance.now() - roundStartTime) / 1000;
+						roundReactionTimes.push(reactionTimeSec);
+						roundAnswered = true;
+						cometStreak.revealed = true;
+						cometStreak.guessX = clickX;
+						cometStreak.guessY = clickY;
+
+						// Hit threshold: 38px
+						if (dist <= 38) {
+							cometStreak.hit = true;
+							totalHits++;
+							const speedBonus = Math.max(0, Math.round((10 - Math.min(10, reactionTimeSec)) * 50));
+							const accuracyBonus = Math.round((38 - dist) * 10);
+							const earnedScore = 800 + speedBonus + accuracyBonus;
+							totalScore += earnedScore;
+
+							if (feedbackPill) {
+								feedbackPill.className = "px-3.5 py-2 rounded-xl backdrop-blur-md text-xs font-mono border shadow-lg inline-flex items-center gap-2 bg-emerald-950/90 border-emerald-500/50 text-emerald-300";
+							}
+							if (feedbackIcon) feedbackIcon.textContent = "🎯";
+							if (feedbackText) {
+								feedbackText.textContent = isEnPage
+									? `HIT! Transient streak flagged! +${earnedScore} pts (${reactionTimeSec.toFixed(1)}s)`
+									: `精准锁定！软件标记出移动拖影！+${earnedScore} 分 (${reactionTimeSec.toFixed(1)} 秒)`;
+							}
+						} else {
+							cometStreak.hit = false;
+							if (feedbackPill) {
+								feedbackPill.className = "px-3.5 py-2 rounded-xl backdrop-blur-md text-xs font-mono border shadow-lg inline-flex items-center gap-2 bg-rose-950/90 border-rose-500/50 text-rose-300";
+							}
+							if (feedbackIcon) feedbackIcon.textContent = "🔍";
+							if (feedbackText) {
+								feedbackText.textContent = isEnPage
+									? `MISSED by ${Math.round(dist)}px. The comet was flagged in green.`
+									: `偏差 ${Math.round(dist)} 像素。已用标记框标出彗星真实位置。`;
+							}
+						}
+
+						if (feedbackBanner) feedbackBanner.classList.remove("opacity-0", "translate-y-[-8px]");
+						if (gameScoreBadge) gameScoreBadge.textContent = `${totalScore}`;
+						if (btnGameNext) {
+							btnGameNext.disabled = false;
+							btnGameNext.focus();
+						}
+
+						renderGame();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnGameNext) {
+					btnGameNext.addEventListener("click", () => {
+						if (currentRound < maxRounds) {
+							currentRound++;
+							generateField(currentRound);
+						} else {
+							showVerdict();
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnGameHint) {
+					btnGameHint.addEventListener("click", () => {
+						hintActive = true;
+						renderGame();
+						const tId = setTimeout(() => {
+							hintActive = false;
+							renderGame();
+						}, 1200);
+						timerIds.push(tId);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnGameReset) {
+					btnGameReset.addEventListener("click", () => {
+						currentRound = 1;
+						totalScore = 0;
+						totalHits = 0;
+						roundReactionTimes = [];
+						if (gameScoreBadge) gameScoreBadge.textContent = "0";
+						generateField(1);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnGameReplay) {
+					btnGameReplay.addEventListener("click", () => {
+						if (verdictOverlay) verdictOverlay.classList.add("hidden");
+						currentRound = 1;
+						totalScore = 0;
+						totalHits = 0;
+						roundReactionTimes = [];
+						if (gameScoreBadge) gameScoreBadge.textContent = "0";
+						generateField(1);
+					}, { signal: lifecycle.signal });
+				}
+
+				function showVerdict() {
+					if (!verdictOverlay) return;
+					verdictOverlay.classList.remove("hidden");
+					if (verdictHits) verdictHits.textContent = `${totalHits} / ${maxRounds}`;
+					if (verdictScore) verdictScore.textContent = `${totalScore}`;
+					const avgTime = roundReactionTimes.length > 0
+						? (roundReactionTimes.reduce((a, b) => a + b, 0) / roundReactionTimes.length).toFixed(1)
+						: "0.0";
+					if (verdictTime) verdictTime.textContent = `${avgTime}s`;
+
+					let rank = "";
+					let desc = "";
+					if (totalHits === 5) {
+						rank = isEnPage ? "[ RANK: CHIEF COMET INVESTIGATOR ]" : "[ 评级：首席彗星探测专家 ]";
+						desc = isEnPage
+							? "Flawless detection across all 5 fields! You matched Mikko Pöntinen's custom detection pipeline, isolating the faint comet streak among thousands of static stars."
+							: "五组深空视场全中！你的肉眼识别敏锐度足以媲美米科·彭蒂宁的自动化巡天算法，在万千恒星与星系中精准锁定了那道暗弱的彗星拖影。";
+					} else if (totalHits >= 3) {
+						rank = isEnPage ? "[ RANK: SENIOR DEEP-FIELD ASTRONOMER ]" : "[ 评级：资深深空巡天科学家 ]";
+						desc = isEnPage
+							? "Strong observation skills! You identified the majority of fields despite the ultra-faint signature and long exposure smearing."
+							: "极为出色的观测水准！在极端暗弱与长曝光弥散下成功识别出了多数视场中的移动目标。";
+					} else {
+						rank = isEnPage ? "[ RANK: ALGORITHM TRAINEE ]" : "[ 评级：巡天算法见习研究员 ]";
+						desc = isEnPage
+							? "Hunting comets in deep space is notoriously difficult. Notice how the comet forms a soft elongated coma compared to stationary stars."
+							: "在百亿光年深空背景里抓捕太阳系小天体确实困难重重。注意辨识其区别于恒星的弥散气团（彗发）与线状位移！";
+					}
+
+					if (verdictRankTitle) verdictRankTitle.textContent = rank;
+					if (verdictDesc) verdictDesc.textContent = desc;
+				}
+
+				// ==========================================
+				// 2. BLINK COMPARATOR
+				// ==========================================
+				const blinkCanvas = document.getElementById("canvas-blink");
+				const blinkIndicator = document.getElementById("blink-frame-indicator");
+				const blinkTimestamp = document.getElementById("blink-timestamp");
+				const btnBlinkAuto = document.getElementById("btn-blink-auto");
+				const btnBlinkManual = document.getElementById("btn-blink-manual");
+				const btnBlinkReveal = document.getElementById("btn-blink-reveal");
+				const sliderBlinkSpeed = document.getElementById("slider-blink-speed");
+				const txtBlinkSpeed = document.getElementById("txt-blink-speed");
+				const textBlinkPlay = document.getElementById("text-blink-play");
+				const textBlinkPlayEn = document.getElementById("text-blink-play-en");
+				const blinkJumpAnnotation = document.getElementById("blink-jump-annotation");
+
+				let blinkActiveFrame = 0; // 0 for A, 1 for B
+				let blinkAutoPlaying = true;
+				let blinkIntervalMs = 500;
+				let blinkRevealHighlight = false;
+				let blinkTimer = null;
+
+				// Fixed stars and galaxies for the comparator
+				const compStars = [];
+				for (let i = 0; i < 110; i++) {
+					compStars.push({
+						x: Math.random(),
+						y: Math.random(),
+						r: Math.random() < 0.8 ? Math.random() * 0.9 + 0.5 : Math.random() * 1.5 + 1.2,
+						a: Math.random() * 0.7 + 0.3,
+					});
+				}
+				const compGalaxies = [];
+				for (let i = 0; i < 9; i++) {
+					compGalaxies.push({
+						x: Math.random() * 0.85 + 0.07,
+						y: Math.random() * 0.85 + 0.07,
+						rx: Math.random() * 6 + 3,
+						ry: Math.random() * 3 + 1.5,
+						angle: Math.random() * Math.PI,
+						a: Math.random() * 0.25 + 0.08,
+					});
+				}
+
+				// The jumper: Frame A vs Frame B positions
+				const jumperA = { x: 0.36, y: 0.55, len: 32, angle: 0.65 };
+				const jumperB = { x: 0.58, y: 0.38, len: 32, angle: 0.62 };
+
+				function renderBlink() {
+					if (!blinkCanvas) return;
+					const rect = blinkCanvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					const w = rect.width;
+					const h = rect.height;
+
+					if (blinkCanvas.width !== Math.round(w * dpr) || blinkCanvas.height !== Math.round(h * dpr)) {
+						blinkCanvas.width = Math.round(w * dpr);
+						blinkCanvas.height = Math.round(h * dpr);
+					}
+
+					const ctx = blinkCanvas.getContext("2d");
+					ctx.save();
+					ctx.scale(dpr, dpr);
+
+					// Dark background
+					ctx.fillStyle = "#02040b";
+					ctx.fillRect(0, 0, w, h);
+
+					// Draw fixed galaxies (identically in both frames!)
+					compGalaxies.forEach((g) => {
+						ctx.save();
+						ctx.translate(g.x * w, g.y * h);
+						ctx.rotate(g.angle);
+						const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.max(g.rx, g.ry) * 2);
+						grad.addColorStop(0, `rgba(224, 231, 255, ${g.a})`);
+						grad.addColorStop(0.5, `rgba(165, 180, 252, ${g.a * 0.4})`);
+						grad.addColorStop(1, "rgba(99, 102, 241, 0)");
+						ctx.fillStyle = grad;
+						ctx.beginPath();
+						ctx.ellipse(0, 0, g.rx * 2, g.ry * 2, 0, 0, Math.PI * 2);
+						ctx.fill();
+						ctx.restore();
+					});
+
+					// Draw fixed stars (identically in both frames!)
+					compStars.forEach((s) => {
+						ctx.fillStyle = `rgba(248, 250, 252, ${s.a})`;
+						ctx.beginPath();
+						ctx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2);
+						ctx.fill();
+					});
+
+					// Draw the moving comet in active frame position
+					const j = blinkActiveFrame === 0 ? jumperA : jumperB;
+					const jx = j.x * w;
+					const jy = j.y * h;
+					const halfL = j.len / 2;
+					const dx = Math.cos(j.angle) * halfL;
+					const dy = Math.sin(j.angle) * halfL;
+
+					// Coma
+					const comaGrad = ctx.createRadialGradient(jx, jy, 0, jx, jy, halfL * 1.4);
+					comaGrad.addColorStop(0, "rgba(186, 230, 253, 0.4)");
+					comaGrad.addColorStop(0.6, "rgba(56, 189, 248, 0.15)");
+					comaGrad.addColorStop(1, "rgba(56, 189, 248, 0)");
+					ctx.fillStyle = comaGrad;
+					ctx.beginPath();
+					ctx.ellipse(jx, jy, halfL * 1.3, 7, j.angle, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Core streak
+					ctx.strokeStyle = "rgba(240, 249, 255, 0.95)";
+					ctx.lineWidth = 1.6;
+					ctx.beginPath();
+					ctx.moveTo(jx - dx, jy - dy);
+					ctx.lineTo(jx + dx, jy + dy);
+					ctx.stroke();
+
+					// If highlight enabled: show movement jump vector and pulsing circle
+					if (blinkRevealHighlight) {
+						// Ring around current position
+						ctx.strokeStyle = "#38bdf8";
+						ctx.lineWidth = 2;
+						ctx.beginPath();
+						ctx.arc(jx, jy, halfL + 10, 0, Math.PI * 2);
+						ctx.stroke();
+
+						// Ring around alternate position (ghost)
+						const altJ = blinkActiveFrame === 0 ? jumperB : jumperA;
+						ctx.strokeStyle = "rgba(251, 191, 36, 0.5)";
+						ctx.setLineDash([3, 3]);
+						ctx.beginPath();
+						ctx.arc(altJ.x * w, altJ.y * h, halfL + 10, 0, Math.PI * 2);
+						ctx.stroke();
+
+						// Connecting displacement arrow
+						ctx.strokeStyle = "#fbbf24";
+						ctx.lineWidth = 1.5;
+						ctx.beginPath();
+						ctx.moveTo(jumperA.x * w, jumperA.y * h);
+						ctx.lineTo(jumperB.x * w, jumperB.y * h);
+						ctx.stroke();
+						ctx.setLineDash([]);
+					}
+
+					ctx.restore();
+				}
+
+				function updateBlinkUI() {
+					if (blinkActiveFrame === 0) {
+						if (blinkIndicator) blinkIndicator.className = "w-2 h-2 rounded-full bg-cyan-400 animate-pulse";
+						if (blinkTimestamp) {
+							blinkTimestamp.className = "text-cyan-300 font-bold";
+							blinkTimestamp.textContent = isEnPage ? "2026-09-20 02:15 UTC (FRAME A)" : "2026-09-20 02:15 UTC (第 1 帧)";
+						}
+					} else {
+						if (blinkIndicator) blinkIndicator.className = "w-2 h-2 rounded-full bg-indigo-400 animate-pulse";
+						if (blinkTimestamp) {
+							blinkTimestamp.className = "text-indigo-300 font-bold";
+							blinkTimestamp.textContent = isEnPage ? "2026-09-20 06:40 UTC (FRAME B)" : "2026-09-20 06:40 UTC (第 2 帧 · 4.4h 后)";
+						}
+					}
+					renderBlink();
+				}
+
+				function resetBlinkTimer() {
+					if (blinkTimer) clearInterval(blinkTimer);
+					if (blinkAutoPlaying) {
+						blinkTimer = setInterval(() => {
+							blinkActiveFrame = blinkActiveFrame === 0 ? 1 : 0;
+							updateBlinkUI();
+						}, blinkIntervalMs);
+						timerIds.push(blinkTimer);
+					}
+				}
+
+				if (btnBlinkAuto) {
+					btnBlinkAuto.addEventListener("click", () => {
+						blinkAutoPlaying = !blinkAutoPlaying;
+						if (blinkAutoPlaying) {
+							resetBlinkTimer();
+							if (textBlinkPlay) textBlinkPlay.textContent = "暂停自动交替闪烁";
+							if (textBlinkPlayEn) textBlinkPlayEn.textContent = "Pause Auto Blink";
+						} else {
+							if (blinkTimer) clearInterval(blinkTimer);
+							if (textBlinkPlay) textBlinkPlay.textContent = "启动自动交替闪烁";
+							if (textBlinkPlayEn) textBlinkPlayEn.textContent = "Resume Auto Blink";
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnBlinkManual) {
+					btnBlinkManual.addEventListener("click", () => {
+						blinkAutoPlaying = false;
+						if (blinkTimer) clearInterval(blinkTimer);
+						if (textBlinkPlay) textBlinkPlay.textContent = "启动自动交替闪烁";
+						if (textBlinkPlayEn) textBlinkPlayEn.textContent = "Resume Auto Blink";
+						blinkActiveFrame = blinkActiveFrame === 0 ? 1 : 0;
+						updateBlinkUI();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnBlinkReveal) {
+					btnBlinkReveal.addEventListener("click", () => {
+						blinkRevealHighlight = !blinkRevealHighlight;
+						if (blinkJumpAnnotation) {
+							blinkJumpAnnotation.classList.toggle("hidden", !blinkRevealHighlight);
+						}
+						renderBlink();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (sliderBlinkSpeed) {
+					sliderBlinkSpeed.addEventListener("input", (e) => {
+						blinkIntervalMs = parseInt(e.target.value, 10);
+						if (txtBlinkSpeed) txtBlinkSpeed.textContent = `${blinkIntervalMs}ms`;
+						resetBlinkTimer();
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 3. EXPOSURE SLIDER SIMULATION
+				// ==========================================
+				const expCanvas = document.getElementById("canvas-exposure");
+				const sliderExp = document.getElementById("slider-exposure");
+				const dispExpSeconds = document.getElementById("disp-exp-seconds");
+				const metricTrailLen = document.getElementById("metric-trail-len");
+				const metricComaSnr = document.getElementById("metric-coma-snr");
+				const metricStatusVerdict = document.getElementById("metric-status-verdict");
+				const btnExpSnap30 = document.getElementById("btn-exp-snap-30");
+				const btnExpSnap180 = document.getElementById("btn-exp-snap-180");
+				const btnExpSnapReal = document.getElementById("btn-exp-snap-real");
+
+				let simExposureSec = 560.52;
+
+				function updateExposureMetrics(seconds) {
+					simExposureSec = seconds;
+					if (dispExpSeconds) dispExpSeconds.textContent = `${seconds.toFixed(2)} s`;
+
+					// Physical scaling: velocity ~ 0.083 px/s
+					const lenPx = Math.max(2.5, seconds * 0.083);
+					if (metricTrailLen) metricTrailLen.textContent = `${lenPx.toFixed(1)} px`;
+
+					// Coma integration SNR scales roughly with sqrt(t)
+					const comaSnr = (Math.sqrt(seconds / 560.52) * 8.9).toFixed(1);
+					if (metricComaSnr) {
+						if (seconds < 60) {
+							metricComaSnr.textContent = `< 2.1 σ (${isEnPage ? "Below noise" : "被背景淹没"})`;
+						} else {
+							metricComaSnr.textContent = `${comaSnr} σ (${isEnPage ? "Prominent halo" : "显著包层"})`;
+						}
+					}
+
+					if (metricStatusVerdict) {
+						if (seconds < 50) {
+							metricStatusVerdict.textContent = isEnPage ? "Point-like (Undifferentiated)" : "点状像质 (无法甄别)";
+							metricStatusVerdict.className = "font-bold text-slate-400";
+						} else if (seconds < 250) {
+							metricStatusVerdict.textContent = isEnPage ? "Slight trail (Suspicious body)" : "轻微拉伸 (可疑移动体)";
+							metricStatusVerdict.className = "font-bold text-cyan-300";
+						} else {
+							metricStatusVerdict.textContent = isEnPage ? "Definitive Active Comet" : "活跃彗星 (彗发明确)";
+							metricStatusVerdict.className = "font-bold text-amber-300";
+						}
+					}
+
+					renderExposureCanvas();
+				}
+
+				function renderExposureCanvas() {
+					if (!expCanvas) return;
+					const rect = expCanvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					const w = rect.width;
+					const h = rect.height;
+
+					if (expCanvas.width !== Math.round(w * dpr) || expCanvas.height !== Math.round(h * dpr)) {
+						expCanvas.width = Math.round(w * dpr);
+						expCanvas.height = Math.round(h * dpr);
+					}
+
+					const ctx = expCanvas.getContext("2d");
+					ctx.save();
+					ctx.scale(dpr, dpr);
+
+					ctx.fillStyle = "#02040b";
+					ctx.fillRect(0, 0, w, h);
+
+					// Draw Reference Fixed Star (on the left side)
+					const starX = w * 0.28;
+					const starY = h * 0.5;
+
+					// Star brightness grows with exposure, but stays point-like
+					const starIntensity = Math.min(1, 0.4 + (simExposureSec / 700) * 0.6);
+					const starGrad = ctx.createRadialGradient(starX, starY, 0, starX, starY, 14);
+					starGrad.addColorStop(0, `rgba(255, 255, 255, ${starIntensity})`);
+					starGrad.addColorStop(0.2, `rgba(186, 230, 253, ${starIntensity * 0.7})`);
+					starGrad.addColorStop(1, "rgba(56, 189, 248, 0)");
+					ctx.fillStyle = starGrad;
+					ctx.beginPath();
+					ctx.arc(starX, starY, 14, 0, Math.PI * 2);
+					ctx.fill();
+
+					ctx.fillStyle = "#ffffff";
+					ctx.beginPath();
+					ctx.arc(starX, starY, 1.8, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Fixed star diffraction spikes (visible at long exposure)
+					if (simExposureSec > 120) {
+						const spikeAlpha = Math.min(0.6, (simExposureSec - 120) / 600);
+						ctx.strokeStyle = `rgba(255, 255, 255, ${spikeAlpha})`;
+						ctx.lineWidth = 0.8;
+						ctx.beginPath();
+						ctx.moveTo(starX - 18, starY);
+						ctx.lineTo(starX + 18, starY);
+						ctx.moveTo(starX, starY - 18);
+						ctx.lineTo(starX, starY + 18);
+						ctx.stroke();
+					}
+
+					// Label for Star
+					ctx.fillStyle = "rgba(148, 163, 184, 0.8)";
+					ctx.font = "11px monospace";
+					ctx.textAlign = "center";
+					ctx.fillText(isEnPage ? "STATIONARY STAR" : "参考静止恒星 (点源)", starX, starY + 32);
+					ctx.font = "9px monospace";
+					ctx.fillStyle = "rgba(100, 116, 139, 0.7)";
+					ctx.fillText(isEnPage ? "PSF preserved regardless of t" : "像质始终保持凝聚", starX, starY + 44);
+
+					// Draw Moving Comet (on the right side)
+					const cometX = w * 0.72;
+					const cometY = h * 0.5;
+					const trailLen = Math.max(3, simExposureSec * 0.083);
+					const angle = -0.55; // diagonal
+					const halfL = trailLen / 2;
+					const dx = Math.cos(angle) * halfL;
+					const dy = Math.sin(angle) * halfL;
+
+					// Coma envelope fades in and elongates with exposure
+					const comaNorm = Math.min(1, simExposureSec / 560.52);
+					if (simExposureSec > 40) {
+						const comaRadius = 12 + comaNorm * 8;
+						const comaGrad = ctx.createRadialGradient(cometX, cometY, 0, cometX, cometY, halfL + comaRadius);
+						comaGrad.addColorStop(0, `rgba(186, 230, 253, ${0.15 + comaNorm * 0.35})`);
+						comaGrad.addColorStop(0.5, `rgba(56, 189, 248, ${0.05 + comaNorm * 0.2})`);
+						comaGrad.addColorStop(1, "rgba(56, 189, 248, 0)");
+						ctx.fillStyle = comaGrad;
+						ctx.beginPath();
+						ctx.ellipse(cometX, cometY, halfL + comaRadius, 10 + comaNorm * 4, angle, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					// Linear Nucleus Streak
+					ctx.strokeStyle = `rgba(240, 249, 255, ${0.4 + comaNorm * 0.6})`;
+					ctx.lineWidth = 1.8;
+					ctx.beginPath();
+					ctx.moveTo(cometX - dx, cometY - dy);
+					ctx.lineTo(cometX + dx, cometY + dy);
+					ctx.stroke();
+
+					// Label for Comet
+					ctx.fillStyle = "#38bdf8";
+					ctx.font = "11px monospace";
+					ctx.textAlign = "center";
+					ctx.fillText(isEnPage ? "COMET C/2026 S1" : "彗星 C/2026 S1 (Euclid)", cometX, cometY + 32);
+					ctx.font = "9px monospace";
+					ctx.fillStyle = "#fbbf24";
+					const subtext = simExposureSec >= 500
+						? (isEnPage ? "Streak + Coma clearly revealed!" : "拖影 + 弥散彗发完全显现！")
+						: (isEnPage ? "Short exposure: smears less" : "短曝光：位移微弱未弥散");
+					ctx.fillText(subtext, cometX, cometY + 44);
+
+					ctx.restore();
+				}
+
+				if (sliderExp) {
+					sliderExp.addEventListener("input", (e) => {
+						updateExposureMetrics(parseFloat(e.target.value));
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnExpSnap30) {
+					btnExpSnap30.addEventListener("click", () => {
+						if (sliderExp) sliderExp.value = "30";
+						updateExposureMetrics(30);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnExpSnap180) {
+					btnExpSnap180.addEventListener("click", () => {
+						if (sliderExp) sliderExp.value = "180";
+						updateExposureMetrics(180);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnExpSnapReal) {
+					btnExpSnapReal.addEventListener("click", () => {
+						if (sliderExp) sliderExp.value = "560.52";
+						updateExposureMetrics(560.52);
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 4. "COMET OR NOT?" CLASSIFICATION QUIZ
+				// ==========================================
+				const quizButtons = document.querySelectorAll(".btn-quiz");
+
+				function renderQuizCanvas(canvasId, type) {
+					const canvas = document.getElementById(canvasId);
+					if (!canvas) return;
+					const rect = canvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					const w = rect.width;
+					const h = rect.height;
+
+					canvas.width = Math.round(w * dpr);
+					canvas.height = Math.round(h * dpr);
+
+					const ctx = canvas.getContext("2d");
+					ctx.scale(dpr, dpr);
+					ctx.fillStyle = "#010308";
+					ctx.fillRect(0, 0, w, h);
+
+					// A few dim stars
+					for (let i = 0; i < 15; i++) {
+						ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+						ctx.beginPath();
+						ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 0.8 + 0.4, 0, Math.PI * 2);
+						ctx.fill();
+					}
+
+					const cx = w * 0.5;
+					const cy = h * 0.5;
+
+					if (type === "comet") {
+						// Streak + Coma
+						const coma = ctx.createRadialGradient(cx, cy, 0, cx, cy, 26);
+						coma.addColorStop(0, "rgba(186, 230, 253, 0.45)");
+						coma.addColorStop(0.6, "rgba(56, 189, 248, 0.15)");
+						coma.addColorStop(1, "rgba(56, 189, 248, 0)");
+						ctx.fillStyle = coma;
+						ctx.beginPath();
+						ctx.ellipse(cx, cy, 28, 12, -0.6, 0, Math.PI * 2);
+						ctx.fill();
+
+						ctx.strokeStyle = "#f0f9ff";
+						ctx.lineWidth = 1.8;
+						ctx.beginPath();
+						ctx.moveTo(cx - 16, cy + 10);
+						ctx.lineTo(cx + 16, cy - 10);
+						ctx.stroke();
+					} else if (type === "asteroid") {
+						// Sharp streak with ZERO coma fuzz
+						ctx.strokeStyle = "#fef08a";
+						ctx.lineWidth = 1.4;
+						ctx.beginPath();
+						ctx.moveTo(cx - 20, cy + 12);
+						ctx.lineTo(cx + 20, cy - 12);
+						ctx.stroke();
+					} else if (type === "cosmic") {
+						// Single frame sharp cluster / artifact
+						ctx.fillStyle = "#ffffff";
+						ctx.fillRect(cx - 1, cy - 1, 3, 3);
+						ctx.fillStyle = "rgba(244, 63, 94, 0.8)";
+						ctx.fillRect(cx - 2, cy, 2, 2);
+						ctx.fillRect(cx + 1, cy - 2, 2, 2);
+					}
+				}
+
+				quizButtons.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						const card = btn.getAttribute("data-card");
+						const choice = btn.getAttribute("data-choice");
+						const feedbackEl = document.getElementById(`feedback-cand-${card}`);
+
+						let isCorrect = false;
+						let explZh = "";
+						let explEn = "";
+
+						if (card === "a") {
+							isCorrect = choice === "comet";
+							explZh = isCorrect
+								? "✅ 完全正确！拖影周围具有明显的弥散彗发（coma），这是冰雪升华转化为气体的铁证——活跃彗星！"
+								: "❌ 错误：注意拖影外围明显的雾状晕轮（彗发），这证明它正在释放气体，绝非光裸小行星或噪声。";
+							explEn = isCorrect
+								? "✅ Correct! A distinct fuzzy coma encloses the streak — conclusive proof of active volatile outgassing."
+								: "❌ Incorrect: The surrounding nebulous coma proves active sublimation, distinguishing it from bare rocks.";
+						} else if (card === "b") {
+							isCorrect = choice === "asteroid";
+							explZh = isCorrect
+								? "✅ 完全正确！拖影极其锋利锐利，周围毫无弥散气团，属于典型的光裸无挥发性小行星岩石！"
+								: "❌ 错误：边缘没有任何彗发晕轮，它未在喷发气体，因此是一颗光裸的小行星。";
+							explEn = isCorrect
+								? "✅ Correct! A razor-sharp track with zero coma fuzz denotes a bare rocky asteroid."
+								: "❌ Incorrect: The lack of diffuse gas cloud rules out an active comet.";
+						} else if (card === "c") {
+							isCorrect = choice === "cosmic";
+							explZh = isCorrect
+								? "✅ 完全正确！仅在单帧图像中出现、无法在下一帧复测验证的突变亮斑属于宇宙线击中像素噪声！"
+								: "❌ 错误：如果天体在下一帧消失，表明它并非真实天文目标，而是相机 CCD 受宇宙线粒子撞击的伪像。";
+							explEn = isCorrect
+								? "✅ Correct! An anomaly present in only one exposure is a cosmic ray hit, not a real celestial body."
+								: "❌ Incorrect: Transient single-frame spikes are camera detector noise, which is why Euclid requires 16 exposures.";
+						}
+
+						if (feedbackEl) {
+							feedbackEl.className = isCorrect
+								? "text-[11px] p-2.5 rounded-xl bg-emerald-950/80 border border-emerald-500/50 text-emerald-300 min-h-[58px] flex items-center leading-relaxed"
+								: "text-[11px] p-2.5 rounded-xl bg-rose-950/80 border border-rose-500/50 text-rose-300 min-h-[58px] flex items-center leading-relaxed";
+							feedbackEl.textContent = isEnPage ? explEn : explZh;
+						}
+					}, { signal: lifecycle.signal });
+				});
+
+				// ==========================================
+				// 5. "OVER THE TOP" ORBIT SIMULATION
+				// ==========================================
+				const orbitCanvas = document.getElementById("canvas-orbit");
+				const btnOrbitTogglePlay = document.getElementById("btn-orbit-toggle-play");
+				const btnOrbitResetPos = document.getElementById("btn-orbit-reset-pos");
+				const btnOrbitViewSide = document.getElementById("btn-orbit-view-side");
+				const btnOrbitViewIso = document.getElementById("btn-orbit-view-iso");
+				const sliderOrbitSpeed = document.getElementById("slider-orbit-speed");
+				const txtOrbitSpeed = document.getElementById("txt-orbit-speed");
+				const textOrbitPlay = document.getElementById("text-orbit-play");
+				const textOrbitPlayEn = document.getElementById("text-orbit-play-en");
+
+				let orbitViewMode = "side"; // "side" or "iso"
+				let orbitPlaying = true;
+				let orbitSpeedMult = 1.0;
+				let cometOrbitT = 0.35; // 0 to 1 along its arched trajectory
+
+				function renderOrbit() {
+					if (!orbitCanvas) return;
+					const rect = orbitCanvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					const w = rect.width;
+					const h = rect.height;
+
+					if (orbitCanvas.width !== Math.round(w * dpr) || orbitCanvas.height !== Math.round(h * dpr)) {
+						orbitCanvas.width = Math.round(w * dpr);
+						orbitCanvas.height = Math.round(h * dpr);
+					}
+
+					const ctx = orbitCanvas.getContext("2d");
+					ctx.save();
+					ctx.scale(dpr, dpr);
+
+					ctx.fillStyle = "#02040b";
+					ctx.fillRect(0, 0, w, h);
+
+					const sunX = w * 0.45;
+					const sunY = orbitViewMode === "side" ? h * 0.72 : h * 0.65;
+
+					// Draw Ecliptic Plane (Flat Disc / Grid)
+					const eclipticRadius = w * 0.42;
+					const eclipticHeight = orbitViewMode === "side" ? 6 : h * 0.22;
+
+					// Ecliptic disc fill
+					const discGrad = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, eclipticRadius);
+					discGrad.addColorStop(0, "rgba(56, 189, 248, 0.08)");
+					discGrad.addColorStop(0.8, "rgba(99, 102, 241, 0.03)");
+					discGrad.addColorStop(1, "rgba(99, 102, 241, 0)");
+					ctx.fillStyle = discGrad;
+					ctx.beginPath();
+					ctx.ellipse(sunX, sunY, eclipticRadius, eclipticHeight, 0, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Ecliptic plane reference line / ellipse
+					ctx.strokeStyle = "rgba(148, 163, 184, 0.3)";
+					ctx.lineWidth = 1;
+					ctx.setLineDash([3, 3]);
+					ctx.beginPath();
+					ctx.ellipse(sunX, sunY, eclipticRadius, eclipticHeight, 0, 0, Math.PI * 2);
+					ctx.stroke();
+					ctx.setLineDash([]);
+
+					// Ecliptic Label
+					ctx.fillStyle = "rgba(148, 163, 184, 0.7)";
+					ctx.font = "10px monospace";
+					ctx.textAlign = "right";
+					ctx.fillText(isEnPage ? "ECLIPTIC PLANE (PLANETARY DISC)" : "黄道面 (行星公转平坦盘面)", sunX + eclipticRadius - 8, sunY - 4);
+
+					// Planetary Orbits on Ecliptic Plane
+					// 1. Earth (1 AU)
+					const rEarth = eclipticRadius * 0.15;
+					ctx.strokeStyle = "rgba(56, 189, 248, 0.5)";
+					ctx.beginPath();
+					ctx.ellipse(sunX, sunY, rEarth, rEarth * (eclipticHeight / eclipticRadius), 0, 0, Math.PI * 2);
+					ctx.stroke();
+
+					// 2. Jupiter (5.2 AU)
+					const rJup = eclipticRadius * 0.52;
+					ctx.strokeStyle = "rgba(34, 211, 238, 0.6)";
+					ctx.beginPath();
+					ctx.ellipse(sunX, sunY, rJup, rJup * (eclipticHeight / eclipticRadius), 0, 0, Math.PI * 2);
+					ctx.stroke();
+					ctx.fillStyle = "rgba(34, 211, 238, 0.8)";
+					ctx.fillText(isEnPage ? "Jupiter (5.2 AU)" : "木星轨道 (5.2 AU)", sunX - rJup - 6, sunY - 2);
+
+					// 3. Saturn (9.5 AU)
+					const rSat = eclipticRadius * 0.88;
+					ctx.strokeStyle = "rgba(251, 191, 36, 0.5)";
+					ctx.beginPath();
+					ctx.ellipse(sunX, sunY, rSat, rSat * (eclipticHeight / eclipticRadius), 0, 0, Math.PI * 2);
+					ctx.stroke();
+					ctx.fillStyle = "rgba(251, 191, 36, 0.8)";
+					ctx.fillText(isEnPage ? "Saturn (9.5 AU)" : "土星轨道 (9.5 AU)", sunX + rSat + 4, sunY - 2);
+
+					// Sun at center
+					const sunGrad = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 18);
+					sunGrad.addColorStop(0, "#ffffff");
+					sunGrad.addColorStop(0.3, "#fef08a");
+					sunGrad.addColorStop(0.7, "#f59e0b");
+					sunGrad.addColorStop(1, "rgba(245, 158, 11, 0)");
+					ctx.fillStyle = sunGrad;
+					ctx.beginPath();
+					ctx.arc(sunX, sunY, 18, 0, Math.PI * 2);
+					ctx.fill();
+					ctx.fillStyle = "#ffffff";
+					ctx.beginPath();
+					ctx.arc(sunX, sunY, 3.5, 0, Math.PI * 2);
+					ctx.fill();
+
+					// COMET ORBIT: Steeply inclined parabola arching "straight up"
+					// Parametric arch over the sun
+					const archSpan = w * 0.6;
+					const archApexH = h * 0.54; // arcs high above sun
+					ctx.strokeStyle = "#a855f7";
+					ctx.lineWidth = 2;
+					ctx.beginPath();
+					for (let i = 0; i <= 60; i++) {
+						const norm = i / 60; // 0 to 1
+						const px = sunX - archSpan * 0.5 + norm * archSpan;
+						// Parabolic arch
+						const hNorm = 4 * norm * (1 - norm); // 0 at ends, 1 at apex
+						const py = sunY - hNorm * archApexH;
+						if (i === 0) ctx.moveTo(px, py);
+						else ctx.lineTo(px, py);
+					}
+					ctx.stroke();
+
+					// Comet current position on the arch
+					const cx = sunX - archSpan * 0.5 + cometOrbitT * archSpan;
+					const chNorm = 4 * cometOrbitT * (1 - cometOrbitT);
+					const cy = sunY - chNorm * archApexH;
+
+					// Projection line down to ecliptic plane
+					ctx.strokeStyle = "rgba(168, 85, 247, 0.4)";
+					ctx.lineWidth = 1;
+					ctx.setLineDash([3, 3]);
+					ctx.beginPath();
+					ctx.moveTo(cx, cy);
+					ctx.lineTo(cx, sunY);
+					ctx.stroke();
+					ctx.setLineDash([]);
+
+					// Projection ground shadow dot
+					ctx.fillStyle = "rgba(168, 85, 247, 0.6)";
+					ctx.beginPath();
+					ctx.arc(cx, sunY, 2.5, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Comet object with glow & tail
+					const cometGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 14);
+					cometGrad.addColorStop(0, "#ffffff");
+					cometGrad.addColorStop(0.4, "#d8b4fe");
+					cometGrad.addColorStop(1, "rgba(168, 85, 247, 0)");
+					ctx.fillStyle = cometGrad;
+					ctx.beginPath();
+					ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+					ctx.fill();
+
+					ctx.fillStyle = "#ffffff";
+					ctx.beginPath();
+					ctx.arc(cx, cy, 2.8, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Comet label & distance indicator
+					ctx.fillStyle = "#e9d5ff";
+					ctx.font = "bold 11px monospace";
+					ctx.textAlign = "left";
+					ctx.fillText("☄️ C/2026 S1 (Euclid)", cx + 12, cy - 6);
+					ctx.font = "10px monospace";
+					ctx.fillStyle = "#a855f7";
+					ctx.fillText(isEnPage ? "Discovery: ~1.3B km from Earth" : "发现时距离：~13 亿公里", cx + 12, cy + 8);
+					ctx.fillStyle = "rgba(216, 180, 254, 0.8)";
+					ctx.fillText(isEnPage ? "Arching 'straight up' above ecliptic" : "高倾角直立拱起于黄道之上", cx + 12, cy + 20);
+
+					ctx.restore();
+				}
+
+				function animateOrbit() {
+					if (orbitPlaying) {
+						cometOrbitT += 0.0015 * orbitSpeedMult;
+						if (cometOrbitT > 0.88) cometOrbitT = 0.12;
+						renderOrbit();
+					}
+					const req = requestAnimationFrame(animateOrbit);
+					animFrameIds.push(req);
+				}
+
+				if (btnOrbitTogglePlay) {
+					btnOrbitTogglePlay.addEventListener("click", () => {
+						orbitPlaying = !orbitPlaying;
+						if (textOrbitPlay) textOrbitPlay.textContent = orbitPlaying ? "暂停轨道公转动画" : "启动轨道公转动画";
+						if (textOrbitPlayEn) textOrbitPlayEn.textContent = orbitPlaying ? "Pause Orbit Sim" : "Resume Orbit Sim";
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnOrbitResetPos) {
+					btnOrbitResetPos.addEventListener("click", () => {
+						cometOrbitT = 0.35; // Discovery position (~1.3 billion km)
+						renderOrbit();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnOrbitViewSide) {
+					btnOrbitViewSide.addEventListener("click", () => {
+						orbitViewMode = "side";
+						btnOrbitViewSide.className = "px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 border border-purple-500/50 text-purple-300 font-mono text-[10px] transition cursor-pointer";
+						if (btnOrbitViewIso) btnOrbitViewIso.className = "px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-400 font-mono text-[10px] transition cursor-pointer";
+						renderOrbit();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnOrbitViewIso) {
+					btnOrbitViewIso.addEventListener("click", () => {
+						orbitViewMode = "iso";
+						btnOrbitViewIso.className = "px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 border border-purple-500/50 text-purple-300 font-mono text-[10px] transition cursor-pointer";
+						if (btnOrbitViewSide) btnOrbitViewSide.className = "px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 border border-slate-700 text-slate-400 font-mono text-[10px] transition cursor-pointer";
+						renderOrbit();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (sliderOrbitSpeed) {
+					sliderOrbitSpeed.addEventListener("input", (e) => {
+						orbitSpeedMult = parseFloat(e.target.value);
+						if (txtOrbitSpeed) txtOrbitSpeed.textContent = `${orbitSpeedMult.toFixed(1)}×`;
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// INITIALIZATION RUNNER
+				// ==========================================
+				generateField(1);
+				resetBlinkTimer();
+				updateExposureMetrics(560.52);
+				renderQuizCanvas("canvas-cand-a", "comet");
+				renderQuizCanvas("canvas-cand-b", "asteroid");
+				renderQuizCanvas("canvas-cand-c", "cosmic");
+				renderOrbit();
+				animateOrbit();
+
+				window.addEventListener("resize", () => {
+					renderGame();
+					renderBlink();
+					renderExposureCanvas();
+					renderQuizCanvas("canvas-cand-a", "comet");
+					renderQuizCanvas("canvas-cand-b", "asteroid");
+					renderQuizCanvas("canvas-cand-c", "cosmic");
+					renderOrbit();
+				}, { signal: lifecycle.signal });
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initStreakHunter);
+			} else {
+				initStreakHunter();
+			}
+			document.addEventListener("astro:page-load", initStreakHunter);
+		})();
+	</script>
+</MainGridLayout>
