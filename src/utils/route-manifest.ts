@@ -35,6 +35,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"snake",
 	"spin-shove",
 	"steady-hand",
+	"streak-hunter",
 	"switchback",
 	"the-last-scan",
 	"the-smallest-triangle",
