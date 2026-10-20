@@ -50,6 +50,8 @@ const NAVBAR_EN_MAP: Record<string, string> = {
 	动态: "Moments",
 	项目: "Projects",
 	像素墙: "Pixel Wall",
+	震波守望: "Quake Watch",
+	棋牌派对: "Party Games",
 	相册: "Gallery",
 	书签导航: "Bookmarks",
 	哔哩哔哩: "Bilibili",
