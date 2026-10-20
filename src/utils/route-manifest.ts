@@ -31,6 +31,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"lopsided-world",
 	"one-beat",
 	"one-of-one",
+	"phobos-gambit",
 	"quake-watch",
 	"sliding-graphene",
 	"snake",
