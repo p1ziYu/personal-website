@@ -1,0 +1,1365 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "Quake Watch · Live Earthquake Monitor"
+	: "震波守望 · QUAKE WATCH";
+const description = isEn
+	? "Live multi-source global earthquake monitor aggregating USGS, JMA, and EMSC catalogs with spatio-temporal deduplication, interactive seismic mapping, and confirmed catalog telemetry."
+	: "震波守望 · 全球多源实时地震监测仪：汇聚 USGS、日本气象厅（JMA）与欧洲地中海地震中心（EMSC）实时目录，时空去重融合，交互式全球震波图谱。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<slot slot="head" name="head">
+		<!-- Leaflet CSS via CDN with SRI -->
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+			integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+			crossorigin=""
+		/>
+	</slot>
+
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#060913] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-rose-500/30 selection:text-rose-200">
+			<!-- Ambient Seismic Wave Glow Background -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#ef4444_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/3 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-8 pb-6 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+							<span class="lang-zh">全球实时震网 · 60秒自动同步</span>
+							<span class="lang-en">GLOBAL SEISMIC NETWORK · 60S AUTO SYNC</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+							<span>📡</span>
+							<span>USGS · JMA · EMSC</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">多源时空去重确认目录</span>
+							<span class="lang-en">Multi-Source Confirmed Catalog</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/quake-watch/" : "/en/projects/quake-watch/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-rose-500/40 text-rose-300 hover:text-white hover:bg-rose-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "Switch to Chinese" : "切换为英文"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">震波守望 · QUAKE WATCH</span>
+					<span class="lang-en">QUAKE WATCH · Seismic Monitor</span>
+				</h1>
+
+				<p class="text-base sm:text-lg font-bold text-rose-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">全球多源实时地震监测仪 · USGS + JMA + EMSC · 跨源去重与时空关联图谱</span>
+					<span class="lang-en">Live Multi-Source Earthquake Monitor · USGS + JMA + EMSC · De-duplicated Telemetry</span>
+				</p>
+
+				<!-- CONTEXT NOTE -->
+				<div class="p-3.5 sm:p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+					<div class="flex items-center gap-2 text-rose-400 font-mono font-semibold text-xs mb-1.5 uppercase tracking-wider">
+						<span>ℹ️</span>
+						<span class="lang-zh">背景与设计说明</span>
+						<span class="lang-en">Context & Purpose</span>
+					</div>
+					<p class="lang-zh">
+						2026 年 10 月 16 日，日本气象厅（JMA）紧急地震速报系统因堪察加半岛近海实际 M6.9 地震的算法误判触发了虚警 M9.9 预警。本仪表板受此事件启发而构建，仅聚合展示 USGS、JMA 与 EMSC 的正式确认地震目录（Confirmed Catalog Data），不提供秒级紧急地震速报（EEW），用于跨机构震级对比、时空去重融合与全球震情态势感知。
+					</p>
+					<p class="lang-en">
+						On October 16, 2026, the Japan Meteorological Agency (JMA) Earthquake Early Warning system triggered a false M9.9 alert (the actual event was an M6.9 quake off the Kamchatka Peninsula). Inspired by that incident, this dashboard aggregates and cross-validates confirmed seismic catalog data from USGS, JMA, and EMSC. It presents verified catalog events rather than unconfirmed early warnings.
+					</p>
+				</div>
+
+				<!-- STATS HEADER CARDS -->
+				<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4">
+					<div class="p-3.5 sm:p-4 rounded-xl bg-slate-950/80 border border-slate-800 relative overflow-hidden">
+						<div class="text-[11px] sm:text-xs font-mono text-slate-400 uppercase tracking-wider mb-1">
+							<span class="lang-zh">近 24h 地震 (去重)</span>
+							<span class="lang-en">Past 24h Quakes</span>
+						</div>
+						<div id="stat-total-count" class="text-2xl sm:text-3xl font-black font-mono text-white">
+							<span class="animate-pulse opacity-60">--</span>
+						</div>
+						<div class="text-[10px] text-slate-500 font-mono mt-1">
+							<span class="lang-zh">三大台网联合检出</span>
+							<span class="lang-en">Combined catalogs</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 sm:p-4 rounded-xl bg-slate-950/80 border border-slate-800 relative overflow-hidden">
+						<div class="text-[11px] sm:text-xs font-mono text-slate-400 uppercase tracking-wider mb-1">
+							<span class="lang-zh">24h 最高震级</span>
+							<span class="lang-en">24h Max Magnitude</span>
+						</div>
+						<div id="stat-max-mag" class="text-2xl sm:text-3xl font-black font-mono text-amber-400">
+							<span class="animate-pulse opacity-60">--</span>
+						</div>
+						<div id="stat-max-place" class="text-[10px] text-slate-400 font-mono mt-1 truncate">
+							<span class="lang-zh">等待同步...</span>
+							<span class="lang-en">Awaiting sync...</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 sm:p-4 rounded-xl bg-slate-950/80 border border-slate-800 relative overflow-hidden">
+						<div class="text-[11px] sm:text-xs font-mono text-slate-400 uppercase tracking-wider mb-1">
+							<span class="lang-zh">强震 (≥ M6.0)</span>
+							<span class="lang-en">Strong Quakes (≥ M6.0)</span>
+						</div>
+						<div id="stat-m6-count" class="text-2xl sm:text-3xl font-black font-mono text-rose-400">
+							<span class="animate-pulse opacity-60">--</span>
+						</div>
+						<div class="text-[10px] text-slate-500 font-mono mt-1">
+							<span class="lang-zh">破坏性地震关注</span>
+							<span class="lang-en">Potentially damaging</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 sm:p-4 rounded-xl bg-slate-950/80 border border-slate-800 relative overflow-hidden flex flex-col justify-between">
+						<div>
+							<div class="text-[11px] sm:text-xs font-mono text-slate-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+								<span>
+									<span class="lang-zh">数据源通道</span>
+									<span class="lang-en">Sources Status</span>
+								</span>
+								<span id="sync-indicator" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" title="Connected"></span>
+							</div>
+							<div class="flex flex-wrap gap-1 text-[10px] font-mono mt-1">
+								<span id="badge-usgs" class="px-1.5 py-0.5 rounded bg-blue-950 border border-blue-800 text-blue-300">USGS: ...</span>
+								<span id="badge-jma" class="px-1.5 py-0.5 rounded bg-rose-950 border border-rose-800 text-rose-300">JMA: ...</span>
+								<span id="badge-emsc" class="px-1.5 py-0.5 rounded bg-purple-950 border border-purple-800 text-purple-300">EMSC: ...</span>
+							</div>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-2 flex items-center justify-between">
+							<span id="last-updated-text">
+								<span class="lang-zh">更新于: 同步中...</span>
+								<span class="lang-en">Updated: syncing...</span>
+							</span>
+							<button
+								id="btn-manual-refresh"
+								type="button"
+								class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition cursor-pointer active:scale-95 flex items-center gap-1"
+								title="Refresh now / 立即刷新"
+							>
+								<svg id="refresh-icon" class="w-3 h-3 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									<path d="M21 12a9 9 0 1 1-2.6-6.4L21 8M21 3v5h-5"/>
+								</svg>
+								<span class="lang-zh">刷新</span>
+								<span class="lang-en">Sync</span>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- CONTROLS & FILTERS ROW -->
+				<div class="p-3.5 sm:p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+					<!-- Source toggle chips -->
+					<div class="flex flex-wrap items-center gap-2">
+						<span class="text-slate-400 font-semibold">
+							<span class="lang-zh">台网筛选:</span>
+							<span class="lang-en">Catalogs:</span>
+						</span>
+						<button
+							id="chip-usgs"
+							type="button"
+							class="chip-toggle active px-2.5 py-1 rounded-md border font-mono transition cursor-pointer active:scale-95 text-blue-300 bg-blue-950/60 border-blue-600"
+							data-source="USGS"
+						>
+							✓ USGS
+						</button>
+						<button
+							id="chip-jma"
+							type="button"
+							class="chip-toggle active px-2.5 py-1 rounded-md border font-mono transition cursor-pointer active:scale-95 text-rose-300 bg-rose-950/60 border-rose-600"
+							data-source="JMA"
+						>
+							✓ JMA (日本)
+						</button>
+						<button
+							id="chip-emsc"
+							type="button"
+							class="chip-toggle active px-2.5 py-1 rounded-md border font-mono transition cursor-pointer active:scale-95 text-purple-300 bg-purple-950/60 border-purple-600"
+							data-source="EMSC"
+						>
+							✓ EMSC (欧洲)
+						</button>
+					</div>
+
+					<!-- Min Magnitude Slider -->
+					<div class="flex items-center gap-2 min-w-[200px]">
+						<span class="text-slate-400 font-semibold">
+							<span class="lang-zh">最低震级:</span>
+							<span class="lang-en">Min Mag:</span>
+						</span>
+						<input
+							id="slider-min-mag"
+							type="range"
+							min="4.0"
+							max="8.0"
+							step="0.1"
+							value="4.0"
+							class="accent-rose-500 cursor-pointer h-1.5 bg-slate-800 rounded-lg grow"
+						/>
+						<span id="label-min-mag" class="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-amber-300 font-bold min-w-[52px] text-center">
+							≥ M4.0
+						</span>
+					</div>
+
+					<!-- Search input & Opt-in Notification toggle -->
+					<div class="flex flex-wrap items-center gap-3">
+						<div class="relative">
+							<input
+								id="input-search"
+								type="text"
+								placeholder="搜索地点 / Filter place..."
+								class="px-2.5 py-1 pl-7 rounded-md bg-slate-900 border border-slate-700 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-rose-500 transition w-44 sm:w-56"
+							/>
+							<svg class="w-3.5 h-3.5 text-slate-500 absolute left-2 top-2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+							</svg>
+						</div>
+
+						<!-- Notification Toggle -->
+						<label class="inline-flex items-center gap-2 cursor-pointer select-none px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 hover:border-slate-700 transition">
+							<input
+								id="toggle-notifications"
+								type="checkbox"
+								class="accent-rose-500 cursor-pointer rounded"
+							/>
+							<span class="text-slate-300 text-[11px]">
+								<span class="lang-zh">有 M6.5+ 强震时通知我</span>
+								<span class="lang-en">Notify me of M6.5+ quakes</span>
+							</span>
+						</label>
+					</div>
+				</div>
+			</header>
+
+			<!-- MAIN CONTENT GRID: MAP + EVENT LIST -->
+			<div class="space-y-6">
+				<!-- MAP CONTAINER -->
+				<div class="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 shadow-xl">
+					<!-- Interactive Map Container -->
+					<div id="quake-map" class="w-full h-[460px] z-0"></div>
+
+					<!-- Graceful Degradation Fallback Container -->
+					<div
+						id="quake-map-fallback"
+						class="hidden absolute inset-0 bg-slate-950/95 flex flex-col items-center justify-center p-6 text-center z-10"
+					>
+						<div class="w-12 h-12 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl mb-3">
+							⚠️
+						</div>
+						<h3 class="text-base font-bold text-slate-200 mb-1">
+							<span class="lang-zh">地图网络加载未就绪 (离线模式)</span>
+							<span class="lang-en">Map Service Standby (Offline Mode)</span>
+						</h3>
+						<p class="text-xs text-slate-400 max-w-md mb-2">
+							<span class="lang-zh">Leaflet CDN 资源不可达或已降级。所有多源地震数据抓取、去重分析、筛选与下方事件列表均完全正常运转。</span>
+							<span class="lang-en">Leaflet CDN is unreachable or blocked. Data acquisition, deduplication, filtering, and the event list below remain fully functional.</span>
+						</p>
+					</div>
+
+					<!-- Map Legend Overlay -->
+					<div class="absolute bottom-4 right-4 z-[400] p-2.5 rounded-lg bg-slate-950/85 backdrop-blur-md border border-slate-800 text-[11px] font-mono shadow-lg pointer-events-auto">
+						<div class="text-[10px] text-slate-400 uppercase font-bold mb-1.5">
+							<span class="lang-zh">震级图例 (圈径/色彩)</span>
+							<span class="lang-en">Magnitude Scale</span>
+						</div>
+						<div class="grid grid-cols-2 gap-x-3 gap-y-1">
+							<div class="flex items-center gap-1.5">
+								<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+								<span class="text-slate-300">&lt; M5.0</span>
+							</div>
+							<div class="flex items-center gap-1.5">
+								<span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+								<span class="text-slate-300">M5.0–5.9</span>
+							</div>
+							<div class="flex items-center gap-1.5">
+								<span class="w-3.5 h-3.5 rounded-full bg-orange-500"></span>
+								<span class="text-slate-300">M6.0–6.9</span>
+							</div>
+							<div class="flex items-center gap-1.5">
+								<span class="w-4 h-4 rounded-full bg-rose-500 animate-pulse"></span>
+								<span class="text-slate-300 font-bold">≥ M7.0</span>
+							</div>
+						</div>
+						<div class="mt-2 pt-1.5 border-t border-slate-800 flex items-center justify-between">
+							<button
+								id="btn-reset-map-view"
+								type="button"
+								class="text-[10px] text-rose-400 hover:text-white transition cursor-pointer"
+							>
+								<span class="lang-zh">↺ 视野居中复位</span>
+								<span class="lang-en">↺ Reset View</span>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- EVENT LIST SECTION -->
+				<div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 sm:p-5 shadow-xl">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800/80">
+						<div class="flex items-center gap-2">
+							<div class="w-2.5 h-2.5 rounded-full bg-rose-500"></div>
+							<h2 class="text-lg font-bold text-white font-sans">
+								<span class="lang-zh">地震事件列表 · 最新优先</span>
+								<span class="lang-en">Earthquake Catalog · Newest First</span>
+							</h2>
+							<span id="filtered-count-badge" class="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-xs font-mono text-slate-300">
+								0 / 0
+							</span>
+						</div>
+						<div class="text-xs font-mono text-slate-400">
+							<span class="lang-zh">点击任意行可在地图上定位并查看详细测报</span>
+							<span class="lang-en">Click any row to locate and open details</span>
+						</div>
+					</div>
+
+					<!-- Event List Table Container -->
+					<div class="overflow-x-auto">
+						<table class="w-full text-left text-xs font-mono border-collapse">
+							<thead>
+								<tr class="text-slate-400 border-b border-slate-800/80 text-[11px] uppercase tracking-wider">
+									<th class="py-2.5 px-3">
+										<span class="lang-zh">震级</span>
+										<span class="lang-en">Mag</span>
+									</th>
+									<th class="py-2.5 px-3">
+										<span class="lang-zh">发震时间 (当地 / 相对)</span>
+										<span class="lang-en">Origin Time</span>
+									</th>
+									<th class="py-2.5 px-3">
+										<span class="lang-zh">震中位置</span>
+										<span class="lang-en">Epicenter Location</span>
+									</th>
+									<th class="py-2.5 px-3">
+										<span class="lang-zh">深度</span>
+										<span class="lang-en">Depth</span>
+									</th>
+									<th class="py-2.5 px-3">
+										<span class="lang-zh">检出机构</span>
+										<span class="lang-en">Sources</span>
+									</th>
+									<th class="py-2.5 px-3 text-right">
+										<span class="lang-zh">操作</span>
+										<span class="lang-en">Action</span>
+									</th>
+								</tr>
+							</thead>
+							<tbody id="quake-table-body" class="divide-y divide-slate-800/40">
+								<!-- Initial Skeleton Loading Rows -->
+								<tr>
+									<td colspan="6" class="py-8 text-center text-slate-500">
+										<div class="inline-flex items-center gap-2">
+											<span class="w-3 h-3 rounded-full border-2 border-rose-500 border-t-transparent animate-spin"></span>
+											<span class="lang-zh">正在连接全球三大地震台网实时数据源并执行跨源去重...</span>
+											<span class="lang-en">Connecting to global seismic networks and performing deduplication...</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<!-- Empty State -->
+					<div id="quake-empty-state" class="hidden py-10 text-center text-slate-400 font-mono text-xs">
+						<p class="mb-1 text-base">🔍</p>
+						<p class="lang-zh">没有找到符合当前筛选条件的地震事件</p>
+						<p class="lang-en">No earthquakes match the current filter criteria</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- FOOTER SECTION & AI DECLARATION -->
+			<div class="pt-8 mt-8 border-t border-slate-800/80 text-xs font-mono text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+				<div>
+					<span class="lang-zh">震波守望 · QUAKE WATCH — 2026 全球多源实时地震监测仪表盘</span>
+					<span class="lang-en">Quake Watch · 2026 Live Multi-Source Earthquake Dashboard</span>
+				</div>
+				<div>
+					<span>p1ziyu.com · 2026</span>
+				</div>
+			</div>
+
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-indigo-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- Leaflet JS via CDN with SRI -->
+	<script
+		is:inline
+		src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+		crossorigin=""
+	></script>
+
+	<!-- CLIENT-SIDE ENGINE SCRIPT -->
+	<script is:inline>
+		(() => {
+			let cleanup = null;
+
+			// Common geographic names dictionary for Chinese translation
+			const GEO_MAP = {
+				"Japan": "日本",
+				"Hokkaido": "北海道",
+				"Honshu": "本州",
+				"Tokyo": "东京",
+				"Okinawa": "冲绳",
+				"Kushiro": "钏路",
+				"Taiwan": "台湾",
+				"Hualien": "花莲",
+				"Yilan": "宜兰",
+				"Taitung": "台东",
+				"Taipei": "台北",
+				"Philippines": "菲律宾",
+				"Indonesia": "印度尼西亚",
+				"Papua New Guinea": "巴布亚新几内亚",
+				"New Britain": "新不列颠",
+				"Vanuatu": "瓦努阿图",
+				"Fiji": "斐济",
+				"Tonga": "汤加",
+				"Samoa": "萨摩亚",
+				"Solomon Islands": "所罗门群岛",
+				"New Zealand": "新西兰",
+				"Kermadec Islands": "克马德克群岛",
+				"Kuril Islands": "千岛群岛",
+				"Kamchatka": "堪察加半岛",
+				"Russia": "俄罗斯",
+				"Alaska": "阿拉斯加",
+				"Aleutian Islands": "阿留申群岛",
+				"California": "加利福尼亚",
+				"Hawaii": "夏威夷",
+				"Mexico": "墨西哥",
+				"Guatemala": "危地马拉",
+				"Chile": "智利",
+				"Peru": "秘鲁",
+				"Ecuador": "厄瓜多尔",
+				"Colombia": "哥伦比亚",
+				"Argentina": "阿根廷",
+				"Turkey": "土耳其",
+				"Greece": "希腊",
+				"Crete": "克里特岛",
+				"Italy": "意大利",
+				"Sicily": "西西里",
+				"Iceland": "冰岛",
+				"China": "中国",
+				"Sichuan": "四川",
+				"Xinjiang": "新疆",
+				"Tibet": "西藏",
+				"Xizang": "西藏",
+				"Qinghai": "青海",
+				"Yunnan": "云南",
+				"Gansu": "甘肃",
+				"Pakistan": "巴基斯坦",
+				"Iran": "伊朗",
+				"Afghanistan": "阿富汗",
+				"India": "印度",
+				"Myanmar": "缅甸",
+				"Nepal": "尼泊尔"
+			};
+
+			function translateLocation(enPlace) {
+				if (!enPlace) return "未知地点";
+				let zh = enPlace;
+				for (const [enKey, zhVal] of Object.entries(GEO_MAP)) {
+					const regex = new RegExp(`\\b${enKey}\\b`, "i");
+					if (regex.test(zh)) {
+						zh = zh.replace(regex, zhVal);
+					}
+				}
+				// Standard nautical / direction terms
+				zh = zh.replace(/\bkm\s+(N|S|E|W|NE|NW|SE|SW)\s+of\b/gi, (_, dir) => {
+					const dirMap = {
+						"N": "以北", "S": "以南", "E": "以东", "W": "以西",
+						"NE": "东北", "NW": "西北", "SE": "东南", "SW": "西南"
+					};
+					return `公里 (${dirMap[dir.toUpperCase()] || dir})`;
+				});
+				zh = zh.replace(/\boff the coast of\b/gi, "近海");
+				zh = zh.replace(/\bregion\b/gi, "地区");
+				return zh;
+			}
+
+			function formatRelativeTime(timeMs) {
+				const diffSec = Math.max(0, Math.floor((Date.now() - timeMs) / 1000));
+				if (diffSec < 60) {
+					return { zh: "刚刚", en: "Just now" };
+				}
+				const diffMin = Math.floor(diffSec / 60);
+				if (diffMin < 60) {
+					return { zh: `${diffMin} 分钟前`, en: `${diffMin} min ago` };
+				}
+				const diffHours = Math.floor(diffMin / 60);
+				if (diffHours < 24) {
+					return { zh: `${diffHours} 小时前`, en: `${diffHours} hr${diffHours > 1 ? "s" : ""} ago` };
+				}
+				const diffDays = Math.floor(diffHours / 24);
+				return { zh: `${diffDays} 天前`, en: `${diffDays} day${diffDays > 1 ? "s" : ""} ago` };
+			}
+
+			function getMagColor(mag) {
+				if (mag < 5.0) return "#10b981"; // green
+				if (mag < 6.0) return "#eab308"; // yellow
+				if (mag < 7.0) return "#f97316"; // orange
+				return "#ef4444"; // red
+			}
+
+			function getMagRadius(mag) {
+				return Math.max(5, Math.min(32, Math.round(Math.pow(Math.max(mag, 4.0) - 2.5, 1.8) * 2.2)));
+			}
+
+			function initQuakeWatch() {
+				if (cleanup) {
+					cleanup();
+					cleanup = null;
+				}
+
+				const lifecycle = new AbortController();
+				cleanup = () => {
+					lifecycle.abort();
+					if (autoRefreshTimer) {
+						clearInterval(autoRefreshTimer);
+						autoRefreshTimer = null;
+					}
+					if (map) {
+						try {
+							map.remove();
+						} catch (e) {
+							// ignore map cleanup errors
+						}
+						map = null;
+					}
+				};
+
+				// DOM references
+				const statTotalCount = document.getElementById("stat-total-count");
+				const statMaxMag = document.getElementById("stat-max-mag");
+				const statMaxPlace = document.getElementById("stat-max-place");
+				const statM6Count = document.getElementById("stat-m6-count");
+				const badgeUsgs = document.getElementById("badge-usgs");
+				const badgeJma = document.getElementById("badge-jma");
+				const badgeEmsc = document.getElementById("badge-emsc");
+				const syncIndicator = document.getElementById("sync-indicator");
+				const lastUpdatedText = document.getElementById("last-updated-text");
+				const btnManualRefresh = document.getElementById("btn-manual-refresh");
+				const refreshIcon = document.getElementById("refresh-icon");
+				const chipUsgs = document.getElementById("chip-usgs");
+				const chipJma = document.getElementById("chip-jma");
+				const chipEmsc = document.getElementById("chip-emsc");
+				const sliderMinMag = document.getElementById("slider-min-mag");
+				const labelMinMag = document.getElementById("label-min-mag");
+				const inputSearch = document.getElementById("input-search");
+				const toggleNotifications = document.getElementById("toggle-notifications");
+				const mapEl = document.getElementById("quake-map");
+				const mapFallbackEl = document.getElementById("quake-map-fallback");
+				const btnResetMapView = document.getElementById("btn-reset-map-view");
+				const tableBody = document.getElementById("quake-table-body");
+				const emptyState = document.getElementById("quake-empty-state");
+				const filteredCountBadge = document.getElementById("filtered-count-badge");
+
+				// App State
+				let allMergedEvents = [];
+				let seenEventIds = new Set();
+				let newlyArrivedIds = new Set();
+				let isFirstLoad = true;
+				let activeSources = new Set(["USGS", "JMA", "EMSC"]);
+				let minMagFilter = 4.0;
+				let searchQuery = "";
+				let autoRefreshTimer = null;
+				let isFetching = false;
+
+				// Leaflet Map state
+				let map = null;
+				let markersLayer = null;
+				let leafletReady = false;
+				const markerMap = new Map();
+
+				// Initialize Leaflet Map
+				function initMap() {
+					if (typeof window.L === "undefined" || !mapEl) {
+						if (mapFallbackEl) mapFallbackEl.classList.remove("hidden");
+						return;
+					}
+					try {
+						map = L.map(mapEl, {
+							center: [20, 140],
+							zoom: 2,
+							minZoom: 2,
+							maxZoom: 10,
+							worldCopyJump: true
+						});
+
+						L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+							attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
+							subdomains: "abcd",
+							maxZoom: 19
+						}).addTo(map);
+
+						markersLayer = L.layerGroup().addTo(map);
+						leafletReady = true;
+						if (mapFallbackEl) mapFallbackEl.classList.add("hidden");
+					} catch (err) {
+						console.error("Leaflet init failed:", err);
+						leafletReady = false;
+						if (mapFallbackEl) mapFallbackEl.classList.remove("hidden");
+					}
+				}
+
+				initMap();
+
+				// Reset Map View
+				if (btnResetMapView && map) {
+					btnResetMapView.addEventListener("click", () => {
+						if (map) {
+							map.setView([20, 140], 2, { animate: true });
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				// Data Fetchers
+				async function fetchUsgs() {
+					const urls = [
+						"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson",
+						"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
+					];
+					const events = [];
+					const seenUids = new Set();
+
+					await Promise.allSettled(urls.map(async (url) => {
+						try {
+							const res = await fetch(url, { signal: lifecycle.signal });
+							if (!res.ok) return;
+							const data = await res.json();
+							const features = data.features || [];
+							for (const f of features) {
+								const id = f.id || f.properties?.code;
+								if (id && seenUids.has(id)) continue;
+								if (id) seenUids.add(id);
+
+								const props = f.properties || {};
+								const geom = f.geometry || {};
+								const coords = geom.coordinates || [0, 0, 0];
+								const mag = typeof props.mag === "number" ? props.mag : parseFloat(props.mag) || 0;
+								const time = props.time || 0;
+								const placeEn = props.place || "Unknown location";
+								const placeZh = translateLocation(placeEn);
+
+								events.push({
+									source: "USGS",
+									sources: ["USGS"],
+									id: `usgs_${id || time}`,
+									time: time,
+									mag: mag,
+									place: placeEn,
+									placeZh: placeZh,
+									placeEn: placeEn,
+									lat: coords[1] || 0,
+									lon: coords[0] || 0,
+									depth: Math.round((coords[2] || 0) * 10) / 10,
+									tsunami: props.tsunami === 1,
+									url: props.url || `https://earthquake.usgs.gov/earthquakes/eventpage/${id}`,
+									maxi: null
+								});
+							}
+						} catch (e) {
+							console.warn("USGS fetch failed for", url, e);
+						}
+					}));
+
+					return events;
+				}
+
+				async function fetchJma() {
+					const events = [];
+					try {
+						const res = await fetch("https://www.jma.go.jp/bosai/quake/data/list.json", { signal: lifecycle.signal });
+						if (!res.ok) return events;
+						const list = await res.json();
+						if (!Array.isArray(list)) return events;
+
+						const now = Date.now();
+						const jmaCodRe = /^([+-]\d+(?:\.\d+)?)([+-]\d+(?:\.\d+)?)(?:([+-]\d+))?\//;
+
+						// Pre-fetch detail json files in background for the newest 20 entries without blocking
+						const newest20 = list.slice(0, 20);
+						Promise.allSettled(newest20.filter(item => item.json).map(item =>
+							fetch(`https://www.jma.go.jp/bosai/quake/data/${item.json}`, { signal: lifecycle.signal }).catch(() => null)
+						));
+
+						for (const item of list) {
+							if (!item.at) continue;
+							const dt = new Date(item.at);
+							const time = dt.getTime();
+							if (isNaN(time)) continue;
+
+							// Only catalog items within past 24 hours
+							if (now - time > 24 * 3600 * 1000) continue;
+
+							let lat = 0, lon = 0, depth = 0;
+							if (item.cod) {
+								const m = jmaCodRe.exec(item.cod);
+								if (m) {
+									lat = parseFloat(m[1]) || 0;
+									lon = parseFloat(m[2]) || 0;
+									depth = m[3] ? Math.abs(parseFloat(m[3])) / 1000.0 : 0;
+								}
+							}
+
+							const mag = item.mag ? (parseFloat(item.mag) || 0) : 0;
+							const anm = item.anm || "日本近海";
+							const enAnm = item.en_anm || anm;
+							const maxi = item.maxi || null;
+
+							events.push({
+								source: "JMA",
+								sources: ["JMA"],
+								id: `jma_${item.eid || time}`,
+								time: time,
+								mag: mag,
+								place: anm,
+								placeZh: anm,
+								placeEn: enAnm,
+								lat: lat,
+								lon: lon,
+								depth: Math.round(depth * 10) / 10,
+								tsunami: false,
+								url: item.json ? `https://www.jma.go.jp/bosai/quake/data/${item.json}` : "https://www.jma.go.jp/bosai/quake/",
+								maxi: maxi
+							});
+						}
+					} catch (e) {
+						console.warn("JMA fetch failed:", e);
+					}
+					return events;
+				}
+
+				async function fetchEmsc() {
+					const events = [];
+					try {
+						const iso24hAgo = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
+						const url = `https://www.seismicportal.eu/fdsnws/event/1/query?starttime=${encodeURIComponent(iso24hAgo)}&minmagnitude=4&format=json&limit=200&orderby=time`;
+						const res = await fetch(url, { signal: lifecycle.signal });
+						if (!res.ok) return events;
+						const data = await res.json();
+						const features = data.features || [];
+
+						for (const f of features) {
+							const props = f.properties || {};
+							const tStr = props.time;
+							if (!tStr) continue;
+							const dt = new Date(tStr);
+							const time = dt.getTime();
+							if (isNaN(time)) continue;
+
+							const mag = typeof props.mag === "number" ? props.mag : parseFloat(props.mag) || 0;
+							const lat = typeof props.lat === "number" ? props.lat : parseFloat(props.lat) || 0;
+							const lon = typeof props.lon === "number" ? props.lon : parseFloat(props.lon) || 0;
+							const depth = typeof props.depth === "number" ? props.depth : parseFloat(props.depth) || 0;
+							const regionEn = props.flynn_region || "Unknown region";
+							const regionZh = translateLocation(regionEn);
+							const unid = props.unid || f.id || `${time}`;
+
+							events.push({
+								source: "EMSC",
+								sources: ["EMSC"],
+								id: `emsc_${unid}`,
+								time: time,
+								mag: mag,
+								place: regionEn,
+								placeZh: regionZh,
+								placeEn: regionEn,
+								lat: lat,
+								lon: lon,
+								depth: Math.round(depth * 10) / 10,
+								tsunami: false,
+								url: `https://www.seismicportal.eu/event/${unid}`,
+								maxi: null
+							});
+						}
+					} catch (e) {
+						console.warn("EMSC fetch failed:", e);
+					}
+					return events;
+				}
+
+				// Merge and Spatio-temporal Deduplication
+				function mergeAndDedupe(events) {
+					// Sort all events newest first
+					events.sort((a, b) => b.time - a.time);
+
+					const merged = [];
+					for (const ev of events) {
+						let matched = false;
+						for (const target of merged) {
+							const dt = Math.abs(ev.time - target.time) / 1000; // seconds
+							const dlat = Math.abs(ev.lat - target.lat);
+							let dlon = Math.abs(ev.lon - target.lon);
+							if (dlon > 180) dlon = 360 - dlon;
+
+							// Merge threshold: |Δtime| <= 120s AND |Δlat| <= 1.0° AND |Δlon| <= 1.0°
+							if (dt <= 120 && dlat <= 1.0 && dlon <= 1.0) {
+								matched = true;
+								for (const s of ev.sources) {
+									if (!target.sources.includes(s)) {
+										target.sources.push(s);
+									}
+								}
+								target.mag = Math.max(target.mag, ev.mag);
+								if (ev.tsunami) target.tsunami = true;
+								if (ev.maxi && !target.maxi) target.maxi = ev.maxi;
+								if (target.depth === 0 && ev.depth > 0) target.depth = ev.depth;
+
+								// Prefer USGS location description if available
+								if (ev.source === "USGS") {
+									target.place = ev.place;
+									target.placeZh = ev.placeZh;
+									target.placeEn = ev.placeEn;
+									target.url = ev.url;
+								}
+								break;
+							}
+						}
+						if (!matched) {
+							merged.push({
+								...ev,
+								sources: [...ev.sources]
+							});
+						}
+					}
+
+					// Sort newest first
+					merged.sort((a, b) => b.time - a.time);
+					return merged;
+				}
+
+				// Check & Trigger Opt-in Desktop Notification
+				function checkNotifications(mergedEvents) {
+					if (!toggleNotifications || !toggleNotifications.checked) return;
+					if (typeof window.Notification === "undefined") return;
+					if (Notification.permission !== "granted") return;
+
+					for (const ev of mergedEvents) {
+						// Only notify for newly arrived events since page was opened, with mag >= 6.5
+						if (!seenEventIds.has(ev.id) && ev.mag >= 6.5) {
+							try {
+								const title = `⚠️ M${ev.mag.toFixed(1)} ${ev.placeEn}`;
+								const body = `${ev.placeZh} · 深度 ${ev.depth} km · 来源: ${ev.sources.join(" / ")}`;
+								new Notification(title, {
+									body: body,
+									tag: ev.id
+								});
+							} catch (err) {
+								console.warn("Notification error:", err);
+							}
+						}
+					}
+				}
+
+				// Render stats cards
+				function renderStats(mergedEvents, rawUsgsCount, rawJmaCount, rawEmscCount) {
+					const now = Date.now();
+					const past24hEvents = mergedEvents.filter(e => (now - e.time) <= 24 * 3600 * 1000);
+
+					if (statTotalCount) {
+						statTotalCount.textContent = `${past24hEvents.length}`;
+					}
+
+					let maxMagEvent = null;
+					let m6Count = 0;
+					for (const e of past24hEvents) {
+						if (!maxMagEvent || e.mag > maxMagEvent.mag) {
+							maxMagEvent = e;
+						}
+						if (e.mag >= 6.0) {
+							m6Count++;
+						}
+					}
+
+					if (statMaxMag) {
+						statMaxMag.textContent = maxMagEvent && maxMagEvent.mag > 0 ? `M${maxMagEvent.mag.toFixed(1)}` : "None";
+					}
+
+					if (statMaxPlace) {
+						if (maxMagEvent && maxMagEvent.mag > 0) {
+							statMaxPlace.innerHTML = `<span class="lang-zh">${maxMagEvent.placeZh}</span><span class="lang-en">${maxMagEvent.placeEn}</span>`;
+						} else {
+							statMaxPlace.innerHTML = `<span class="lang-zh">暂无大震</span><span class="lang-en">No significant</span>`;
+						}
+					}
+
+					if (statM6Count) {
+						statM6Count.textContent = `${m6Count}`;
+					}
+
+					if (badgeUsgs) badgeUsgs.textContent = `USGS: ${rawUsgsCount}`;
+					if (badgeJma) badgeJma.textContent = `JMA: ${rawJmaCount}`;
+					if (badgeEmsc) badgeEmsc.textContent = `EMSC: ${rawEmscCount}`;
+				}
+
+				// Filter events
+				function getFilteredEvents() {
+					return allMergedEvents.filter(ev => {
+						// Source filter: event must have at least one source in activeSources
+						const hasActiveSource = ev.sources.some(s => activeSources.has(s));
+						if (!hasActiveSource) return false;
+
+						// Magnitude filter
+						if (ev.mag < minMagFilter) return false;
+
+						// Text search
+						if (searchQuery.trim().length > 0) {
+							const q = searchQuery.toLowerCase();
+							const matchZh = ev.placeZh.toLowerCase().includes(q);
+							const matchEn = ev.placeEn.toLowerCase().includes(q);
+							if (!matchZh && !matchEn) return false;
+						}
+
+						return true;
+					});
+				}
+
+				// Update Leaflet Map Markers
+				function updateMapMarkers(filteredEvents) {
+					if (!leafletReady || !markersLayer || !map) return;
+					markersLayer.clearLayers();
+					markerMap.clear();
+
+					filteredEvents.forEach(ev => {
+						if (!ev.lat && !ev.lon) return;
+
+						const color = getMagColor(ev.mag);
+						const radius = getMagRadius(ev.mag);
+
+						const marker = L.circleMarker([ev.lat, ev.lon], {
+							radius: radius,
+							color: color,
+							weight: 1.5,
+							fillColor: color,
+							fillOpacity: 0.65
+						});
+
+						const dateObj = new Date(ev.time);
+						const localTimeStr = dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+						const rel = formatRelativeTime(ev.time);
+
+						const shindoHtml = ev.maxi
+							? `<div class="mt-1 text-xs text-rose-300 font-mono">
+									<span class="lang-zh">最大震度: <strong>${ev.maxi}</strong> (日本震度阶)</span>
+									<span class="lang-en">Max Shindo: <strong>${ev.maxi}</strong> (JMA Intensity)</span>
+								</div>`
+							: "";
+
+						const tsunamiHtml = ev.tsunami
+							? `<div class="mt-1 text-xs text-amber-300 font-bold">
+									<span class="lang-zh">🌊 海啸预警已发布</span>
+									<span class="lang-en">🌊 Tsunami Warning Active</span>
+								</div>`
+							: "";
+
+						const sourcesHtml = ev.sources.map(s => `<span class="px-1.5 py-0.5 rounded bg-slate-800 text-[10px] font-mono mr-1">${s}</span>`).join("");
+
+						const popupContent = `
+							<div class="p-2 text-slate-100 font-sans max-w-[240px]">
+								<div class="flex items-center justify-between gap-2 mb-1">
+									<span class="text-base font-black font-mono" style="color: ${color}">M ${ev.mag.toFixed(1)}</span>
+									<div class="text-[10px] text-slate-400 font-mono">
+										<span class="lang-zh">${rel.zh}</span>
+										<span class="lang-en">${rel.en}</span>
+									</div>
+								</div>
+								<div class="text-xs font-bold text-white mb-1">
+									<span class="lang-zh">${ev.placeZh}</span>
+									<span class="lang-en">${ev.placeEn}</span>
+								</div>
+								<div class="text-[11px] text-slate-300 font-mono space-y-0.5">
+									<div>
+										<span class="lang-zh">深度: ${ev.depth} km</span>
+										<span class="lang-en">Depth: ${ev.depth} km</span>
+									</div>
+									<div>
+										<span class="lang-zh">时间: ${localTimeStr}</span>
+										<span class="lang-en">Time: ${localTimeStr}</span>
+									</div>
+								</div>
+								${shindoHtml}
+								${tsunamiHtml}
+								<div class="mt-2 pt-1 border-t border-slate-700/60 flex items-center justify-between text-[10px]">
+									<div>${sourcesHtml}</div>
+									<a href="${ev.url}" target="_blank" rel="noopener" class="text-cyan-400 hover:underline">
+										<span class="lang-zh">详情 ↗</span>
+										<span class="lang-en">Detail ↗</span>
+									</a>
+								</div>
+							</div>
+						`;
+
+						marker.bindPopup(popupContent, {
+							className: "quake-custom-popup",
+							maxWidth: 280
+						});
+
+						markersLayer.addLayer(marker);
+						markerMap.set(ev.id, marker);
+					});
+				}
+
+				// Render Event List Table
+				function renderTable(filteredEvents) {
+					if (!tableBody) return;
+
+					if (filteredCountBadge) {
+						filteredCountBadge.textContent = `${filteredEvents.length} / ${allMergedEvents.length}`;
+					}
+
+					if (filteredEvents.length === 0) {
+						tableBody.innerHTML = "";
+						if (emptyState) emptyState.classList.remove("hidden");
+						return;
+					}
+
+					if (emptyState) emptyState.classList.add("hidden");
+
+					const rowsHtml = filteredEvents.map(ev => {
+						const color = getMagColor(ev.mag);
+						const rel = formatRelativeTime(ev.time);
+						const dateObj = new Date(ev.time);
+						const localTimeStr = dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+						const dateDateStr = dateObj.toLocaleDateString([], { month: "2-digit", day: "2-digit" });
+
+						const isNewlyArrived = newlyArrivedIds.has(ev.id);
+						const newBadgeHtml = isNewlyArrived
+							? `<span class="ml-1.5 px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-[9px] animate-pulse">
+									<span class="lang-zh">新</span><span class="lang-en">NEW</span>
+								</span>`
+							: "";
+
+						const shindoText = ev.maxi
+							? `<div class="text-[10px] text-rose-300 font-mono mt-0.5">
+									<span class="lang-zh">最大震度 ${ev.maxi}</span>
+									<span class="lang-en">Max Shindo ${ev.maxi}</span>
+								</div>`
+							: "";
+
+						const tsunamiBadge = ev.tsunami
+							? `<span class="inline-flex items-center gap-0.5 ml-1 px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px]" title="Tsunami Warning">
+									🌊 <span class="lang-zh">海啸预警</span><span class="lang-en">Tsunami</span>
+								</span>`
+							: "";
+
+						const sourceBadges = ev.sources.map(s => {
+							let badgeCls = "bg-slate-800 text-slate-300 border-slate-700";
+							if (s === "USGS") badgeCls = "bg-blue-950/70 text-blue-300 border-blue-800";
+							if (s === "JMA") badgeCls = "bg-rose-950/70 text-rose-300 border-rose-800";
+							if (s === "EMSC") badgeCls = "bg-purple-950/70 text-purple-300 border-purple-800";
+							return `<span class="px-1.5 py-0.5 rounded border text-[10px] ${badgeCls}">${s}</span>`;
+						}).join(" ");
+
+						return `
+							<tr
+								class="quake-row hover:bg-slate-900/80 transition cursor-pointer ${isNewlyArrived ? 'bg-emerald-950/15' : ''}"
+								data-ev-id="${ev.id}"
+								data-lat="${ev.lat}"
+								data-lon="${ev.lon}"
+							>
+								<td class="py-3 px-3 whitespace-nowrap">
+									<div class="flex items-center gap-1.5">
+										<span class="px-2 py-0.5 rounded font-black text-xs font-mono" style="background-color: ${color}20; color: ${color}; border: 1px solid ${color}40;">
+											M ${ev.mag.toFixed(1)}
+										</span>
+										${newBadgeHtml}
+									</div>
+									${shindoText}
+								</td>
+								<td class="py-3 px-3 whitespace-nowrap text-slate-300">
+									<div class="font-bold text-slate-200">
+										<span class="lang-zh">${rel.zh}</span>
+										<span class="lang-en">${rel.en}</span>
+									</div>
+									<div class="text-[10px] text-slate-500">${dateDateStr} ${localTimeStr}</div>
+								</td>
+								<td class="py-3 px-3">
+									<div class="font-bold text-slate-100 flex items-center">
+										<span class="lang-zh">${ev.placeZh}</span>
+										<span class="lang-en">${ev.placeEn}</span>
+										${tsunamiBadge}
+									</div>
+									<div class="text-[10px] text-slate-500 font-mono">
+										${ev.lat.toFixed(2)}°, ${ev.lon.toFixed(2)}°
+									</div>
+								</td>
+								<td class="py-3 px-3 whitespace-nowrap text-slate-400">
+									<span class="lang-zh">${ev.depth} 千米</span>
+									<span class="lang-en">${ev.depth} km</span>
+								</td>
+								<td class="py-3 px-3 whitespace-nowrap">
+									<div class="flex items-center gap-1">
+										${sourceBadges}
+									</div>
+								</td>
+								<td class="py-3 px-3 whitespace-nowrap text-right">
+									<button
+										type="button"
+										class="btn-locate-row px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-rose-300 hover:text-white transition cursor-pointer active:scale-95 text-xs font-mono"
+									>
+										<span class="lang-zh">定位 📍</span>
+										<span class="lang-en">Locate 📍</span>
+									</button>
+								</td>
+							</tr>
+						`;
+					}).join("");
+
+					tableBody.innerHTML = rowsHtml;
+
+					// Attach Row Click handlers for map pan/highlight
+					const rows = tableBody.querySelectorAll(".quake-row");
+					rows.forEach(row => {
+						const evId = row.dataset.evId;
+						const lat = parseFloat(row.dataset.lat);
+						const lon = parseFloat(row.dataset.lon);
+
+						row.addEventListener("click", () => {
+							// Remove active highlight from other rows
+							rows.forEach(r => r.classList.remove("bg-rose-950/40", "border-l-2", "border-rose-500"));
+							row.classList.add("bg-rose-950/40", "border-l-2", "border-rose-500");
+
+							if (leafletReady && map && !isNaN(lat) && !isNaN(lon)) {
+								map.flyTo([lat, lon], Math.max(map.getZoom(), 5), {
+									duration: 0.8
+								});
+								const marker = markerMap.get(evId);
+								if (marker) {
+									setTimeout(() => {
+										marker.openPopup();
+									}, 850);
+								}
+							}
+						}, { signal: lifecycle.signal });
+					});
+				}
+
+				function refreshUI() {
+					const filtered = getFilteredEvents();
+					renderTable(filtered);
+					updateMapMarkers(filtered);
+				}
+
+				// Synchronize Data from All Sources
+				async function syncAllSources() {
+					if (isFetching) return;
+					isFetching = true;
+
+					if (refreshIcon) refreshIcon.classList.add("animate-spin");
+					if (syncIndicator) {
+						syncIndicator.className = "w-2 h-2 rounded-full bg-amber-400 animate-ping";
+					}
+
+					try {
+						const [usgsRes, jmaRes, emscRes] = await Promise.allSettled([
+							fetchUsgs(),
+							fetchJma(),
+							fetchEmsc()
+						]);
+
+						const rawUsgs = usgsRes.status === "fulfilled" ? usgsRes.value : [];
+						const rawJma = jmaRes.status === "fulfilled" ? jmaRes.value : [];
+						const rawEmsc = emscRes.status === "fulfilled" ? emscRes.value : [];
+
+						const rawTotal = [...rawUsgs, ...rawJma, ...rawEmsc];
+						const merged = mergeAndDedupe(rawTotal);
+
+						// Determine newly arrived events
+						newlyArrivedIds.clear();
+						if (!isFirstLoad) {
+							for (const ev of merged) {
+								if (!seenEventIds.has(ev.id)) {
+									newlyArrivedIds.add(ev.id);
+								}
+							}
+						}
+
+						// Check opt-in notification for newly seen quakes >= M6.5
+						checkNotifications(merged);
+
+						// Update seen events set
+						for (const ev of merged) {
+							seenEventIds.add(ev.id);
+						}
+						isFirstLoad = false;
+
+						allMergedEvents = merged;
+
+						// Render stats & update UI
+						renderStats(merged, rawUsgs.length, rawJma.length, rawEmsc.length);
+						refreshUI();
+
+						// Update Last Updated timestamp
+						const nowStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+						if (lastUpdatedText) {
+							lastUpdatedText.innerHTML = `<span class="lang-zh">更新于: ${nowStr}</span><span class="lang-en">Updated: ${nowStr}</span>`;
+						}
+
+						if (syncIndicator) {
+							syncIndicator.className = "w-2 h-2 rounded-full bg-emerald-400";
+						}
+					} catch (err) {
+						console.error("Sync error:", err);
+						if (syncIndicator) {
+							syncIndicator.className = "w-2 h-2 rounded-full bg-rose-500";
+						}
+					} finally {
+						isFetching = false;
+						if (refreshIcon) refreshIcon.classList.remove("animate-spin");
+					}
+				}
+
+				// Manual refresh button listener
+				if (btnManualRefresh) {
+					btnManualRefresh.addEventListener("click", () => {
+						syncAllSources();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Filter Listeners: Source Chips
+				[chipUsgs, chipJma, chipEmsc].forEach(chip => {
+					if (!chip) return;
+					const src = chip.dataset.source;
+					chip.addEventListener("click", () => {
+						if (activeSources.has(src)) {
+							// Prevent unchecking all
+							if (activeSources.size > 1) {
+								activeSources.delete(src);
+								chip.classList.remove("active", "bg-blue-950/60", "bg-rose-950/60", "bg-purple-950/60", "border-blue-600", "border-rose-600", "border-purple-600");
+								chip.classList.add("bg-slate-900", "border-slate-800", "text-slate-500");
+								chip.textContent = `○ ${src}`;
+							}
+						} else {
+							activeSources.add(src);
+							chip.classList.add("active");
+							chip.classList.remove("bg-slate-900", "border-slate-800", "text-slate-500");
+							if (src === "USGS") {
+								chip.classList.add("bg-blue-950/60", "border-blue-600", "text-blue-300");
+								chip.textContent = `✓ USGS`;
+							} else if (src === "JMA") {
+								chip.classList.add("bg-rose-950/60", "border-rose-600", "text-rose-300");
+								chip.textContent = `✓ JMA (日本)`;
+							} else if (src === "EMSC") {
+								chip.classList.add("bg-purple-950/60", "border-purple-600", "text-purple-300");
+								chip.textContent = `✓ EMSC (欧洲)`;
+							}
+						}
+						refreshUI();
+					}, { signal: lifecycle.signal });
+				});
+
+				// Min Magnitude Slider
+				if (sliderMinMag && labelMinMag) {
+					sliderMinMag.addEventListener("input", (e) => {
+						minMagFilter = parseFloat(e.target.value);
+						labelMinMag.textContent = `≥ M${minMagFilter.toFixed(1)}`;
+						refreshUI();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Search query
+				if (inputSearch) {
+					inputSearch.addEventListener("input", (e) => {
+						searchQuery = e.target.value;
+						refreshUI();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Notification toggle
+				if (toggleNotifications) {
+					toggleNotifications.addEventListener("change", async () => {
+						if (toggleNotifications.checked) {
+							if (typeof window.Notification === "undefined") {
+								alert("This browser does not support notifications.");
+								toggleNotifications.checked = false;
+								return;
+							}
+							if (Notification.permission === "default") {
+								const perm = await Notification.requestPermission();
+								if (perm !== "granted") {
+									toggleNotifications.checked = false;
+								}
+							} else if (Notification.permission === "denied") {
+								alert("Notification permission is blocked in browser settings.");
+								toggleNotifications.checked = false;
+							}
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				// Initial sync and start 60s auto-refresh
+				syncAllSources();
+				autoRefreshTimer = setInterval(syncAllSources, 60000);
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initQuakeWatch);
+			} else {
+				initQuakeWatch();
+			}
+			document.addEventListener("astro:page-load", initQuakeWatch);
+		})();
+	</script>
+
+	<!-- Custom styling for Leaflet Dark Mode Popup -->
+	<style is:global>
+		.quake-custom-popup .leaflet-popup-content-wrapper {
+			background: rgba(10, 15, 30, 0.95) !important;
+			border: 1px solid rgba(51, 65, 85, 0.8) !important;
+			border-radius: 12px !important;
+			box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.7) !important;
+			backdrop-filter: blur(8px);
+			padding: 0 !important;
+		}
+		.quake-custom-popup .leaflet-popup-content {
+			margin: 0 !important;
+			line-height: 1.4 !important;
+		}
+		.quake-custom-popup .leaflet-popup-tip {
+			background: rgba(10, 15, 30, 0.95) !important;
+			border: 1px solid rgba(51, 65, 85, 0.8) !important;
+		}
+		.quake-custom-popup a.leaflet-popup-close-button {
+			color: #94a3b8 !important;
+			padding: 4px 6px 0 0 !important;
+		}
+		.quake-custom-popup a.leaflet-popup-close-button:hover {
+			color: #ffffff !important;
+		}
+	</style>
+</MainGridLayout>
