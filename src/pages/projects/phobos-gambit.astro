@@ -1,0 +1,2122 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "The Phobos Gambit · MMX Mission"
+	: "盗火计划 · THE PHOBOS GAMBIT";
+const description = isEn
+	? "On 20 October 2026, Japan's JAXA launched the Martian Moons eXploration (MMX) mission — a five-year deep-space heist to steal at least 10 grams of dust from Mars's moon Phobos and return it to Earth in 2031."
+	: "2026 年 10 月 20 日，日本 JAXA 成功发射火星卫星探测任务（MMX）。这是一场跨越五年的深空‘盗火’绝技：从火星卫星火卫一掠取至少 10 克未被人类触碰过的原始星尘，并在 2031 年安全带回地球。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#05070f] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-amber-500/30 selection:text-amber-200">
+			<!-- Ambient Space & Mars Glow -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#f97316_1px,transparent_1px)] [background-size:32px_32px] overflow-hidden"></div>
+			<div class="absolute -top-32 -left-32 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/4 -right-32 w-96 h-96 bg-red-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-10 left-1/3 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+							<span>JAXA · MMX MISSION LAUNCH · 2026-10-20</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-mono">
+							<span>🚀</span>
+							<span class="lang-zh">H3-24L 重型构型 F10 成功发射</span>
+							<span class="lang-en">H3-24L Heavy Configuration F10 Success</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+							<span>🛰️</span>
+							<span class="lang-zh">JAXA 主导 × NASA · CNES · DLR · ESA 国际协同</span>
+							<span class="lang-en">JAXA Led × NASA · CNES · DLR · ESA Coalition</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">种子岛宇宙中心 · 2026-10-20 04:41 JST</span>
+							<span class="lang-en">Tanegashima · 2026-10-20 04:41 JST</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/phobos-gambit/" : "/en/projects/phobos-gambit/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-amber-500/40 text-amber-300 hover:text-white hover:bg-amber-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "切换为中文" : "Switch to English"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">盗火计划 · THE PHOBOS GAMBIT</span>
+					<span class="lang-en">THE PHOBOS GAMBIT · MMX MISSION</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-amber-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">一场跨越五年的深空“夺宝”：从火星卫星掠走十克尘埃，并全身而退。</span>
+					<span class="lang-en">A five-year deep-space heist: steal 10 grams of dust from a moon of Mars and get away with it.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							<strong>2026 年 10 月 20 日 04:41:03 JST</strong>（世界协调时 10 月 19 日 19:41:03 UTC），日本宇宙航空研究开发机构（JAXA）从日本西南部鹿儿岛县的种子岛宇宙中心，使用 H3 重型火箭（H3-24L 构型：两台液氢液氧 LE-9 芯级发动机 + 四台固体助推器 + 加长整流罩，为其迄今最强运载能力；飞行代号 F10），成功发射了<strong>火星卫星探测任务（Martian Moons eXploration，简称 MMX）</strong>！飞船按计划精准星箭分离，JAXA 项目经理有田诚（Makoto Arita）宣布航天器以“极高精度（exceptional precision）”进入预定转移轨道。
+						</span>
+						<span class="lang-en">
+							On <strong>20 October 2026 at 04:41:03 JST</strong> (19 October 19:41:03 UTC), Japan's JAXA launched the <strong>Martian Moons eXploration (MMX)</strong> mission aboard an H3 rocket in its H3-24L heavy configuration (two liquid LE-9 engines + four solid boosters under a long fairing — its heaviest payload capability to date; flight F10) from the Tanegashima Space Center in southwestern Japan. The MMX spacecraft separated cleanly, and JAXA project manager Makoto Arita reported it entered its planned trajectory with "exceptional precision."
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							MMX 是日本主导的有史以来规模最大的月球与行星国际合作探测任务，总任务负责人为川胜康弘（Yasuhiro Kawakatsu），联合了 NASA、法国 CNES、德国 DLR 和欧空局 ESA。探测器发射总重约 4 吨（其中约半数为推进剂），全长约 9 米，由三组独立模块拼接而成：1,800 kg 的推进模块、150 kg 的环绕探测模块以及 1,050 kg 的返回模块。它的终极目标只有一个：深入火星引力深渊，在仅有微弱重力的火卫一（Phobos）上停靠触底，掠取<strong>至少 10 克（约 0.35 盎司）</strong>从未被人类触碰过的原始土壤，并在 2031 年 7 月将其带回澳大利亚南部的伍默拉禁区沙漠。
+						</span>
+						<span class="lang-en">
+							Led by JAXA's mission lead Yasuhiro Kawakatsu in partnership with NASA, France's CNES, Germany's DLR, and ESA, JAXA calls MMX "the largest international collaborative mission in lunar and planetary exploration ever led by Japan." Weighing roughly 4 tonnes at launch (~half propellant) and ~9 metres long, it consists of three modular stages: a 1,800 kg propulsion module, a 150 kg exploration module, and a 1,050 kg return module. Its singular prize: land on the microgravity surface of Phobos, steal <strong>at least 10 grams (0.35 oz)</strong> of pristine regolith, and touch down at Australia's Woomera Prohibited Area in July 2031.
+						</span>
+					</p>
+				</div>
+
+				<!-- Attributed Quotes Section (Strictly the two permitted quotes) -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-amber-500/30 relative overflow-hidden">
+						<div class="text-xs font-mono text-amber-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>💬</span>
+							<span class="lang-zh">JAXA 项目经理 · 有田诚 (MAKOTO ARITA)</span>
+							<span class="lang-en">JAXA PROJECT MANAGER · MAKOTO ARITA</span>
+						</div>
+						<blockquote class="text-xs sm:text-sm text-slate-200 italic font-serif leading-relaxed">
+							<span class="lang-zh">
+								有田诚在确认飞船顺利入轨后评价道，探测器以“<strong class="text-amber-300">exceptional precision</strong>”（极高精度）进入了预定轨道。
+							</span>
+							<span class="lang-en">
+								Makoto Arita confirmed that the MMX spacecraft separated cleanly and reached its planned orbit with "<strong class="text-amber-300">exceptional precision</strong>."
+							</span>
+						</blockquote>
+					</div>
+
+					<div class="p-4 rounded-xl bg-slate-900/90 border border-cyan-500/30 relative overflow-hidden">
+						<div class="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>💬</span>
+							<span class="lang-zh">NASA 合作科学家 · 汤姆·斯塔特勒 (TOM STATLER)</span>
+							<span class="lang-en">NASA COLLABORATING SCIENTIST · TOM STATLER</span>
+						</div>
+						<blockquote class="text-xs sm:text-sm text-slate-200 italic font-serif leading-relaxed">
+							<span class="lang-zh">
+								NASA 科学家汤姆·斯塔特勒指出：“<strong class="text-cyan-300">Having the answer will help illuminate that early era when Earth and the other inner planets may have been acquiring much of their water and organic compounds.</strong>”
+								<span class="block text-xs font-sans text-slate-400 not-italic mt-1">（“揭开这个答案，将照亮地球及其它类地行星在太阳系早期可能从何处获取大量水和有机化合物的谜题。”）</span>
+							</span>
+							<span class="lang-en">
+								Tom Statler (NASA, collaborating on MMX): "<strong class="text-cyan-300">Having the answer will help illuminate that early era when Earth and the other inner planets may have been acquiring much of their water and organic compounds.</strong>"
+							</span>
+						</blockquote>
+					</div>
+				</div>
+
+				<!-- Scientific Honesty Note Card -->
+				<div class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-orange-500/30 text-xs text-slate-300 leading-relaxed">
+					<div class="text-orange-400 font-mono font-bold uppercase tracking-wider mb-1.5 flex items-center gap-2">
+						<span>🔬</span>
+						<span class="lang-zh">科学严谨性与示意图解特别声明 (HONESTY NOTE)</span>
+						<span class="lang-en">SCIENTIFIC HONESTY & SCHEMATIC ILLUSTRATION NOTE</span>
+					</div>
+					<p>
+						<span class="lang-zh">
+							必须明确强调：本页面呈现的所有轨道示意图、火卫一三维外形、重力下落与尺度对比均为用于互动演示与科普教学的<strong>概念性示意图解（schematic illustrations）</strong>，绝非 JAXA 官方实拍影像。今日（2026 年 10 月 20 日）发射已经圆满成功，探测器已启程前往火星；2027 年 8 月之后的所有任务节点均为科学规划路线。<strong>本任务目前绝未完成采样</strong>。本页绝不编造测量数据、日期或科学家姓名。
+						</span>
+						<span class="lang-en">
+							All trajectory diagrams, Phobos renderings, and scale comparisons on this page are <strong>schematic illustrations</strong> clearly labeled as such — they are NOT official JAXA imagery. Launch is complete today (20 October 2026), and the spacecraft is now cruising; all milestones after August 2027 represent the planned timeline. <strong>The mission has NOT yet collected the sample</strong>. We do not invent measurements, dates, or personnel names.
+						</span>
+					</p>
+				</div>
+			</header>
+
+			<!-- 7. FACTS STRIP SECTION -->
+			<section class="relative z-10 mb-12 pb-10 border-b border-slate-800/80">
+				<div class="flex items-center gap-2 mb-4">
+					<span class="text-amber-400 font-mono text-xs font-bold uppercase tracking-wider">
+						<span class="lang-zh">核心任务事实一览 · FACTS STRIP</span>
+						<span class="lang-en">CORE MISSION FACTS STRIP</span>
+					</span>
+				</div>
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition">
+						<div class="text-amber-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">发射时间 (JST)</span>
+							<span class="lang-en">LAUNCH TIME (JST)</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-white mt-1">2026-10-20</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">04:41:03 JST 种子岛</span>
+							<span class="lang-en">19:41:03 UTC F10</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition">
+						<div class="text-red-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">火箭构型</span>
+							<span class="lang-en">LAUNCH VEHICLE</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-red-300 mt-1">H3-24L</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">2×LE-9 + 4 固推 (最强)</span>
+							<span class="lang-en">2 LE-9 + 4 SRBs (max)</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition">
+						<div class="text-cyan-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">飞船总质量</span>
+							<span class="lang-en">SPACECRAFT MASS</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-cyan-300 mt-1">~4.0 吨</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">三模块组装 · 约半数燃料</span>
+							<span class="lang-en">3 modules · ~50% prop</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition">
+						<div class="text-emerald-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">目标猎物 (土壤)</span>
+							<span class="lang-en">SAMPLE BOUNTY</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-emerald-300 mt-1">≥ 10 克</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">0.35 oz 原始火卫一表土</span>
+							<span class="lang-en">≥10g pristine regolith</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition">
+						<div class="text-purple-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">先锋漫游车</span>
+							<span class="lang-en">SCOUT ROVER</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-purple-300 mt-1">IDEFIX (25kg)</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">法德研制 · &lt;100m 空投</span>
+							<span class="lang-en">CNES/DLR · &lt;100m drop</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/40 transition">
+						<div class="text-sky-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">地球回收时间</span>
+							<span class="lang-en">EARTH RETURN</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-sky-300 mt-1">2031-07</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">澳大利亚伍默拉禁区</span>
+							<span class="lang-en">Woomera, Australia</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 1. CENTERPIECE TIMELINE: THE FIVE-YEAR HEIST -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-amber-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>⏱️</span>
+							<span class="lang-zh">核心交互时间轴 · 2026 → 2031 全程推演</span>
+							<span class="lang-en">CENTERPIECE TIMELINE · 2026 → 2031 HEIST TIMELINE</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">五年“深空夺宝”的八个生死阶段</span>
+							<span class="lang-en">The Five-Year Heist: Eight Critical Phases</span>
+						</h2>
+					</div>
+
+					<!-- Real-time Where is MMX now tracker badge -->
+					<div id="mmx-live-status-pill" class="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-amber-950/40 border border-amber-500/40 text-xs font-mono text-amber-300 flex items-center gap-2 shadow-inner">
+						<span class="relative flex h-2.5 w-2.5">
+							<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+							<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500"></span>
+						</span>
+						<span id="mmx-live-readout-text">
+							<span class="lang-zh">计算中：MMX 当前正在地火巡航轨道中奔向火星...</span>
+							<span class="lang-en">Computing: MMX is currently cruising to Mars...</span>
+						</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						点击下方 8 个关键任务阶段，查看每个步骤的精确执行时间、行动代号以及决定成败的“关键破案细节”。时间跨越从今天（2026 年 10 月 20 日发射）到 2031 年 7 月返回舱安全降落在澳大利亚红色荒漠。
+					</span>
+					<span class="lang-en">
+						Click any of the 8 mission phases below to inspect dates, operational plans, and one critical telling detail for each step. Spanning from today's launch (20 Oct 2026) to the return capsule touchdown in July 2031 at Woomera.
+					</span>
+				</p>
+
+				<!-- Timeline Stepper Grid -->
+				<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 mb-6">
+					<button class="timeline-step-btn active p-3 rounded-xl bg-slate-900 border border-amber-500 text-left transition hover:border-amber-400 cursor-pointer" data-phase="0">
+						<div class="text-[10px] font-mono text-amber-400 font-bold">PHASE 01</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">发射启航</span>
+							<span class="lang-en">Launch</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2026-10</div>
+					</button>
+
+					<button class="timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer" data-phase="1">
+						<div class="text-[10px] font-mono text-slate-500 font-bold">PHASE 02</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">火星捕获</span>
+							<span class="lang-en">Mars Orbit</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2027-08</div>
+					</button>
+
+					<button class="timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer" data-phase="2">
+						<div class="text-[10px] font-mono text-slate-500 font-bold">PHASE 03</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">准卫星轨道</span>
+							<span class="lang-en">Phobos QSO</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2027-09</div>
+					</button>
+
+					<button class="timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer" data-phase="3">
+						<div class="text-[10px] font-mono text-slate-500 font-bold">PHASE 04</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">IDEFIX 空投</span>
+							<span class="lang-en">Rover Drop</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2028-2029</div>
+					</button>
+
+					<button class="timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer" data-phase="4">
+						<div class="text-[10px] font-mono text-slate-500 font-bold">PHASE 05</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">触底采样</span>
+							<span class="lang-en">Sampling</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2029-2030</div>
+					</button>
+
+					<button class="timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer" data-phase="5">
+						<div class="text-[10px] font-mono text-slate-500 font-bold">PHASE 06</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">启程脱离</span>
+							<span class="lang-en">Departure</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2030-11</div>
+					</button>
+
+					<button class="timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer" data-phase="6">
+						<div class="text-[10px] font-mono text-slate-500 font-bold">PHASE 07</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">火卫二飞掠</span>
+							<span class="lang-en">Deimos Flyby</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2030-late</div>
+					</button>
+
+					<button class="timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer" data-phase="7">
+						<div class="text-[10px] font-mono text-slate-500 font-bold">PHASE 08</div>
+						<div class="text-xs font-bold text-white mt-0.5 truncate">
+							<span class="lang-zh">地球回收</span>
+							<span class="lang-en">Earth Touch</span>
+						</div>
+						<div class="text-[10px] text-slate-400 font-mono mt-0.5">2031-07</div>
+					</button>
+				</div>
+
+				<!-- Selected Phase Details Card -->
+				<div id="phase-detail-card" class="p-5 sm:p-6 rounded-2xl bg-slate-900/90 border border-amber-500/40 relative overflow-hidden transition-all duration-300">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+						<div class="flex items-center gap-2">
+							<span id="phase-badge-number" class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-mono font-bold">
+								PHASE 01 / 08
+							</span>
+							<span id="phase-badge-date" class="text-xs font-mono text-slate-400">
+								2026-10-20 JST (19 Oct UTC)
+							</span>
+						</div>
+						<div id="phase-badge-status" class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono">
+							<span class="lang-zh">已执行 · 现处于此阶段</span>
+							<span class="lang-en">EXECUTED · CURRENT PHASE</span>
+						</div>
+					</div>
+
+					<h3 id="phase-title" class="text-xl sm:text-2xl font-black text-white mb-2">
+						<span class="lang-zh">发射升空与地火转移轨道注入</span>
+						<span class="lang-en">Launch & Earth-to-Mars Cruise Injection</span>
+					</h3>
+
+					<p id="phase-desc" class="text-slate-300 text-sm leading-relaxed mb-4">
+						<span class="lang-zh">
+							H3-24L 运载火箭（两台 LE-9 主机 + 4 台固体助推器）在种子岛宇宙中心发射升空，约 4 吨重的三模块探测器顺利分离，以极高精度打入地火霍曼转移轨道。开启为期 10 个月的深空漫长巡航。
+						</span>
+						<span class="lang-en">
+							H3-24L launches from Tanegashima. The ~4-tonne modular MMX spacecraft separates cleanly and enters the interplanetary transfer cruise toward Mars with exceptional precision.
+						</span>
+					</p>
+
+					<!-- Telling Detail Spotlight Box -->
+					<div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-900/40 flex items-start gap-3">
+						<div class="text-amber-400 text-lg">💡</div>
+						<div>
+							<div class="text-xs font-mono font-bold text-amber-300 uppercase">
+								<span class="lang-zh">破案关键细节 (TELLING DETAIL)</span>
+								<span class="lang-en">TELLING DETAIL</span>
+							</div>
+							<div id="phase-telling-detail" class="text-xs text-slate-300 mt-1 leading-relaxed">
+								<span class="lang-zh">
+									H3 火箭在经历了 2023 年首飞失败和 2025 年末的波折后，由第 6 次飞行（2026 年 6 月 12 日）成功复飞，最终在今天的第 10 次飞行（F10）以其史上最重的 H3-24L 构型交出了无可挑剔的答卷。
+								</span>
+								<span class="lang-en">
+									Delayed from 2024 by early H3 engine ignition setbacks in March 2023 and Dec 2025, Flight No. 6 returned the vehicle on 12 June 2026, culminating in today's F10 heavy liftoff.
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. ANIMATED SCHEMATIC TRAJECTORY VISUALIZATION -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-amber-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>🧭</span>
+							<span class="lang-zh">轨道推演模拟器 · FLY THE TRAJECTORY</span>
+							<span class="lang-en">ORBITAL SIMULATOR · FLY THE TRAJECTORY</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">太阳系俯视示意图：五年往返深空轨迹</span>
+							<span class="lang-en">Top-Down Schematic: The Five-Year Roundtrip</span>
+						</h2>
+					</div>
+
+					<div class="flex items-center gap-2">
+						<button id="btn-traj-toggle-play" class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-mono text-xs transition cursor-pointer flex items-center gap-1.5 active:scale-95">
+							<span id="traj-play-icon">⏸️</span>
+							<span id="traj-play-text-zh" class="lang-zh">暂停轨道推演</span>
+							<span id="traj-play-text-en" class="lang-en">Pause Flight</span>
+						</button>
+						<button id="btn-traj-reset" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs transition cursor-pointer active:scale-95">
+							<span class="lang-zh">重置回起点</span>
+							<span class="lang-en">Reset</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-4 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						俯瞰太阳、地球轨道与火星轨道。观察 MMX 探测器在不同年份执行的四段核心轨迹：地火转移（2026-2027）、火星与火卫一准卫星轨道探测（2027-2030）、火卫二飞掠（2030）以及火地转移返回（2030-2031）。
+					</span>
+					<span class="lang-en">
+						Top-down schematic view of Sun, Earth, Mars, and MMX. Step through the mission legs: Earth→Mars cruise (2026-2027), Mars arrival & Phobos QSO loop (2027-2030), Deimos flyby (2030), and Mars→Earth return (2030-2031).
+					</span>
+				</p>
+
+				<!-- Trajectory Canvas Container -->
+				<div class="relative w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 p-2 sm:p-4 mb-4">
+					<div class="absolute top-4 left-4 z-20 flex flex-wrap gap-2 pointer-events-none">
+						<span class="px-2.5 py-1 rounded bg-slate-900/90 border border-slate-700 font-mono text-[11px] text-amber-300">
+							<span class="lang-zh">当前航段：</span><span class="lang-en">Leg: </span>
+							<strong id="traj-current-leg-name" class="text-white">Earth → Mars (2026–2027)</strong>
+						</span>
+						<span class="px-2.5 py-1 rounded bg-slate-900/90 border border-slate-700 font-mono text-[11px] text-slate-400">
+							<span class="lang-zh">模拟年份：</span><span class="lang-en">Year: </span>
+							<strong id="traj-sim-year" class="text-amber-400">2026.8</strong>
+						</span>
+					</div>
+
+					<div class="absolute bottom-4 right-4 z-20 px-2 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500">
+						<span class="lang-zh">示意图解 · 非真实天文比例</span>
+						<span class="lang-en">Schematic · Not to scale</span>
+					</div>
+
+					<canvas id="traj-canvas" class="w-full h-72 sm:h-96 rounded-xl block bg-[#030611]"></canvas>
+				</div>
+
+				<!-- Trajectory Leg Select Buttons -->
+				<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+					<button class="traj-leg-btn active px-3 py-2 rounded-xl bg-slate-900 border border-amber-500/50 text-amber-300 text-left transition hover:border-amber-400 cursor-pointer" data-leg="0">
+						<div class="text-[10px] text-slate-400">LEG 01 (2026-2027)</div>
+						<div class="font-bold text-white truncate">
+							<span class="lang-zh">地火转移巡航</span>
+							<span class="lang-en">Earth → Mars Cruise</span>
+						</div>
+					</button>
+
+					<button class="traj-leg-btn px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 text-left transition hover:border-amber-500/50 cursor-pointer" data-leg="1">
+						<div class="text-[10px] text-slate-500">LEG 02 (2027-2030)</div>
+						<div class="font-bold text-white truncate">
+							<span class="lang-zh">火卫一 QSO 准卫星</span>
+							<span class="lang-en">Mars & Phobos QSO</span>
+						</div>
+					</button>
+
+					<button class="traj-leg-btn px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 text-left transition hover:border-amber-500/50 cursor-pointer" data-leg="2">
+						<div class="text-[10px] text-slate-500">LEG 03 (2030 Late)</div>
+						<div class="font-bold text-white truncate">
+							<span class="lang-zh">火卫二飞掠</span>
+							<span class="lang-en">Deimos Flyby</span>
+						</div>
+					</button>
+
+					<button class="traj-leg-btn px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 text-left transition hover:border-amber-500/50 cursor-pointer" data-leg="3">
+						<div class="text-[10px] text-slate-500">LEG 04 (2030-2031)</div>
+						<div class="font-bold text-white truncate">
+							<span class="lang-zh">火地转移返航</span>
+							<span class="lang-en">Mars → Earth Return</span>
+						</div>
+					</button>
+				</div>
+			</section>
+
+			<!-- 3. GRAVITY PLAYGROUND: FEATHERWEIGHT WORLD -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>🪶</span>
+							<span class="lang-zh">微重力物理场 · FEATHERWEIGHT WORLD</span>
+							<span class="lang-en">GRAVITY PLAYGROUND · FEATHERWEIGHT WORLD</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">火卫一引力仅为地球的 1/2000：自由落体耗时推算</span>
+							<span class="lang-en">Phobos Gravity ≈ 1/2,000th Earth's: Drop-Time Simulator</span>
+						</h2>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						火卫一体积狭小（平均直径 22.2 km），表面重力加速度仅为 <strong>0.0057 m/s²</strong>（地球为 9.8 m/s²，月球为 1.62 m/s²）。如果从固定高度释放一个物体，它需要多长时间才能落地？在火卫一上，重量只有在地球上的两千分之一！
+					</span>
+					<span class="lang-en">
+						Phobos has a mean diameter of just 22.2 km, with surface gravity of roughly <strong>0.0057 m/s²</strong> (~1/2,000th of Earth's 9.8 m/s², and far weaker than the Moon's 1.62 m/s²). Use the drop simulator (t = √(2h/g)) and the interactive paperclip weight converter below.
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+					<!-- Drop Simulator Column -->
+					<div class="lg:col-span-7 p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
+						<div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+							<div class="text-xs font-mono font-bold text-cyan-300">
+								<span class="lang-zh">落体高度与星球切换</span>
+								<span class="lang-en">Drop Height & Body Selection</span>
+							</div>
+							<div class="flex items-center gap-1.5 text-xs font-mono">
+								<button class="gravity-body-btn active px-2.5 py-1 rounded-lg bg-cyan-950 border border-cyan-500 text-cyan-300 cursor-pointer" data-gravity="0.0057" data-body="phobos">
+									Phobos (0.0057)
+								</button>
+								<button class="gravity-body-btn px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 cursor-pointer" data-gravity="1.62" data-body="moon">
+									Moon (1.62)
+								</button>
+								<button class="gravity-body-btn px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 cursor-pointer" data-gravity="9.8" data-body="earth">
+									Earth (9.8)
+								</button>
+							</div>
+						</div>
+
+						<!-- Slider for drop height -->
+						<div class="mb-4">
+							<div class="flex justify-between items-center text-xs font-mono mb-1 text-slate-300">
+								<span><span class="lang-zh">释放高度 h：</span><span class="lang-en">Drop Height h: </span><strong id="drop-height-val" class="text-white">2.0 m</strong></span>
+								<span class="text-slate-500">t = √(2h / g)</span>
+							</div>
+						</div>
+
+						<!-- Drop Chamber Graphic Canvas -->
+						<div class="relative w-full h-48 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden mb-4">
+							<canvas id="drop-canvas" class="w-full h-full block"></canvas>
+							<div class="absolute bottom-2 left-2 z-10 px-2.5 py-1 rounded bg-slate-900/90 border border-slate-800 font-mono text-xs">
+								<span class="text-slate-400"><span class="lang-zh">理论下落耗时：</span><span class="lang-en">Fall Time: </span></span>
+								<strong id="drop-calculated-time" class="text-cyan-300 font-bold">26.49 秒</strong>
+							</div>
+							<div class="absolute bottom-2 right-2 z-10 flex gap-2">
+								<button id="btn-drop-run" class="px-3 py-1 rounded bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-xs font-bold transition cursor-pointer active:scale-95">
+									<span class="lang-zh">释放物体</span>
+									<span class="lang-en">Drop Object</span>
+								</button>
+							</div>
+						</div>
+
+						<div class="text-[11px] text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								📌 <strong>微重力直观感受：</strong> 在地球上，2 米高度释放仅需 <strong>0.64 秒</strong> 落地；在火卫一上，同样高度缓缓漂移下落需要漫长的 <strong>26.5 秒</strong>！这意味着任何轻微的推进器喷射或机械钻孔反冲力，都极易让探测器飘离火卫一（火卫一逃逸速度仅为约 11 m/s）。
+							</span>
+							<span class="lang-en">
+								📌 <strong>Gravity Intuition:</strong> On Earth, a 2-metre drop takes <strong>0.64 seconds</strong>; on Phobos, it gently drifts for <strong>26.5 seconds</strong>! Escape velocity is only ~11 m/s; any sudden thrust or drilling recoil risks tossing the spacecraft off the moon.
+							</span>
+						</div>
+					</div>
+
+					<!-- Weight Converter Column (The Paperclip Line) -->
+					<div class="lg:col-span-5 p-5 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col justify-between">
+						<div>
+							<div class="text-xs font-mono font-bold text-amber-400 uppercase mb-3 flex items-center gap-1.5">
+								<span>📎</span>
+								<span class="lang-zh">曲别针定律 · 火卫一称重换算器</span>
+								<span class="lang-en">THE PAPERCLIP LINE · WEIGHT CONVERTER</span>
+							</div>
+
+							<p class="text-xs text-slate-300 leading-relaxed mb-4">
+								<span class="lang-zh">
+									法德联合研制的 <strong>IDEFIX 漫游车</strong> 在地球上重达 <strong>25 kg（55 磅）</strong>。而在火卫一的微重力场中，它受到的引力仅相当于几打曲别针的重量（不到 13 克）！
+								</span>
+								<span class="lang-en">
+									The Franco-German <strong>IDEFIX rover</strong> weighs <strong>25 kg (55 lb)</strong> on Earth, but on Phobos it weighs less than a few dozen paperclips (~12.5 grams)!
+								</span>
+							</p>
+
+							<div class="space-y-4 mb-6">
+								<div>
+									<div class="flex justify-between items-center text-xs font-mono mb-1">
+										<span class="text-slate-400"><span class="lang-zh">你的地球体重：</span><span class="lang-en">Your Earth Weight: </span></span>
+										<strong id="weight-earth-val" class="text-white text-sm">70 kg</strong>
+									</div>
+									<input id="slider-earth-weight" type="range" min="30" max="130" step="1" value="70" class="w-full accent-amber-400 cursor-pointer" />
+								</div>
+
+								<div class="p-4 rounded-xl bg-slate-950 border border-amber-500/30">
+									<div class="text-xs font-mono text-amber-400 mb-1">
+										<span class="lang-zh">站在火卫一上的体重（除以 2,000）</span>
+										<span class="lang-en">Weight on Phobos (Divided by 2,000)</span>
+									</div>
+									<div class="text-2xl sm:text-3xl font-black text-amber-300 font-mono">
+										<span id="weight-phobos-g">35.0</span> <span class="text-sm font-sans">克 (grams)</span>
+									</div>
+									<div id="weight-phobos-equiv" class="text-[11px] text-slate-400 mt-1">
+										<span class="lang-zh">相当于约 35 枚普通曲别针，或一节 5 号 AA 电池的轻巧感！</span>
+										<span class="lang-en">Equivalent to ~35 paperclips, or one lightweight AA battery!</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="p-3 rounded-lg bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 font-mono">
+							<span class="lang-zh">公式：W(Phobos) = W(Earth) × (0.0057 / 9.8) ≈ W(Earth) / 1720 ≈ W / 2000</span>
+							<span class="lang-en">Formula: W(Phobos) ≈ W(Earth) / 2000</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 4. MOON FACE-OFF: TO-SCALE SIZE COMPARISON -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-indigo-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>🌕</span>
+							<span class="lang-zh">卫星体量对决 · MOON FACE-OFF</span>
+							<span class="lang-en">SCALE COMPARISON · MOON FACE-OFF</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">火卫一 (22.2 km) vs 火卫二 (12.4 km) vs 月球 (3,474 km)</span>
+							<span class="lang-en">Phobos (22.2 km) vs Deimos (12.4 km) vs Earth's Moon (3,474 km)</span>
+						</h2>
+					</div>
+
+					<div class="flex items-center gap-2">
+						<button id="btn-scale-cosmic" class="px-3 py-1.5 rounded-lg bg-indigo-950 border border-indigo-500 text-indigo-300 font-mono text-xs transition cursor-pointer active:scale-95">
+							<span class="lang-zh">地月宇宙级尺度</span>
+							<span class="lang-en">Cosmic Scale (Moon)</span>
+						</button>
+						<button id="btn-scale-city" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-mono text-xs transition cursor-pointer active:scale-95">
+							<span class="lang-zh">城市环线微观尺度</span>
+							<span class="lang-en">City Ring Scale</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-4 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						地球的月球平均直径高达 3,474 km，而火卫一平均直径仅 22.2 km，火卫二更只有 12.4 km（质量不到火卫一的十分之一）。点击上方按钮在“地月宇宙级全景”与“特大城市环线微观对比”之间平滑切换。
+					</span>
+					<span class="lang-en">
+						Earth's Moon spans 3,474 km across. Phobos is a diminutive 22.2 km rock, and Deimos is ~12.4 km (nearly ten times less massive than Phobos). Toggle between cosmic perspective and familiar city-district scale.
+					</span>
+				</p>
+
+				<div class="relative w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 p-3 sm:p-4 mb-4">
+					<div class="absolute top-4 left-4 z-20 px-3 py-1.5 rounded bg-slate-900/90 border border-slate-700 font-mono text-xs text-indigo-300">
+						<span id="scale-canvas-label-zh" class="lang-zh">模式：宇宙宏观尺度对比（月球 vs 火星双卫）</span>
+						<span id="scale-canvas-label-en" class="lang-en">Mode: Cosmic Scale Comparison (Moon vs Martian Moons)</span>
+					</div>
+
+					<div class="absolute bottom-4 right-4 z-20 px-2 py-1 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500">
+						<span class="lang-zh">按真实千米比例几何绘制 · 示意说明</span>
+						<span class="lang-en">Rendered to true km proportions · Schematic</span>
+					</div>
+
+					<canvas id="moon-scale-canvas" class="w-full h-72 sm:h-80 rounded-xl block bg-[#040612]"></canvas>
+				</div>
+
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+					<div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
+						<div class="text-slate-400"><span class="lang-zh">地球月球 (Earth's Moon)</span><span class="lang-en">Earth's Moon</span></div>
+						<div class="text-lg font-black text-white mt-1">3,474 km</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">正圆球体 · 庞大卫星</span>
+							<span class="lang-en">Spherical planetary moon</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/70 border border-amber-500/40">
+						<div class="text-amber-400"><span class="lang-zh">火卫一 (Phobos)</span><span class="lang-en">Phobos (Target)</span></div>
+						<div class="text-lg font-black text-amber-300 mt-1">22.2 km</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">如同一座大城市的内环规模</span>
+							<span class="lang-en">Size of a major city core</span>
+						</div>
+					</div>
+
+					<div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
+						<div class="text-slate-400"><span class="lang-zh">火卫二 (Deimos)</span><span class="lang-en">Deimos (Flyby)</span></div>
+						<div class="text-lg font-black text-slate-200 mt-1">12.4 km</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">质量不到火卫一的 10%</span>
+							<span class="lang-en">&lt;10% mass of Phobos</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 5. WHY STEAL IT? ORIGIN MYSTERY & ISOTOPE FINGERPRINT -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-emerald-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>💎</span>
+							<span class="lang-zh">为何必须“盗火”？ · 起源之谜与同位素指纹</span>
+							<span class="lang-en">WHY STEAL IT? · ORIGIN MYSTERY & ISOTOPIC FINGERPRINT</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">拍照无法破案：只有 10 克真实土壤能终结 45 亿年的争议</span>
+							<span class="lang-en">Remote Sensing Fails: Why 10 Grams Settles a 4.5-Billion-Year Mystery</span>
+						</h2>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						半个世纪以来，天文学界围绕火卫一的起源针锋相对：它究竟是一颗被捕获的小行星，还是年轻火星遭遇大碰撞溅射出的碎块？远距离光谱拍摄已被太空风化与尘埃所混淆；唯有在地球超高精密度实验室中对 10 克物理样本测定<strong>氧、铬、钛等同位素比值</strong>，才能彻底给母体天体验明“DNA”。
+					</span>
+					<span class="lang-en">
+						Two competing theories divide planetary science: Was Phobos captured from the asteroid belt, or born from early giant-impact ejecta? Remote cameras only see space-weathered surfaces; only physical mass spectrometry in Earth labs can measure isotopic ratios precisely enough to fingerprint the parent rock.
+					</span>
+				</p>
+
+				<!-- Two Competing Theories Side-by-Side -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+					<div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/40 transition">
+						<div class="text-xs font-mono font-bold text-amber-400 uppercase mb-2 flex items-center gap-2">
+							<span>🪨</span>
+							<span class="lang-zh">假说 A：捕获的外来含碳小行星 (CAPTURED ASTEROID)</span>
+							<span class="lang-en">HYPOTHESIS A: CAPTURED CARBONACEOUS ASTEROID</span>
+						</div>
+						<div class="space-y-2 text-xs text-slate-300 leading-relaxed">
+							<div>
+								<strong class="text-white"><span class="lang-zh">有力论据：</span><span class="lang-en">Evidence: </span></strong>
+								<span class="lang-zh">火卫一反射光谱极暗，呈现深红/低反照率特征，与太阳系外侧的 D 型或 T 型富碳小行星惊人一致，极可能富含早期有机物与水分子载体。</span>
+								<span class="lang-en">Surface reflectance spectra match carbonaceous D/T-type asteroids, hinting at primitive organic and water-bearing building blocks.</span>
+							</div>
+							<div>
+								<strong class="text-rose-400"><span class="lang-zh">致命反驳：</span><span class="lang-en">Problem: </span></strong>
+								<span class="lang-zh">在轨道动力学上，几乎不可能将一颗从外太空闯入的小行星完美捕获进紧贴火星赤道、且离心率近乎为零的圆形顺行轨道！</span>
+								<span class="lang-en">Orbital mechanics: capturing a rogue asteroid into an almost circular, zero-inclination equatorial orbit without huge tidal friction is nearly impossible.</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-cyan-500/40 transition">
+						<div class="text-xs font-mono font-bold text-cyan-400 uppercase mb-2 flex items-center gap-2">
+							<span>💥</span>
+							<span class="lang-zh">假说 B：火星早期大碰撞碎块凝聚 (GIANT-IMPACT EJECTA)</span>
+							<span class="lang-en">HYPOTHESIS B: GIANT-IMPACT DEBRIS ACCRETION</span>
+						</div>
+						<div class="space-y-2 text-xs text-slate-300 leading-relaxed">
+							<div>
+								<strong class="text-white"><span class="lang-zh">有力论据：</span><span class="lang-en">Evidence: </span></strong>
+								<span class="lang-zh">圆形且紧贴赤道的超低轨道，完全符合原行星在 40 亿年前撞击火星后，在近火赤道盘中冷凝吸积的动力学演化预期。</span>
+								<span class="lang-en">Its circular equatorial orbit at 9,376 km radius naturally emerges from debris coalescing in a post-giant-impact accretion ring.</span>
+							</div>
+							<div>
+								<strong class="text-rose-400"><span class="lang-zh">致命反驳：</span><span class="lang-en">Problem: </span></strong>
+								<span class="lang-zh">如果由火星地幔高温熔融碎屑重新凝聚，光谱中为何缺乏火星火山岩常见的典型硅酸盐吸收带，反倒布满含碳有机质特征？</span>
+								<span class="lang-en">If made of melted Martian crust/mantle, why does its surface look like primitive asteroid carbon rather than basaltic Martian minerals?</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Interactive Isotope Reveal Widget -->
+				<div class="p-5 sm:p-6 rounded-2xl bg-slate-900/80 border border-emerald-500/30">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+						<div>
+							<div class="text-xs font-mono text-emerald-400 font-bold uppercase">
+								<span class="lang-zh">交互探针：遥感猜测 vs 实验室同位素铁证</span>
+								<span class="lang-en">INTERACTIVE REVEAL: REMOTE SENSING VS ISOTOPE LAB FINGERPRINT</span>
+							</div>
+							<div class="text-sm text-slate-300 mt-0.5">
+								<span class="lang-zh">拖动滑块或切换视图：体验“模糊光谱估测”向“原子级同位素定性”的质变</span>
+								<span class="lang-en">Toggle view: see how vague spectral hints sharpen into definitive isotopic DNA</span>
+							</div>
+						</div>
+
+						<div class="flex items-center gap-2">
+							<button id="btn-reveal-remote" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs cursor-pointer transition active:scale-95">
+								<span class="lang-zh">轨道遥感光谱 (模糊)</span>
+								<span class="lang-en">Remote Sensing (Blurry)</span>
+							</button>
+							<button id="btn-reveal-sample" class="px-3 py-1.5 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 font-mono text-xs cursor-pointer transition active:scale-95">
+								<span class="lang-zh">返回物理样本 (锐利同位素)</span>
+								<span class="lang-en">Returned Sample (Sharp)</span>
+							</button>
+						</div>
+					</div>
+
+					<div class="relative w-full h-56 sm:h-64 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden mb-4">
+						<canvas id="isotope-canvas" class="w-full h-full block"></canvas>
+						<div id="isotope-status-overlay" class="absolute bottom-3 left-3 px-3 py-1 rounded bg-slate-900/90 border border-slate-800 font-mono text-xs text-slate-300">
+							<span id="isotope-status-text-zh" class="lang-zh">返回物理样本分析：Δ¹⁷O 与 ε⁵⁴Cr 同位素比值呈现分明指纹，彻底定性母体来源！</span>
+							<span id="isotope-status-text-en" class="lang-en">Physical Sample: Δ¹⁷O and ε⁵⁴Cr isotopic ratios reveal unambiguous planetary DNA!</span>
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs leading-relaxed text-slate-300">
+						<div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800">
+							<div class="font-bold text-amber-300 font-mono mb-1">
+								<span class="lang-zh">为什么高空拍照无法定案？</span>
+								<span class="lang-en">Why Photography Cannot Settle It</span>
+							</div>
+							<p class="text-slate-400">
+								<span class="lang-zh">亿万年宇宙射线轰击与微陨石撞击在火卫一表面形成了数米厚的太空风化层（space weathering），使表面矿物反射谱变得平滑且发红。多台轨道光谱仪只能给出宽泛的矿物猜想，无法反演未受风化的原始内核。</span>
+								<span class="lang-en">Billions of years of cosmic rays and micrometeorite impacts create weathered rims, smoothing spectral absorption bands. Remote cameras only see surface alteration, unable to reach the pristine core.</span>
+							</p>
+						</div>
+
+						<div class="p-3.5 rounded-xl bg-slate-950/70 border border-emerald-900/40">
+							<div class="font-bold text-emerald-300 font-mono mb-1">
+								<span class="lang-zh">为什么 10 克真实土壤价值连城？</span>
+								<span class="lang-en">Why 10 Grams of Soil is Priceless</span>
+							</div>
+							<p class="text-slate-400">
+								<span class="lang-zh">地球尖端质谱仪精度可达百万分之一（ppm）。通过测量氧三同位素（Δ¹⁷O）和铬同位素（ε⁵⁴Cr），可以像亲子鉴定一样将火卫一岩石与火星陨石库、碳质球粒陨石库进行严密同位素对齐！</span>
+								<span class="lang-en">Terrestrial mass spectrometers measure isotope anomalies at parts-per-million precision. Oxygen (Δ¹⁷O) and chromium (ε⁵⁴Cr) anomalies act as indelible parent-body fingerprints.</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 6. ONE PASS PER ORBIT & IDEFIX ROVER -->
+			<section class="relative z-10 mb-14 pb-12 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-red-400 font-semibold tracking-wider uppercase mb-1 flex items-center gap-2">
+							<span>⚡</span>
+							<span class="lang-zh">一圈一次的采样窗口 · ONE PASS PER ORBIT</span>
+							<span class="lang-en">ORBITAL MECHANICS · ONE PASS PER ORBIT</span>
+						</div>
+						<h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+							<span class="lang-zh">7.65 小时疾驰一圈：~2.5 小时触地采样的致命窗口</span>
+							<span class="lang-en">Phobos Whips Around Mars in 7.65 Hours: The 2.5-Hour Touchdown Window</span>
+						</h2>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-400 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						火卫一是太阳系中距离母星最近的天然卫星（仅距火星表面约 6,000 km，公转轨道半径 9,376 km）。它环绕火星一圈仅需 <strong>7.65 小时</strong>，比火星自转（24.6 小时）快得多！探测器每次执行触底采样只有约 <strong>2.5 小时</strong> 的黄金接触窗口，必须依靠机载反冲推进与气动+钻芯双重采样机构在极短时间内吸取表土并迅速撤离。
+					</span>
+					<span class="lang-en">
+						Phobos is closer to its primary than any other planetary moon in the Solar System, orbiting at 9,376 km from Mars's center once every <strong>7.65 hours</strong> — much faster than Mars's 24.6h day! MMX descends on its thrusters, touches down for roughly <strong>2.5 hours</strong>, collects regolith via pneumatic and coring systems, and lifts off immediately.
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+					<!-- Fast Orbit Canvas -->
+					<div class="lg:col-span-7 p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+						<div class="flex items-center justify-between gap-2 mb-3">
+							<span class="text-xs font-mono text-red-300 font-bold">
+								<span class="lang-zh">火卫一 7.65 小时近火轨道与 2.5 小时采样窗口推演</span>
+								<span class="lang-en">7.65h Phobos Orbit & 2.5h Touchdown Window</span>
+							</span>
+							<button id="btn-orbit-anim-toggle" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs cursor-pointer">
+								<span id="orbit-anim-text-zh" class="lang-zh">暂停轨道</span>
+								<span id="orbit-anim-text-en" class="lang-en">Pause</span>
+							</button>
+						</div>
+
+						<div class="relative w-full h-64 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden mb-3">
+							<canvas id="orbit-window-canvas" class="w-full h-full block"></canvas>
+							<div class="absolute bottom-2 left-2 px-2.5 py-1 rounded bg-slate-900/90 border border-slate-800 text-[11px] font-mono">
+								<span class="text-red-400"><span class="lang-zh">采样接触弧段：</span><span class="lang-en">Sampling Arc: </span></span>
+								<strong class="text-white">~2.5 h / 7.65 h (~32% 轨道周期)</strong>
+							</div>
+						</div>
+
+						<div class="text-[11px] text-slate-400 font-mono leading-relaxed">
+							<span class="lang-zh">准卫星轨道 (QSO)：由于火卫一引力极弱且火星潮汐梯度极大，探测器无法围绕火卫一进行传统开普勒环绕，而是绕火星公转并与火卫一保持相对伴飞循环。</span>
+							<span class="lang-en">Quasi-Satellite Orbit (QSO): Because Phobos has minimal gravity and Mars exerts huge tidal forces, MMX loops around Mars while tracking Phobos synchronously.</span>
+						</div>
+					</div>
+
+					<!-- IDEFIX Rover Showcase Card -->
+					<div class="lg:col-span-5 p-5 rounded-2xl bg-slate-900/80 border border-purple-500/30 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between gap-2 mb-2">
+								<div class="text-xs font-mono font-bold text-purple-400 uppercase flex items-center gap-1.5">
+									<span>🤖</span>
+									<span class="lang-zh">先锋漫游车 · IDEFIX 档案</span>
+									<span class="lang-en">SCOUT ROVER · IDEFIX PROFILE</span>
+								</div>
+								<span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-[10px] font-mono">CNES × DLR</span>
+							</div>
+
+							<div class="text-lg font-black text-white mb-2 font-mono">
+								IDEFIX (25 kg / 55 lb)
+							</div>
+
+							<p class="text-xs text-slate-300 leading-relaxed mb-4">
+								<span class="lang-zh">
+									在主飞船降落之前，这台由法国国家空间研究中心（CNES）与德国航空航天中心（DLR）联手打造的太阳能微型漫游车将率先从<strong>小于 100 米高度</strong>被直接抛落至火卫一表面！它将在微重力下弹跳稳定，执行约 3 个月的科考任务，行驶几米至数百米。
+								</span>
+								<span class="lang-en">
+									Before the main spacecraft touches down, this 25 kg solar rover built by France's CNES and Germany's DLR will be deployed from <strong>under 100 m altitude</strong>, bouncing to rest on Phobos. It will operate for ~3 months, driving several to hundreds of metres.
+								</span>
+							</p>
+
+							<div class="space-y-2 font-mono text-xs">
+								<div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between items-center">
+									<span class="text-purple-300 font-bold">miniRAD</span>
+									<span class="text-slate-400 text-[11px]"><span class="lang-zh">DLR 六通道辐射计 (测地表热辐射)</span><span class="lang-en">DLR 6-ch Radiometer</span></span>
+								</div>
+								<div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between items-center">
+									<span class="text-purple-300 font-bold">RAX</span>
+									<span class="text-slate-400 text-[11px]"><span class="lang-zh">DLR 拉曼光谱仪 (原位矿物定性)</span><span class="lang-en">DLR Raman Spectrometer</span></span>
+								</div>
+								<div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between items-center">
+									<span class="text-purple-300 font-bold">NavCam</span>
+									<span class="text-slate-400 text-[11px]"><span class="lang-zh">双目立体导航相机 (地貌三维重建)</span><span class="lang-en">Stereo Nav Cameras</span></span>
+								</div>
+								<div class="p-2 rounded-lg bg-slate-950 border border-slate-800 flex justify-between items-center">
+									<span class="text-purple-300 font-bold">WheelCams</span>
+									<span class="text-slate-400 text-[11px]"><span class="lang-zh">两台车轮相机 (分析土壤压痕与粒径)</span><span class="lang-en">Two Wheel Cameras</span></span>
+								</div>
+							</div>
+						</div>
+
+						<div class="mt-4 pt-3 border-t border-slate-800 text-[11px] text-slate-400">
+							<strong class="text-slate-300"><span class="lang-zh">两大任务：</span><span class="lang-en">Dual Roles: </span></strong>
+							<span class="lang-zh">① 为母船侦察安全平整的触底采样点；② 原位分析土壤颗粒硬度、粗糙度与矿物成分。</span>
+							<span class="lang-en">1) Scout a safe landing spot for the mothership; 2) Analyze regolith texture and physical properties.</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SPACECRAFT ARCHITECTURE & BACKSTORY -->
+			<section class="relative z-10 mb-12 max-w-4xl space-y-8 text-sm sm:text-base text-slate-300 leading-relaxed">
+				<div>
+					<h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+						<span class="lang-zh">一、三模块航天架构：轻装简从的深空接力</span>
+						<span class="lang-en">1. Three-Module Architecture: A Deep-Space Relay</span>
+					</h3>
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs">
+						<div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+							<div class="text-amber-400 font-bold mb-1">
+								<span class="lang-zh">推进模块 (Propulsion Module)</span>
+								<span class="lang-en">Propulsion Module</span>
+							</div>
+							<div class="text-base font-black text-white mb-2">1,800 kg</div>
+							<p class="text-slate-400 font-sans leading-relaxed text-[12px]">
+								<span class="lang-zh">负责提供地火转移入轨与火星重力捕获的核心冲量。完成减速刹车后在火星轨道适时脱离。</span>
+								<span class="lang-en">Provides velocity increments for Earth departure and Mars orbit insertion, jettisoned after braking.</span>
+							</p>
+						</div>
+
+						<div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+							<div class="text-cyan-400 font-bold mb-1">
+								<span class="lang-zh">探索模块 (Exploration Module)</span>
+								<span class="lang-en">Exploration Module</span>
+							</div>
+							<div class="text-base font-black text-white mb-2">150 kg</div>
+							<p class="text-slate-400 font-sans leading-relaxed text-[12px]">
+								<span class="lang-zh">搭载着陆腿架、气动采样臂、钻探工具以及 IDEFIX 漫游车。在完成全部采样后留驻在火卫一。</span>
+								<span class="lang-en">Houses landing gear, sampling arms, corers, and IDEFIX; remains on Phobos after liftoff.</span>
+							</p>
+						</div>
+
+						<div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+							<div class="text-emerald-400 font-bold mb-1">
+								<span class="lang-zh">返回模块 (Return Module)</span>
+								<span class="lang-en">Return Module</span>
+							</div>
+							<div class="text-base font-black text-white mb-2">1,050 kg</div>
+							<p class="text-slate-400 font-sans leading-relaxed text-[12px]">
+								<span class="lang-zh">封存 10 克宝贵样品的坚固防热返回舱。负责从火星飞回地球，并于 2031 年 7 月在伍默拉沙漠开伞着陆。</span>
+								<span class="lang-en">Carries sealed sample capsule back to Earth, descending under parachute at Woomera in July 2031.</span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+						<span class="lang-zh">二、母船顶级科学载荷矩阵</span>
+						<span class="lang-en">2. Orbiter Scientific Instrument Suite</span>
+					</h3>
+					<p class="mb-4 text-xs sm:text-sm text-slate-300">
+						<span class="lang-zh">
+							除了先锋漫游车 IDEFIX 外，MMX 母船搭载了由全球顶尖科研机构贡献的精密仪器：
+						</span>
+						<span class="lang-en">
+							Alongside the IDEFIX rover, the MMX mother ship carries an international payload suite:
+						</span>
+					</p>
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
+						<div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+							<strong class="text-amber-300">MEGANE (NASA)</strong>
+							<span class="block text-slate-400 font-sans mt-0.5">
+								<span class="lang-zh">NASA 伽马射线与中子光谱仪（“MEGANE”在日文中意为“眼镜”），透过表层探测火卫一主要元素（硅、铁、氧、水氢含量）。</span>
+								<span class="lang-en">NASA gamma-ray and neutron spectrometer ("megane" is Japanese for eyeglasses) measuring elemental abundances.</span>
+							</span>
+						</div>
+
+						<div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+							<strong class="text-cyan-300">MIRS (CNES / France)</strong>
+							<span class="block text-slate-400 font-sans mt-0.5">
+								<span class="lang-zh">法国近红外光谱仪，以极高光谱分辨率探测火卫一及火星高层大气的水合矿物与有机分子。</span>
+								<span class="lang-en">French infrared spectrometer mapping hydrated minerals and organics on Phobos and Mars.</span>
+							</span>
+						</div>
+
+						<div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+							<strong class="text-emerald-300">TENGOO & OROMI (JAXA)</strong>
+							<span class="block text-slate-400 font-sans mt-0.5">
+								<span class="lang-zh">望远照相机（分辨力约 40 厘米微观地貌）与广角多色成像仪，绘制全火卫一高精度彩色三维地形图。</span>
+								<span class="lang-en">Telescopic camera (~40 cm resolution) and wide-angle multicolour imager mapping surface topography.</span>
+							</span>
+						</div>
+
+						<div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+							<strong class="text-purple-300">LIDAR, CMD & RMD (JAXA)</strong>
+							<span class="block text-slate-400 font-sans mt-0.5">
+								<span class="lang-zh">激光测高仪（精确测量降落距离与重力场）、环绕尘埃监测仪以及空间辐射监测器。</span>
+								<span class="lang-en">Laser altimeter for precision landing guidance, circum-Martian dust monitor, and radiation monitor.</span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<h3 class="text-xl sm:text-2xl font-bold text-white mb-3">
+						<span class="lang-zh">三、波折与涅槃：H3 火箭的曲折复飞之路</span>
+						<span class="lang-en">3. Backstory: The H3 Rocket's Hard-Won Return</span>
+					</h3>
+					<p class="mb-3">
+						<span class="lang-zh">
+							MMX 任务原本计划于 2024 年发射。然而，作为日本下一代主力运载火箭的 H3，在 2023 年 3 月的首次飞行中，因二级发动机点火电气系统故障导致失利，不得不实施地面受控自毁。2025 年 12 月的发射波折更是给后续计划蒙上阴影。
+						</span>
+						<span class="lang-en">
+							MMX was originally scheduled to launch in 2024. However, the maiden flight of Japan's new flagship H3 rocket failed in March 2023 when its second-stage LE-9 engine failed to ignite. Another setback followed in December 2025 before Flight No. 6 returned the vehicle to flight on 12 June 2026.
+						</span>
+					</p>
+					<p class="text-slate-400 text-xs sm:text-sm">
+						<span class="lang-zh">
+							日本航天团队顶住压力排查修复了所有点火电路隐患。2026 年 6 月 12 日，H3 第 6 次飞行（Flight No. 6）圆满成功，恢复常态化发射。今天，在种子岛发射场升空的第 10 次飞行（F10），以最强悍的“H3-24L”（四枚固体助推器全配版）将重达 4 吨的 MMX 毫无差池地送入预定轨道，标志着日本大型运载火箭彻底走出了低谷！
+						</span>
+						<span class="lang-en">
+							JAXA and industry partners methodically resolved the electrical and ignition issues. On 12 June 2026, H3 Flight No. 6 validated the fixes. Today's Flight F10, configured in its maximum-lift H3-24L setup, cleanly delivered the 4-tonne MMX into its transfer path, opening Japan's deepest planetary mission to date.
+						</span>
+					</p>
+				</div>
+			</section>
+
+			<!-- CITATION & ATTRIBUTION BLOCK -->
+			<section class="relative z-10 mb-8 p-6 rounded-2xl bg-slate-900/70 border border-slate-800 text-xs font-mono text-slate-400">
+				<div class="text-sm font-bold text-slate-200 mb-2 flex items-center gap-2">
+					<span>📚</span>
+					<span class="lang-zh">学术公报与国际权威发布引用</span>
+					<span class="lang-en">Official Bulletin & Scientific Reference</span>
+				</div>
+				<p class="leading-relaxed mb-3 text-slate-300">
+					Japan Aerospace Exploration Agency (JAXA) Mission Release, 20 October 2026. NASA Planetary Science Division, October 2026. CNES/DLR IDEFIX Rover Project Documentation, 2026.
+				</p>
+				<p class="leading-relaxed text-[11px] text-slate-400">
+					<span class="lang-zh">
+						发射任务：JAXA 火星卫星探测任务（MMX）。任务负责人：川胜康弘（Yasuhiro Kawakatsu）。项目经理：有田诚（Makoto Arita）。合作机构：NASA、法国 CNES、德国 DLR、欧洲航天局 ESA。回收场地：澳大利亚南澳州伍默拉禁区（Woomera Prohibited Area）。
+					</span>
+					<span class="lang-en">
+						Mission: JAXA Martian Moons eXploration (MMX). Mission Lead: Yasuhiro Kawakatsu. Project Manager: Makoto Arita. Partner Agencies: NASA, CNES, DLR, ESA. Return Location: Woomera Prohibited Area, South Australia.
+					</span>
+				</p>
+			</section>
+
+			<!-- AI GENERATION DISCLOSURE -->
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-amber-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE INTERACTIVE ENGINE -->
+	<script is:inline>
+		(() => {
+			let cleanup = null;
+
+			function initPhobosGambit() {
+				if (cleanup) {
+					cleanup();
+					cleanup = null;
+				}
+
+				const lifecycle = new AbortController();
+				const animFrameIds = [];
+
+				cleanup = () => {
+					lifecycle.abort();
+					for (const id of animFrameIds) {
+						cancelAnimationFrame(id);
+					}
+				};
+
+				// ==========================================
+				// 1. TIMELINE & WHERE IS MMX NOW
+				// ==========================================
+				const phaseData = [
+					{
+						num: "01 / 08",
+						date: "2026-10-20 JST (19 Oct UTC)",
+						statusZh: "已执行 · 现处于此阶段",
+						statusEn: "EXECUTED · CURRENT PHASE",
+						titleZh: "发射升空与地火转移轨道注入",
+						titleEn: "Launch & Earth-to-Mars Cruise Injection",
+						descZh: "H3-24L 运载火箭（两台 LE-9 主机 + 4 台固体助推器）在种子岛宇宙中心发射升空，约 4 吨重的三模块探测器顺利分离，以极高精度打入地火霍曼转移轨道。开启为期 10 个月的深空漫长巡航。",
+						descEn: "H3-24L launches from Tanegashima. The ~4-tonne modular MMX spacecraft separates cleanly and enters the interplanetary transfer cruise toward Mars with exceptional precision.",
+						detailZh: "H3 火箭在经历了 2023 年首飞失败和 2025 年末的波折后，由第 6 次飞行（2026 年 6 月 12 日）成功复飞，最终在今天的第 10 次飞行（F10）以其史上最重的 H3-24L 构型交出了无可挑剔的答卷。",
+						detailEn: "Delayed from 2024 by early H3 engine ignition setbacks in March 2023 and Dec 2025, Flight No. 6 returned the vehicle on 12 June 2026, culminating in today's F10 heavy liftoff."
+					},
+					{
+						num: "02 / 08",
+						date: "2027-08 (August 2027)",
+						statusZh: "未来计划 · 行程预定",
+						statusEn: "PLANNED · UPCOMING",
+						titleZh: "火星轨道捕获 (Mars Orbit Insertion)",
+						titleEn: "Mars Orbit Insertion (MOI)",
+						descZh: "飞船在飞行约 5 亿公里后抵达火星。1,800 kg 的推进模块主发动机点火大减速，将探测器捕获进大椭圆环火星极轨，并逐步将轨道降圆。",
+						descEn: "Arriving at Mars after a ~500 million km cruise. The 1,800 kg propulsion module fires to brake into an elliptical Mars orbit before circularizing.",
+						detailZh: "火星引力捕获只有一次机会。推进模块装载了全船一半以上的推进剂，用于在此处消耗超过 1,000 m/s 的巨大速度增量。",
+						detailEn: "Mars capture is a single-burn critical event; the propulsion module burns over half the mission's initial fuel load here."
+					},
+					{
+						num: "03 / 08",
+						date: "2027-09 (September 2027)",
+						statusZh: "未来计划 · 行程预定",
+						statusEn: "PLANNED · UPCOMING",
+						titleZh: "火卫一准卫星轨道 (QSO) 伴飞",
+						titleEn: "Phobos Quasi-Satellite Orbit (QSO)",
+						descZh: "飞船移入火卫一准卫星轨道。由于火卫一引力极度微弱（地球的 1/2000），无法进行传统开普勒环绕；MMX 依靠精密环火伴飞轨迹，在几公里至几十公里距离上与火卫一相对环绕。",
+						descEn: "MMX enters Quasi-Satellite Orbits (QSOs) around Phobos. Because Phobos is too small to orbit conventionally, MMX loops around Mars while synchronizing with Phobos.",
+						detailZh: "火卫一以 7.65 小时为周期急速绕火转动。飞船在 QSO-L、QSO-M 等多层高度轨道上用望远相机以高达 40 厘米的分辨率对全表面展开地质普查。",
+						detailEn: "Phobos orbits Mars every 7.65 hours. From stepped QSO altitudes, MMX surveys candidate sampling zones down to 40 cm resolution."
+					},
+					{
+						num: "04 / 08",
+						date: "2028 Late – 2029 Early",
+						statusZh: "未来计划 · 行程预定",
+						statusEn: "PLANNED · UPCOMING",
+						titleZh: "先锋漫游车 IDEFIX 低空空投",
+						titleEn: "IDEFIX Scout Rover Deployment",
+						descZh: "母船下降至距离火卫一表面不到 100 米的高度，将重 25 kg 的法德联合研制漫游车 IDEFIX 释放。漫游车在微重力下像羽毛般缓缓坠落、弹跳，随后展开太阳能帆板自主站立。",
+						descEn: "The mother ship drops to under 100 m altitude to deploy the 25 kg Franco-German IDEFIX rover, which gently bounces to rest before righting itself.",
+						detailZh: "在火卫一上，25 kg 的 IDEFIX 受到的重力甚至不如几十枚曲别针（仅约 12.5 克）。它用特制车轮在松散浮土上行驶数米到数百米，为母船验证落脚点安全性。",
+						detailEn: "On Phobos, 25 kg IDEFIX weighs less than a few dozen paperclips (~12.5 g), scouting safe touchdown ground with its WheelCams."
+					},
+					{
+						num: "05 / 08",
+						date: "2029 – 2030",
+						statusZh: "未来计划 · 行程预定",
+						statusEn: "PLANNED · UPCOMING",
+						titleZh: "核心夺宝：火卫一触底与两套采样系统",
+						titleEn: "Touchdown & Core Sampling Heist",
+						descZh: "母船自主导航下降触底，并在微重力表面保持贴地约 2.5 小时。启动两套独立采样机构：气动采样器（高速气体吹起浮土吸入容器）与钻芯采样器（机械深钻获取下层未受风化岩芯），确保夺取至少 10 克原土！",
+						descEn: "MMX touches down for ~2.5 hours, deploying redundant pneumatic gas-puff and coring mechanisms to gather >=10 grams of pristine subsurface regolith.",
+						detailZh: "因为火卫一每 7.65 小时就绕火星疯狂飞奔一整圈，轨道设计人员在每个轨道周期内实质上仅有一次降落射窗，一旦错过就必须等待下一轮轨道同步。",
+						detailEn: "Because Phobos whips around Mars every 7.65 hours, mission planners effectively get only one touchdown opportunity per orbital pass."
+					},
+					{
+						num: "06 / 08",
+						date: "2030-11 (November 2030)",
+						statusZh: "未来计划 · 行程预定",
+						statusEn: "PLANNED · UPCOMING",
+						titleZh: "告别火星系统：逃逸点火启程返航",
+						titleEn: "Mars System Departure Burn",
+						descZh: "在将样品完好密封于返回模块之后，飞船抛弃完成历史使命的着陆机构，等待 26 个月一次的地火转移窗口开启。2030 年 11 月，返回模块发动机点火，彻底挣脱火星引力缰绳。",
+						descEn: "With regolith sealed inside the return capsule, MMX waits for the return launch window, firing its engines in Nov 2030 to break out of Mars orbit.",
+						detailZh: "留在火星轨道上的探索模块将继续利用残余电力进行科学观测，而承载着十克宝藏的 1,050 kg 返回模块则踏上返回地球的茫茫归途。",
+						detailEn: "The exploration module remains in Mars orbit as a relay/monitor, while the 1,050 kg return module speeds toward Earth."
+					},
+					{
+						num: "07 / 08",
+						date: "2030 Late (En Route)",
+						statusZh: "未来计划 · 行程预定",
+						statusEn: "PLANNED · UPCOMING",
+						titleZh: "顺道探访：火卫二（Deimos）近距飞掠",
+						titleEn: "Deimos Flyby En Route",
+						descZh: "在飞离火星引力场的出境航道上，探测器巧妙规划了对火星另一颗更小卫星——火卫二（平均直径仅 12.4 km）的高速飞掠探测，拍摄高分辨率光谱与近距离地貌。",
+						descEn: "On its outbound escape trajectory, MMX sweeps past Mars's outer moon Deimos (~12.4 km across) to image its surface and gather comparative spectra.",
+						detailZh: "火卫二的质量不到火卫一的十分之一。通过在单次任务中同时近距离观测火星的两颗卫星，科学家能直接对比两者的成分差异，彻底破译它们是否来自同一母体。",
+						detailEn: "Deimos is nearly ten times less massive than Phobos. Comparing both moons in one mission reveals whether they share a common origin."
+					},
+					{
+						num: "08 / 08",
+						date: "2031-07 (July 2031)",
+						statusZh: "未来计划 · 行程预定",
+						statusEn: "PLANNED · UPCOMING",
+						titleZh: "澳大利亚伍默拉禁区：十克星尘降临地球",
+						titleEn: "Earth Return: 10g Delivered at Woomera",
+						descZh: "经过 8 个月返程巡航，返回模块接近地球。防热返回舱分离并以第二宇宙速度（~12 km/s）高速冲入地球大气层，在澳大利亚南部的伍默拉禁区沙漠开伞软着陆。",
+						descEn: "The return capsule separates and enters Earth's atmosphere at ~12 km/s, parachuting down to the desert at Woomera Prohibited Area in Australia.",
+						detailZh: "伍默拉（Woomera）也是 2020 年 12 月日本隼鸟二号（Hayabusa2）将小行星龙宫样本送回地球的同一片荒漠！10 克外星卫星泥土将在此被严密转运送入无尘实验室。",
+						detailEn: "Woomera is the exact same desert where Hayabusa2 delivered asteroid Ryugu's dust in Dec 2020. The capsule will be retrieved within hours."
+					}
+				];
+
+				const stepBtns = document.querySelectorAll(".timeline-step-btn");
+				const badgeNum = document.getElementById("phase-badge-number");
+				const badgeDate = document.getElementById("phase-badge-date");
+				const badgeStatus = document.getElementById("phase-badge-status");
+				const phaseTitle = document.getElementById("phase-title");
+				const phaseDesc = document.getElementById("phase-desc");
+				const phaseDetail = document.getElementById("phase-telling-detail");
+
+				function selectPhase(idx) {
+					stepBtns.forEach((btn, i) => {
+						if (i === idx) {
+							btn.className = "timeline-step-btn active p-3 rounded-xl bg-slate-900 border border-amber-500 text-left transition hover:border-amber-400 cursor-pointer";
+							const numDiv = btn.querySelector("div:first-child");
+							if (numDiv) numDiv.className = "text-[10px] font-mono text-amber-400 font-bold";
+						} else {
+							btn.className = "timeline-step-btn p-3 rounded-xl bg-slate-900 border border-slate-800 text-left transition hover:border-amber-500/50 cursor-pointer";
+							const numDiv = btn.querySelector("div:first-child");
+							if (numDiv) numDiv.className = "text-[10px] font-mono text-slate-500 font-bold";
+						}
+					});
+
+					const p = phaseData[idx];
+					if (badgeNum) badgeNum.textContent = `PHASE ${p.num}`;
+					if (badgeDate) badgeDate.textContent = p.date;
+					if (badgeStatus) {
+						badgeStatus.innerHTML = `<span class="lang-zh">${p.statusZh}</span><span class="lang-en">${p.statusEn}</span>`;
+						if (idx === 0) {
+							badgeStatus.className = "px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-mono";
+						} else {
+							badgeStatus.className = "px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-mono";
+						}
+					}
+					if (phaseTitle) {
+						phaseTitle.innerHTML = `<span class="lang-zh">${p.titleZh}</span><span class="lang-en">${p.titleEn}</span>`;
+					}
+					if (phaseDesc) {
+						phaseDesc.innerHTML = `<span class="lang-zh">${p.descZh}</span><span class="lang-en">${p.descEn}</span>`;
+					}
+					if (phaseDetail) {
+						phaseDetail.innerHTML = `<span class="lang-zh">${p.detailZh}</span><span class="lang-en">${p.detailEn}</span>`;
+					}
+				}
+
+				stepBtns.forEach((btn, i) => {
+					btn.addEventListener("click", () => selectPhase(i), { signal: lifecycle.signal });
+				});
+
+				// Live MMX location readout based on date
+				const liveReadout = document.getElementById("mmx-live-readout-text");
+				if (liveReadout) {
+					const now = new Date();
+					const launchDate = new Date("2026-10-20T04:41:03+09:00");
+					const marsArrival = new Date("2027-08-01T00:00:00Z");
+					const marsDepart = new Date("2030-11-01T00:00:00Z");
+					const earthTouch = new Date("2031-07-31T00:00:00Z");
+
+					if (now < launchDate) {
+						liveReadout.innerHTML = `<span class="lang-zh">准备就绪：发射倒计时中</span><span class="lang-en">Pre-launch: Final countdown on pad</span>`;
+					} else if (now < marsArrival) {
+						const daysElapsed = Math.max(0, Math.floor((now.getTime() - launchDate.getTime()) / (1000 * 60 * 60 * 24)));
+						liveReadout.innerHTML = `<span class="lang-zh">MMX 飞行第 ${daysElapsed} 天：地火转移巡航中（预计 2027 年 8 月抵火）</span><span class="lang-en">Day ${daysElapsed} of flight: Cruising to Mars (Arrival Aug 2027)</span>`;
+					} else if (now < marsDepart) {
+						liveReadout.innerHTML = `<span class="lang-zh">MMX 任务中：身处火星系统执行火卫一勘测与采样</span><span class="lang-en">Active at Mars: Phobos surveying & sampling underway</span>`;
+					} else if (now < earthTouch) {
+						liveReadout.innerHTML = `<span class="lang-zh">MMX 返航中：携 10 克火卫一样品飞向地球</span><span class="lang-en">Inbound Cruise: Returning to Earth with Phobos samples</span>`;
+					} else {
+						liveReadout.innerHTML = `<span class="lang-zh">已回收：样品安全送达地球，实验室分析中</span><span class="lang-en">Delivered: Sample in Earth laboratory quarantine</span>`;
+					}
+				}
+
+				// ==========================================
+				// 2. FLY THE TRAJECTORY SIMULATOR (CANVAS)
+				// ==========================================
+				const trajCanvas = document.getElementById("traj-canvas");
+				const trajCtx = trajCanvas ? trajCanvas.getContext("2d") : null;
+				let trajPlaying = true;
+				let trajProgress = 0.05; // 0 to 1 across 4 legs
+				let activeLegIdx = 0;
+
+				const legNames = [
+					"Earth → Mars Cruise (2026–2027)",
+					"Mars Arrival & Phobos QSO (2027–2030)",
+					"Deimos Flyby (2030 Late)",
+					"Mars → Earth Return (2030–2031)"
+				];
+
+				function resizeCanvas(canvas) {
+					if (!canvas) return;
+					const rect = canvas.getBoundingClientRect();
+					const dpr = window.devicePixelRatio || 1;
+					if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
+						canvas.width = rect.width * dpr;
+						canvas.height = rect.height * dpr;
+					}
+				}
+
+				function renderTrajectory() {
+					if (!trajCanvas || !trajCtx) return;
+					resizeCanvas(trajCanvas);
+					const w = trajCanvas.width;
+					const h = trajCanvas.height;
+					const dpr = window.devicePixelRatio || 1;
+
+					trajCtx.save();
+					trajCtx.scale(dpr, dpr);
+					const cssW = w / dpr;
+					const cssH = h / dpr;
+
+					trajCtx.clearRect(0, 0, cssW, cssH);
+
+					const cx = cssW * 0.42;
+					const cy = cssH * 0.52;
+					const rEarth = Math.min(cssW, cssH) * 0.24;
+					const rMars = Math.min(cssW, cssH) * 0.39;
+
+					// Draw Sun
+					trajCtx.beginPath();
+					trajCtx.arc(cx, cy, 14, 0, Math.PI * 2);
+					trajCtx.fillStyle = "#fbbf24";
+					trajCtx.shadowColor = "#f59e0b";
+					trajCtx.shadowBlur = 20;
+					trajCtx.fill();
+					trajCtx.shadowBlur = 0;
+
+					trajCtx.fillStyle = "#ffffff";
+					trajCtx.font = "10px monospace";
+					trajCtx.textAlign = "center";
+					trajCtx.fillText("Sun (太阳)", cx, cy + 26);
+
+					// Draw Earth Orbit
+					trajCtx.beginPath();
+					trajCtx.arc(cx, cy, rEarth, 0, Math.PI * 2);
+					trajCtx.strokeStyle = "rgba(56, 189, 248, 0.25)";
+					trajCtx.lineWidth = 1.5;
+					trajCtx.setLineDash([4, 4]);
+					trajCtx.stroke();
+					trajCtx.setLineDash([]);
+
+					// Draw Earth Position
+					const earthAngle = -Math.PI * 0.3;
+					const ex = cx + rEarth * Math.cos(earthAngle);
+					const ey = cy + rEarth * Math.sin(earthAngle);
+					trajCtx.beginPath();
+					trajCtx.arc(ex, ey, 7, 0, Math.PI * 2);
+					trajCtx.fillStyle = "#38bdf8";
+					trajCtx.fill();
+					trajCtx.fillText("Earth (地球)", ex, ey - 12);
+
+					// Draw Mars Orbit
+					trajCtx.beginPath();
+					trajCtx.arc(cx, cy, rMars, 0, Math.PI * 2);
+					trajCtx.strokeStyle = "rgba(249, 115, 22, 0.25)";
+					trajCtx.lineWidth = 1.5;
+					trajCtx.setLineDash([4, 4]);
+					trajCtx.stroke();
+					trajCtx.setLineDash([]);
+
+					// Draw Mars Position
+					const marsAngle = Math.PI * 0.15;
+					const mx = cx + rMars * Math.cos(marsAngle);
+					const my = cy + rMars * Math.sin(marsAngle);
+					trajCtx.beginPath();
+					trajCtx.arc(mx, my, 8, 0, Math.PI * 2);
+					trajCtx.fillStyle = "#f97316";
+					trajCtx.fill();
+					trajCtx.fillText("Mars (火星)", mx, my - 14);
+
+					// Draw Phobos Orbit around Mars (schematic zoomed inset near Mars)
+					trajCtx.beginPath();
+					trajCtx.arc(mx, my, 22, 0, Math.PI * 2);
+					trajCtx.strokeStyle = "rgba(251, 191, 36, 0.5)";
+					trajCtx.lineWidth = 1;
+					trajCtx.stroke();
+					trajCtx.fillText("Phobos QSO", mx, my + 32);
+
+					// Draw Deimos Orbit (further out)
+					trajCtx.beginPath();
+					trajCtx.arc(mx, my, 34, 0, Math.PI * 2);
+					trajCtx.strokeStyle = "rgba(148, 163, 184, 0.3)";
+					trajCtx.lineWidth = 0.8;
+					trajCtx.setLineDash([2, 2]);
+					trajCtx.stroke();
+					trajCtx.setLineDash([]);
+
+					// Transfer Curve 1: Earth to Mars (Hohmann-like bezier)
+					trajCtx.beginPath();
+					trajCtx.moveTo(ex, ey);
+					const cpx1 = cx + (rEarth + rMars) * 0.5 * Math.cos(0.0);
+					const cpy1 = cy + (rEarth + rMars) * 0.5 * Math.sin(0.0);
+					trajCtx.quadraticCurveTo(cpx1, cpy1, mx, my);
+					trajCtx.strokeStyle = "rgba(251, 191, 36, 0.4)";
+					trajCtx.lineWidth = 2;
+					trajCtx.stroke();
+
+					// Compute craft position along the mission progress (0 to 1)
+					let craftX = ex;
+					let craftY = ey;
+					let simYear = 2026.8;
+
+					if (trajProgress < 0.25) {
+						// Leg 1: Earth -> Mars
+						const t = trajProgress / 0.25;
+						activeLegIdx = 0;
+						simYear = 2026.8 + t * (2027.6 - 2026.8);
+						const invT = 1 - t;
+						craftX = invT * invT * ex + 2 * invT * t * cpx1 + t * t * mx;
+						craftY = invT * invT * ey + 2 * invT * t * cpy1 + t * t * my;
+					} else if (trajProgress < 0.65) {
+						// Leg 2: Mars Phobos QSO Loop
+						const t = (trajProgress - 0.25) / 0.4;
+						activeLegIdx = 1;
+						simYear = 2027.6 + t * (2030.8 - 2027.6);
+						const loopAngle = t * Math.PI * 6;
+						craftX = mx + Math.cos(loopAngle) * 22;
+						craftY = my + Math.sin(loopAngle) * 22;
+					} else if (trajProgress < 0.75) {
+						// Leg 3: Deimos Flyby
+						const t = (trajProgress - 0.65) / 0.1;
+						activeLegIdx = 2;
+						simYear = 2030.8 + t * 0.1;
+						const flyAngle = t * Math.PI * 2;
+						craftX = mx + Math.cos(flyAngle) * 34;
+						craftY = my + Math.sin(flyAngle) * 34;
+					} else {
+						// Leg 4: Mars -> Earth return
+						const t = (trajProgress - 0.75) / 0.25;
+						activeLegIdx = 3;
+						simYear = 2030.9 + t * (2031.6 - 2030.9);
+						const invT = 1 - t;
+						const cpx2 = cx + (rEarth + rMars) * 0.4 * Math.cos(-Math.PI * 0.1);
+						const cpy2 = cy + (rEarth + rMars) * 0.4 * Math.sin(-Math.PI * 0.1);
+						craftX = invT * invT * mx + 2 * invT * t * cpx2 + t * t * ex;
+						craftY = invT * invT * my + 2 * invT * t * cpy2 + t * t * ey;
+					}
+
+					// Draw Craft Marker (MMX)
+					trajCtx.beginPath();
+					trajCtx.arc(craftX, craftY, 5, 0, Math.PI * 2);
+					trajCtx.fillStyle = "#ffffff";
+					trajCtx.shadowColor = "#38bdf8";
+					trajCtx.shadowBlur = 12;
+					trajCtx.fill();
+					trajCtx.shadowBlur = 0;
+
+					// Label craft
+					trajCtx.fillStyle = "#38bdf8";
+					trajCtx.font = "bold 10px monospace";
+					trajCtx.fillText("MMX", craftX + 8, craftY - 6);
+
+					trajCtx.restore();
+
+					// Update DOM labels
+					const txtLeg = document.getElementById("traj-current-leg-name");
+					const txtYear = document.getElementById("traj-sim-year");
+					if (txtLeg) txtLeg.textContent = legNames[activeLegIdx];
+					if (txtYear) txtYear.textContent = simYear.toFixed(1);
+
+					// Sync active leg buttons
+					const legBtns = document.querySelectorAll(".traj-leg-btn");
+					legBtns.forEach((b, i) => {
+						if (i === activeLegIdx) {
+							b.className = "traj-leg-btn active px-3 py-2 rounded-xl bg-slate-900 border border-amber-500 text-amber-300 text-left transition cursor-pointer";
+						} else {
+							b.className = "traj-leg-btn px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 text-left transition hover:border-amber-500/50 cursor-pointer";
+						}
+					});
+				}
+
+				function animateTrajectory() {
+					if (trajPlaying) {
+						trajProgress += 0.0015;
+						if (trajProgress > 1.0) trajProgress = 0.0;
+						renderTrajectory();
+					}
+					const req = requestAnimationFrame(animateTrajectory);
+					animFrameIds.push(req);
+				}
+
+				const btnTrajPlay = document.getElementById("btn-traj-toggle-play");
+				const trajPlayIcon = document.getElementById("traj-play-icon");
+				const trajTextZh = document.getElementById("traj-play-text-zh");
+				const trajTextEn = document.getElementById("traj-play-text-en");
+				if (btnTrajPlay) {
+					btnTrajPlay.addEventListener("click", () => {
+						trajPlaying = !trajPlaying;
+						if (trajPlayIcon) trajPlayIcon.textContent = trajPlaying ? "⏸️" : "▶️";
+						if (trajTextZh) trajTextZh.textContent = trajPlaying ? "暂停轨道推演" : "继续轨道推演";
+						if (trajTextEn) trajTextEn.textContent = trajPlaying ? "Pause Flight" : "Resume Flight";
+					}, { signal: lifecycle.signal });
+				}
+
+				const btnTrajReset = document.getElementById("btn-traj-reset");
+				if (btnTrajReset) {
+					btnTrajReset.addEventListener("click", () => {
+						trajProgress = 0.0;
+						renderTrajectory();
+					}, { signal: lifecycle.signal });
+				}
+
+				const legBtns = document.querySelectorAll(".traj-leg-btn");
+				legBtns.forEach((btn, idx) => {
+					btn.addEventListener("click", () => {
+						if (idx === 0) trajProgress = 0.05;
+						if (idx === 1) trajProgress = 0.35;
+						if (idx === 2) trajProgress = 0.68;
+						if (idx === 3) trajProgress = 0.82;
+						renderTrajectory();
+					}, { signal: lifecycle.signal });
+				});
+
+				// ==========================================
+				// 3. GRAVITY PLAYGROUND (DROP SIMULATOR)
+				// ==========================================
+				let selectedGravity = 0.0057; // m/s^2 for Phobos
+				let dropHeight = 2.0; // metres
+				const dropCanvas = document.getElementById("drop-canvas");
+				const dropCtx = dropCanvas ? dropCanvas.getContext("2d") : null;
+				let dropY = 0; // 0 to 1
+				let dropAnimRunning = false;
+				let dropStartTime = 0;
+				let totalDropTime = 0;
+
+				function calcDropTime() {
+					return Math.sqrt((2 * dropHeight) / selectedGravity);
+				}
+
+				function updateDropMetrics() {
+					const t = calcDropTime();
+					const lbl = document.getElementById("drop-calculated-time");
+					if (lbl) {
+						if (t > 10) {
+							lbl.textContent = `${t.toFixed(2)} 秒 (漫长缓慢漂落)`;
+						} else {
+							lbl.textContent = `${t.toFixed(2)} 秒`;
+						}
+					}
+				}
+
+				function renderDropChamber() {
+					if (!dropCanvas || !dropCtx) return;
+					resizeCanvas(dropCanvas);
+					const w = dropCanvas.width;
+					const h = dropCanvas.height;
+					const dpr = window.devicePixelRatio || 1;
+
+					dropCtx.save();
+					dropCtx.scale(dpr, dpr);
+					const cssW = w / dpr;
+					const cssH = h / dpr;
+
+					dropCtx.clearRect(0, 0, cssW, cssH);
+
+					// Draw Chamber background height marks
+					const startY = 30;
+					const floorY = cssH - 30;
+					const trackH = floorY - startY;
+
+					dropCtx.strokeStyle = "#334155";
+					dropCtx.lineWidth = 1;
+					dropCtx.beginPath();
+					dropCtx.moveTo(40, startY);
+					dropCtx.lineTo(cssW - 40, startY);
+					dropCtx.moveTo(40, floorY);
+					dropCtx.lineTo(cssW - 40, floorY);
+					dropCtx.stroke();
+
+					dropCtx.fillStyle = "#64748b";
+					dropCtx.font = "10px monospace";
+					dropCtx.textAlign = "left";
+					dropCtx.fillText(`h = ${dropHeight.toFixed(1)} m`, 45, startY - 8);
+					dropCtx.fillText("Surface Ground (地表)", 45, floorY + 16);
+
+					// Draw dropping capsule
+					const currentY = startY + trackH * dropY;
+					const craftX = cssW * 0.5;
+
+					dropCtx.beginPath();
+					dropCtx.arc(craftX, currentY, 12, 0, Math.PI * 2);
+					dropCtx.fillStyle = "#38bdf8";
+					dropCtx.shadowColor = "#38bdf8";
+					dropCtx.shadowBlur = 10;
+					dropCtx.fill();
+					dropCtx.shadowBlur = 0;
+
+					dropCtx.fillStyle = "#ffffff";
+					dropCtx.font = "bold 9px monospace";
+					dropCtx.textAlign = "center";
+					dropCtx.fillText("SAMPLE", craftX, currentY + 3);
+
+					dropCtx.restore();
+				}
+
+				function animateDrop() {
+					if (!dropAnimRunning) return;
+					const elapsed = (performance.now() - dropStartTime) / 1000;
+					// For Phobos (26s), speed up visually by 3x so user doesn't wait forever, but show true clock
+					const visualMultiplier = selectedGravity < 0.1 ? 3.0 : 1.0;
+					const simElapsed = elapsed * visualMultiplier;
+
+					if (simElapsed >= totalDropTime) {
+						dropY = 1.0;
+						dropAnimRunning = false;
+						renderDropChamber();
+						return;
+					}
+
+					dropY = (0.5 * selectedGravity * Math.pow(simElapsed, 2)) / dropHeight;
+					dropY = Math.min(1.0, Math.max(0, dropY));
+					renderDropChamber();
+
+					const req = requestAnimationFrame(animateDrop);
+					animFrameIds.push(req);
+				}
+
+				const btnDropRun = document.getElementById("btn-drop-run");
+				if (btnDropRun) {
+					btnDropRun.addEventListener("click", () => {
+						totalDropTime = calcDropTime();
+						dropStartTime = performance.now();
+						dropY = 0;
+						dropAnimRunning = true;
+						animateDrop();
+					}, { signal: lifecycle.signal });
+				}
+
+				const sliderHeight = document.getElementById("slider-drop-height");
+				const txtHeightVal = document.getElementById("drop-height-val");
+				if (sliderHeight) {
+					sliderHeight.addEventListener("input", (e) => {
+						dropHeight = parseFloat(e.target.value);
+						if (txtHeightVal) txtHeightVal.textContent = `${dropHeight.toFixed(1)} m`;
+						dropY = 0;
+						updateDropMetrics();
+						renderDropChamber();
+					}, { signal: lifecycle.signal });
+				}
+
+				const gravBtns = document.querySelectorAll(".gravity-body-btn");
+				gravBtns.forEach((b) => {
+					b.addEventListener("click", () => {
+						gravBtns.forEach((item) => {
+							item.className = "gravity-body-btn px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 cursor-pointer";
+						});
+						b.className = "gravity-body-btn active px-2.5 py-1 rounded-lg bg-cyan-950 border border-cyan-500 text-cyan-300 cursor-pointer";
+						selectedGravity = parseFloat(b.dataset.gravity);
+						dropY = 0;
+						updateDropMetrics();
+						renderDropChamber();
+					}, { signal: lifecycle.signal });
+				});
+
+				// Paperclip line weight calculator
+				const sliderWeight = document.getElementById("slider-earth-weight");
+				const txtEarthW = document.getElementById("weight-earth-val");
+				const txtPhobosW = document.getElementById("weight-phobos-g");
+				const txtPhobosEquiv = document.getElementById("weight-phobos-equiv");
+
+				if (sliderWeight) {
+					sliderWeight.addEventListener("input", (e) => {
+						const ew = parseFloat(e.target.value);
+						if (txtEarthW) txtEarthW.textContent = `${ew} kg`;
+						// Divide by ~2,000 to get grams
+						const phobosGrams = (ew / 2.0).toFixed(1);
+						if (txtPhobosW) txtPhobosW.textContent = phobosGrams;
+						if (txtPhobosEquiv) {
+							const clips = Math.round(ew / 2.0);
+							txtPhobosEquiv.innerHTML = `<span class="lang-zh">相当于约 ${clips} 枚普通金属曲别针，或一节 5 号 AA 电池的轻巧感！</span><span class="lang-en">Equivalent to ~${clips} paperclips, or one lightweight AA battery!</span>`;
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 4. MOON FACE-OFF SCALE CANVAS
+				// ==========================================
+				const scaleCanvas = document.getElementById("moon-scale-canvas");
+				const scaleCtx = scaleCanvas ? scaleCanvas.getContext("2d") : null;
+				let scaleMode = "cosmic"; // "cosmic" or "city"
+
+				function renderMoonScale() {
+					if (!scaleCanvas || !scaleCtx) return;
+					resizeCanvas(scaleCanvas);
+					const w = scaleCanvas.width;
+					const h = scaleCanvas.height;
+					const dpr = window.devicePixelRatio || 1;
+
+					scaleCtx.save();
+					scaleCtx.scale(dpr, dpr);
+					const cssW = w / dpr;
+					const cssH = h / dpr;
+
+					scaleCtx.clearRect(0, 0, cssW, cssH);
+
+					if (scaleMode === "cosmic") {
+						// Moon is 3474 km, Phobos 22.2 km, Deimos 12.4 km
+						// Render Moon as a large sphere on the left/center
+						const moonRadius = cssH * 0.42;
+						const moonX = cssW * 0.35;
+						const moonY = cssH * 0.5;
+
+						scaleCtx.beginPath();
+						scaleCtx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+						scaleCtx.fillStyle = "#94a3b8";
+						scaleCtx.shadowColor = "rgba(148, 163, 184, 0.3)";
+						scaleCtx.shadowBlur = 15;
+						scaleCtx.fill();
+						scaleCtx.shadowBlur = 0;
+
+						scaleCtx.fillStyle = "#ffffff";
+						scaleCtx.font = "bold 12px monospace";
+						scaleCtx.textAlign = "center";
+						scaleCtx.fillText("Moon (月球 · 3,474 km)", moonX, moonY);
+
+						// Phobos to scale: 22.2 / 3474 * (moonRadius * 2) ≈ 2.5 pixels!
+						const phobosX = cssW * 0.72;
+						const phobosY = cssH * 0.45;
+						const phobosPx = Math.max(3, (22.2 / 3474) * (moonRadius * 2));
+
+						scaleCtx.beginPath();
+						scaleCtx.arc(phobosX, phobosY, phobosPx, 0, Math.PI * 2);
+						scaleCtx.fillStyle = "#f59e0b";
+						scaleCtx.fill();
+
+						// Ring indicator
+						scaleCtx.beginPath();
+						scaleCtx.arc(phobosX, phobosY, 14, 0, Math.PI * 2);
+						scaleCtx.strokeStyle = "#f59e0b";
+						scaleCtx.lineWidth = 1;
+						scaleCtx.stroke();
+
+						scaleCtx.font = "11px monospace";
+						scaleCtx.fillStyle = "#f59e0b";
+						scaleCtx.textAlign = "left";
+						scaleCtx.fillText("Phobos (火卫一 · 22.2 km)", phobosX + 20, phobosY + 4);
+
+						// Deimos: 12.4 km
+						const deimosX = cssW * 0.72;
+						const deimosY = cssH * 0.65;
+						const deimosPx = Math.max(2, (12.4 / 3474) * (moonRadius * 2));
+
+						scaleCtx.beginPath();
+						scaleCtx.arc(deimosX, deimosY, deimosPx, 0, Math.PI * 2);
+						scaleCtx.fillStyle = "#e2e8f0";
+						scaleCtx.fill();
+
+						scaleCtx.beginPath();
+						scaleCtx.arc(deimosX, deimosY, 10, 0, Math.PI * 2);
+						scaleCtx.strokeStyle = "#94a3b8";
+						scaleCtx.lineWidth = 1;
+						scaleCtx.stroke();
+
+						scaleCtx.fillStyle = "#cbd5e1";
+						scaleCtx.fillText("Deimos (火卫二 · 12.4 km)", deimosX + 20, deimosY + 4);
+					} else {
+						// City scale mode: Phobos 22.2 km compared to city ring road
+						const centerX = cssW * 0.5;
+						const centerY = cssH * 0.5;
+						const phobosRadius = cssH * 0.35;
+
+						// Draw City Ring Road
+						scaleCtx.beginPath();
+						scaleCtx.arc(centerX, centerY, phobosRadius, 0, Math.PI * 2);
+						scaleCtx.strokeStyle = "rgba(56, 189, 248, 0.4)";
+						scaleCtx.lineWidth = 3;
+						scaleCtx.setLineDash([6, 4]);
+						scaleCtx.stroke();
+						scaleCtx.setLineDash([]);
+
+						// Phobos shape (irregular potato-like polygon)
+						scaleCtx.beginPath();
+						const pts = 24;
+						for (let i = 0; i <= pts; i++) {
+							const theta = (i / pts) * Math.PI * 2;
+							const rVar = phobosRadius * (0.88 + 0.14 * Math.sin(theta * 3) + 0.08 * Math.cos(theta * 5));
+							const px = centerX + rVar * Math.cos(theta);
+							const py = centerY + rVar * Math.sin(theta);
+							if (i === 0) scaleCtx.moveTo(px, py);
+							else scaleCtx.lineTo(px, py);
+						}
+						scaleCtx.fillStyle = "rgba(245, 158, 11, 0.35)";
+						scaleCtx.fill();
+						scaleCtx.strokeStyle = "#f59e0b";
+						scaleCtx.lineWidth = 2;
+						scaleCtx.stroke();
+
+						// Labels
+						scaleCtx.fillStyle = "#ffffff";
+						scaleCtx.font = "bold 13px monospace";
+						scaleCtx.textAlign = "center";
+						scaleCtx.fillText("Phobos (~22.2 km Mean Diameter)", centerX, centerY - 10);
+						scaleCtx.font = "11px sans-serif";
+						scaleCtx.fillStyle = "#38bdf8";
+						scaleCtx.fillText("≈ 大都市核心环线 / Major City Ring Road (~22 km across)", centerX, centerY + 14);
+
+						// Deimos overlay size
+						const deimosRadius = phobosRadius * (12.4 / 22.2);
+						scaleCtx.beginPath();
+						scaleCtx.arc(centerX + phobosRadius + 30, centerY, deimosRadius, 0, Math.PI * 2);
+						scaleCtx.fillStyle = "rgba(148, 163, 184, 0.3)";
+						scaleCtx.fill();
+						scaleCtx.strokeStyle = "#cbd5e1";
+						scaleCtx.stroke();
+						scaleCtx.fillText("Deimos (12.4 km)", centerX + phobosRadius + 30, centerY + deimosRadius + 15);
+					}
+
+					scaleCtx.restore();
+				}
+
+				const btnScaleCosmic = document.getElementById("btn-scale-cosmic");
+				const btnScaleCity = document.getElementById("btn-scale-city");
+				const scaleLblZh = document.getElementById("scale-canvas-label-zh");
+				const scaleLblEn = document.getElementById("scale-canvas-label-en");
+
+				if (btnScaleCosmic) {
+					btnScaleCosmic.addEventListener("click", () => {
+						scaleMode = "cosmic";
+						btnScaleCosmic.className = "px-3 py-1.5 rounded-lg bg-indigo-950 border border-indigo-500 text-indigo-300 font-mono text-xs transition cursor-pointer active:scale-95";
+						if (btnScaleCity) btnScaleCity.className = "px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-mono text-xs transition cursor-pointer active:scale-95";
+						if (scaleLblZh) scaleLblZh.textContent = "模式：宇宙宏观尺度对比（月球 vs 火星双卫）";
+						if (scaleLblEn) scaleLblEn.textContent = "Mode: Cosmic Scale Comparison (Moon vs Martian Moons)";
+						renderMoonScale();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnScaleCity) {
+					btnScaleCity.addEventListener("click", () => {
+						scaleMode = "city";
+						btnScaleCity.className = "px-3 py-1.5 rounded-lg bg-indigo-950 border border-indigo-500 text-indigo-300 font-mono text-xs transition cursor-pointer active:scale-95";
+						if (btnScaleCosmic) btnScaleCosmic.className = "px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-400 font-mono text-xs transition cursor-pointer active:scale-95";
+						if (scaleLblZh) scaleLblZh.textContent = "模式：微观城市环线对比（火卫一如同一座大城市城区）";
+						if (scaleLblEn) scaleLblEn.textContent = "Mode: City Scale Comparison (Phobos matches a major city ring)";
+						renderMoonScale();
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 5. ISOTOPE FINGERPRINT REVEAL (CANVAS)
+				// ==========================================
+				const isoCanvas = document.getElementById("isotope-canvas");
+				const isoCtx = isoCanvas ? isoCanvas.getContext("2d") : null;
+				let isoMode = "sample"; // "remote" or "sample"
+
+				function renderIsotopeChart() {
+					if (!isoCanvas || !isoCtx) return;
+					resizeCanvas(isoCanvas);
+					const w = isoCanvas.width;
+					const h = isoCanvas.height;
+					const dpr = window.devicePixelRatio || 1;
+
+					isoCtx.save();
+					isoCtx.scale(dpr, dpr);
+					const cssW = w / dpr;
+					const cssH = h / dpr;
+
+					isoCtx.clearRect(0, 0, cssW, cssH);
+
+					const padL = 60;
+					const padR = 30;
+					const padT = 30;
+					const padB = 40;
+					const chartW = cssW - padL - padR;
+					const chartH = cssH - padT - padB;
+
+					// Axes
+					isoCtx.strokeStyle = "#334155";
+					isoCtx.lineWidth = 1;
+					isoCtx.beginPath();
+					isoCtx.moveTo(padL, padT);
+					isoCtx.lineTo(padL, padT + chartH);
+					isoCtx.lineTo(padL + chartW, padT + chartH);
+					isoCtx.stroke();
+
+					if (isoMode === "remote") {
+						// Blurry spectral curve with noise & wide error band
+						isoCtx.fillStyle = "rgba(239, 68, 68, 0.15)";
+						isoCtx.beginPath();
+						isoCtx.moveTo(padL, padT + chartH * 0.4);
+						for (let x = 0; x <= chartW; x += 5) {
+							const t = x / chartW;
+							const yOffset = Math.sin(t * 3.5) * 20 + Math.cos(t * 7) * 8;
+							isoCtx.lineTo(padL + x, padT + chartH * 0.4 + yOffset - 18);
+						}
+						for (let x = chartW; x >= 0; x -= 5) {
+							const t = x / chartW;
+							const yOffset = Math.sin(t * 3.5) * 20 + Math.cos(t * 7) * 8;
+							isoCtx.lineTo(padL + x, padT + chartH * 0.4 + yOffset + 18);
+						}
+						isoCtx.closePath();
+						isoCtx.fill();
+
+						// Noisy mean line
+						isoCtx.beginPath();
+						for (let x = 0; x <= chartW; x += 4) {
+							const t = x / chartW;
+							const noise = (Math.sin(x * 123.4) * 4);
+							const y = padT + chartH * 0.4 + Math.sin(t * 3.5) * 20 + Math.cos(t * 7) * 8 + noise;
+							if (x === 0) isoCtx.moveTo(padL + x, y);
+							else isoCtx.lineTo(padL + x, y);
+						}
+						isoCtx.strokeStyle = "#f87171";
+						isoCtx.lineWidth = 2;
+						isoCtx.stroke();
+
+						isoCtx.fillStyle = "#fca5a5";
+						isoCtx.font = "bold 11px monospace";
+						isoCtx.textAlign = "left";
+						isoCtx.fillText("Remote Reflectance: Broad & Blurry (Ambiguous D-type vs Basalt)", padL + 15, padT + 25);
+					} else {
+						// High-precision isotopic spikes
+						const peaks = [
+							{ name: "Δ¹⁷O (Oxygen)", x: 0.25, val: 0.75, color: "#10b981" },
+							{ name: "ε⁵⁴Cr (Chromium)", x: 0.50, val: 0.88, color: "#38bdf8" },
+							{ name: "ε⁵⁰Ti (Titanium)", x: 0.75, val: 0.65, color: "#fbbf24" }
+						];
+
+						peaks.forEach((p) => {
+							const px = padL + chartW * p.x;
+							const py = padT + chartH * (1 - p.val);
+
+							// Draw sharp spike
+							isoCtx.beginPath();
+							isoCtx.moveTo(px, padT + chartH);
+							isoCtx.lineTo(px, py);
+							isoCtx.strokeStyle = p.color;
+							isoCtx.lineWidth = 4;
+							isoCtx.stroke();
+
+							// Top marker
+							isoCtx.beginPath();
+							isoCtx.arc(px, py, 5, 0, Math.PI * 2);
+							isoCtx.fillStyle = p.color;
+							isoCtx.fill();
+
+							// Label
+							isoCtx.fillStyle = "#ffffff";
+							isoCtx.font = "bold 10px monospace";
+							isoCtx.textAlign = "center";
+							isoCtx.fillText(p.name, px, py - 10);
+							isoCtx.fillStyle = p.color;
+							isoCtx.fillText(`Fingerprint: ${(p.val * 100).toFixed(1)} ppm`, px, py + 18);
+						});
+
+						isoCtx.fillStyle = "#34d399";
+						isoCtx.font = "bold 11px monospace";
+						isoCtx.textAlign = "left";
+						isoCtx.fillText("Laboratory Mass Spec: Decisive Isotopic DNA Spikes", padL + 15, padT + 20);
+					}
+
+					isoCtx.restore();
+				}
+
+				const btnIsoRemote = document.getElementById("btn-reveal-remote");
+				const btnIsoSample = document.getElementById("btn-reveal-sample");
+				const isoStatusZh = document.getElementById("isotope-status-text-zh");
+				const isoStatusEn = document.getElementById("isotope-status-text-en");
+
+				if (btnIsoRemote) {
+					btnIsoRemote.addEventListener("click", () => {
+						isoMode = "remote";
+						btnIsoRemote.className = "px-3 py-1.5 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 font-mono text-xs cursor-pointer transition active:scale-95";
+						if (btnIsoSample) btnIsoSample.className = "px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs cursor-pointer transition active:scale-95";
+						if (isoStatusZh) isoStatusZh.textContent = "轨道遥感光谱：太空风化使吸收带严重钝化，含碳小行星与火星玄武岩严重重叠！";
+						if (isoStatusEn) isoStatusEn.textContent = "Remote Sensing: Space weathering severely flattens spectral features, leaving parentage ambiguous!";
+						renderIsotopeChart();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnIsoSample) {
+					btnIsoSample.addEventListener("click", () => {
+						isoMode = "sample";
+						btnIsoSample.className = "px-3 py-1.5 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-300 font-mono text-xs cursor-pointer transition active:scale-95";
+						if (btnIsoRemote) btnIsoRemote.className = "px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 font-mono text-xs cursor-pointer transition active:scale-95";
+						if (isoStatusZh) isoStatusZh.textContent = "返回物理样本分析：Δ¹⁷O 与 ε⁵⁴Cr 同位素比值呈现分明指纹，彻底定性母体来源！";
+						if (isoStatusEn) isoStatusEn.textContent = "Physical Sample: Δ¹⁷O and ε⁵⁴Cr isotopic ratios reveal unambiguous planetary DNA!";
+						renderIsotopeChart();
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 6. ONE PASS PER ORBIT CANVAS
+				// ==========================================
+				const orbitCanvas = document.getElementById("orbit-window-canvas");
+				const orbitCtx = orbitCanvas ? orbitCanvas.getContext("2d") : null;
+				let orbitAnimPlaying = true;
+				let orbitAngle = 0;
+
+				function renderOrbitWindow() {
+					if (!orbitCanvas || !orbitCtx) return;
+					resizeCanvas(orbitCanvas);
+					const w = orbitCanvas.width;
+					const h = orbitCanvas.height;
+					const dpr = window.devicePixelRatio || 1;
+
+					orbitCtx.save();
+					orbitCtx.scale(dpr, dpr);
+					const cssW = w / dpr;
+					const cssH = h / dpr;
+
+					orbitCtx.clearRect(0, 0, cssW, cssH);
+
+					const cx = cssW * 0.5;
+					const cy = cssH * 0.5;
+					const rOrbit = Math.min(cssW, cssH) * 0.38;
+
+					// Draw Mars Center
+					orbitCtx.beginPath();
+					orbitCtx.arc(cx, cy, 28, 0, Math.PI * 2);
+					orbitCtx.fillStyle = "#c2410c";
+					orbitCtx.shadowColor = "#ea580c";
+					orbitCtx.shadowBlur = 15;
+					orbitCtx.fill();
+					orbitCtx.shadowBlur = 0;
+
+					orbitCtx.fillStyle = "#ffffff";
+					orbitCtx.font = "bold 11px monospace";
+					orbitCtx.textAlign = "center";
+					orbitCtx.fillText("Mars (火星)", cx, cy + 4);
+
+					// Orbit Ring (Full 7.65 hr track)
+					orbitCtx.beginPath();
+					orbitCtx.arc(cx, cy, rOrbit, 0, Math.PI * 2);
+					orbitCtx.strokeStyle = "rgba(148, 163, 184, 0.25)";
+					orbitCtx.lineWidth = 2;
+					orbitCtx.stroke();
+
+					// 2.5-hour Sampling Window Arc (2.5 / 7.65 * 2PI ≈ 2.05 rad)
+					const windowArc = (2.5 / 7.65) * Math.PI * 2;
+					orbitCtx.beginPath();
+					orbitCtx.arc(cx, cy, rOrbit, -windowArc * 0.5, windowArc * 0.5);
+					orbitCtx.strokeStyle = "#ef4444";
+					orbitCtx.lineWidth = 6;
+					orbitCtx.stroke();
+
+					orbitCtx.fillStyle = "#ef4444";
+					orbitCtx.font = "bold 10px monospace";
+					orbitCtx.fillText("~2.5h Touchdown Window (~32%)", cx + rOrbit + 15, cy - 10);
+
+					// Phobos Moving along Orbit
+					const px = cx + rOrbit * Math.cos(orbitAngle);
+					const py = cy + rOrbit * Math.sin(orbitAngle);
+
+					orbitCtx.beginPath();
+					orbitCtx.arc(px, py, 8, 0, Math.PI * 2);
+					orbitCtx.fillStyle = "#f59e0b";
+					orbitCtx.fill();
+
+					orbitCtx.fillStyle = "#fcd34d";
+					orbitCtx.fillText("Phobos", px, py - 12);
+
+					// Is it inside the window?
+					const normAngle = ((orbitAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+					const inWindow = normAngle < windowArc * 0.5 || normAngle > (Math.PI * 2 - windowArc * 0.5);
+
+					if (inWindow) {
+						orbitCtx.beginPath();
+						orbitCtx.arc(px, py, 14, 0, Math.PI * 2);
+						orbitCtx.strokeStyle = "#ef4444";
+						orbitCtx.lineWidth = 2;
+						orbitCtx.stroke();
+					}
+
+					orbitCtx.restore();
+				}
+
+				function animateOrbitWindow() {
+					if (orbitAnimPlaying) {
+						orbitAngle += 0.015;
+						renderOrbitWindow();
+					}
+					const req = requestAnimationFrame(animateOrbitWindow);
+					animFrameIds.push(req);
+				}
+
+				const btnOrbitToggle = document.getElementById("btn-orbit-anim-toggle");
+				const orbitTxtZh = document.getElementById("orbit-anim-text-zh");
+				const orbitTxtEn = document.getElementById("orbit-anim-text-en");
+				if (btnOrbitToggle) {
+					btnOrbitToggle.addEventListener("click", () => {
+						orbitAnimPlaying = !orbitAnimPlaying;
+						if (orbitTxtZh) orbitTxtZh.textContent = orbitAnimPlaying ? "暂停轨道" : "继续轨道";
+						if (orbitTxtEn) orbitTxtEn.textContent = orbitAnimPlaying ? "Pause" : "Resume";
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// INITIALIZATION RUNNER
+				// ==========================================
+				selectPhase(0);
+				renderTrajectory();
+				animateTrajectory();
+				updateDropMetrics();
+				renderDropChamber();
+				renderMoonScale();
+				renderIsotopeChart();
+				renderOrbitWindow();
+				animateOrbitWindow();
+
+				window.addEventListener("resize", () => {
+					renderTrajectory();
+					renderDropChamber();
+					renderMoonScale();
+					renderIsotopeChart();
+					renderOrbitWindow();
+				}, { signal: lifecycle.signal });
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initPhobosGambit);
+			} else {
+				initPhobosGambit();
+			}
+			document.addEventListener("astro:page-load", initPhobosGambit);
+		})();
+	</script>
+</MainGridLayout>
