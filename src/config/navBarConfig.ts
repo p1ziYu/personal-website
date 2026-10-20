@@ -20,7 +20,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => ({
 		},
 		{
 			...LinkPresets.Projects,
-			children: [LinkPresets.Projects, LinkPresets.PixelWall],
+			children: [LinkPresets.Projects, LinkPresets.PixelWall, LinkPresets.QuakeWatch, LinkPresets.PartyGames],
 		},
 		LinkPresets.Friends,
 		LinkPresets.Guestbook,
@@ -102,6 +102,18 @@ export const LinkPresets: Record<string, NavBarLink> = {
 		name: "像素墙",
 		url: "https://pixels.p1ziyu.com/",
 		icon: "material-symbols:grid-on-rounded",
+		external: true,
+	},
+	QuakeWatch: {
+		name: "震波守望",
+		url: "https://quake.p1ziyu.com/",
+		icon: "material-symbols:vibration",
+		external: true,
+	},
+	PartyGames: {
+		name: "棋牌派对",
+		url: "https://games.p1ziyu.com/",
+		icon: "material-symbols:stadia-controller",
 		external: true,
 	},
 	Gallery: {
