@@ -23,6 +23,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"cursed-fonts",
 	"emberhold-siege",
 	"event-horizon",
+	"fragile-bits",
 	"ghost-catcher",
 	"goldilocks-ink",
 	"grounded-wings",
