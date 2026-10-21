@@ -53,6 +53,7 @@ export const ENGLISH_POST_SLUGS: ReadonlySet<string> = new Set<string>([
 	"a-beautiful-misunderstanding",
 	"writing-on-firefly",
 	"first-round-in-america",
+	"when-the-roots-fail",
 ]);
 
 /**
