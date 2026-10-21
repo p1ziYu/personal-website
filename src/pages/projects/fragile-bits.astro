@@ -1,0 +1,1620 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "FRAGILE BITS · Quantum Error Correction Record"
+	: "一错万钧 · FRAGILE BITS";
+const description = isEn
+	? "On 21 October 2026, Quantinuum's trapped-ion quantum computer Helios set a quantum error-correction record: 99.9995% logical fidelity (five errors per million operations). Quantum bits forget constantly, and making them remember costs qubits — this page makes that cost and payoff visceral."
+	: "2026 年 10 月 21 日，Quantinuum 离子阱量子计算机 Helios 创下量子纠错新纪录：99.9995% 逻辑保真度（百万次操作仅 5 次错误）。量子比特时刻在遗忘，而让它们记住需要巨大的物理比特代价——本页将这一代价与回报直观具象化。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#040714] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-cyan-500/30 selection:text-cyan-200">
+			<!-- Ambient Quantum Energy Glows -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-36 -left-36 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-96 h-96 bg-purple-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-16 left-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+							<span>QUANTINUUM · HELIOS QEC RECORD · 2026-10-21</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono">
+							<span>⚡</span>
+							<span class="lang-zh">99.9995% 逻辑保真度 (5 / 1,000,000)</span>
+							<span class="lang-en">99.9995% Logical Fidelity (5 in 1M)</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono">
+							<span>⚛️</span>
+							<span class="lang-zh">离子阱色码纠错 · 37:1 物理冗余</span>
+							<span class="lang-en">Trapped-Ion Color Code · 37:1 Redundancy</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">全球量子纠错基准 · 2026-10-21</span>
+							<span class="lang-en">Global QEC Benchmark · 2026-10-21</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/fragile-bits/" : "/en/projects/fragile-bits/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-cyan-500/40 text-cyan-300 hover:text-white hover:bg-cyan-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "切换为中文" : "Switch to English"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">一错万钧 · FRAGILE BITS</span>
+					<span class="lang-en">FRAGILE BITS · Quantum Error Correction</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-cyan-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">计算史上最昂贵的拼写纠错：量子比特时刻在遗忘，让它们记住需要巨大的比特代价。</span>
+					<span class="lang-en">The most expensive spellcheck in computing history: qubits forget constantly; making them remember costs qubits.</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							<strong>2026 年 10 月 21 日</strong>，量子计算领军企业 Quantinuum 正式公布了其新一代离子阱量子计算机<strong>“Helios”</strong>创下的里程碑式量子纠错记录：实现高达 <strong>99.9995% 的逻辑保真度</strong>——即在每百万次逻辑量子门操作中，仅发生<strong>五次错误（five errors per million operations）</strong>！
+						</span>
+						<span class="lang-en">
+							On <strong>21 October 2026</strong>, quantum computing company Quantinuum announced a record-setting quantum error-correction benchmark achieved on its trapped-ion quantum computer <strong>"Helios"</strong>: <strong>99.9995% logical fidelity</strong> — equivalent to just <strong>five errors per million operations</strong>.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							这一突破展现了极为惊人的技术演进斜率：与 Quantinuum 自身在 2026 年 9 月发布的“Helix”方案相比，错误率在短短一个月内实现了<strong>整整十倍（10×）的削减</strong>；据 Quantinuum 报告，该保真度相比于竞品硬件路线已发表的最强成果更实现了<strong>一百倍（100×）的断层式领先</strong>。9 月的 Helix 方案使用 10 个物理比特来守护 1 个逻辑比特，而本次实验则引入了复杂的色码（Color Code）架构，使用多达 <strong>37 个物理离子比特</strong>来保护 1 个逻辑比特——以更大的物理硬件消耗，换取了断崖式下降的错误率。同时，实验观测到了严格的指数级纠错扩展规律：代码距离每前进一步，逻辑错误抑制倍率便提升 <strong>12 倍</strong>。
+						</span>
+						<span class="lang-en">
+							This represents a steep engineering trajectory: a tenfold (10×) reduction in Quantinuum's own error rate in just one month since September, and — per Quantinuum — a hundredfold (100×) improvement over the strongest published result from competing hardware approaches. September's "Helix" system used 10 physical qubits to protect each logical qubit. The Helios experiment deployed a color code with up to <strong>37 physical qubits per logical qubit</strong> — directly trading greater physical resource consumption for substantially lower logical error rates. Crucially, increasing code distance reduced logical errors exponentially: each tested step improved error suppression by a <strong>factor of 12</strong>.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							量子比特时刻面临退相干与环境噪声侵袭，未经纠错的量子算法往往在触及复杂计算前便沦为随机乱码；容错量子纠错正是通用量子计算必须矗立其上的坚实地基。Quantinuum 将这一成果与其计划于 <strong>2029 年推出的通用容错量子计算系统“Apollo”</strong>直接挂钩（公司公布的目标规划，非既成事实）。
+						</span>
+						<span class="lang-en">
+							Qubits lose coherence constantly and physical operations inject noise, derailing calculations long before complex algorithms finish; quantum error correction is the foundational bedrock on which practical quantum computing must be built. Quantinuum links these results to <strong>"Apollo," its planned universal fault-tolerant system targeted for 2029</strong> (the company's stated development target, not a verified fact).
+						</span>
+					</p>
+				</div>
+			</header>
+
+			<!-- CORE FACTS METRICS STRIP -->
+			<section class="relative z-10 mb-10">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-cyan-400 font-mono text-xs font-bold uppercase tracking-wider">
+						<span class="lang-zh">核心突破指标 · KEY BENCHMARK STRIP</span>
+						<span class="lang-en">CORE BENCHMARK METRICS STRIP</span>
+					</span>
+				</div>
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-cyan-500/30">
+						<div class="text-cyan-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">逻辑保真度</span>
+							<span class="lang-en">LOGICAL FIDELITY</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-white mt-1">99.9995%</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">5 / 1,000,000 操作错误</span>
+							<span class="lang-en">5 errors / 1M operations</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-purple-500/30">
+						<div class="text-purple-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">月度进步幅度</span>
+							<span class="lang-en">1-MONTH LEAP</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-purple-300 mt-1">10× 降错</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">相比 9 月 Helix 方案</span>
+							<span class="lang-en">Tenfold vs Sept Helix</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-amber-500/30">
+						<div class="text-amber-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">竞品比较领先</span>
+							<span class="lang-en">COMPETITIVE LEAD</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-amber-300 mt-1">100× 优势</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">优于竞品已发表成果 (Quantinuum称)</span>
+							<span class="lang-en">vs published rivals (Quantinuum)</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30">
+						<div class="text-emerald-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">色码物理冗余</span>
+							<span class="lang-en">CODE REDUNDANCY</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-emerald-300 mt-1">37 : 1</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">最多37物理离子/逻辑比特</span>
+							<span class="lang-en">Up to 37 ions / logical bit</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-indigo-500/30">
+						<div class="text-indigo-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">距离扩展抑制率</span>
+							<span class="lang-en">DISTANCE SCALING</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-indigo-300 mt-1">÷ 12 / 阶梯</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">每步错误下降12倍</span>
+							<span class="lang-en">12× suppression per step</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-rose-500/30">
+						<div class="text-rose-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">通用容错路线</span>
+							<span class="lang-en">ROADMAP TARGET</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-rose-300 mt-1">2029 Apollo</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">Quantinuum规划目标</span>
+							<span class="lang-en">Company stated target</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- REALITY CHECK STRIP (NON-INTERACTIVE HONESTY NOTES) -->
+			<section class="relative z-10 mb-12 p-6 rounded-2xl bg-slate-950/90 border border-rose-500/40 text-slate-300 text-xs sm:text-sm leading-relaxed">
+				<div class="flex items-center gap-2 mb-3 text-rose-400 font-mono font-bold tracking-wider uppercase text-sm">
+					<span>⚖️</span>
+					<span class="lang-zh">现实审视与科学诚实性声明 (REALITY CHECK)</span>
+					<span class="lang-en">REALITY CHECK & SCIENTIFIC HONESTY STRIP</span>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-amber-400 font-bold mb-1 flex items-center gap-1.5">
+							<span>⚠️</span>
+							<span class="lang-zh">1. 单项逻辑操作纪录 ≠ 商业实用算法稳定运行数小时</span>
+							<span class="lang-en">1. Record Logical Op ≠ Useful Algorithm Run for Hours</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								在实验受控基准测试中跑出高保真度的单个或级联逻辑门，与在实际大规模量子算法（例如 Shor 质因数分解或长时分子量子化学模拟）中持续调度成百上千个纠错比特并无间断运行数小时，存在着巨大的系统工程与软硬件鸿沟。
+							</span>
+							<span class="lang-en">
+								Demonstrating high fidelity on isolated benchmark operations is fundamentally different from sustaining thousands of coordinated logical gates across hundreds of logical qubits running commercially useful algorithms for uninterrupted hours.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-cyan-400 font-bold mb-1 flex items-center gap-1.5">
+							<span>⚠️</span>
+							<span class="lang-zh">2. 单一硬件架构成功 ≠ 全方位性能指标全胜</span>
+							<span class="lang-en">2. Trapped-Ion Success ≠ Superiority Across Every Metric</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								离子阱硬件在两比特门保真度与全连通性（All-to-All Connectivity）上表现卓绝，但在门操作速度（微秒到毫秒级，比超导慢数个数量级）、离子穿梭延迟、芯片制造与极低温/超高真空封装成本上均面临独立且严峻的挑战。
+							</span>
+							<span class="lang-en">
+								While trapped ions exhibit superior native gate fidelities and all-to-all connectivity via ion shuttling, superconducting and other architectures maintain significant advantages in raw gate speeds (nanoseconds vs microseconds) and scalable semiconductor manufacturing.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-purple-400 font-bold mb-1 flex items-center gap-1.5">
+							<span>📐</span>
+							<span class="lang-zh">3. 所有图表均为概念示意图，非实验室实测波形</span>
+							<span class="lang-en">3. All Diagrams Are Schematic / Illustrative Models</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								本页面呈现的“遗忘的量子比特”波形、“百万分之五”点阵、“色码晶格点”以及“十二倍抑制曲线”均为用于原理解释与交互教学的<strong>概念性示意图解（illustrative / schematic）</strong>，绝非 Quantinuum 实验室硬件实测摄影或原始实验波形数据。
+							</span>
+							<span class="lang-en">
+								All visual simulations, dot matrices, color-code lattices, and suppression curves on this page are <strong>schematic illustrations</strong> clearly labeled as such for intuitive pedagogical understanding — they are NOT Quantinuum hardware imagery or raw laboratory traces.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-emerald-400 font-bold mb-1 flex items-center gap-1.5">
+							<span>🔭</span>
+							<span class="lang-zh">4. 真正的终极突破：当纠错不再成为头条新闻</span>
+							<span class="lang-en">4. The Real Turning Point: Invisible Infrastructure</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								量子计算历史上真正的奇点，绝不会发生在某一次刷屏的单项保真度纪录破榜之日，而是发生当量子纠错彻底从所有科技头条新闻中淡出、蜕变成为如同现代经典计算机内存 ECC 一样令人心安且无感的<strong>隐形基础设施</strong>之时。
+							</span>
+							<span class="lang-en">
+								The true watershed in quantum computing will arrive not when a single fidelity record makes headlines, but when quantum error correction ceases to be news at all — fading into boring, reliable, invisible background infrastructure just like DRAM ECC in modern classical servers.
+							</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- ============================================================== -->
+			<!-- INTERACTIVE 1: THE FORGETFUL QUBIT (DECOHERENCE PLAYGROUND)   -->
+			<!-- ============================================================== -->
+			<section class="relative z-10 mb-14 p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold flex items-center gap-2 mb-1">
+							<span>⏳</span>
+							<span class="lang-zh">交互实验 01 · 遗忘的量子比特</span>
+							<span class="lang-en">INTERACTIVE 01 · THE FORGETFUL QUBIT</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">退相干游乐场：没有纠错，量子计算何时崩溃？</span>
+							<span class="lang-en">Decoherence Playground: When Does Uncorrected Computation Fail?</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300">
+						<span class="lang-zh">公式：P(失败) ≈ 1 - (1 - p)ⁿ</span>
+						<span class="lang-en">Formula: P(fail) ≈ 1 - (1 - p)ⁿ</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						单个物理量子比特极其脆弱。即使单次操作的物理错误率仅有 0.1%（千分之一），当算法连续执行数百上千步门操作后，累积错误概率将迅速逼近 100%，整个量子计算将坍缩为毫无意义的随机噪声。拖动下方滑块，对比未纠错物理比特与 Helios 纠错逻辑比特的命运。
+					</span>
+					<span class="lang-en">
+						Physical qubits are extraordinarily brittle. Even with a seemingly minuscule physical error rate of 0.1% per gate, running an algorithm of a few thousand gates causes cumulative failure probability to approach 100%. Adjust the sliders below to contrast an uncorrected physical qubit against the Helios logical qubit.
+					</span>
+				</p>
+
+				<!-- Controls Grid -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+					<!-- Slider Controls (Left 6 cols) -->
+					<div class="lg:col-span-6 space-y-5 p-5 rounded-xl bg-slate-950/60 border border-slate-800">
+						<div>
+							<div class="flex justify-between items-center text-xs font-mono mb-2">
+								<span class="text-slate-300 font-bold">
+									<span class="lang-zh">连续门操作步数 (n)：</span>
+									<span class="lang-en">Operation Count (n):</span>
+								</span>
+								<span id="qubit-ops-val" class="text-cyan-400 font-black text-sm">5,000 步</span>
+							</div>
+							<input id="slider-qubit-ops" type="range" min="100" max="1000000" step="100" value="5000" class="w-full accent-cyan-400 cursor-pointer" />
+							<div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+								<span>100</span>
+								<span>1,000</span>
+								<span>10,000</span>
+								<span>100,000</span>
+								<span>1,000,000</span>
+							</div>
+						</div>
+
+						<div>
+							<div class="flex justify-between items-center text-xs font-mono mb-2">
+								<span class="text-slate-300 font-bold">
+									<span class="lang-zh">假定物理单门错误率 (p)：</span>
+									<span class="lang-en">Assumed Physical Error Rate (p):</span>
+								</span>
+								<span id="qubit-err-val" class="text-amber-400 font-black text-sm">0.100% (1.0×10⁻³)</span>
+							</div>
+							<input id="slider-qubit-err" type="range" min="0.01" max="1.50" step="0.01" value="0.10" class="w-full accent-amber-400 cursor-pointer" />
+							<div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+								<span>0.01% (超导极品)</span>
+								<span>0.10% (典型离子阱)</span>
+								<span>1.50% (噪声门)</span>
+							</div>
+						</div>
+
+						<div class="pt-2">
+							<div class="text-[11px] font-mono text-slate-400 mb-2">
+								<span class="lang-zh">典型预设场景：</span>
+								<span class="lang-en">Preset Scenarios:</span>
+							</div>
+							<div class="flex flex-wrap gap-2 text-xs font-mono">
+								<button id="preset-raw-clean" type="button" class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-white transition cursor-pointer active:scale-95">
+									<span class="lang-zh">高端物理门 (0.05%)</span>
+									<span class="lang-en">High-end Physical (0.05%)</span>
+								</button>
+								<button id="preset-raw-typical" type="button" class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 hover:border-amber-400 text-slate-300 hover:text-white transition cursor-pointer active:scale-95">
+									<span class="lang-zh">典型基准门 (0.10%)</span>
+									<span class="lang-en">Standard Gate (0.10%)</span>
+								</button>
+								<button id="preset-raw-noisy" type="button" class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-700 hover:border-red-400 text-slate-300 hover:text-white transition cursor-pointer active:scale-95">
+									<span class="lang-zh">近期含噪门 (0.50%)</span>
+									<span class="lang-en">Noisy Gate (0.50%)</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Real-time Comparison Results (Right 6 cols) -->
+					<div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+						<!-- Uncorrected Raw Qubit -->
+						<div class="p-4 rounded-xl bg-slate-950/80 border border-red-500/40 flex flex-col justify-between">
+							<div>
+								<div class="flex items-center justify-between text-xs font-mono text-red-400 font-bold mb-1">
+									<span class="lang-zh">❌ 未纠错裸物理比特</span>
+									<span class="lang-en">❌ RAW UNCORRECTED QUBIT</span>
+								</div>
+								<div class="text-[11px] text-slate-400 mb-3 font-mono">
+									<span class="lang-zh">基于设定错误率 p 累积</span>
+									<span class="lang-en">Accumulated from assumed p</span>
+								</div>
+								<div class="text-2xl sm:text-3xl font-black font-mono text-red-400" id="res-raw-fail">
+									99.33%
+								</div>
+								<div class="text-[11px] font-mono text-slate-400 mt-1">
+									<span class="lang-zh">累积崩溃失真概率</span>
+									<span class="lang-en">Cumulative Failure Chance</span>
+								</div>
+							</div>
+							<div class="mt-4 pt-3 border-t border-slate-800">
+								<div class="flex justify-between text-xs font-mono mb-1">
+									<span class="text-slate-400"><span class="lang-zh">算力保真余量：</span><span class="lang-en">Survival: </span></span>
+									<span id="res-raw-survival" class="text-white font-bold">0.67%</span>
+								</div>
+								<div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
+									<div id="bar-raw-survival" class="bg-red-500 h-2 rounded-full transition-all duration-300" style="width: 0.67%"></div>
+								</div>
+								<div id="badge-raw-verdict" class="mt-2 text-[10px] font-mono px-2 py-0.5 rounded bg-red-950/80 border border-red-800 text-red-300 inline-block">
+									<span class="lang-zh">⚠️ 计算结果已退相干为噪声</span>
+									<span class="lang-en">⚠️ Scrambled into pure entropy</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Helios Corrected Logical Qubit -->
+						<div class="p-4 rounded-xl bg-slate-950/80 border border-cyan-500/50 flex flex-col justify-between">
+							<div>
+								<div class="flex items-center justify-between text-xs font-mono text-cyan-400 font-bold mb-1">
+									<span class="lang-zh">🛡️ Helios 纠错逻辑比特</span>
+									<span class="lang-en">🛡️ HELIOS LOGICAL QUBIT</span>
+								</div>
+								<div class="text-[11px] text-cyan-300/70 mb-3 font-mono">
+									<span class="lang-zh">p = 5.0 × 10⁻⁶ (每百万次 5 错)</span>
+									<span class="lang-en">p = 5.0 × 10⁻⁶ (5 in 1M ops)</span>
+								</div>
+								<div class="text-2xl sm:text-3xl font-black font-mono text-cyan-300" id="res-helios-fail">
+									2.47%
+								</div>
+								<div class="text-[11px] font-mono text-slate-400 mt-1">
+									<span class="lang-zh">同一操作量下的崩溃概率</span>
+									<span class="lang-en">Failure at Same Operation Count</span>
+								</div>
+							</div>
+							<div class="mt-4 pt-3 border-t border-slate-800">
+								<div class="flex justify-between text-xs font-mono mb-1">
+									<span class="text-slate-400"><span class="lang-zh">算力保真余量：</span><span class="lang-en">Survival: </span></span>
+									<span id="res-helios-survival" class="text-cyan-300 font-bold">97.53%</span>
+								</div>
+								<div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
+									<div id="bar-helios-survival" class="bg-cyan-400 h-2 rounded-full transition-all duration-300" style="width: 97.53%"></div>
+								</div>
+								<div id="badge-helios-verdict" class="mt-2 text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950/80 border border-cyan-800 text-cyan-300 inline-block">
+									<span class="lang-zh">✅ 逻辑态维持高度相干稳定</span>
+									<span class="lang-en">✅ Highly coherent logical state</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Visual Wave Coherence Simulation Canvas -->
+				<div class="p-4 rounded-xl bg-slate-950 border border-slate-800">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs font-mono text-slate-400">
+						<span class="flex items-center gap-2">
+							<span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+							<span class="lang-zh">未纠错量子态（红：相干性衰减入背景噪声）</span>
+							<span class="lang-en">Uncorrected state (Red: fast decay to noise)</span>
+							<span class="mx-2 text-slate-600">|</span>
+							<span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+							<span class="lang-zh">Helios 逻辑态（青：色码稳定相干保护）</span>
+							<span class="lang-en">Helios logical state (Cyan: stable coherence)</span>
+						</span>
+						<span class="text-[11px] text-slate-500">
+							<span class="lang-zh">示意波形 · Schematic</span>
+							<span class="lang-en">Schematic Wave</span>
+						</span>
+					</div>
+					<canvas id="canvas-decoherence" class="w-full h-36 rounded-lg block bg-[#02050f]"></canvas>
+				</div>
+			</section>
+
+			<!-- ============================================================== -->
+			<!-- INTERACTIVE 2: FIVE IN A MILLION (99.9995% FIDELITY)          -->
+			<!-- ============================================================== -->
+			<section class="relative z-10 mb-14 p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-purple-400 uppercase tracking-widest font-bold flex items-center gap-2 mb-1">
+							<span>🔍</span>
+							<span class="lang-zh">交互实验 02 · 百万分之五</span>
+							<span class="lang-en">INTERACTIVE 02 · FIVE IN A MILLION</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">99.9995% 保真度直观具象化：在百万次操作中寻找 5 个坏点</span>
+							<span class="lang-en">Visualizing 99.9995%: Hunting 5 Errors Among 1,000,000 Operations</span>
+						</h2>
+					</div>
+					<div class="flex items-center gap-2">
+						<button id="btn-seek-error" class="px-3 py-1.5 rounded-lg bg-purple-950 border border-purple-500/60 text-purple-300 font-mono text-xs hover:text-white hover:bg-purple-900 transition cursor-pointer active:scale-95 flex items-center gap-1.5">
+							<span>🎯</span>
+							<span class="lang-zh">锁定下一个错误点</span>
+							<span class="lang-en">Target Next Error</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						99.9995% 是一个抽象而遥远的数字。下方点阵按比例代表 <strong>1,000,000 次逻辑门操作</strong>（画布由 10,000 个采样单元组成，每单元代表 100 次操作；全场严格分布着 5 处单次错误事件）。点击“锁定下一个错误点”在浩瀚的完好运算中穿梭，感受万分之五的罕见度与纠错精密度。
+					</span>
+					<span class="lang-en">
+						99.9995% is an abstract statistical benchmark. The proportional canvas below represents <strong>1,000,000 operations</strong> (10,000 macroscopic sample blocks, each spanning 100 gates, housing exactly 5 error events). Click "Target Next Error" to inspect the isolated faults across the vast sea of pristine gates.
+					</span>
+				</p>
+
+				<!-- Canvas & Readout Grid -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+					<!-- Interactive Dot Canvas (Left 8 cols) -->
+					<div class="lg:col-span-8 relative">
+						<div class="absolute top-3 left-3 z-20 px-2.5 py-1 rounded bg-slate-950/85 border border-slate-700 text-[11px] font-mono text-slate-300">
+							<span class="lang-zh">当前坐标：</span><span class="lang-en">Loc: </span>
+							<strong id="dot-cursor-coord" class="text-purple-300">Gate #482,910</strong>
+						</div>
+						<div class="absolute top-3 right-3 z-20 px-2.5 py-1 rounded bg-slate-950/85 border border-slate-700 text-[11px] font-mono text-rose-400 flex items-center gap-1.5">
+							<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+							<span class="lang-zh">已定位错误：</span><span class="lang-en">Focused: </span>
+							<strong id="dot-error-index" class="text-white">1 / 5</strong>
+						</div>
+						<div class="absolute bottom-3 right-3 z-20 px-2 py-0.5 rounded bg-slate-950/80 border border-slate-800 text-[10px] font-mono text-slate-500">
+							<span class="lang-zh">示意比例点阵 · 10,000 块 × 100 步</span>
+							<span class="lang-en">Schematic 10,000-cell array (100 ops/cell)</span>
+						</div>
+						<canvas id="canvas-million" class="w-full h-80 rounded-xl block bg-[#02040c] border border-slate-800 cursor-crosshair"></canvas>
+					</div>
+
+					<!-- Big Number Readouts & Comparisons (Right 4 cols) -->
+					<div class="lg:col-span-4 space-y-3 font-mono">
+						<div class="p-4 rounded-xl bg-slate-950/80 border border-purple-500/30">
+							<div class="text-xs text-purple-400 uppercase tracking-wider font-semibold">
+								<span class="lang-zh">每百万次操作错误数</span>
+								<span class="lang-en">ERRORS PER 1,000,000 OPS</span>
+							</div>
+							<div class="text-4xl font-black text-white mt-1">5</div>
+							<div class="text-xs text-slate-400 mt-1">
+								<span class="lang-zh">999,995 次完全精准执行</span>
+								<span class="lang-en">999,995 operations fully flawless</span>
+							</div>
+						</div>
+
+						<div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
+							<div class="text-xs text-cyan-400 uppercase tracking-wider font-semibold">
+								<span class="lang-zh">相比 9 月自身方案 (Helix)</span>
+								<span class="lang-en">VS QUANTINUUM SEPT (HELIX)</span>
+							</div>
+							<div class="text-2xl font-black text-cyan-300 mt-1">10× 跃升</div>
+							<div class="text-xs text-slate-400 mt-1">
+								<span class="lang-zh">1 个月内将自身错误率压低 10 倍</span>
+								<span class="lang-en">Error rate lowered tenfold in 30 days</span>
+							</div>
+						</div>
+
+						<div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800">
+							<div class="text-xs text-amber-400 uppercase tracking-wider font-semibold">
+								<span class="lang-zh">相比竞品已发表成果 (Quantinuum称)</span>
+								<span class="lang-en">VS PUBLISHED RIVALS (PER QUANTINUUM)</span>
+							</div>
+							<div class="text-2xl font-black text-amber-300 mt-1">100× 优势</div>
+							<div class="text-xs text-slate-400 mt-1">
+								<span class="lang-zh">比其他硬件路线发表的最好纪录高 2 个数量级</span>
+								<span class="lang-en">100× lower error than strongest published competitors</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ============================================================== -->
+			<!-- INTERACTIVE 3: THE COST OF MEMORY (REDUNDANCY VISUALIZER)      -->
+			<!-- ============================================================== -->
+			<section class="relative z-10 mb-14 p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-amber-400 uppercase tracking-widest font-bold flex items-center gap-2 mb-1">
+							<span>🧩</span>
+							<span class="lang-zh">交互实验 03 · 记忆的代价</span>
+							<span class="lang-en">INTERACTIVE 03 · THE COST OF MEMORY</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">物理比特冗余对比：Helix (10:1) vs Helios 色码 (37:1)</span>
+							<span class="lang-en">Physical Qubit Redundancy: Helix (10:1) vs Helios Color Code (37:1)</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-amber-950/80 border border-amber-500/40 text-amber-300">
+						<span class="lang-zh">原则：更好的保护需要更多的物理比特</span>
+						<span class="lang-en">Rule: Better protection costs more qubits</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						在量子物理中，保护逻辑信息不能靠“简单复制”（受不可克隆定理制约），只能将单比特信息非局域地编码在一群纠缠的物理比特中。2026 年 9 月的 Helix 方案使用 10 个物理比特来守护 1 个逻辑比特；而 10 月的 Helios 色码方案为达到 99.9995% 保真度，动用了多达 <strong>37 个物理比特保护 1 个逻辑比特</strong>。拖动滑块调整目标逻辑比特规模，直观感受膨胀的物理离子硬件代价。
+					</span>
+					<span class="lang-en">
+						Under the No-Cloning Theorem, quantum information cannot simply be duplicated — it must be entangled across non-local multi-qubit topologies. September's Helix protected 1 logical qubit with 10 physical qubits. October's Helios color code deploys up to <strong>37 physical qubits per logical qubit</strong> to secure 99.9995% fidelity. Slide below to see the exponential hardware bill.
+					</span>
+				</p>
+
+				<!-- Redundancy Slider -->
+				<div class="p-5 rounded-xl bg-slate-950/60 border border-slate-800 mb-6">
+					<div class="flex justify-between items-center text-xs font-mono mb-2">
+						<span class="text-slate-300 font-bold">
+							<span class="lang-zh">目标逻辑量子比特数 (N_logical)：</span>
+							<span class="lang-en">Target Logical Qubits (N_logical):</span>
+						</span>
+						<span id="redundancy-logical-val" class="text-amber-400 font-black text-base">6 个逻辑比特</span>
+					</div>
+					<input id="slider-logical-qubits" type="range" min="1" max="25" step="1" value="6" class="w-full accent-amber-400 cursor-pointer" />
+					<div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+						<span>1 (玩具单元)</span>
+						<span>5 (微型算法)</span>
+						<span>10 (逻辑寄存器)</span>
+						<span>25 (小规模纠错簇)</span>
+					</div>
+				</div>
+
+				<!-- Side-by-Side Comparison Columns -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<!-- Helix (10:1) -->
+					<div class="p-5 rounded-xl bg-slate-950/80 border border-cyan-500/30 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between text-xs font-mono mb-2">
+								<span class="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 font-bold">
+									<span class="lang-zh">Helix 方案 (2026 年 9 月)</span>
+									<span class="lang-en">HELIX CODE (SEPT 2026)</span>
+								</span>
+								<span class="text-cyan-400 font-mono text-xs">10 : 1 编码比率</span>
+							</div>
+							<div class="flex items-baseline gap-2 mt-2 mb-4">
+								<span id="helix-physical-total" class="text-3xl font-black font-mono text-white">60</span>
+								<span class="text-xs font-mono text-slate-400">
+									<span class="lang-zh">物理离子比特</span>
+									<span class="lang-en">physical ions</span>
+								</span>
+							</div>
+
+							<!-- Qubit Cell Matrix -->
+							<div class="text-[11px] font-mono text-slate-400 mb-2">
+								<span class="lang-zh">物理比特阵列网格（每个方块 = 1 物理比特）：</span>
+								<span class="lang-en">Physical Qubit Grid (Each block = 1 physical ion):</span>
+							</div>
+							<div id="helix-grid-cells" class="grid grid-cols-10 gap-1.5 p-3 rounded-lg bg-slate-900 border border-slate-800 min-h-36">
+								<!-- Rendered dynamically -->
+							</div>
+							<div id="helix-grid-overflow" class="text-[11px] font-mono text-slate-500 mt-1.5 hidden">
+								<!-- Overflow text -->
+							</div>
+						</div>
+
+						<div class="mt-4 pt-3 border-t border-slate-800 text-xs font-mono text-slate-400 leading-relaxed">
+							<span class="lang-zh">轻量冗余：以更少的物理资源快速成形，但逻辑错误率在 5×10⁻⁵ 级别。</span>
+							<span class="lang-en">Lightweight overhead: fewer physical ions required, but logical error sits at ~5×10⁻⁵.</span>
+						</div>
+					</div>
+
+					<!-- Helios Color Code (37:1) -->
+					<div class="p-5 rounded-xl bg-slate-950/80 border border-amber-500/40 flex flex-col justify-between">
+						<div>
+							<div class="flex items-center justify-between text-xs font-mono mb-2">
+								<span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-800 font-bold">
+									<span class="lang-zh">Helios 色码 (2026 年 10 月 21 日)</span>
+									<span class="lang-en">HELIOS COLOR CODE (OCT 2026)</span>
+								</span>
+								<span class="text-amber-400 font-mono text-xs">37 : 1 深度色码</span>
+							</div>
+							<div class="flex items-baseline gap-2 mt-2 mb-4">
+								<span id="helios-physical-total" class="text-3xl font-black font-mono text-amber-300">222</span>
+								<span class="text-xs font-mono text-slate-400">
+									<span class="lang-zh">物理离子比特 (3.7× 膨胀)</span>
+									<span class="lang-en">physical ions (3.7× overhead)</span>
+								</span>
+							</div>
+
+							<!-- Qubit Cell Matrix -->
+							<div class="text-[11px] font-mono text-slate-400 mb-2">
+								<span class="lang-zh">物理比特阵列网格（展示最大 222 个物理离子）：</span>
+								<span class="lang-en">Physical Qubit Grid (Displaying up to 222 physical ions):</span>
+							</div>
+							<div id="helios-grid-cells" class="grid grid-cols-12 sm:grid-cols-16 gap-1 p-3 rounded-lg bg-slate-900 border border-slate-800 min-h-36">
+								<!-- Rendered dynamically -->
+							</div>
+							<div id="helios-grid-overflow" class="text-[11px] font-mono text-amber-400/80 mt-1.5 hidden">
+								<!-- Overflow text -->
+							</div>
+						</div>
+
+						<div class="mt-4 pt-3 border-t border-slate-800 text-xs font-mono text-slate-400 leading-relaxed">
+							<span class="lang-zh">重型铠甲：消耗 3.7 倍物理比特构建色码晶格，将错误率彻底砸落至 5×10⁻⁶。</span>
+							<span class="lang-en">Heavy armor: 3.7× physical qubit overhead constructs color-code plaquettes, suppressing errors to 5×10⁻⁶.</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ============================================================== -->
+			<!-- INTERACTIVE 4: TWELVE TIMES TWELVE (SUPPRESSION CURVE)        -->
+			<!-- ============================================================== -->
+			<section class="relative z-10 mb-14 p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-indigo-400 uppercase tracking-widest font-bold flex items-center gap-2 mb-1">
+							<span>📉</span>
+							<span class="lang-zh">交互实验 04 · 十二乘十二</span>
+							<span class="lang-en">INTERACTIVE 04 · TWELVE TIMES TWELVE</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">代码距离阶梯与指数级错误雪崩：每步削减至 1/12</span>
+							<span class="lang-en">Exponential Error Suppression: Each Code Distance Step Divides Error by 12</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300">
+						<span class="lang-zh">示意模型 · 实验测得 12 倍阶梯抑制率</span>
+						<span class="lang-en">Schematic · 12× step suppression from experiment</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						量子纠错的“超能力”在于：随着代码距离（Code Distance，即能够检测并纠正的物理错误数量极限）的增大，逻辑错误率不是线性下降，而是呈陡峭的<strong>指数级崩溃</strong>。Quantinuum 在本次 Helios 实验中实测：<strong>每提升一级代码距离，逻辑错误率便被削减 12 倍</strong>。拖动阶梯滑块，观察错误率如何从每百次一错骤降至数千万次仅有一错。
+					</span>
+					<span class="lang-en">
+						The true superpower of quantum error correction is exponential suppression: as the code distance (the minimum number of physical operations required to cause an undetected logical error) grows, the logical error rate plummets exponentially. In Helios, Quantinuum demonstrated that <strong>each code-distance step improves error suppression by a factor of 12</strong>. Drag the stepper below to watch the error rate collapse.
+					</span>
+				</p>
+
+				<!-- Stepper Slider -->
+				<div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800 mb-6">
+					<div class="flex justify-between items-center text-xs font-mono mb-2">
+						<span class="text-slate-300 font-bold">
+							<span class="lang-zh">代码距离步进阶梯 (Distance Step k)：</span>
+							<span class="lang-en">Code Distance Step (Step k):</span>
+						</span>
+						<span id="curve-step-display" class="text-indigo-400 font-black text-sm">Step 3 · Distance d=7 (Helios 纪录级)</span>
+					</div>
+					<input id="slider-curve-step" type="range" min="0" max="5" step="1" value="3" class="w-full accent-indigo-400 cursor-pointer" />
+					<div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+						<span>Step 0 (裸物理比特)</span>
+						<span>Step 1 (d=3)</span>
+						<span>Step 2 (d=5)</span>
+						<span>Step 3 (d=7 / Helios)</span>
+						<span>Step 4 (d=9 展望)</span>
+						<span>Step 5 (d=11 容错深水)</span>
+					</div>
+				</div>
+
+				<!-- Hand-rolled Interactive SVG Chart -->
+				<div class="p-4 sm:p-6 rounded-xl bg-[#020511] border border-slate-800 relative">
+					<div class="flex flex-wrap items-center justify-between text-xs font-mono text-slate-400 mb-3">
+						<span class="flex items-center gap-2">
+							<span class="w-2.5 h-2.5 rounded-full bg-indigo-400"></span>
+							<span class="lang-zh">逻辑错误率对数曲线（Y 轴：对数尺度 log10）</span>
+							<span class="lang-en">Logical error rate curve (Y-axis: log scale)</span>
+						</span>
+						<span class="text-indigo-400 font-mono text-xs" id="curve-active-val">
+							5.0 × 10⁻⁶ (每 200,000 操作 1 错)
+						</span>
+					</div>
+
+					<svg id="svg-suppression-chart" class="w-full h-64 sm:h-80 overflow-visible" viewBox="0 0 700 320">
+						<!-- Gridlines and axis rendered dynamically via script -->
+					</svg>
+
+					<div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+						<div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
+							<div class="text-slate-400 text-[10px]">
+								<span class="lang-zh">当前步级代码距离</span>
+								<span class="lang-en">CODE DISTANCE (d)</span>
+							</div>
+							<div id="stat-curve-d" class="text-lg font-bold text-white mt-0.5">d = 7</div>
+						</div>
+						<div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
+							<div class="text-slate-400 text-[10px]">
+								<span class="lang-zh">相比裸比特抑制倍数</span>
+								<span class="lang-en">TOTAL SUPPRESSION</span>
+							</div>
+							<div id="stat-curve-factor" class="text-lg font-bold text-indigo-300 mt-0.5">1,728× (12³)</div>
+						</div>
+						<div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
+							<div class="text-slate-400 text-[10px]">
+								<span class="lang-zh">单次操作逻辑错误率</span>
+								<span class="lang-en">LOGICAL ERROR RATE</span>
+							</div>
+							<div id="stat-curve-rate" class="text-lg font-bold text-cyan-300 mt-0.5">5.0 × 10⁻⁶</div>
+						</div>
+						<div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800">
+							<div class="text-slate-400 text-[10px]">
+								<span class="lang-zh">平均无错操作次数</span>
+								<span class="lang-en">MEAN ERROR-FREE OPS</span>
+							</div>
+							<div id="stat-curve-mttf" class="text-lg font-bold text-amber-300 mt-0.5">200,000 步</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ============================================================== -->
+			<!-- INTERACTIVE 5: A MONTH OF PROGRESS (TIMELINE MINI-STRIP)       -->
+			<!-- ============================================================== -->
+			<section class="relative z-10 mb-14 p-6 sm:p-8 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="text-xs font-mono text-emerald-400 uppercase tracking-widest font-bold flex items-center gap-2 mb-1">
+							<span>⏱️</span>
+							<span class="lang-zh">交互实验 05 · 一个月的跨越</span>
+							<span class="lang-en">INTERACTIVE 05 · A MONTH OF PROGRESS</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">演进微时间轴：Helix → Helios → 2029 Apollo</span>
+							<span class="lang-en">Timeline Mini-Strip: Helix (Sept 2026) → Helios (Oct 2026) → Apollo (2029)</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono text-slate-400">
+						<span class="lang-zh">点击节点查看历史与规划细节</span>
+						<span class="lang-en">Click nodes to inspect milestones</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						从 2026 年 9 月的初步 10:1 冗余验证，到 10 月 21 日色码创下的 99.9995% 纪录，再到 2029 年的目标系统 Apollo，见证量子纠错从“昂贵的实验室验证”向“规模化通用容错”迈进的轨迹。
+					</span>
+					<span class="lang-en">
+						From September 2026's initial 10:1 Helix benchmark, to 21 October 2026's record-setting 99.9995% color-code milestone, to the ambitious 2029 Apollo roadmap target: trace how quantum error correction progresses from expensive proof-of-concept toward universal fault tolerance.
+					</span>
+				</p>
+
+				<!-- Timeline Node Buttons -->
+				<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+					<button id="tl-node-0" type="button" class="tl-btn p-4 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700">
+						<div class="text-[11px] font-mono text-slate-400 mb-1 flex items-center justify-between">
+							<span>2026 年 9 月 (SEPTEMBER)</span>
+							<span class="w-2 h-2 rounded-full bg-slate-600 tl-dot"></span>
+						</div>
+						<div class="text-base font-black text-white">Helix</div>
+						<div class="text-xs text-slate-400 font-mono mt-1">10:1 物理冗余 · 前序基准</div>
+					</button>
+
+					<button id="tl-node-1" type="button" class="tl-btn active p-4 rounded-xl bg-slate-950 border border-cyan-500 text-left cursor-pointer transition active:scale-95 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+						<div class="text-[11px] font-mono text-cyan-400 mb-1 flex items-center justify-between">
+							<span>2026-10-21 (TODAY)</span>
+							<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse tl-dot"></span>
+						</div>
+						<div class="text-base font-black text-cyan-300">Helios 色码新纪录</div>
+						<div class="text-xs text-slate-300 font-mono mt-1">37:1 物理冗余 · 99.9995% 保真度</div>
+					</button>
+
+					<button id="tl-node-2" type="button" class="tl-btn p-4 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700">
+						<div class="text-[11px] font-mono text-slate-400 mb-1 flex items-center justify-between">
+							<span>2029 目标 (TARGET)</span>
+							<span class="w-2 h-2 rounded-full bg-slate-600 tl-dot"></span>
+						</div>
+						<div class="text-base font-black text-white">Apollo</div>
+						<div class="text-xs text-slate-400 font-mono mt-1">通用容错目标 · 规划愿景</div>
+					</button>
+				</div>
+
+				<!-- Selected Node Details Panel -->
+				<div class="p-5 rounded-xl bg-slate-950/90 border border-slate-800" id="tl-detail-card">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+						<div class="flex items-center gap-2">
+							<span id="tl-detail-badge" class="px-2.5 py-0.5 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800 text-xs font-mono font-bold">
+								2026-10-21 · 全球纪录
+							</span>
+							<h3 id="tl-detail-title" class="text-lg font-bold text-white">
+								Helios 离子阱色码纠错突破
+							</h3>
+						</div>
+						<div id="tl-detail-meta" class="text-xs font-mono text-slate-400">
+							37 物理比特 / 逻辑比特
+						</div>
+					</div>
+
+					<p id="tl-detail-body" class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+						Quantinuum 在其离子阱系统 Helios 上，运用 2D 色码（Color Code）算法，使用多达 37 个物理离子保护单个逻辑比特，达成 99.9995% 逻辑保真度（每百万次操作仅 5 次错误）。相较一个月前的 Helix 实现了整整十倍的错误缩减，并观测到了代码距离每前进一步错误削减 12 倍的严格指数抑制法则。
+					</p>
+
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono border-t border-slate-800/80 pt-3">
+						<div>
+							<span class="text-slate-500 block">编码拓扑与方案：</span>
+							<span id="tl-meta-1" class="text-slate-200 font-bold">Color Code (色码)</span>
+						</div>
+						<div>
+							<span class="text-slate-500 block">逻辑门错误率：</span>
+							<span id="tl-meta-2" class="text-cyan-400 font-bold">5 × 10⁻⁶ (5 in 1M)</span>
+						</div>
+						<div>
+							<span class="text-slate-500 block">科学与工程意义：</span>
+							<span id="tl-meta-3" class="text-amber-400 font-bold">确立指数级距离抑制实效</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- IN-DEPTH ENGINEERING CONTEXT SECTION -->
+			<section class="relative z-10 mb-12 max-w-4xl space-y-8 text-sm sm:text-base text-slate-300 leading-relaxed">
+				<div>
+					<h2 class="text-xl sm:text-2xl font-black text-white mb-3">
+						<span class="lang-zh">一、退相干与量子魔咒：为什么量子比特会“失忆”？</span>
+						<span class="lang-en">1. Decoherence & Quantum Curse: Why Qubits Forget</span>
+					</h2>
+					<p class="mb-3">
+						<span class="lang-zh">
+							在经典计算中，一个晶体管里流淌着数以万计的电子，即便个别电子逃逸或受到热扰动，整体高低电平依然固若金汤。然而在量子计算中，一个量子比特（Qubit）往往就是一颗孤立的钙离子或钡离子。根据量子力学，量子信息存储在离子的能级叠加态 α|0⟩ + β|1⟩ 中。
+						</span>
+						<span class="lang-en">
+							In classical computation, a transistor manipulates macroscopic currents composed of billions of electrons; stray thermal fluctuations barely nudge the discrete high/low voltage states. In quantum computation, however, a single qubit is often an isolated, individual ion. Quantum information lives in fragile superpositions α|0⟩ + β|1⟩.
+						</span>
+					</p>
+					<p class="text-slate-400 text-xs sm:text-sm">
+						<span class="lang-zh">
+							环境中最微弱的磁场抖动、激光相位漂移、乃至极其微量的热辐射，都会在毫秒之内破坏这种精巧的相位关系（相位翻转相干时间 $T_2$ 耗尽），或是导致受激能级自发跌落（弛豫时间 $T_1$ 耗尽）。这种量子叠加态向经典随机概率的退化，被称为<strong>退相干（Decoherence）</strong>。更致命的是，量子力学中的<strong>不可克隆定理（No-Cloning Theorem）</strong>严禁复制未知量子态，这意味着经典计算中把比特复制三份取多数表决的方案在量子世界彻底失效。
+						</span>
+						<span class="lang-en">
+							Minute environmental magnetic jitter, laser phase fluctuations, and ambient thermal radiation destroy fragile phase relationships within milliseconds ($T_2$ dephasing), or trigger spontaneous state decay ($T_1$ relaxation). This corruption is known as <strong>decoherence</strong>. Worse still, the <strong>No-Cloning Theorem</strong> strictly forbids duplicating an unknown quantum state, rendering classical triple-modular redundancy mathematically impossible in quantum states.
+						</span>
+					</p>
+				</div>
+
+				<div>
+					<h2 class="text-xl sm:text-2xl font-black text-white mb-3">
+						<span class="lang-zh">二、色码的数学美感：如何不测量信息却纠正错误？</span>
+						<span class="lang-en">2. The Beauty of Color Codes: Measuring Errors Without Collapsing Information</span>
+					</h2>
+					<p class="mb-3">
+						<span class="lang-zh">
+							既然不能复制量子比特，人类科学家给出的绝妙答案是：<strong>拓扑纠错码（Topological Error Correction Codes）</strong>。Quantinuum 在 Helios 实验中所采用的<strong>色码（Color Code）</strong>，是一种定义在二维三色可着色平铺晶格上的量子稳定子码。
+						</span>
+						<span class="lang-en">
+							Because cloning is forbidden, quantum physicists developed <strong>topological error-correcting codes</strong>. The <strong>color code</strong> architecture deployed in Quantinuum's Helios is a planar stabilizer code defined on three-colorable 2D lattices.
+						</span>
+					</p>
+					<p class="text-slate-400 text-xs sm:text-sm">
+						<span class="lang-zh">
+							在色码中，单个逻辑量子比特被“稀释”并隐秘地编码在上百个离子的联合多体纠缠态中。实验团队并不直接测量编码的数据离子，而是通过辅助离子周期性地测量面状晶格上的宇称算符（$X$-稳定子与 $Z$-稳定子）。这些测量结果（被称为综合征，Syndrome）就像侦探手中的足迹——它能精准测出哪一颗物理离子发生了比特翻转（$X$ 错）或相位翻转（$Z$ 错），却绝不会刺探逻辑比特本身到底是 0 还是 1，从而完全避免了波函数因测量而坍缩！
+						</span>
+						<span class="lang-en">
+							In a color code, a single logical state is delocalized into joint multi-body entangled correlations across dozens of physical ions. Instead of reading out data qubits directly, auxiliary ancilla ions measure local parity check operators ($X$-stabilizers and $Z$-stabilizers) across polygonal faces. The resulting syndromes pinpoint exactly which physical ion experienced a bit flip or phase flip without ever revealing the logical state itself, dodging wave-function collapse.
+						</span>
+					</p>
+				</div>
+
+				<div>
+					<h2 class="text-xl sm:text-2xl font-black text-white mb-3">
+						<span class="lang-zh">三、离子阱架构的得与失：高保真度背后的物理折衷</span>
+						<span class="lang-en">3. Trapped Ions in Practice: Physical Trade-Offs Behind Record Fidelity</span>
+					</h2>
+					<p class="mb-3">
+						<span class="lang-zh">
+							Quantinuum 能够率先斩获 99.9995% 保真度，深深根植于<strong>离子阱（Trapped Ion）</strong>路线的天然物理禀赋。每一颗镱离子或钡离子都由自然法则精密造就，原子能级绝对同一，彻底消除了超导量子芯片因光刻制造公差带来的芯片异质性。利用微型射频电极控制离子在真空腔中物理穿梭（QCCD 构型），系统能够实现任意物理离子对之间的全连通门操作。
+						</span>
+						<span class="lang-en">
+							Quantinuum's achievement is deeply intertwined with the natural physics of <strong>trapped ions</strong>. Every single ytterbium or barium ion is identical by the laws of quantum mechanics, eliminating manufacturing variances that challenge superconducting lithography. Leveraging Quantum Charged-Coupled Device (QCCD) architectures, micro-fabricated RF traps physically shuttle ions across zones, enabling all-to-all connectivity without lossy routing networks.
+						</span>
+					</p>
+					<p class="text-slate-400 text-xs sm:text-sm">
+						<span class="lang-zh">
+							但代价同样沉重：离子穿梭与激光脉冲调谐的速度以微秒（μs）计算，相比超导电路纳秒（ns）级的门操作速度慢了三个数量级。当未来容错计算机需要调度数百万个物理离子时，超高真空腔体、成百上千束激光光路的高精度分束与离子穿梭拥堵，将对工程集成带来史无前例的极限界标。
+						</span>
+						<span class="lang-en">
+							Yet the physical compromises are steep: ion shuttling and laser-driven gate durations run on microsecond timescales — three orders of magnitude slower than nanosecond superconducting gates. When scaling toward millions of physical ions, routing laser optics, maintaining ultra-high vacuum, and managing shuttling congestion present unprecedented engineering hurdles.
+						</span>
+					</p>
+				</div>
+			</section>
+
+			<!-- CITATION & ATTRIBUTION BLOCK -->
+			<section class="relative z-10 mb-8 p-6 rounded-2xl bg-slate-900/70 border border-slate-800 text-xs font-mono text-slate-400">
+				<div class="text-sm font-bold text-slate-200 mb-2 flex items-center gap-2">
+					<span>📚</span>
+					<span class="lang-zh">科学公报与实验基准引证 (2026-10-21)</span>
+					<span class="lang-en">Scientific Announcement & Benchmark Reference (2026-10-21)</span>
+				</div>
+				<p class="leading-relaxed mb-3 text-slate-300">
+					Quantinuum Official Technical Release: "Helios Trapped-Ion Architecture Sets Universal Quantum Error Correction Record at 99.9995% Logical Fidelity", announced 21 October 2026. Prior benchmark reference: Quantinuum Helix (10:1 physical-to-logical QEC architecture), September 2026. Target roadmap: Quantinuum Apollo Fault-Tolerant System (target 2029).
+				</p>
+				<p class="leading-relaxed text-[11px] text-slate-400">
+					<span class="lang-zh">
+						实验平台：Quantinuum Helios 离子阱量子计算机。核心成果：99.9995% 逻辑单门保真度（百万分之五错误率）。纠错码型：色码（Color Code），最高 37:1 物理比特冗余。代码距离阶梯抑制：每步提升 12 倍。所有图表为示意说明（illustrative / schematic）。
+					</span>
+					<span class="lang-en">
+						Platform: Quantinuum Helios trapped-ion quantum system. Headline metric: 99.9995% logical fidelity (5 errors per million operations). Code family: Color Code, up to 37:1 physical redundancy. Exponential suppression factor: 12× per code-distance step. All diagrams are illustrative / schematic.
+					</span>
+				</p>
+			</section>
+
+			<!-- AI GENERATION DISCLOSURE -->
+			<hr class="my-6 border-slate-800" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-cyan-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE INTERACTIVE ENGINE -->
+	<script is:inline>
+		(() => {
+			let cleanup = null;
+
+			function initFragileBits() {
+				if (cleanup) {
+					cleanup();
+					cleanup = null;
+				}
+
+				const lifecycle = new AbortController();
+				const animFrameIds = [];
+
+				cleanup = () => {
+					lifecycle.abort();
+					for (const id of animFrameIds) {
+						cancelAnimationFrame(id);
+					}
+				};
+
+				// ==========================================
+				// 1. THE FORGETFUL QUBIT (DECOHERENCE)
+				// ==========================================
+				const sliderOps = document.getElementById("slider-qubit-ops");
+				const sliderErr = document.getElementById("slider-qubit-err");
+				const opsValEl = document.getElementById("qubit-ops-val");
+				const errValEl = document.getElementById("qubit-err-val");
+				const resRawFailEl = document.getElementById("res-raw-fail");
+				const resRawSurvivalEl = document.getElementById("res-raw-survival");
+				const barRawSurvivalEl = document.getElementById("bar-raw-survival");
+				const badgeRawVerdict = document.getElementById("badge-raw-verdict");
+				const resHeliosFailEl = document.getElementById("res-helios-fail");
+				const resHeliosSurvivalEl = document.getElementById("res-helios-survival");
+				const barHeliosSurvivalEl = document.getElementById("bar-helios-survival");
+				const canvasDecoherence = document.getElementById("canvas-decoherence");
+
+				let waveOffset = 0;
+
+				function updateDecoherence() {
+					if (!sliderOps || !sliderErr) return;
+					const n = Number.parseFloat(sliderOps.value);
+					const p = Number.parseFloat(sliderErr.value) / 100.0; // convert percentage to prob
+
+					if (opsValEl) opsValEl.textContent = `${n.toLocaleString()} 步 / ops`;
+					if (errValEl) errValEl.textContent = `${(p * 100).toFixed(3)}% (${p.toExponential(2)})`;
+
+					// Raw uncorrected: P_fail = 1 - (1 - p)^n
+					// For very small p and large n, use Math.exp(-n * p) for numerical stability
+					const survivalRaw = Math.pow(Math.max(0, 1 - p), n);
+					const failRaw = Math.max(0, Math.min(1, 1 - survivalRaw));
+
+					// Helios logical rate: p_helios = 5.0e-6
+					const pHelios = 5.0e-6;
+					const survivalHelios = Math.pow(Math.max(0, 1 - pHelios), n);
+					const failHelios = Math.max(0, Math.min(1, 1 - survivalHelios));
+
+					if (resRawFailEl) {
+						resRawFailEl.textContent = `${(failRaw * 100).toFixed(failRaw > 0.999 ? 3 : 2)}%`;
+					}
+					if (resRawSurvivalEl) {
+						resRawSurvivalEl.textContent = `${(survivalRaw * 100).toFixed(survivalRaw < 0.001 ? 4 : 2)}%`;
+					}
+					if (barRawSurvivalEl) {
+						barRawSurvivalEl.style.width = `${Math.min(100, Math.max(0, survivalRaw * 100))}%`;
+					}
+
+					if (badgeRawVerdict) {
+						if (survivalRaw < 0.05) {
+							badgeRawVerdict.className = "mt-2 text-[10px] font-mono px-2 py-0.5 rounded bg-red-950/80 border border-red-800 text-red-300 inline-block";
+							badgeRawVerdict.innerHTML = '<span class="lang-zh">⚠️ 计算结果已退相干为噪声</span><span class="lang-en">⚠️ Scrambled into pure entropy</span>';
+						} else if (survivalRaw < 0.5) {
+							badgeRawVerdict.className = "mt-2 text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950/80 border border-amber-800 text-amber-300 inline-block";
+							badgeRawVerdict.innerHTML = '<span class="lang-zh">⚠️ 严重相干衰减 (>50% 错误率)</span><span class="lang-en">⚠️ Severe decay (&gt;50% error rate)</span>';
+						} else {
+							badgeRawVerdict.className = "mt-2 text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-300 inline-block";
+							badgeRawVerdict.innerHTML = '<span class="lang-zh">ℹ️ 短步数保持有限相干</span><span class="lang-en">ℹ️ Marginal coherence preserved</span>';
+						}
+					}
+
+					if (resHeliosFailEl) {
+						resHeliosFailEl.textContent = `${(failHelios * 100).toFixed(failHelios < 0.01 ? 3 : 2)}%`;
+					}
+					if (resHeliosSurvivalEl) {
+						resHeliosSurvivalEl.textContent = `${(survivalHelios * 100).toFixed(2)}%`;
+					}
+					if (barHeliosSurvivalEl) {
+						barHeliosSurvivalEl.style.width = `${Math.min(100, Math.max(0, survivalHelios * 100))}%`;
+					}
+				}
+
+				if (sliderOps) sliderOps.addEventListener("input", updateDecoherence, { signal: lifecycle.signal });
+				if (sliderErr) sliderErr.addEventListener("input", updateDecoherence, { signal: lifecycle.signal });
+
+				// Presets
+				const btnClean = document.getElementById("preset-raw-clean");
+				const btnTypical = document.getElementById("preset-raw-typical");
+				const btnNoisy = document.getElementById("preset-raw-noisy");
+
+				if (btnClean && sliderErr) {
+					btnClean.addEventListener("click", () => {
+						sliderErr.value = "0.05";
+						updateDecoherence();
+					}, { signal: lifecycle.signal });
+				}
+				if (btnTypical && sliderErr) {
+					btnTypical.addEventListener("click", () => {
+						sliderErr.value = "0.10";
+						updateDecoherence();
+					}, { signal: lifecycle.signal });
+				}
+				if (btnNoisy && sliderErr) {
+					btnNoisy.addEventListener("click", () => {
+						sliderErr.value = "0.50";
+						updateDecoherence();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Decoherence Wave Animation
+				function renderDecoherenceWave() {
+					if (!canvasDecoherence) return;
+					const ctx = canvasDecoherence.getContext("2d");
+					if (!ctx) return;
+
+					const dpr = window.devicePixelRatio || 1;
+					const rect = canvasDecoherence.getBoundingClientRect();
+					if (canvasDecoherence.width !== rect.width * dpr || canvasDecoherence.height !== rect.height * dpr) {
+						canvasDecoherence.width = rect.width * dpr;
+						canvasDecoherence.height = rect.height * dpr;
+					}
+
+					const w = canvasDecoherence.width;
+					const h = canvasDecoherence.height;
+
+					ctx.clearRect(0, 0, w, h);
+
+					// Draw mid horizontal line
+					const midY = h / 2;
+					ctx.strokeStyle = "rgba(51, 65, 85, 0.4)";
+					ctx.lineWidth = 1 * dpr;
+					ctx.beginPath();
+					ctx.moveTo(0, midY);
+					ctx.lineTo(w, midY);
+					ctx.stroke();
+
+					const n = sliderOps ? Number.parseFloat(sliderOps.value) : 5000;
+					const p = sliderErr ? Number.parseFloat(sliderErr.value) / 100.0 : 0.001;
+					const rawSurvival = Math.pow(Math.max(0, 1 - p), n);
+
+					// 1. Draw Raw Qubit (Red wave that attenuates and becomes noisy noise)
+					ctx.beginPath();
+					ctx.strokeStyle = "#f87171";
+					ctx.lineWidth = 2 * dpr;
+
+					const rawAttenuationRate = Math.min(1, (1 - rawSurvival) * 1.5);
+
+					for (let x = 0; x <= w; x += 3 * dpr) {
+						const progress = x / w; // 0 to 1
+						// amplitude decays from 1 down to rawSurvival
+						const amp = (h * 0.35) * Math.max(0.05, 1 - progress * rawAttenuationRate);
+						// Noise increases as progress increases
+						const noiseAmp = (1 - rawSurvival) * progress * (h * 0.25);
+						const noise = (Math.random() - 0.5) * noiseAmp;
+						const wave = Math.sin((x * 0.02) + waveOffset) * amp;
+						const y = midY + wave + noise;
+
+						if (x === 0) ctx.moveTo(x, y);
+						else ctx.lineTo(x, y);
+					}
+					ctx.stroke();
+
+					// 2. Draw Helios Logical Qubit (Cyan wave, protected and coherent)
+					ctx.beginPath();
+					ctx.strokeStyle = "#06b6d4";
+					ctx.lineWidth = 2.5 * dpr;
+
+					for (let x = 0; x <= w; x += 3 * dpr) {
+						const progress = x / w;
+						// Very slight decay (5e-6)
+						const heliosAmp = (h * 0.36) * (1 - progress * 0.03);
+						const y = midY + Math.sin((x * 0.02) + waveOffset + Math.PI * 0.5) * heliosAmp;
+
+						if (x === 0) ctx.moveTo(x, y);
+						else ctx.lineTo(x, y);
+					}
+					ctx.stroke();
+
+					waveOffset += 0.04;
+					const req = requestAnimationFrame(renderDecoherenceWave);
+					animFrameIds.push(req);
+				}
+
+				// ==========================================
+				// 2. FIVE IN A MILLION (CANVAS DOT FIELD)
+				// ==========================================
+				const canvasMillion = document.getElementById("canvas-million");
+				const btnSeekError = document.getElementById("btn-seek-error");
+				const dotCursorCoord = document.getElementById("dot-cursor-coord");
+				const dotErrorIndex = document.getElementById("dot-error-index");
+
+				// 5 error gate indices among 1,000,000 (fixed reproducible coordinates)
+				const errorLocations = [
+					{ id: 1, opIndex: 142857, gridX: 18, gridY: 24, label: "Gate #142,857" },
+					{ id: 2, opIndex: 319402, gridX: 64, gridY: 15, label: "Gate #319,402" },
+					{ id: 3, opIndex: 482910, gridX: 42, gridY: 67, label: "Gate #482,910" },
+					{ id: 4, opIndex: 720513, gridX: 85, gridY: 78, label: "Gate #720,513" },
+					{ id: 5, opIndex: 941038, gridX: 31, gridY: 91, label: "Gate #941,038" },
+				];
+
+				let currentFocusedErrorIdx = 2; // start focused on #3
+				let pingRadius = 0;
+
+				function renderMillionCanvas() {
+					if (!canvasMillion) return;
+					const ctx = canvasMillion.getContext("2d");
+					if (!ctx) return;
+
+					const dpr = window.devicePixelRatio || 1;
+					const rect = canvasMillion.getBoundingClientRect();
+					if (canvasMillion.width !== rect.width * dpr || canvasMillion.height !== rect.height * dpr) {
+						canvasMillion.width = rect.width * dpr;
+						canvasMillion.height = rect.height * dpr;
+					}
+
+					const w = canvasMillion.width;
+					const h = canvasMillion.height;
+
+					ctx.clearRect(0, 0, w, h);
+
+					// Draw a fine matrix representing 10,000 macroscopic sample blocks (100x100 grid)
+					const cols = 100;
+					const rows = 100;
+					const cellW = w / cols;
+					const cellH = h / rows;
+
+					// Background pristine dots
+					ctx.fillStyle = "rgba(6, 182, 212, 0.25)";
+					for (let i = 0; i < cols; i += 2) {
+						for (let j = 0; j < rows; j += 2) {
+							ctx.fillRect(i * cellW + 1, j * cellH + 1, cellW * 0.7, cellH * 0.7);
+						}
+					}
+
+					// Draw the 5 error locations in glowing crimson
+					for (let k = 0; k < errorLocations.length; k++) {
+						const err = errorLocations[k];
+						const ex = err.gridX * cellW + cellW * 0.5;
+						const ey = err.gridY * cellH + cellH * 0.5;
+
+						// Red dot
+						ctx.beginPath();
+						ctx.arc(ex, ey, 4 * dpr, 0, Math.PI * 2);
+						ctx.fillStyle = "#ef4444";
+						ctx.fill();
+
+						// Halo
+						ctx.beginPath();
+						ctx.arc(ex, ey, 8 * dpr, 0, Math.PI * 2);
+						ctx.strokeStyle = "rgba(239, 68, 68, 0.4)";
+						ctx.lineWidth = 1.5 * dpr;
+						ctx.stroke();
+
+						// If currently focused, draw animated radar ring and crosshair
+						if (k === currentFocusedErrorIdx) {
+							ctx.beginPath();
+							ctx.arc(ex, ey, pingRadius * dpr, 0, Math.PI * 2);
+							ctx.strokeStyle = `rgba(239, 68, 68, ${Math.max(0, 1 - pingRadius / 28)})`;
+							ctx.lineWidth = 2 * dpr;
+							ctx.stroke();
+
+							// Crosshair box
+							const boxSize = 22 * dpr;
+							ctx.strokeStyle = "#f43f5e";
+							ctx.lineWidth = 1 * dpr;
+							ctx.strokeRect(ex - boxSize / 2, ey - boxSize / 2, boxSize, boxSize);
+
+							// Label
+							ctx.fillStyle = "#ffffff";
+							ctx.font = `bold ${10 * dpr}px monospace`;
+							ctx.fillText(err.label, ex + boxSize / 2 + 5 * dpr, ey + 4 * dpr);
+						}
+					}
+
+					pingRadius += 0.5;
+					if (pingRadius > 28) pingRadius = 6;
+
+					const req = requestAnimationFrame(renderMillionCanvas);
+					animFrameIds.push(req);
+				}
+
+				function focusError(index) {
+					currentFocusedErrorIdx = index % errorLocations.length;
+					const err = errorLocations[currentFocusedErrorIdx];
+					if (dotCursorCoord) dotCursorCoord.textContent = err.label;
+					if (dotErrorIndex) dotErrorIndex.textContent = `${err.id} / 5`;
+					pingRadius = 6;
+				}
+
+				if (btnSeekError) {
+					btnSeekError.addEventListener("click", () => {
+						focusError(currentFocusedErrorIdx + 1);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (canvasMillion) {
+					canvasMillion.addEventListener("click", (e) => {
+						const rect = canvasMillion.getBoundingClientRect();
+						const clickX = e.clientX - rect.left;
+						const clickY = e.clientY - rect.top;
+
+						// Find closest error
+						let closestIdx = 0;
+						let minDist = Number.POSITIVE_INFINITY;
+
+						for (let i = 0; i < errorLocations.length; i++) {
+							const ex = (errorLocations[i].gridX / 100) * rect.width;
+							const ey = (errorLocations[i].gridY / 100) * rect.height;
+							const dist = Math.hypot(clickX - ex, clickY - ey);
+							if (dist < minDist) {
+								minDist = dist;
+								closestIdx = i;
+							}
+						}
+						focusError(closestIdx);
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 3. THE COST OF MEMORY (REDUNDANCY GRID)
+				// ==========================================
+				const sliderLogical = document.getElementById("slider-logical-qubits");
+				const logicalValEl = document.getElementById("redundancy-logical-val");
+				const helixTotalEl = document.getElementById("helix-physical-total");
+				const heliosTotalEl = document.getElementById("helios-physical-total");
+				const helixGridEl = document.getElementById("helix-grid-cells");
+				const heliosGridEl = document.getElementById("helios-grid-cells");
+				const helixOverflowEl = document.getElementById("helix-grid-overflow");
+				const heliosOverflowEl = document.getElementById("helios-grid-overflow");
+
+				function updateRedundancyGrids() {
+					if (!sliderLogical) return;
+					const N = Number.parseInt(sliderLogical.value, 10);
+					if (logicalValEl) logicalValEl.textContent = `${N} 个逻辑比特 / ${N} logical qubits`;
+
+					const helixTotal = N * 10;
+					const heliosTotal = N * 37;
+
+					if (helixTotalEl) helixTotalEl.textContent = helixTotal.toLocaleString();
+					if (heliosTotalEl) heliosTotalEl.textContent = heliosTotal.toLocaleString();
+
+					// Render Helix cells (cap visual render at 120 cells)
+					if (helixGridEl) {
+						helixGridEl.innerHTML = "";
+						const maxRenderHelix = Math.min(helixTotal, 120);
+						for (let i = 0; i < maxRenderHelix; i++) {
+							const cell = document.createElement("div");
+							cell.className = "w-full aspect-square rounded-xs bg-cyan-500/80 hover:bg-cyan-300 transition shadow-[0_0_4px_rgba(6,182,212,0.4)]";
+							cell.title = `Helix Ion #${i + 1}`;
+							helixGridEl.appendChild(cell);
+						}
+						if (helixOverflowEl) {
+							if (helixTotal > 120) {
+								helixOverflowEl.classList.remove("hidden");
+								helixOverflowEl.textContent = `+ 剩余 ${helixTotal - 120} 个物理比特未绘制 (+${helixTotal - 120} more physical qubits)`;
+							} else {
+								helixOverflowEl.classList.add("hidden");
+							}
+						}
+					}
+
+					// Render Helios cells (cap visual render at 222 cells)
+					if (heliosGridEl) {
+						heliosGridEl.innerHTML = "";
+						const maxRenderHelios = Math.min(heliosTotal, 222);
+						// Color code tri-color lattice palette
+						const colors = [
+							"bg-red-400 hover:bg-red-200",
+							"bg-emerald-400 hover:bg-emerald-200",
+							"bg-blue-400 hover:bg-blue-200"
+						];
+						for (let i = 0; i < maxRenderHelios; i++) {
+							const cell = document.createElement("div");
+							const c = colors[i % 3];
+							cell.className = `w-full aspect-square rounded-xs ${c} transition shadow-[0_0_3px_rgba(255,255,255,0.2)]`;
+							cell.title = `Color Code Ion #${i + 1}`;
+							heliosGridEl.appendChild(cell);
+						}
+						if (heliosOverflowEl) {
+							if (heliosTotal > 222) {
+								heliosOverflowEl.classList.remove("hidden");
+								heliosOverflowEl.textContent = `+ 剩余 ${heliosTotal - 222} 个物理离子未绘制 (+${heliosTotal - 222} more physical qubits)`;
+							} else {
+								heliosOverflowEl.classList.add("hidden");
+							}
+						}
+					}
+				}
+
+				if (sliderLogical) {
+					sliderLogical.addEventListener("input", updateRedundancyGrids, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 4. TWELVE TIMES TWELVE (SUPPRESSION CURVE)
+				// ==========================================
+				const sliderCurveStep = document.getElementById("slider-curve-step");
+				const curveStepDisplay = document.getElementById("curve-step-display");
+				const curveActiveValEl = document.getElementById("curve-active-val");
+				const statCurveD = document.getElementById("stat-curve-d");
+				const statCurveFactor = document.getElementById("stat-curve-factor");
+				const statCurveRate = document.getElementById("stat-curve-rate");
+				const statCurveMttf = document.getElementById("stat-curve-mttf");
+				const svgSuppression = document.getElementById("svg-suppression-chart");
+
+				// Steps data: each step divides error rate by 12
+				// Base physical error ~ 8.64e-3
+				// Step 0: 8.64e-3 (1 in ~116)
+				// Step 1: 7.20e-4 (1 in ~1,388)
+				// Step 2: 6.00e-5 (1 in ~16,666)
+				// Step 3 (Helios): 5.00e-6 (1 in 200,000 / 5 in 1,000,000)
+				// Step 4: 4.17e-7 (1 in ~2,400,000)
+				// Step 5: 3.47e-8 (1 in ~28,800,000)
+				const curveData = [
+					{ step: 0, d: "Base (d=1)", factor: "1× (基准裸比特)", rate: 8.64e-3, rateStr: "8.64 × 10⁻³", mttf: "~116 步", labelZh: "Step 0 · 裸物理比特 (未纠错基准)", labelEn: "Step 0 · Raw Physical Qubit (Unprotected)" },
+					{ step: 1, d: "d = 3", factor: "12× (12¹)", rate: 7.20e-4, rateStr: "7.20 × 10⁻⁴", mttf: "~1,390 步", labelZh: "Step 1 · 距离 d=3 (初级容错)", labelEn: "Step 1 · Distance d=3 (Basic Fault-Tolerance)" },
+					{ step: 2, d: "d = 5", factor: "144× (12²)", rate: 6.00e-5, rateStr: "6.00 × 10⁻⁵", mttf: "~16,700 步", labelZh: "Step 2 · 距离 d=5 (中级冗余)", labelEn: "Step 2 · Distance d=5 (Intermediate QEC)" },
+					{ step: 3, d: "d = 7", factor: "1,728× (12³)", rate: 5.00e-6, rateStr: "5.00 × 10⁻⁶", mttf: "200,000 步 (5 in 1M)", labelZh: "Step 3 · 距离 d=7 (Helios 今日新纪录)", labelEn: "Step 3 · Distance d=7 (Helios Record Benchmark)" },
+					{ step: 4, d: "d = 9", factor: "20,736× (12⁴)", rate: 4.17e-7, rateStr: "4.17 × 10⁻⁷", mttf: "~2.4 百万步", labelZh: "Step 4 · 距离 d=9 (高阶扩展规划)", labelEn: "Step 4 · Distance d=9 (Projected Scaling)" },
+					{ step: 5, d: "d = 11", factor: "248,832× (12⁵)", rate: 3.47e-8, rateStr: "3.47 × 10⁻⁸", mttf: "~2,880 万步", labelZh: "Step 5 · 距离 d=11 (通用容错深水区)", labelEn: "Step 5 · Distance d=11 (Deep Fault-Tolerant Zone)" },
+				];
+
+				function updateSuppressionChart() {
+					if (!sliderCurveStep || !svgSuppression) return;
+					const curStep = Number.parseInt(sliderCurveStep.value, 10);
+					const data = curveData[curStep];
+
+					if (curveStepDisplay) curveStepDisplay.textContent = `${data.labelZh}`;
+					if (curveActiveValEl) curveActiveValEl.textContent = `${data.rateStr} (${data.mttf})`;
+					if (statCurveD) statCurveD.textContent = data.d;
+					if (statCurveFactor) statCurveFactor.textContent = data.factor;
+					if (statCurveRate) statCurveRate.textContent = data.rateStr;
+					if (statCurveMttf) statCurveMttf.textContent = data.mttf;
+
+					// SVG geometry: viewBox="0 0 700 320"
+					// Margins: left=70, right=40, top=30, bottom=50
+					const svgW = 700;
+					const svgH = 320;
+					const ml = 75;
+					const mr = 40;
+					const mt = 25;
+					const mb = 50;
+					const plotW = svgW - ml - mr;
+					const plotH = svgH - mt - mb;
+
+					// Y scale: log10 from 1e-2 (top, log = -2) down to 1e-8 (bottom, log = -8)
+					const minY = -8;
+					const maxY = -2;
+
+					const getX = (stepIdx) => ml + (stepIdx / 5) * plotW;
+					const getY = (rate) => {
+						const logVal = Math.log10(rate);
+						const norm = (logVal - maxY) / (minY - maxY); // 0 at top (1e-2), 1 at bottom (1e-8)
+						return mt + norm * plotH;
+					};
+
+					// Build SVG inner content
+					let svgHTML = "";
+
+					// Y Gridlines and Labels
+					for (let exp = -2; exp >= -8; exp--) {
+						const yPos = mt + ((exp - maxY) / (minY - maxY)) * plotH;
+						svgHTML += `
+							<line x1="${ml}" y1="${yPos}" x2="${svgW - mr}" y2="${yPos}" stroke="#1e293b" stroke-dasharray="3,3" stroke-width="1" />
+							<text x="${ml - 12}" y="${yPos + 4}" fill="#64748b" font-family="monospace" font-size="11" text-anchor="end">10^${exp}</text>
+						`;
+					}
+
+					// X Gridlines and Labels
+					for (let i = 0; i <= 5; i++) {
+						const xPos = getX(i);
+						svgHTML += `
+							<line x1="${xPos}" y1="${mt}" x2="${xPos}" y2="${mt + plotH}" stroke="#1e293b" stroke-dasharray="3,3" stroke-width="1" />
+							<text x="${xPos}" y="${mt + plotH + 20}" fill="#94a3b8" font-family="monospace" font-size="11" text-anchor="middle">Step ${i}</text>
+							<text x="${xPos}" y="${mt + plotH + 34}" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">${curveData[i].d}</text>
+						`;
+					}
+
+					// Build path curve
+					let pathD = `M ${getX(0)} ${getY(curveData[0].rate)}`;
+					for (let i = 1; i <= 5; i++) {
+						pathD += ` L ${getX(i)} ${getY(curveData[i].rate)}`;
+					}
+
+					// Path glow & line
+					svgHTML += `
+						<path d="${pathD}" fill="none" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+					`;
+
+					// Highlighted active scan line
+					const activeX = getX(curStep);
+					const activeY = getY(data.rate);
+
+					svgHTML += `
+						<line x1="${activeX}" y1="${mt}" x2="${activeX}" y2="${mt + plotH}" stroke="#818cf8" stroke-dasharray="4,4" stroke-width="2" />
+						<line x1="${ml}" y1="${activeY}" x2="${svgW - mr}" y2="${activeY}" stroke="#818cf8" stroke-dasharray="4,4" stroke-width="1.5" />
+					`;
+
+					// Dots
+					for (let i = 0; i <= 5; i++) {
+						const px = getX(i);
+						const py = getY(curveData[i].rate);
+						const isSelected = i === curStep;
+						const isHelios = i === 3;
+
+						if (isHelios) {
+							// Special marker for Helios record
+							svgHTML += `
+								<circle cx="${px}" cy="${py}" r="${isSelected ? 9 : 7}" fill="#06b6d4" stroke="#ffffff" stroke-width="2" />
+								<text x="${px}" y="${py - 14}" fill="#06b6d4" font-family="monospace" font-weight="bold" font-size="10" text-anchor="middle">Helios (5e-6)</text>
+							`;
+						} else {
+							svgHTML += `
+								<circle cx="${px}" cy="${py}" r="${isSelected ? 8 : 5}" fill="${isSelected ? '#a5b4fc' : '#4f46e5'}" stroke="#1e1b4b" stroke-width="2" />
+							`;
+						}
+
+						// Factor label above points
+						if (i > 0 && i !== 3) {
+							svgHTML += `
+								<text x="${px}" y="${py - 10}" fill="#818cf8" font-family="monospace" font-size="9" text-anchor="middle">÷12</text>
+							`;
+						}
+					}
+
+					svgSuppression.innerHTML = svgHTML;
+				}
+
+				if (sliderCurveStep) {
+					sliderCurveStep.addEventListener("input", updateSuppressionChart, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 5. A MONTH OF PROGRESS (TIMELINE STRIP)
+				// ==========================================
+				const timelineNodes = [
+					{
+						id: 0,
+						dateZh: "2026 年 9 月 · 前序基准",
+						dateEn: "September 2026 · Prior Baseline",
+						titleZh: "Helix 纠错方案：10 物理比特守护",
+						titleEn: "Helix System: 10 Physical Qubits Protection",
+						meta1: "Helix 拓扑 (10:1 冗余)",
+						meta2: "~5.0 × 10⁻⁵ (50 in 1M)",
+						meta3: "奠定高保真度基石",
+						bodyZh: "Quantinuum 团队在 2026 年 9 月率先发布了代号为 Helix 的纠错成果，使用 10 个物理离子比特保护 1 个逻辑比特。该基准展示了离子阱在穿梭控制与相干性保持上的坚实底色，为 10 月更深层次的代码距离与色码验证积累了核心控制经验。",
+						bodyEn: "Quantinuum released its Helix error-correction milestone in September 2026, pairing 10 physical ions to protect each logical qubit. This established ion shuttling and coherence control foundations, setting the stage for deeper color-code distances."
+					},
+					{
+						id: 1,
+						dateZh: "2026-10-21 · 全球纪录 (今日公布)",
+						dateEn: "21 October 2026 · Global Record (Announced Today)",
+						titleZh: "Helios 色码新纪录：99.9995% 逻辑保真度",
+						titleEn: "Helios Color Code: 99.9995% Logical Fidelity",
+						meta1: "2D Color Code (最高 37:1)",
+						meta2: "5.0 × 10⁻⁶ (5 in 1M)",
+						meta3: "确立 12 倍指数级距离抑制法则",
+						bodyZh: "Quantinuum 在 Helios 离子阱机上实现了 99.9995% 逻辑保真度（百万次操作仅 5 次错误）。相比 9 月 Helix 实现了整整 10 倍的断崖式降错，并比竞品硬件公开发表的最强成果高出 100 倍。实验证明提升代码距离能以每步 12 倍的倍率指数级抑制错误，用 37:1 的物理冗余换取了极其稳健的相干记忆。",
+						bodyEn: "Quantinuum demonstrated 99.9995% logical fidelity on Helios (5 errors per million operations) — a tenfold improvement over September's Helix and a hundredfold improvement over published rival approaches. It proved exponential scaling with a factor-of-12 error suppression per code distance step."
+					},
+					{
+						id: 2,
+						dateZh: "2029 目标 · 规划愿景 (严禁过度炒作)",
+						dateEn: "2029 Target · Ambitious Roadmap (Not an established fact)",
+						titleZh: "Apollo：规划中的通用容错量子计算机",
+						titleEn: "Apollo: Planned Universal Fault-Tolerant System",
+						meta1: "数百逻辑比特集群规划",
+						meta2: "商业级长时算法容错目标",
+						meta3: "公司战略路线规划 (非既成事实)",
+						bodyZh: "Quantinuum 将 Helios 的破纪录成果与计划于 2029 年落地的 Apollo 系统直接挂钩。必须客观强调：这是 Quantinuum 官方立项的战略规划与攻关目标，绝非已完成的既成事实。从单个逻辑门纪录迈向长达数小时稳定运行商业算法的大规模容错系统，仍面临巨大工程考验。",
+						bodyEn: "Quantinuum ties these Helios results directly to 'Apollo,' its planned universal fault-tolerant quantum computer targeted for 2029. Crucially, this is the company's stated development target, not an established fact. Scaling from record benchmark operations to running commercial algorithms across hundreds of logical qubits remains an enormous engineering endeavor."
+					}
+				];
+
+				const tlBtns = [
+					document.getElementById("tl-node-0"),
+					document.getElementById("tl-node-1"),
+					document.getElementById("tl-node-2")
+				];
+
+				const tlBadge = document.getElementById("tl-detail-badge");
+				const tlTitle = document.getElementById("tl-detail-title");
+				const tlBody = document.getElementById("tl-detail-body");
+				const tlMeta1 = document.getElementById("tl-meta-1");
+				const tlMeta2 = document.getElementById("tl-meta-2");
+				const tlMeta3 = document.getElementById("tl-meta-3");
+
+				function selectTimelineNode(idx) {
+					tlBtns.forEach((btn, i) => {
+						if (!btn) return;
+						if (i === idx) {
+							btn.className = "tl-btn active p-4 rounded-xl bg-slate-950 border border-cyan-500 text-left cursor-pointer transition active:scale-95 shadow-[0_0_15px_rgba(6,182,212,0.15)]";
+							const dot = btn.querySelector(".tl-dot");
+							if (dot) dot.className = "w-2 h-2 rounded-full bg-cyan-400 animate-pulse tl-dot";
+						} else {
+							btn.className = "tl-btn p-4 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700";
+							const dot = btn.querySelector(".tl-dot");
+							if (dot) dot.className = "w-2 h-2 rounded-full bg-slate-600 tl-dot";
+						}
+					});
+
+					const item = timelineNodes[idx];
+					if (tlBadge) tlBadge.textContent = item.dateZh;
+					if (tlTitle) tlTitle.textContent = item.titleZh;
+					if (tlBody) tlBody.textContent = item.bodyZh;
+					if (tlMeta1) tlMeta1.textContent = item.meta1;
+					if (tlMeta2) tlMeta2.textContent = item.meta2;
+					if (tlMeta3) tlMeta3.textContent = item.meta3;
+				}
+
+				tlBtns.forEach((btn, i) => {
+					if (btn) {
+						btn.addEventListener("click", () => selectTimelineNode(i), { signal: lifecycle.signal });
+					}
+				});
+
+				// ==========================================
+				// INITIALIZATION RUNNER
+				// ==========================================
+				updateDecoherence();
+				renderDecoherenceWave();
+				renderMillionCanvas();
+				focusError(2);
+				updateRedundancyGrids();
+				updateSuppressionChart();
+				selectTimelineNode(1);
+
+				window.addEventListener("resize", () => {
+					updateSuppressionChart();
+				}, { signal: lifecycle.signal });
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initFragileBits);
+			} else {
+				initFragileBits();
+			}
+			document.addEventListener("astro:page-load", initFragileBits);
+		})();
+	</script>
+</MainGridLayout>
