@@ -1,0 +1,2335 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "GLASS NEURONS · The Black Box Isn't Black"
+	: "黑盒不黑 · GLASS NEURONS";
+const description = isEn
+	? "On 15 October 2026, Nick Cammarata published 'Neural Networks Are Already Clean,' arguing AI's black box was never as tangled as we thought — roughly 90% of neuron poles have one primary job. This interactive page lets you look inside with a toy neuron lab."
+	: "2026 年 10 月 15 日，Goodfire 研究员 Nick Cammarata 发表 2.6 万字长文《神经网络本已纯净》，提出 AI 黑盒并不黑：现代模型中约 90% 的神经元极向从始至终只有一项清晰的主任务。本页构建了互动玩具神经元实验室，带你直观检视这一震撼 AI 可解释性领域的学术争论。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#040814] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-emerald-500/30 selection:text-emerald-200">
+			<!-- Ambient Neural Energy Glows -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:28px_28px] overflow-hidden"></div>
+			<div class="absolute -top-36 -left-36 w-96 h-96 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-16 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+							<span>NICK CAMMARATA · GOODFIRE · 2026-10-15</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+							<span>🔬</span>
+							<span class="lang-zh">论文：神经网络本已纯净 (2.6万字 / 65分钟)</span>
+							<span class="lang-en">Essay: Neural Networks Are Already Clean (26k words)</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono">
+							<span>💡</span>
+							<span class="lang-zh">初步审计标的：Qwen3-32B 语言模型</span>
+							<span class="lang-en">Preliminary Audit: Qwen3-32B (Alibaba)</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">AI 可解释性前沿争议 · 2026-10</span>
+							<span class="lang-en">AI Interpretability Debate · Oct 2026</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/glass-neurons/" : "/en/projects/glass-neurons/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-emerald-500/40 text-emerald-300 hover:text-white hover:bg-emerald-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "切换为中文" : "Switch to English"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">黑盒不黑 · GLASS NEURONS</span>
+					<span class="lang-en">GLASS NEURONS · The Black Box Isn't Black</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-emerald-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">“黑盒其实并不黑——前提是你得用正确的方法去看它。”</span>
+					<span class="lang-en">"The black box isn't black — you just have to look at it properly."</span>
+				</p>
+
+				<div class="space-y-3 max-w-3xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							<strong>2026 年 10 月 15 日</strong>，AI 可解释性初创公司 Goodfire 研究员（前 OpenAI 核心成员）<strong>Nick Cammarata</strong> 发表了长达 26,000 字（阅读时长约 65 分钟）的长文<strong>《神经网络本已纯净》（Neural Networks Are Already Clean）</strong>。文章在发布数小时内引爆 Hacker News 与 LessWrong 首页，引发了整个 AI 研究界的激烈震荡与两极评价。
+						</span>
+						<span class="lang-en">
+							On <strong>15 October 2026</strong>, <strong>Nick Cammarata</strong> — interpretability researcher at AI startup Goodfire and formerly with OpenAI — published a landmark 26,000-word essay (a 65-minute read) titled <strong>"Neural Networks Are Already Clean"</strong>. It vaulted to the front page of Hacker News and LessWrong within hours, igniting intense debate across the machine learning community.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							过去十年，学术界普遍悲观地认为神经网络是一个无可救药的“混沌黑盒”：单个神经元似乎同时被多个互不相干的现实概念激活（即“多语义性”与“叠加假说”）。然而 Cammarata 在对阿里巴巴开源大模型 <strong>Qwen3-32B</strong> 展开的深度审计中发现：多达 <strong>约 90% 的神经元极向（Poles）其实只有一项清晰的主要任务</strong>；约 7% 拥有两项相关的延伸任务；仅有约 2-4% 尚未被完全理解。所谓的“混乱”，很大程度上只是过去的探查工具与过时架构投下的幻影。
+						</span>
+						<span class="lang-en">
+							For over a decade, researchers feared neural networks were intrinsically chaotic black boxes, where individual neurons simultaneously represent wildly unrelated concepts (polysemanticity and superposition). In preliminary audits of Alibaba's open-source <strong>Qwen3-32B</strong> model, Goodfire estimates that roughly <strong>90% of neuron poles have ONE primary job</strong> (often with minor related offshoots); ~7% have two related jobs; and only ~2-4% remain not yet understood. Much of the field's supposed mess was an artifact of dated architectures and clumsy tools.
+						</span>
+					</p>
+					<div class="p-3.5 rounded-xl bg-slate-900/90 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+						<span class="text-emerald-400 font-bold block mb-1">
+							<span class="lang-zh">论文开篇原话 · OPENING LINE:</span>
+							<span class="lang-en">VERBATIM OPENING LINE:</span>
+						</span>
+						<p class="italic text-slate-200">
+							"I think I have good news about the nature of neural networks."
+						</p>
+						<p class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">（“我想，我关于神经网络本质的好消息要带给大家。”）</span>
+							<span class="lang-en">— Nick Cammarata, 15 October 2026</span>
+						</p>
+					</div>
+				</div>
+			</header>
+
+			<!-- 6-METRIC OVERVIEW STRIP -->
+			<section class="relative z-10 mb-10">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-emerald-400 font-mono text-xs font-bold uppercase tracking-wider">
+						<span class="lang-zh">核心审计指标 · BENCHMARK AUDIT STRIP</span>
+						<span class="lang-en">BENCHMARK AUDIT METRICS STRIP</span>
+					</span>
+				</div>
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-slate-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">2023 旧结论</span>
+							<span class="lang-en">2023 OLD VERDICT</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-rose-400 mt-1">~1.7%</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">OpenAI 项目可解释神经元</span>
+							<span class="lang-en">OpenAI project legible rate</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30">
+						<div class="text-emerald-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">2026 单任务率</span>
+							<span class="lang-en">2026 SINGLE JOB</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-emerald-300 mt-1">~90%</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">Qwen3-32B 极向主任务</span>
+							<span class="lang-en">Qwen3-32B poles with 1 job</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-cyan-500/30">
+						<div class="text-cyan-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">双重相关任务</span>
+							<span class="lang-en">DUAL RELATED</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-cyan-300 mt-1">~7%</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">递归泛化自然分支</span>
+							<span class="lang-en">Recursive generalization</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-amber-500/30">
+						<div class="text-amber-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">未理解比例</span>
+							<span class="lang-en">UNUNDERSTOOD</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-amber-300 mt-1">~2-4%</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">待后续深入假说检验</span>
+							<span class="lang-en">Working hypothesis gap</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-purple-500/30">
+						<div class="text-purple-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">现代重训末层</span>
+							<span class="lang-en">MODERN RETRAIN</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-purple-300 mt-1">99-100%</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">跨 300 倍规模极易理解</span>
+							<span class="lang-en">Legible across 300x scale</span>
+						</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+						<div class="text-slate-400 font-semibold uppercase tracking-wider">
+							<span class="lang-zh">长文篇幅</span>
+							<span class="lang-en">ESSAY SCALE</span>
+						</div>
+						<div class="text-base sm:text-lg font-black text-white mt-1">26,000 字</div>
+						<div class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">65 分钟深度论文长读</span>
+							<span class="lang-en">65-min comprehensive essay</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- REALITY CHECK & HONESTY STRIP (CLEARLY MARKED) -->
+			<section class="relative z-10 mb-10 p-5 rounded-2xl bg-amber-950/20 border border-amber-500/40 text-slate-200">
+				<div class="flex items-center gap-2 mb-3 text-amber-400 font-mono text-sm font-bold">
+					<span>⚖️</span>
+					<span class="lang-zh">现实审视与科学诚实性声明 (REALITY CHECK)</span>
+					<span class="lang-en">REALITY CHECK & SCIENTIFIC HONESTY STRIP</span>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+					<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/20">
+						<div class="text-amber-300 font-bold mb-1 flex items-center gap-1.5">
+							<span>⚠️</span>
+							<span class="lang-zh">1. 90% 数据仅为初步审计估算，并非既成科学定律</span>
+							<span class="lang-en">1. 90% Is a Preliminary Audit Estimate, Not a Proven Law</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								Cammarata 本人在论文中明确将这一主张界定为<strong>“工作假说（working hypothesis）”</strong>，其第四步推导更被作者本人亲自标为<strong>“高度投机性（highly speculative）”</strong>。切勿将初步抽样推论误当作盖棺定论的物理铁律。
+							</span>
+							<span class="lang-en">
+								The 90% figure is a preliminary audit estimate, not a proven law; the essay itself frames the claim as a working hypothesis (its fourth step is labeled "highly speculative" by Cammarata himself).
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/20">
+						<div class="text-amber-300 font-bold mb-1 flex items-center gap-1.5">
+							<span>⚠️</span>
+							<span class="lang-zh">2. 外部独立学者尚未完成复现</span>
+							<span class="lang-en">2. Outside Researchers Have Not Yet Reproduced Audits</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								截至 2026 年 10 月中旬（17-22日），<strong>尚无任何外部独立实验室或同行评议团队完整复现这一审计数据</strong>；与之配套的技术支持论文（Technical Companion Paper）目前仍未正式公开发布。
+							</span>
+							<span class="lang-en">
+								Outside researchers have NOT yet reproduced the audits (as of ~17 Oct, no outsider had reproduced any of it); the technical companion paper is still unreleased.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/20">
+						<div class="text-amber-300 font-bold mb-1 flex items-center gap-1.5">
+							<span>⚖️</span>
+							<span class="lang-zh">3. 学界顶尖专家阵营依然深度割裂</span>
+							<span class="lang-en">3. Top Researchers Are Deeply Split</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								Google DeepMind 的机械可解释性领军人物 <strong>Neel Nanda 依然坚信叠加假说（Superposition）在深层网络中真实存在</strong>；有学者称该长文可能是该领域的“里程碑式转折点”，亦有顶尖学者评价其为“有用但并非颠覆性突破”。
+							</span>
+							<span class="lang-en">
+								Google DeepMind's Neel Nanda still thinks superposition is real; top researchers are split (one calls it a possible turning point, another says useful but not a big change).
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/20">
+						<div class="text-amber-300 font-bold mb-1 flex items-center gap-1.5">
+							<span>💼</span>
+							<span class="lang-zh">4. 商业利益相关性：Goodfire 制造并出售显微镜</span>
+							<span class="lang-en">4. Commercial Interest: Goodfire Sells the Microscopes</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								发布方 Goodfire 是一家商业化 AI 可解释性初创企业，其商业模式正是<strong>对外出售探查大模型内部状态的分析工具与服务</strong>。如果“神经网络可以被轻松看透”，其商业工具链的价值与落地门槛将获得巨大背书。
+							</span>
+							<span class="lang-en">
+								Goodfire sells tools for looking inside AI — it has a direct commercial interest in this clean-box narrative being true.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/20">
+						<div class="text-amber-300 font-bold mb-1 flex items-center gap-1.5">
+							<span>🔮</span>
+							<span class="lang-zh">5. 对高风险关键行为的预测力仍待严苛实证</span>
+							<span class="lang-en">5. Predicting Consequential Behavior Remains Unproven</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								正如科技智库《The Neuron》所指出的：研究界仍需用实打实的证据证明，单神经元级别的标签化解释，是否真的能够<strong>精准预测并在事前干预先进大模型在现实世界中的关键复杂行为</strong>（如对抗攻击、欺骗、幻觉等）。
+							</span>
+							<span class="lang-en">
+								Researchers still need to show that neuron-level explanations can predict CONSEQUENTIAL behavior in advanced models (per The Neuron's coverage).
+							</span>
+						</p>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-950/80 border border-amber-500/20">
+						<div class="text-amber-300 font-bold mb-1 flex items-center gap-1.5">
+							<span>🎨</span>
+							<span class="lang-zh">6. 本页所有演示神经元均为手写合成玩具演示</span>
+							<span class="lang-en">6. Hand-Coded Synthetic Demos (Not Real Qwen Data)</span>
+						</div>
+						<p class="text-slate-400 leading-relaxed font-sans">
+							<span class="lang-zh">
+								本页面中包含的所有可交互神经元、网格与图表均为用于解释科学原理的<strong>手写合成玩具模型（toy synthetic demos）</strong>，它们<strong>绝非 Qwen3-32B 的真实神经元权重，也不是真实模型原始数据</strong>。
+							</span>
+							<span class="lang-en">
+								All toy neurons on this page are hand-coded synthetic demos illustrating the IDEAS — they are NOT Qwen3-32B neurons and not real model data.
+							</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE 01: 1.7% TO 90% JOURNEY & DONUT CHART -->
+			<section class="relative z-10 mb-12 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider mb-1">
+							<span>📊</span>
+							<span class="lang-zh">交互实验 01 · 1.7% 到 90% 的认知跃迁</span>
+							<span class="lang-en">INTERACTIVE 01 · FROM 1.7% TO 90%</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">从“不可解读的混沌”到“九成纯净的主任务”</span>
+							<span class="lang-en">The Paradigm Shift: From 1.7% Noise to 90% Legibility</span>
+						</h2>
+					</div>
+					<div class="flex items-center gap-2">
+						<button
+							id="btn-switch-2023"
+							type="button"
+							class="px-3 py-1.5 rounded-lg text-xs font-mono border border-slate-700 bg-slate-950 text-slate-300 hover:text-white transition cursor-pointer active:scale-95"
+						>
+							<span class="lang-zh">2023 OpenAI 裁决 (~1.7%)</span>
+							<span class="lang-en">2023 OpenAI Era (~1.7%)</span>
+						</button>
+						<button
+							id="btn-switch-2026"
+							type="button"
+							class="px-3 py-1.5 rounded-lg text-xs font-mono border border-emerald-500 bg-emerald-950/60 text-emerald-300 font-bold transition cursor-pointer active:scale-95"
+						>
+							<span class="lang-zh">2026 Goodfire 审计 (~90%)</span>
+							<span class="lang-en">2026 Goodfire Audit (~90%)</span>
+						</button>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						2023 年，Cammarata 亲自主导了 OpenAI 的自动可解释性研究（用 GPT-4 自动给 GPT-2 神经元写总结），当时最宽松的标准下也仅能解释约 <strong>1.7%</strong> 的神经元，学界因此认定神经元天生杂乱，必须借助庞大的稀疏自编码器（SAE）重构概念。三年后的 2026 年 10 月，在改进了激活分析方法（独立考量正负极向）后，Qwen3-32B 的审计展现了完全颠覆的图景：<strong>约 90% 的神经元极向具备单一主任务</strong>。
+					</span>
+					<span class="lang-en">
+						In 2023, an automated interpretability project at OpenAI (initiated by Cammarata himself) could explain only ~1.7% of neurons under its most generous scoring metric. In October 2026, preliminary audits of Alibaba's Qwen3-32B revealed a completely transformed picture: roughly 90% of neuron poles have ONE clear job. Click the years or donut slices below to explore.
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+					<!-- Animated Big Counter / Progress Arc -->
+					<div class="lg:col-span-5 p-5 rounded-xl bg-slate-950/90 border border-slate-800 flex flex-col items-center justify-center text-center">
+						<div class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">
+							<span id="metric-epoch-label" class="text-emerald-400 font-bold">2026 GOODFIRE AUDIT</span>
+						</div>
+						<div class="relative w-44 h-44 my-2 flex items-center justify-center">
+							<svg class="w-full h-full -rotate-90" viewBox="0 0 120 120">
+								<circle cx="60" cy="60" r="50" fill="none" stroke="#1e293b" stroke-width="10" />
+								<circle
+									id="circle-metric-progress"
+									cx="60"
+									cy="60"
+									r="50"
+									fill="none"
+									stroke="#10b981"
+									stroke-width="10"
+									stroke-dasharray="314.16"
+									stroke-dashoffset="31.4"
+									stroke-linecap="round"
+									class="transition-all duration-1000 ease-out"
+								/>
+							</svg>
+							<div class="absolute inset-0 flex flex-col items-center justify-center">
+								<span id="counter-metric-val" class="text-4xl font-black font-mono text-emerald-300">90%</span>
+								<span id="counter-metric-sub" class="text-[11px] font-mono text-slate-400 mt-0.5">
+									<span class="lang-zh">具有单一主任务</span>
+									<span class="lang-en">One Main Job</span>
+								</span>
+							</div>
+						</div>
+						<p id="metric-epoch-desc" class="text-xs text-slate-300 font-mono mt-3 max-w-xs">
+							<span class="lang-zh">Qwen3-32B 极向审计：仅 ~2-4% 的神经元仍未被理解。</span>
+							<span class="lang-en">Qwen3-32B pole audit: only ~2-4% remain not understood.</span>
+						</p>
+					</div>
+
+					<!-- Qwen3-32B Donut Breakdown -->
+					<div class="lg:col-span-7 p-5 rounded-xl bg-slate-950/90 border border-slate-800">
+						<div class="flex items-center justify-between gap-2 mb-3 pb-2 border-b border-slate-800">
+							<div class="text-xs font-mono text-slate-300 font-bold">
+								<span class="lang-zh">Qwen3-32B 神经元极向审计构成</span>
+								<span class="lang-en">Qwen3-32B Neuron Poles Audit Breakdown</span>
+							</div>
+							<div class="text-[11px] font-mono text-amber-400/90 px-2 py-0.5 rounded bg-amber-950/60 border border-amber-800/40">
+								<span class="lang-zh">初步审计 · Goodfire · 2026年10月</span>
+								<span class="lang-en">preliminary audit, Goodfire, Oct 2026</span>
+							</div>
+						</div>
+
+						<div class="flex flex-col sm:flex-row items-center gap-6">
+							<!-- Donut SVG -->
+							<div class="relative w-36 h-36 shrink-0">
+								<svg class="w-full h-full -rotate-90 cursor-pointer" viewBox="0 0 100 100">
+									<!-- 90% Slice (circumference = 2*pi*38 = 238.76. 90% is 214.88) -->
+									<circle
+										id="donut-slice-1"
+										cx="50"
+										cy="50"
+										r="38"
+										fill="none"
+										stroke="#10b981"
+										stroke-width="16"
+										stroke-dasharray="214.88 238.76"
+										stroke-dashoffset="0"
+										class="hover:opacity-80 transition cursor-pointer"
+									/>
+									<!-- 7% Slice (16.71 length) -->
+									<circle
+										id="donut-slice-2"
+										cx="50"
+										cy="50"
+										r="38"
+										fill="none"
+										stroke="#06b6d4"
+										stroke-width="16"
+										stroke-dasharray="16.71 238.76"
+										stroke-dashoffset="-214.88"
+										class="hover:opacity-80 transition cursor-pointer"
+									/>
+									<!-- 3% Slice (7.16 length) -->
+									<circle
+										id="donut-slice-3"
+										cx="50"
+										cy="50"
+										r="38"
+										fill="none"
+										stroke="#f59e0b"
+										stroke-width="16"
+										stroke-dasharray="7.16 238.76"
+										stroke-dashoffset="-231.59"
+										class="hover:opacity-80 transition cursor-pointer"
+									/>
+								</svg>
+								<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
+									<span class="text-xs font-mono font-bold text-white">Qwen3</span>
+									<span class="text-[10px] font-mono text-slate-400">32B</span>
+								</div>
+							</div>
+
+							<!-- Donut Legend & Details -->
+							<div class="space-y-2.5 text-xs font-mono w-full">
+								<div id="legend-item-1" class="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-500/40 cursor-pointer hover:bg-emerald-950/60 transition">
+									<div class="flex items-center justify-between text-emerald-300 font-bold">
+										<span class="flex items-center gap-1.5">
+											<span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+											<span class="lang-zh">单一主任务 (One Main Job)</span>
+											<span class="lang-en">One Main Job</span>
+										</span>
+										<span class="text-white text-sm">~90%</span>
+									</div>
+									<p class="text-[11px] text-slate-400 mt-1 font-sans">
+										<span class="lang-zh">具备高度聚焦的语义或特征探测职责，常带有微小的直接衍生侧枝。</span>
+										<span class="lang-en">Highly focused primary role, often with minor related offshoots.</span>
+									</p>
+								</div>
+
+								<div id="legend-item-2" class="p-2.5 rounded-lg bg-slate-900 border border-cyan-500/30 cursor-pointer hover:bg-cyan-950/40 transition">
+									<div class="flex items-center justify-between text-cyan-300 font-bold">
+										<span class="flex items-center gap-1.5">
+											<span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+											<span class="lang-zh">双重相关任务 (Two Related Jobs)</span>
+											<span class="lang-en">Two Related Jobs</span>
+										</span>
+										<span class="text-white text-sm">~7%</span>
+									</div>
+									<p class="text-[11px] text-slate-400 mt-1 font-sans">
+										<span class="lang-zh">承担两项紧密关联的任务，源于树状生长式的“递归泛化”。</span>
+										<span class="lang-en">Two closely related roles via recursive generalization.</span>
+									</p>
+								</div>
+
+								<div id="legend-item-3" class="p-2.5 rounded-lg bg-slate-900 border border-amber-500/30 cursor-pointer hover:bg-amber-950/40 transition">
+									<div class="flex items-center justify-between text-amber-300 font-bold">
+										<span class="flex items-center gap-1.5">
+											<span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+											<span class="lang-zh">暂未理解 (Not Yet Understood)</span>
+											<span class="lang-en">Not Yet Understood</span>
+										</span>
+										<span class="text-white text-sm">~2-4%</span>
+									</div>
+									<p class="text-[11px] text-slate-400 mt-1 font-sans">
+										<span class="lang-zh">当前审计工作假说尚未完全破解的少部分极向。</span>
+										<span class="lang-en">The remaining subset unresolved under current working hypothesis.</span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE 02: THE V-NEURON (THE FAMOUS RE-READ PUZZLE) -->
+			<section class="relative z-10 mb-12 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider mb-1">
+							<span>🧩</span>
+							<span class="lang-zh">交互实验 02 · 明星解谜：V 字神经元</span>
+							<span class="lang-en">INTERACTIVE 02 · THE V-NEURON STAR PUZZLE</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">“既看猫又看车”的百年悬案：它到底在看什么？</span>
+							<span class="lang-en">The Cat-and-Car Mystery: What Is It Actually Detecting?</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-slate-950 border border-slate-700 text-slate-300">
+						<span class="lang-zh">已测试图块：<strong id="v-click-count" class="text-emerald-400">0</strong> / 12</span>
+						<span class="lang-en">Tiles Tested: <strong id="v-click-count-en" class="text-emerald-400">0</strong> / 12</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						在经典视觉网络 InceptionV1 中，曾有一个令所有 AI 研究员费解的<strong>神经元 #4471</strong>：它在看见“猫脸”时剧烈放电，在看见“跑车车头”时同样剧烈放电！这被奉为“多语义性 / 叠加假说”的铁证（一个神经元打包了猫和车两个互不相干的概念）。<strong>请点击下方 12 块手工绘制的矢量图块</strong>，观察仪表的放电与抑制反应，找出它的真正规律！
+					</span>
+					<span class="lang-en">
+						In the image model InceptionV1, one famous neuron seemed to fire equally for both cat faces and car fronts — cited for years as evidence for messy polysemanticity. Cammarata re-read it: it was never about cats or cars. Click the 12 hand-drawn tiles below to observe the activation meter and solve the mystery.
+					</span>
+				</p>
+
+				<!-- 12 SVG Picture Tiles Grid -->
+				<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-6" id="v-tiles-grid">
+					<!-- Tile 1: Cat Face (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.94"
+						data-name-zh="猫脸 (Cat Face)"
+						data-name-en="Cat Face"
+						data-feature-zh="尖锐三角形猫耳与下颌尖角形成鲜明 V 形"
+						data-feature-en="Pointed triangular ears and sharp jaw forming V-shapes"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Cat Face with prominent V-ears and V-chin -->
+							<path d="M14 26 L12 12 L26 20 Q32 18 38 20 L52 12 L50 26 C56 36 52 48 32 54 C12 48 8 36 14 26 Z" fill="currentColor" fill-opacity="0.1" />
+							<!-- V shaped ears inner -->
+							<path d="M15 16 L22 21" stroke-width="1.5" />
+							<path d="M49 16 L42 21" stroke-width="1.5" />
+							<!-- Eyes & Nose V -->
+							<circle cx="24" cy="30" r="2.5" fill="currentColor" />
+							<circle cx="40" cy="30" r="2.5" fill="currentColor" />
+							<path d="M29 36 L32 40 L35 36 Z" fill="currentColor" />
+							<path d="M32 40 L32 44" />
+							<!-- Whiskers -->
+							<path d="M22 38 L12 36 M22 41 L10 42" stroke-width="1" />
+							<path d="M42 38 L52 36 M42 41 L54 42" stroke-width="1" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">猫脸 (Cat Face)</span>
+							<span class="lang-en">Cat Face</span>
+						</span>
+					</button>
+
+					<!-- Tile 2: Car Front (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.91"
+						data-name-zh="跑车车头 (Car Front)"
+						data-name-en="Car Front"
+						data-feature-zh="进气格栅导流折线与俯冲前盖构成锐角 V"
+						data-feature-en="Low hood and angular grille converge into sharp V-lines"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Car Front converging V -->
+							<path d="M12 46 L20 28 L44 28 L52 46 L46 52 L18 52 Z" fill="currentColor" fill-opacity="0.1" />
+							<!-- Windshield -->
+							<path d="M20 28 L24 16 L40 16 L44 28 Z" stroke-width="1.5" />
+							<!-- Angular headlights forming V lines -->
+							<polygon points="16,36 24,34 22,40 15,38" fill="currentColor" fill-opacity="0.3" />
+							<polygon points="48,36 40,34 42,40 49,38" fill="currentColor" fill-opacity="0.3" />
+							<!-- V grille center -->
+							<path d="M24 42 L32 49 L40 42" stroke-width="2.5" class="text-emerald-400" />
+							<path d="M26 38 L32 44 L38 38" stroke-width="1.5" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">跑车前脸 (Car Front)</span>
+							<span class="lang-en">Car Front</span>
+						</span>
+					</button>
+
+					<!-- Tile 3: Fox Snout (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.96"
+						data-name-zh="狐狸吻部 (Fox Snout)"
+						data-name-en="Fox Snout"
+						data-feature-zh="修长锐利的三角形吻部与立耳构成尖锐 V 结构"
+						data-feature-en="Elongated triangular snout and pointed ears forming sharp V"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Fox Head with sharp downward V -->
+							<path d="M10 10 L22 22 L32 54 L42 22 L54 10 L44 26 C48 34 42 42 32 54 C22 42 16 34 20 26 Z" fill="currentColor" fill-opacity="0.1" />
+							<!-- Sharp V Snout -->
+							<path d="M20 28 L32 54 L44 28" stroke-width="2.5" class="text-emerald-400" />
+							<polygon points="30,51 32,54 34,51" fill="currentColor" />
+							<!-- Slanted Eyes -->
+							<path d="M22 28 L28 26" stroke-width="2" />
+							<path d="M42 28 L36 26" stroke-width="2" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">狐狸尖吻 (Fox Snout)</span>
+							<span class="lang-en">Fox Snout</span>
+						</span>
+					</button>
+
+					<!-- Tile 4: Flame (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.88"
+						data-name-zh="烈焰火舌 (Flame)"
+						data-name-en="Flame"
+						data-feature-zh="向上聚拢收紧的锥形火焰尖端 V 形折角"
+						data-feature-en="Tapering fire tips converging into sharp ascending V-points"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Flame Outer -->
+							<path d="M32 8 C32 8 46 22 46 36 C46 48 38 56 32 56 C26 56 18 48 18 36 C18 24 32 8 32 8 Z" fill="currentColor" fill-opacity="0.1" />
+							<!-- Flickering V Tongues -->
+							<path d="M32 14 L36 28 L32 24 L28 28 Z" fill="currentColor" fill-opacity="0.2" />
+							<path d="M26 36 L32 20 L38 36 C38 44 32 48 32 48 C32 48 26 44 26 36 Z" stroke-width="1.5" />
+							<!-- Inverted V tip -->
+							<path d="M24 24 L32 8 L40 24" stroke-width="2.5" class="text-emerald-400" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">烈焰尖端 (Flame)</span>
+							<span class="lang-en">Flame</span>
+						</span>
+					</button>
+
+					<!-- Tile 5: Fireboat Water Jet (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.86"
+						data-name-zh="消防水炮射流 (Water Jet)"
+						data-name-en="Water Jet"
+						data-feature-zh="高压喷头喷射出的两股汇聚呈锐角 V 状的水流"
+						data-feature-en="Pressurized water streams angled sharply in high-speed V spray"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Nozzle Base -->
+							<rect x="8" y="28" width="12" height="8" rx="2" fill="currentColor" fill-opacity="0.3" />
+							<path d="M20 29 L28 26 L28 38 L20 35 Z" fill="currentColor" fill-opacity="0.2" />
+							<!-- Angled V spray jet -->
+							<path d="M28 32 L56 14" stroke-width="2.5" class="text-emerald-400" />
+							<path d="M28 32 L56 50" stroke-width="2.5" class="text-emerald-400" />
+							<path d="M36 30 L54 22 M36 34 L54 42 M28 32 L58 32" stroke-dasharray="3 3" stroke-width="1.5" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">射流水炮 (Water Jet)</span>
+							<span class="lang-en">Water Jet</span>
+						</span>
+					</button>
+
+					<!-- Tile 6: Chevron Arrow (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.98"
+						data-name-zh="折角箭头 (Chevron Arrow)"
+						data-name-en="Chevron Arrow"
+						data-feature-zh="标准几何锐角 V 结构，峰值激活"
+						data-feature-en="Pure geometric sharp V vertex with maximum activation"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Double Chevron V -->
+							<path d="M12 20 L32 36 L52 20" stroke-width="3.5" class="text-emerald-400" />
+							<path d="M12 34 L32 50 L52 34" stroke-width="3" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">折角箭头 (Chevron)</span>
+							<span class="lang-en">Chevron Arrow</span>
+						</span>
+					</button>
+
+					<!-- Tile 7: Mountain Peak (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.93"
+						data-name-zh="险峰尖顶 (Mountain Peak)"
+						data-name-en="Mountain Peak"
+						data-feature-zh="陡峭耸立的山脊线构成的倒置锐角 V"
+						data-feature-en="Steep craggy mountain ridges meeting at a sharp summit V"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Sharp Mountain Peak V -->
+							<path d="M32 10 L56 52 L8 52 Z" fill="currentColor" fill-opacity="0.1" />
+							<path d="M16 52 L32 10 L48 52" stroke-width="2.5" class="text-emerald-400" />
+							<!-- Ridge line -->
+							<path d="M32 10 L28 28 L34 38 L30 52" stroke-width="1.5" />
+							<!-- Snow cap -->
+							<path d="M26 24 L32 20 L38 24 L32 10 Z" fill="currentColor" fill-opacity="0.3" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">险峰尖顶 (Mountain)</span>
+							<span class="lang-en">Mountain Peak</span>
+						</span>
+					</button>
+
+					<!-- Tile 8: Bird Beak (Pointed V) -->
+					<button
+						type="button"
+						data-tile-type="v"
+						data-val="0.92"
+						data-name-zh="鹰隼锐喙 (Bird Beak)"
+						data-name-en="Bird Beak"
+						data-feature-zh="猛禽喙部上下闭合形成的极具攻击性的锐角 V"
+						data-feature-en="Sharp raptor beak profile converging into an acute V point"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-emerald-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Raptor head & beak -->
+							<path d="M10 44 C12 28 22 16 36 16 C42 16 48 20 54 26 L36 34 L52 38 C42 46 26 48 10 44 Z" fill="currentColor" fill-opacity="0.1" />
+							<!-- Pointed Beak V -->
+							<path d="M32 20 L58 32 L36 40" stroke-width="2.5" class="text-emerald-400" />
+							<path d="M36 32 L58 32" stroke-width="1.5" />
+							<circle cx="28" cy="24" r="2.5" fill="currentColor" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">鹰隼锐喙 (Bird Beak)</span>
+							<span class="lang-en">Bird Beak</span>
+						</span>
+					</button>
+
+					<!-- Tile 9: Letter O (Round Shape - INHIBIT) -->
+					<button
+						type="button"
+						data-tile-type="round"
+						data-val="-0.78"
+						data-name-zh="字母 O (Letter O)"
+						data-name-en="Letter O"
+						data-feature-zh="完全平滑圆润的环形闭合曲线，无任何尖角折线（产生强负抑制）"
+						data-feature-en="Perfect smooth circular curvature with zero vertices (strong negative inhibition)"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-rose-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-rose-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Clean Typographic O -->
+							<circle cx="32" cy="32" r="22" stroke-width="4" class="text-rose-400" />
+							<circle cx="32" cy="32" r="14" stroke-width="2" stroke-dasharray="2 2" opacity="0.4" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">字母 O (Letter O)</span>
+							<span class="lang-en">Letter O</span>
+						</span>
+					</button>
+
+					<!-- Tile 10: Donut (Round Shape - INHIBIT) -->
+					<button
+						type="button"
+						data-tile-type="round"
+						data-val="-0.82"
+						data-name-zh="圆环甜甜圈 (Donut)"
+						data-name-en="Donut"
+						data-feature-zh="连续圆环拓扑曲面，内外同心圆平滑弧度（强负抑制）"
+						data-feature-en="Torus ring topology with concentric smooth boundaries (negative inhibition)"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-rose-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-rose-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Donut Torus -->
+							<circle cx="32" cy="32" r="22" stroke-width="3" class="text-rose-400" fill="currentColor" fill-opacity="0.1" />
+							<circle cx="32" cy="32" r="9" stroke-width="2.5" class="text-rose-400" />
+							<!-- Sprinkles -->
+							<circle cx="22" cy="22" r="1.5" fill="currentColor" />
+							<circle cx="42" cy="24" r="1.5" fill="currentColor" />
+							<circle cx="24" cy="42" r="1.5" fill="currentColor" />
+							<circle cx="40" cy="40" r="1.5" fill="currentColor" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">甜甜圈 (Donut)</span>
+							<span class="lang-en">Donut</span>
+						</span>
+					</button>
+
+					<!-- Tile 11: Wheel (Round Shape - INHIBIT) -->
+					<button
+						type="button"
+						data-tile-type="round"
+						data-val="-0.74"
+						data-name-zh="轮毂车轮 (Wheel)"
+						data-name-en="Wheel"
+						data-feature-zh="等径旋转对称圆周，无任何 V 形指向结构（负抑制）"
+						data-feature-en="Radial rotation symmetry with zero directional V vertices (inhibition)"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-rose-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-rose-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Wheel -->
+							<circle cx="32" cy="32" r="22" stroke-width="3.5" class="text-rose-400" />
+							<circle cx="32" cy="32" r="14" stroke-width="1.5" />
+							<circle cx="32" cy="32" r="5" fill="currentColor" />
+							<!-- Spokes -->
+							<line x1="32" y1="10" x2="32" y2="27" />
+							<line x1="32" y1="37" x2="32" y2="54" />
+							<line x1="10" y1="32" x2="27" y2="32" />
+							<line x1="37" y1="32" x2="54" y2="32" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">轮毂车轮 (Wheel)</span>
+							<span class="lang-en">Wheel</span>
+						</span>
+					</button>
+
+					<!-- Tile 12: Full Moon (Round Shape - INHIBIT) -->
+					<button
+						type="button"
+						data-tile-type="round"
+						data-val="-0.85"
+						data-name-zh="圆形满月 (Full Moon)"
+						data-name-en="Full Moon"
+						data-feature-zh="完美的圆月轮廓，完全平滑曲率（强负抑制）"
+						data-feature-en="Perfect circular lunar disc with smooth continuous silhouette (strong inhibition)"
+						class="v-tile p-3 rounded-xl bg-slate-950 border border-slate-800 hover:border-rose-500/60 transition cursor-pointer text-left group active:scale-95 flex flex-col items-center justify-between min-h-36"
+					>
+						<svg class="w-16 h-16 text-slate-300 group-hover:text-rose-400 transition" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<!-- Full Moon Disc -->
+							<circle cx="32" cy="32" r="22" stroke-width="3" class="text-rose-400" fill="currentColor" fill-opacity="0.15" />
+							<!-- Soft craters -->
+							<ellipse cx="26" cy="26" rx="4" ry="3" stroke-width="1" stroke-dasharray="2 1" />
+							<ellipse cx="38" cy="38" rx="5" ry="4" stroke-width="1" stroke-dasharray="2 1" />
+							<circle cx="40" cy="22" r="2.5" stroke-width="1" stroke-dasharray="2 1" />
+						</svg>
+						<span class="text-[11px] font-mono text-slate-300 group-hover:text-white mt-2 text-center">
+							<span class="lang-zh">圆形满月 (Moon)</span>
+							<span class="lang-en">Full Moon</span>
+						</span>
+					</button>
+				</div>
+
+				<!-- BIG ACTIVATION METER -->
+				<div class="p-5 rounded-xl bg-slate-950/90 border border-slate-800 mb-6">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+						<div class="flex items-center gap-2">
+							<span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" id="meter-status-indicator"></span>
+							<span class="font-mono text-xs font-bold text-white tracking-wider">
+								<span class="lang-zh">测试神经元：#4471 (InceptionV1 视觉层，示意)</span>
+								<span class="lang-en">Neuron #4471 (InceptionV1, illustrative)</span>
+							</span>
+						</div>
+						<div class="font-mono text-xs text-slate-400" id="v-meter-tile-label">
+							<span class="lang-zh">点击上方任一图块开始测试</span>
+							<span class="lang-en">Click any tile above to trigger activation</span>
+						</div>
+					</div>
+
+					<!-- Visual Bar Meter -->
+					<div class="relative w-full h-8 bg-slate-900 rounded-lg overflow-hidden border border-slate-800 flex items-center mb-2">
+						<!-- Center Zero Line -->
+						<div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-700 z-10"></div>
+						<!-- Negative Bar (from 50% going left) -->
+						<div
+							id="v-meter-neg-bar"
+							class="absolute right-1/2 top-1 bottom-1 bg-gradient-to-l from-rose-600 to-rose-400 rounded-l transition-all duration-300 w-0"
+						></div>
+						<!-- Positive Bar (from 50% going right) -->
+						<div
+							id="v-meter-pos-bar"
+							class="absolute left-1/2 top-1 bottom-1 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-r transition-all duration-300 w-0"
+						></div>
+					</div>
+
+					<!-- Meter Labels -->
+					<div class="flex justify-between items-center text-[11px] font-mono">
+						<span class="text-rose-400 font-bold">-1.0 (强烈负抑制 · INHIBITED)</span>
+						<span class="text-slate-500 font-bold">0.0 (基线)</span>
+						<span class="text-emerald-400 font-bold">+1.0 (强烈正放电 · FIRES / EXCITED)</span>
+					</div>
+
+					<!-- Real-time Numerical Readout -->
+					<div class="mt-4 pt-3 border-t border-slate-900 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+						<div>
+							<span class="text-slate-400"><span class="lang-zh">当前神经元激活度：</span><span class="lang-en">Activation Output: </span></span>
+							<strong id="v-meter-num" class="text-lg text-white font-black tracking-wider">0.00</strong>
+						</div>
+						<div id="v-meter-summary" class="text-slate-400 italic font-sans text-xs">
+							<span class="lang-zh">尚未选择输入刺激源</span>
+							<span class="lang-en">No stimulus selected</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- REVEAL ANSWER BANNER (SHOWN AFTER ~6 CLICKS OR BUTTON) -->
+				<div class="flex items-center justify-end mb-3">
+					<button
+						id="btn-force-reveal-v"
+						type="button"
+						class="text-xs font-mono text-emerald-400 hover:text-emerald-300 underline underline-offset-4 cursor-pointer"
+					>
+						<span class="lang-zh">直接揭晓该神经元的真正任务 ➔</span>
+						<span class="lang-en">Directly Reveal Neuron's True Purpose ➔</span>
+					</button>
+				</div>
+
+				<div id="v-answer-banner" class="hidden p-6 rounded-xl bg-gradient-to-r from-emerald-950/80 via-slate-900 to-cyan-950/80 border-2 border-emerald-500 text-slate-100 animate-in fade-in zoom-in duration-500">
+					<div class="flex items-start gap-4">
+						<div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-2xl shrink-0">
+							💡
+						</div>
+						<div class="space-y-2">
+							<h3 class="text-lg sm:text-xl font-black text-emerald-300 font-sans">
+								<span class="lang-zh">“它从未‘既看猫又看车’。它看的是尖锐的 V 形。从始至终只有一项任务。”</span>
+								<span class="lang-en">"It never saw cats or cars. It sees V shapes. One job."</span>
+							</h3>
+							<p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+								<span class="lang-zh">
+									Nick Cammarata 重新审视了这一曾被视作“不可解多语义性”的经典案例：当把该神经元的完整激活图谱拉通后，真相一目了然——<strong>狐狸尖吻、升腾火苗、高压水枪、几何箭头、险峰与鹰喙全部强烈触发它；而字母 O、甜甜圈、轮毂、满月等圆形则毫不留情地将其推向负激活抑制！</strong>猫脸上的尖耳与车头俯冲的空气动力学折线，恰好都拥有锐利的 V 形夹角。
+								</span>
+								<span class="lang-en">
+									Cammarata re-examined this iconic "polysemantic" neuron: it was never juggling high-level categories of cats and cars. Fox snouts and flames switch it ON; round shapes (like the letter O) push its activation NEGATIVE (inhibit). Cats and cars both contain sharp V-shapes — the neuron had one coherent geometric job all along.
+								</span>
+							</p>
+							<div class="pt-2 text-xs font-mono text-emerald-400/90 flex flex-wrap items-center gap-2">
+								<span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800">
+									<span class="lang-zh">论文名句</span>
+									<span class="lang-en">KEY QUOTE</span>
+								</span>
+								<span class="italic text-slate-200">
+									"Instead, I spent most of a decade figuring out how to look at a model rather than looking at it."
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE 03: TOY NEURON LAB (7x7 GRID + 2-LAYER NETWORK) -->
+			<section class="relative z-10 mb-12 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider mb-1">
+							<span>🧪</span>
+							<span class="lang-zh">交互实验 03 · 玩具神经元实验室 (TOY NEURON LAB)</span>
+							<span class="lang-en">INTERACTIVE 03 · TOY NEURON LAB</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">7×7 画布与双层透明网络：亲手检验权重与激活</span>
+							<span class="lang-en">7×7 Pixel Canvas & 2-Layer Demo Network: Inspect Every Weight</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-slate-950 border border-emerald-500/40 text-emerald-300">
+						<span class="lang-zh">公式：a = max(0, Σ wᵢ xᵢ + b) (ReLU)</span>
+						<span class="lang-en">Math: a = max(0, Σ wᵢ xᵢ + b) (ReLU)</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						黑盒之所以成为黑盒，是因为人们没有打开它去读写内部的标签。在下方 7×7 网格上点击或拖动绘制像素（点亮 = 1，熄灭 = 0）。第一层部署了 3 个固定特征探测器（V 形、O 圆形、对角线），第二层部署了 2 个组合概念神经元（箭形复合体、环形复合体）。<strong>点击任一神经元可直接高亮其关注的权重像素</strong>；数学原理完全诚实透明，无任何黑盒魔术。
+					</span>
+					<span class="lang-en">
+						The point of Cammarata's essay is simple: you can READ each neuron by looking at what turns it on. Draw on the 7×7 grid below (click/drag). Layer 1 features three detectors (V-shape, O/circle, diagonal-line) shown as weight heatmaps; Layer 2 houses two "concept" neurons combining them. Click any neuron to highlight its weights.
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+					<!-- Left: 7x7 Interactive Drawing Canvas & Controls -->
+					<div class="lg:col-span-5 p-5 rounded-xl bg-slate-950/90 border border-slate-800 flex flex-col items-center">
+						<div class="w-full flex items-center justify-between text-xs font-mono text-slate-400 mb-3">
+							<span class="text-emerald-400 font-bold">
+								<span class="lang-zh">输入画布 (7×7 像素矩阵)</span>
+								<span class="lang-en">Input Canvas (7×7 Pixels)</span>
+							</span>
+							<span id="canvas-active-pixel-count" class="text-slate-300">0 像素点亮</span>
+						</div>
+
+						<!-- 7x7 Grid Container -->
+						<div
+							id="pixel-grid-container"
+							class="grid grid-cols-7 gap-1.5 p-3 rounded-xl bg-slate-900 border border-slate-800 select-none cursor-pointer touch-none"
+							style="width: 280px; height: 280px;"
+						>
+							<!-- 49 cells dynamically populated via script -->
+						</div>
+
+						<!-- Canvas Preset Controls -->
+						<div class="w-full mt-4 pt-3 border-t border-slate-800">
+							<div class="text-[11px] font-mono text-slate-400 mb-2">
+								<span class="lang-zh">快捷预设图形：</span>
+								<span class="lang-en">Quick Draw Presets:</span>
+							</div>
+							<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+								<button id="btn-preset-v" type="button" class="px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-emerald-400 text-slate-200 transition cursor-pointer active:scale-95">
+									<span class="lang-zh">画 V 字</span>
+									<span class="lang-en">Draw V</span>
+								</button>
+								<button id="btn-preset-o" type="button" class="px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyan-400 text-slate-200 transition cursor-pointer active:scale-95">
+									<span class="lang-zh">画 O 圆</span>
+									<span class="lang-en">Draw O</span>
+								</button>
+								<button id="btn-preset-diag" type="button" class="px-2 py-1.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-purple-400 text-slate-200 transition cursor-pointer active:scale-95">
+									<span class="lang-zh">画对角</span>
+									<span class="lang-en">Draw Diag</span>
+								</button>
+								<button id="btn-preset-clear" type="button" class="px-2 py-1.5 rounded-lg bg-slate-900 border border-rose-800/60 hover:border-rose-400 text-rose-300 transition cursor-pointer active:scale-95">
+									<span class="lang-zh">清空画布</span>
+									<span class="lang-en">Clear</span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<!-- Right: 2-Layer Neural Network Readouts -->
+					<div class="lg:col-span-7 space-y-4">
+						<!-- Layer 1 Header -->
+						<div class="p-3 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center justify-between text-xs font-mono">
+							<div class="text-emerald-400 font-bold uppercase tracking-wider">
+								<span class="lang-zh">第 1 层：底层基元特征探测器 (3 个固定神经元)</span>
+								<span class="lang-en">Layer 1: Low-Level Feature Detectors (3 Fixed Neurons)</span>
+							</div>
+							<span class="text-slate-400 text-[11px]">
+								<span class="lang-zh">点击卡片高亮权重</span>
+								<span class="lang-en">Click card to view weights</span>
+							</span>
+						</div>
+
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+							<!-- L1 Neuron 1: V Detector -->
+							<div
+								id="card-neuron-l1-v"
+								class="neuron-card p-3 rounded-xl bg-slate-950/90 border border-emerald-500/30 hover:border-emerald-400 transition cursor-pointer"
+							>
+								<div class="flex items-center justify-between text-xs font-mono font-bold text-emerald-300 mb-2">
+									<span>Neuron 1-A (V)</span>
+									<span id="score-l1-v" class="text-white">0.00</span>
+								</div>
+								<div class="text-[11px] text-slate-400 font-sans mb-2">
+									<span class="lang-zh">V 形锐角探测器</span>
+									<span class="lang-en">V-Shape Detector</span>
+								</div>
+								<div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden mb-2">
+									<div id="bar-l1-v" class="bg-emerald-400 h-full rounded-full transition-all duration-200" style="width: 0%"></div>
+								</div>
+								<div class="flex items-center justify-center p-1 bg-slate-900/60 rounded border border-slate-800">
+									<canvas id="mini-heatmap-v" width="49" height="49" class="w-12 h-12 block"></canvas>
+								</div>
+							</div>
+
+							<!-- L1 Neuron 2: O Detector -->
+							<div
+								id="card-neuron-l1-o"
+								class="neuron-card p-3 rounded-xl bg-slate-950/90 border border-cyan-500/30 hover:border-cyan-400 transition cursor-pointer"
+							>
+								<div class="flex items-center justify-between text-xs font-mono font-bold text-cyan-300 mb-2">
+									<span>Neuron 1-B (O)</span>
+									<span id="score-l1-o" class="text-white">0.00</span>
+								</div>
+								<div class="text-[11px] text-slate-400 font-sans mb-2">
+									<span class="lang-zh">O 圆环闭合探测器</span>
+									<span class="lang-en">O Circle Detector</span>
+								</div>
+								<div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden mb-2">
+									<div id="bar-l1-o" class="bg-cyan-400 h-full rounded-full transition-all duration-200" style="width: 0%"></div>
+								</div>
+								<div class="flex items-center justify-center p-1 bg-slate-900/60 rounded border border-slate-800">
+									<canvas id="mini-heatmap-o" width="49" height="49" class="w-12 h-12 block"></canvas>
+								</div>
+							</div>
+
+							<!-- L1 Neuron 3: Diagonal Detector -->
+							<div
+								id="card-neuron-l1-diag"
+								class="neuron-card p-3 rounded-xl bg-slate-950/90 border border-purple-500/30 hover:border-purple-400 transition cursor-pointer"
+							>
+								<div class="flex items-center justify-between text-xs font-mono font-bold text-purple-300 mb-2">
+									<span>Neuron 1-C (Diag)</span>
+									<span id="score-l1-diag" class="text-white">0.00</span>
+								</div>
+								<div class="text-[11px] text-slate-400 font-sans mb-2">
+									<span class="lang-zh">对角线轴向探测器</span>
+									<span class="lang-en">Diagonal Detector</span>
+								</div>
+								<div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden mb-2">
+									<div id="bar-l1-diag" class="bg-purple-400 h-full rounded-full transition-all duration-200" style="width: 0%"></div>
+								</div>
+								<div class="flex items-center justify-center p-1 bg-slate-900/60 rounded border border-slate-800">
+									<canvas id="mini-heatmap-diag" width="49" height="49" class="w-12 h-12 block"></canvas>
+								</div>
+							</div>
+						</div>
+
+						<!-- Layer 2 Header -->
+						<div class="p-3 rounded-lg bg-slate-950/70 border border-slate-800 flex items-center justify-between text-xs font-mono mt-4">
+							<div class="text-amber-400 font-bold uppercase tracking-wider">
+								<span class="lang-zh">第 2 层：高层概念抽象神经元 (结合第 1 层输出)</span>
+								<span class="lang-en">Layer 2: High-Level Concept Neurons (Combinations of L1)</span>
+							</div>
+							<span class="text-slate-400 text-[11px]">
+								<span class="lang-zh">纯粹加权组合 + ReLU</span>
+								<span class="lang-en">Weighted Sum + ReLU</span>
+							</span>
+						</div>
+
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+							<!-- L2 Neuron 1: Arrow Concept -->
+							<div
+								id="card-neuron-l2-arrow"
+								class="neuron-card p-4 rounded-xl bg-slate-950/90 border border-amber-500/30 hover:border-amber-400 transition cursor-pointer"
+							>
+								<div class="flex items-center justify-between text-xs font-mono font-bold text-amber-300 mb-2">
+									<span>Neuron 2-A: "Arrow-Like"</span>
+									<span id="score-l2-arrow" class="text-white text-sm">0.00</span>
+								</div>
+								<div class="text-xs text-slate-300 font-sans mb-2">
+									<span class="lang-zh">箭形复合概念：兴奋(1.5×V + 1.0×对角) - 抑制(2.0×O)</span>
+									<span class="lang-en">Arrow concept: Excite(1.5×V + 1.0×Diag) - Inhibit(2.0×O)</span>
+								</div>
+								<div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden mb-3">
+									<div id="bar-l2-arrow" class="bg-amber-400 h-full rounded-full transition-all duration-200" style="width: 0%"></div>
+								</div>
+								<div class="text-[11px] font-mono text-slate-400" id="badge-l2-arrow-status">
+									<span class="lang-zh">待激活</span>
+									<span class="lang-en">Inactive</span>
+								</div>
+							</div>
+
+							<!-- L2 Neuron 2: Ring Concept -->
+							<div
+								id="card-neuron-l2-ring"
+								class="neuron-card p-4 rounded-xl bg-slate-950/90 border border-cyan-500/30 hover:border-cyan-400 transition cursor-pointer"
+							>
+								<div class="flex items-center justify-between text-xs font-mono font-bold text-cyan-300 mb-2">
+									<span>Neuron 2-B: "Ring-Like"</span>
+									<span id="score-l2-ring" class="text-white text-sm">0.00</span>
+								</div>
+								<div class="text-xs text-slate-300 font-sans mb-2">
+									<span class="lang-zh">环形复合概念：兴奋(2.0×O) - 抑制(1.5×V + 1.0×对角)</span>
+									<span class="lang-en">Ring concept: Excite(2.0×O) - Inhibit(1.5×V + 1.0×Diag)</span>
+								</div>
+								<div class="w-full bg-slate-900 rounded-full h-2.5 overflow-hidden mb-3">
+									<div id="bar-l2-ring" class="bg-cyan-400 h-full rounded-full transition-all duration-200" style="width: 0%"></div>
+								</div>
+								<div class="text-[11px] font-mono text-slate-400" id="badge-l2-ring-status">
+									<span class="lang-zh">待激活</span>
+									<span class="lang-en">Inactive</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Selected Neuron Inspector Bar -->
+						<div class="p-3 rounded-lg bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 flex items-center justify-between">
+							<span id="selected-neuron-info">
+								<span class="lang-zh">提示：点击上方任意神经元卡片，画布将切换显示其专属权重分布。</span>
+								<span class="lang-en">Tip: Click any neuron card above to preview its target weight heatmap.</span>
+							</span>
+							<button id="btn-reset-inspect" type="button" class="text-emerald-400 hover:underline cursor-pointer">
+								<span class="lang-zh">恢复画板</span>
+								<span class="lang-en">Reset View</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE 04: RECURSIVE GENERALIZATION (THE "IY" TREE) -->
+			<section class="relative z-10 mb-12 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider mb-1">
+							<span>🌿</span>
+							<span class="lang-zh">交互实验 04 · 递归泛化树状分支 (RECURSIVE GENERALIZATION)</span>
+							<span class="lang-en">INTERACTIVE 04 · RECURSIVE GENERALIZATION: THE "IY" TREE</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">为什么部分神经元身兼数职？它们像树枝一样生长</span>
+							<span class="lang-en">Why Some Neurons Wear Several Hats: Sprouting Semantic Offshoots</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono px-3 py-1 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-300">
+						<span class="lang-zh">自然层级泛化 · 非随机叠加</span>
+						<span class="lang-en">Natural Generalization, Not Random Soup</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						如果 90% 的神经元有单一主任务，那剩下约 7% 为什么同时激活多个任务？Cammarata 提出<strong>“递归泛化（Recursive Generalization）”</strong>模型：神经元不是在随机重叠无关概念，而是像一棵树的枝桠向外抽条。例如在真实大语言模型中，一个最初探测字母组合 <strong>"iy"</strong> 的底层神经元，顺理成章地延伸覆盖缩写词 <strong>"diy"</strong>，继而进一步生长到完整短语 <strong>"do it yourself"</strong>（哪怕该短语中根本不包含 "iy" 字符）！点击树状图节点检视激活样本。
+					</span>
+					<span class="lang-en">
+						Cammarata's motif for why some neurons wear several hats: a neuron grows like a branch sprouting side shoots. For example, a language-model neuron detecting the letters "iy" grew to cover "diy", then "do it yourself" — which contains no "iy" at all. The extra jobs are RELATED, teaching you how the model thinks rather than hiding it. Click each node below.
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+					<!-- Interactive SVG Branch Diagram -->
+					<div class="lg:col-span-7 p-4 rounded-xl bg-slate-950/90 border border-slate-800 flex items-center justify-center">
+						<svg class="w-full max-w-lg h-80" viewBox="0 0 500 300" fill="none">
+							<!-- Connecting Branch Lines -->
+							<!-- Root to Mid-1 (diy) -->
+							<path d="M100 150 C 160 150, 180 80, 240 80" stroke="#06b6d4" stroke-width="3" stroke-linecap="round" />
+							<!-- Root to Mid-2 (phonetic -ity) -->
+							<path d="M100 150 C 160 150, 180 220, 240 220" stroke="#10b981" stroke-width="3" stroke-linecap="round" />
+							<!-- Mid-1 to Leaf-1 (do it yourself) -->
+							<path d="M240 80 C 300 80, 320 50, 380 50" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 4" />
+							<!-- Mid-1 to Leaf-2 (diy crafts) -->
+							<path d="M240 80 C 300 80, 320 110, 380 110" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" />
+							<!-- Mid-2 to Leaf-3 (clarity / rarity) -->
+							<path d="M240 220 C 300 220, 320 220, 380 220" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" />
+
+							<!-- Node 1: Root ["iy"] -->
+							<g class="tree-node cursor-pointer group" id="tree-node-iy" transform="translate(100, 150)">
+								<circle r="32" fill="#040814" stroke="#10b981" stroke-width="3" class="group-hover:stroke-emerald-300 transition" />
+								<circle r="26" fill="#10b981" fill-opacity="0.15" />
+								<text text-anchor="middle" dy="5" fill="#10b981" font-family="monospace" font-size="14" font-weight="bold">"iy"</text>
+								<text text-anchor="middle" dy="48" fill="#94a3b8" font-family="monospace" font-size="10">ROOT</text>
+							</g>
+
+							<!-- Node 2: Branch ["diy"] -->
+							<g class="tree-node cursor-pointer group" id="tree-node-diy" transform="translate(240, 80)">
+								<circle r="28" fill="#040814" stroke="#06b6d4" stroke-width="2.5" class="group-hover:stroke-cyan-300 transition" />
+								<circle r="22" fill="#06b6d4" fill-opacity="0.15" />
+								<text text-anchor="middle" dy="5" fill="#06b6d4" font-family="monospace" font-size="13" font-weight="bold">"diy"</text>
+								<text text-anchor="middle" dy="44" fill="#94a3b8" font-family="monospace" font-size="10">ACRONYM</text>
+							</g>
+
+							<!-- Node 3: Branch ["-ity"] -->
+							<g class="tree-node cursor-pointer group" id="tree-node-ity" transform="translate(240, 220)">
+								<circle r="28" fill="#040814" stroke="#10b981" stroke-width="2" class="group-hover:stroke-emerald-300 transition" />
+								<circle r="22" fill="#10b981" fill-opacity="0.1" />
+								<text text-anchor="middle" dy="5" fill="#10b981" font-family="monospace" font-size="12" font-weight="bold">"-ity"</text>
+								<text text-anchor="middle" dy="44" fill="#94a3b8" font-family="monospace" font-size="10">PHONETIC</text>
+							</g>
+
+							<!-- Node 4: Leaf ["do it yourself"] -->
+							<g class="tree-node cursor-pointer group" id="tree-node-full" transform="translate(390, 50)">
+								<rect x="-65" y="-18" width="130" height="36" rx="18" fill="#040814" stroke="#f59e0b" stroke-width="2.5" class="group-hover:stroke-amber-300 transition" />
+								<rect x="-61" y="-14" width="122" height="28" rx="14" fill="#f59e0b" fill-opacity="0.15" />
+								<text text-anchor="middle" dy="4" fill="#f59e0b" font-family="monospace" font-size="11" font-weight="bold">"do it yourself"</text>
+							</g>
+
+							<!-- Node 5: Leaf ["diy crafts"] -->
+							<g class="tree-node cursor-pointer group" id="tree-node-crafts" transform="translate(390, 110)">
+								<rect x="-55" y="-16" width="110" height="32" rx="16" fill="#040814" stroke="#06b6d4" stroke-width="2" class="group-hover:stroke-cyan-300 transition" />
+								<rect x="-51" y="-12" width="102" height="24" rx="12" fill="#06b6d4" fill-opacity="0.1" />
+								<text text-anchor="middle" dy="4" fill="#06b6d4" font-family="monospace" font-size="11">"diy projects"</text>
+							</g>
+
+							<!-- Node 6: Leaf ["clarity / rarity"] -->
+							<g class="tree-node cursor-pointer group" id="tree-node-phonetic-leaf" transform="translate(390, 220)">
+								<rect x="-55" y="-16" width="110" height="32" rx="16" fill="#040814" stroke="#10b981" stroke-width="1.5" class="group-hover:stroke-emerald-300 transition" />
+								<text text-anchor="middle" dy="4" fill="#10b981" font-family="monospace" font-size="11">"clarity / purity"</text>
+							</g>
+						</svg>
+					</div>
+
+					<!-- Right: Interactive Node Inspector Card -->
+					<div class="lg:col-span-5 p-5 rounded-xl bg-slate-950/90 border border-slate-800">
+						<div class="text-[11px] font-mono text-emerald-400 uppercase tracking-wider mb-1" id="tree-detail-tier">
+							<span class="lang-zh">选中节点：根部低层字符探测器</span>
+							<span class="lang-en">Selected: Root Phonetic/Character Detector</span>
+						</div>
+						<h3 class="text-xl font-black text-white font-mono mb-2" id="tree-detail-title">
+							Token: "iy"
+						</h3>
+						<p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans mb-4" id="tree-detail-body">
+							<span class="lang-zh">
+								神经元的初始基底职责。负责响应语料库中的 /iː/ 元音音素以及英文词尾常见的拼写碎片。
+							</span>
+							<span class="lang-en">
+								Initial base role of the neuron. Detects English token fragments and phonemes around /iː/ vowel endings.
+							</span>
+						</p>
+
+						<!-- Example Tokens Sample Strip -->
+						<div class="p-3 rounded-lg bg-slate-900/90 border border-slate-800 font-mono text-xs">
+							<div class="text-slate-400 text-[10px] uppercase tracking-wider mb-2">
+								<span class="lang-zh">激活语料样本 · ACTIVATING TOKENS</span>
+								<span class="lang-en">ACTIVATING TOKEN EXAMPLES</span>
+							</div>
+							<div class="flex flex-wrap gap-1.5" id="tree-detail-tokens">
+								<span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">qual-<strong>iy</strong></span>
+								<span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">clar-<strong>iy</strong></span>
+								<span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">p-<strong>iy</strong>-ing</span>
+							</div>
+						</div>
+
+						<div class="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-amber-400 flex items-center gap-1.5">
+							<span>💡</span>
+							<span id="tree-detail-takeaway">
+								<span class="lang-zh">核心启示：次级任务是主任务的自然泛化，它向我们展示了模型如何构建概念，而非隐藏概念。</span>
+								<span class="lang-en">Takeaway: The extra jobs are related side-shoots, not random packing.</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- INTERACTIVE 05: THE DEBATE TIMELINE -->
+			<section class="relative z-10 mb-12 p-6 rounded-2xl bg-slate-900/60 border border-slate-800">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div>
+						<div class="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider mb-1">
+							<span>⏱️</span>
+							<span class="lang-zh">交互实验 05 · 学术争鸣微时间轴 (THE DEBATE TIMELINE)</span>
+							<span class="lang-en">INTERACTIVE 05 · THE DEBATE TIMELINE (2017 - 2026)</span>
+						</div>
+						<h2 class="text-xl sm:text-2xl font-black text-white tracking-tight">
+							<span class="lang-zh">十年可解释性之路：从“回路议程”到“纯净黑盒”</span>
+							<span class="lang-en">A Decade of Interpretability: From Circuits to Clean Neurons</span>
+						</h2>
+					</div>
+					<div class="text-xs font-mono text-slate-400">
+						<span class="lang-zh">点击节点查看完整事实与各方引述</span>
+						<span class="lang-en">Click nodes to inspect facts & quotes</span>
+					</div>
+				</div>
+
+				<p class="text-xs sm:text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						可解释性研究不是一蹴而就的灵感，而是一场长达十年的拉锯战。从 2017 年 Chris Olah 开创回路理论，到 2020 年正式命名叠加假说，再到 2023 年仅解释 1.7% 导致的集体悲观，直至 2026 年 10 月 Cammarata 的 2.6 万字重磅论文，见证这一领域对神经网络认知模型的巨幅摇摆。
+					</span>
+					<span class="lang-en">
+						From the Circuits agenda in 2017 to naming superposition in 2020, through the despair of 2023's 1.7% verdict, to modern 99-100% retrains and the 15 October 2026 essay: trace the evolution of how the world looks inside AI.
+					</span>
+				</p>
+
+				<!-- Timeline Node Buttons Bar -->
+				<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-6" id="timeline-buttons-strip">
+					<button
+						type="button"
+						id="tl-btn-0"
+						class="tl-btn p-3 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700"
+					>
+						<div class="flex items-center gap-1.5 text-slate-500 font-mono text-[10px] mb-1">
+							<span class="w-2 h-2 rounded-full bg-slate-600 tl-dot"></span>
+							<span>2017</span>
+						</div>
+						<div class="font-mono text-xs font-bold text-white truncate">
+							<span class="lang-zh">回路议程破土</span>
+							<span class="lang-en">Circuits Agenda</span>
+						</div>
+					</button>
+
+					<button
+						type="button"
+						id="tl-btn-1"
+						class="tl-btn p-3 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700"
+					>
+						<div class="flex items-center gap-1.5 text-slate-500 font-mono text-[10px] mb-1">
+							<span class="w-2 h-2 rounded-full bg-slate-600 tl-dot"></span>
+							<span>2020</span>
+						</div>
+						<div class="font-mono text-xs font-bold text-white truncate">
+							<span class="lang-zh">命名叠加假说</span>
+							<span class="lang-en">"Zoom In" Paper</span>
+						</div>
+					</button>
+
+					<button
+						type="button"
+						id="tl-btn-2"
+						class="tl-btn p-3 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700"
+					>
+						<div class="flex items-center gap-1.5 text-slate-500 font-mono text-[10px] mb-1">
+							<span class="w-2 h-2 rounded-full bg-slate-600 tl-dot"></span>
+							<span>2023</span>
+						</div>
+						<div class="font-mono text-xs font-bold text-white truncate">
+							<span class="lang-zh">OpenAI 1.7% 判决</span>
+							<span class="lang-en">OpenAI 1.7% Result</span>
+						</div>
+					</button>
+
+					<button
+						type="button"
+						id="tl-btn-3"
+						class="tl-btn p-3 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700"
+					>
+						<div class="flex items-center gap-1.5 text-slate-500 font-mono text-[10px] mb-1">
+							<span class="w-2 h-2 rounded-full bg-slate-600 tl-dot"></span>
+							<span>2025</span>
+						</div>
+						<div class="font-mono text-xs font-bold text-white truncate">
+							<span class="lang-zh">现代重训 99-100%</span>
+							<span class="lang-en">Modern Retrain</span>
+						</div>
+					</button>
+
+					<button
+						type="button"
+						id="tl-btn-4"
+						class="tl-btn p-3 rounded-xl bg-slate-950 border border-emerald-500 text-left cursor-pointer transition active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+					>
+						<div class="flex items-center gap-1.5 text-emerald-400 font-mono text-[10px] mb-1">
+							<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse tl-dot"></span>
+							<span>2026-10-15</span>
+						</div>
+						<div class="font-mono text-xs font-bold text-emerald-300 truncate">
+							<span class="lang-zh">长文震撼发布</span>
+							<span class="lang-en">26k-Word Essay</span>
+						</div>
+					</button>
+
+					<button
+						type="button"
+						id="tl-btn-5"
+						class="tl-btn p-3 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700"
+					>
+						<div class="flex items-center gap-1.5 text-slate-500 font-mono text-[10px] mb-1">
+							<span class="w-2 h-2 rounded-full bg-slate-600 tl-dot"></span>
+							<span>NOW</span>
+						</div>
+						<div class="font-mono text-xs font-bold text-white truncate">
+							<span class="lang-zh">学界大分歧</span>
+							<span class="lang-en">Split Field Today</span>
+						</div>
+					</button>
+				</div>
+
+				<!-- Timeline Detail Card -->
+				<div class="p-6 rounded-xl bg-slate-950/90 border border-slate-800" id="tl-detail-card">
+					<div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+						<span id="tl-detail-badge" class="px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800 text-xs font-mono font-bold">
+							2026-10-15 · Goodfire Publication
+						</span>
+						<span id="tl-detail-meta" class="text-xs font-mono text-slate-400">
+							Nick Cammarata · 26,000 words
+						</span>
+					</div>
+					<h3 id="tl-detail-title" class="text-xl sm:text-2xl font-black text-white font-sans mb-3">
+						《神经网络本已纯净》（Neural Networks Are Already Clean）
+					</h3>
+					<p id="tl-detail-body" class="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans mb-4">
+						Nick Cammarata 发表 2.6 万字长文，全面推翻过去的“混沌叠加”基调。他在阿里巴巴 Qwen3-32B 的极向审计中指出约 90% 神经元极向具备单一主任务，并重读了 InceptionV1 猫与车的 V 神经元和狗与车的朝向聚类。文章开篇写道：“我想，我关于神经网络本质的好消息要带给大家。”
+					</p>
+					<div class="p-3.5 rounded-lg bg-slate-900 border border-emerald-500/30 text-emerald-300 font-mono text-xs">
+						<span class="font-bold block mb-1">
+							<span class="lang-zh">论文核心引述 · VERBATIM QUOTE:</span>
+							<span class="lang-en">VERBATIM QUOTE:</span>
+						</span>
+						<p id="tl-detail-quote" class="italic text-slate-200">
+							"Scaling ordinary investigation beats engineering a clever new decomposition."
+						</p>
+						<p class="text-[11px] text-slate-400 mt-1">
+							<span class="lang-zh">（“扩展常规的探查方法，胜过去费尽心机设计巧妙的新分解算法。”）</span>
+							<span class="lang-en">— Nick Cammarata</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- DEEP DIVE NARRATIVE & GLOSSARY -->
+			<section class="relative z-10 mb-10 pt-8 border-t border-slate-800">
+				<div class="max-w-3xl space-y-8 text-slate-300 leading-relaxed text-sm sm:text-base">
+					<div>
+						<h2 class="text-xl sm:text-2xl font-black text-white mb-3">
+							<span class="lang-zh">一、重读 InceptionV1：当猫、车与狗在几何中相遇</span>
+							<span class="lang-en">1. Re-reading InceptionV1: When Cats, Cars, and Dogs Meet in Geometry</span>
+						</h2>
+						<p class="mb-3">
+							<span class="lang-zh">
+								在长达近十年的时间里，经典图像模型 InceptionV1 中的一个神经元始终是学术界论文里的“反面典型”：它对猫脸有强烈响应，对跑车前脸也有强烈响应。既然猫是活生生的动物，车是冰冷的工业机械，两者概念风马牛不相及，研究界便顺理成章地将其归因于“多语义性（Polysemanticity）”——即网络在有限的维度中偷懒，将互不相干的高阶概念粗暴叠加在一起。
+							</span>
+							<span class="lang-en">
+								For nearly a decade, one InceptionV1 neuron served as the textbook exhibit for polysemanticity: it fired for both cat faces and car fronts. Because cats are mammals and cars are vehicles, researchers assumed the network was lazily overlapping disjoint concepts into a single dimension.
+							</span>
+						</p>
+						<p class="text-slate-400 text-xs sm:text-sm">
+							<span class="lang-zh">
+								Cammarata 的重新审视指出了这种解读的盲区：<strong>人类用“语义分类学（Taxonomy）”去看模型，而模型看的是“几何底层（Geometry）”。</strong>该神经元自始至终就是一个纯粹的尖锐 V 形折角探测器。另一个经典例子是隐藏在一群“狗神经元”中的“汽车信号”——重新审计后发现，模型并非分不清物种与汽车，而是将它们<strong>按照面向镜头的姿态朝向（Pose Invariance）</strong>进行了普通的空间泛化！
+							</span>
+							<span class="lang-en">
+								Cammarata showed that humans were projecting semantic taxonomies onto low-level geometry. The neuron simply detects sharp V vertices. Another famous anomaly — a car signal hiding inside dog neurons — turned out to be ordinary spatial pose invariance: the network grouped subjects by the direction they faced the camera, regardless of whether they were canine or metallic.
+							</span>
+						</p>
+					</div>
+
+					<div>
+						<h2 class="text-xl sm:text-2xl font-black text-white mb-3">
+							<span class="lang-zh">二、架构之别：为什么过去的模型看起来那么乱？</span>
+							<span class="lang-en">2. Architecture Matters: Why Dated Models Seemed So Untidy</span>
+						</h2>
+						<p class="mb-3">
+							<span class="lang-zh">
+								为什么 2014-2020 年代的旧研究充斥着不可解的混乱？Cammarata 做了一组对照实验：他采用现代神经网络架构（现代归一化、现代激活函数与优化器），在完全相同的图片数据集和相同的参数量级下重新训练了该模型。结果震撼人心：<strong>在跨越 300 倍模型尺寸规模的实验中，最终层的神经元有 99% 至 100% 变得极其直观、极易理解！</strong>
+							</span>
+							<span class="lang-en">
+								Why did interpretability feel so desperate between 2014 and 2023? Cammarata retrained modern versions of the old architecture at the exact same size on the exact same images. The result: across a 300× scale range, 99-100% of final-layer neurons were immediately legible and understandable. Much of the field's historic nightmare stemmed from dated training hygiene and clumsy probing tools.
+							</span>
+						</p>
+						<p class="text-slate-400 text-xs sm:text-sm">
+							<span class="lang-zh">
+								在接受《麻省理工科技评论》（MIT Technology Review）采访时，Cammarata 坦言：
+							</span>
+							<span class="lang-en">
+								Speaking to MIT Technology Review, Cammarata captured the core moral:
+							</span>
+						</p>
+						<div class="my-3 p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 font-mono text-xs">
+							<p class="italic">
+								"We were looking at it wrong. I just think you want to try slightly harder; you don't want to give up too quickly."
+							</p>
+							<p class="text-[11px] text-slate-400 mt-1">
+								<span class="lang-zh">（“我们之前的观察方式错了。我只是觉得你得多尝试一点点；不要那么快就放弃。”）</span>
+								<span class="lang-en">— Nick Cammarata to MIT Technology Review</span>
+							</p>
+						</div>
+					</div>
+
+					<!-- GLOSSARY SECTION -->
+					<div>
+						<h2 class="text-xl sm:text-2xl font-black text-white mb-4">
+							<span class="lang-zh">三、核心术语对照表 (GLOSSARY)</span>
+							<span class="lang-en">3. Technical Glossary</span>
+						</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+							<div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800">
+								<div class="text-emerald-400 font-bold mb-1">
+									<span>多语义性 (Polysemanticity)</span>
+								</div>
+								<p class="text-slate-400 font-sans leading-relaxed">
+									<span class="lang-zh">单个神经元表面上看似对多个完全互不相干的现实概念同时产生放电激活的现象（“一词多义”）。</span>
+									<span class="lang-en">One neuron seemingly responding to several completely unrelated concepts ("many meanings").</span>
+								</p>
+							</div>
+
+							<div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800">
+								<div class="text-cyan-400 font-bold mb-1">
+									<span>叠加假说 (Superposition)</span>
+								</div>
+								<p class="text-slate-400 font-sans leading-relaxed">
+									<span class="lang-zh">经典假说认为模型塞入的概念数量远超神经元物理数量，利用高维空间的近正交性在相同维度中交叉重叠打包特征。</span>
+									<span class="lang-en">The theory that networks pack more concepts than they have physical neurons by overlapping them in high-dimensional space.</span>
+								</p>
+							</div>
+
+							<div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800">
+								<div class="text-amber-400 font-bold mb-1">
+									<span>稀疏自编码器 (SAEs)</span>
+								</div>
+								<p class="text-slate-400 font-sans leading-relaxed">
+									<span class="lang-zh">研究人员为了将混乱纠缠的神经元解构出“纯净特征”而额外构建的字典学习重构工具（拆解重叠）。</span>
+									<span class="lang-en">Sparse Autoencoders: decomposition tools researchers built to untangle supposedly overlapping concepts.</span>
+								</p>
+							</div>
+
+							<div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800">
+								<div class="text-purple-400 font-bold mb-1">
+									<span>递归泛化 (Recursive Generalization)</span>
+								</div>
+								<p class="text-slate-400 font-sans leading-relaxed">
+									<span class="lang-zh">Cammarata 提出的单神经元分支演化模式：从底层符号像树木抽枝般自然延伸到高层概念，附加任务高度相关。</span>
+									<span class="lang-en">A neuron grows like a branch sprouting related offshoots (e.g. "iy" → "diy" → "do it yourself").</span>
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- CITATION & DOCUMENTATION -->
+					<div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono">
+						<div class="text-emerald-400 font-bold mb-2 flex items-center gap-2">
+							<span>📚</span>
+							<span class="lang-zh">学术公报与引证信息 (2026-10-15)</span>
+							<span class="lang-en">Academic Essay & Citation (2026-10-15)</span>
+						</div>
+						<p class="text-slate-300 mb-2 leading-relaxed">
+							Cammarata, N. (2026). <em>"Neural Networks Are Already Clean"</em>. Goodfire Research Publications. Released 15 October 2026 (~26,000 words).
+						</p>
+						<p class="text-[11px] text-slate-400 leading-relaxed">
+							<span class="lang-zh">
+								审计平台：Alibaba Qwen3-32B 开源权重。关键结论：~90% 极向单一主任务、~7% 双重关联任务、~2-4% 未完全理解。配套同行评议技术报告仍在审稿流程中。所有互动组件均为 hand-coded synthetic 原理图解。
+							</span>
+							<span class="lang-en">
+								Target Model: Alibaba Qwen3-32B open weights. Key Claims: ~90% single job, ~7% dual related, ~2-4% unresolved. Technical companion paper pending. All interactive demos are hand-coded synthetic schematics.
+							</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- AI DISCLOSURE REQUIRED FOOTER -->
+			<hr class="border-slate-800/80 my-8" />
+			<blockquote class="text-xs opacity-50 border-l-2 border-emerald-500/40 pl-3 py-1 my-4 italic">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE INTERACTIVITY SCRIPT -->
+	<script is:inline>
+		(() => {
+			let cleanup = null;
+
+			function initGlassNeurons() {
+				if (cleanup) {
+					cleanup();
+					cleanup = null;
+				}
+
+				const lifecycle = new AbortController();
+				const animFrameIds = [];
+
+				cleanup = () => {
+					lifecycle.abort();
+					for (const id of animFrameIds) {
+						cancelAnimationFrame(id);
+					}
+				};
+
+				// ==========================================
+				// 1. "1.7% to 90%" METRIC SCRUBBER & DONUT
+				// ==========================================
+				const btnSwitch2023 = document.getElementById("btn-switch-2023");
+				const btnSwitch2026 = document.getElementById("btn-switch-2026");
+				const circleMetricProgress = document.getElementById("circle-metric-progress");
+				const counterMetricVal = document.getElementById("counter-metric-val");
+				const counterMetricSub = document.getElementById("counter-metric-sub");
+				const metricEpochLabel = document.getElementById("metric-epoch-label");
+				const metricEpochDesc = document.getElementById("metric-epoch-desc");
+
+				const donutSlice1 = document.getElementById("donut-slice-1");
+				const donutSlice2 = document.getElementById("donut-slice-2");
+				const donutSlice3 = document.getElementById("donut-slice-3");
+				const legendItem1 = document.getElementById("legend-item-1");
+				const legendItem2 = document.getElementById("legend-item-2");
+				const legendItem3 = document.getElementById("legend-item-3");
+
+				function setMetricEpoch(epoch) {
+					// set epoch
+					if (epoch === "2023") {
+						if (btnSwitch2023) {
+							btnSwitch2023.className = "px-3 py-1.5 rounded-lg text-xs font-mono border border-rose-500 bg-rose-950/60 text-rose-300 font-bold transition cursor-pointer active:scale-95";
+						}
+						if (btnSwitch2026) {
+							btnSwitch2026.className = "px-3 py-1.5 rounded-lg text-xs font-mono border border-slate-700 bg-slate-950 text-slate-300 transition cursor-pointer active:scale-95";
+						}
+						if (circleMetricProgress) {
+							circleMetricProgress.setAttribute("stroke", "#f43f5e");
+							// 1.7% of 314.16 circumference is ~5.34 => offset = 314.16 - 5.34 = 308.82
+							circleMetricProgress.setAttribute("stroke-dashoffset", "308.82");
+						}
+						if (counterMetricVal) {
+							counterMetricVal.className = "text-4xl font-black font-mono text-rose-400";
+							counterMetricVal.textContent = "1.7%";
+						}
+						if (counterMetricSub) {
+							counterMetricSub.innerHTML = '<span class="lang-zh">可被解释神经元</span><span class="lang-en">Legible Neurons</span>';
+						}
+						if (metricEpochLabel) {
+							metricEpochLabel.className = "text-rose-400 font-bold";
+							metricEpochLabel.textContent = "2023 OPENAI AUTO-INTERP";
+						}
+						if (metricEpochDesc) {
+							metricEpochDesc.innerHTML = '<span class="lang-zh">GPT-4 自动审计 GPT-2：仅 ~1.7% 可解释，全场深陷混乱。</span><span class="lang-en">OpenAI GPT-2 audit: only ~1.7% legible. Collective despair.</span>';
+						}
+					} else {
+						if (btnSwitch2023) {
+							btnSwitch2023.className = "px-3 py-1.5 rounded-lg text-xs font-mono border border-slate-700 bg-slate-950 text-slate-300 transition cursor-pointer active:scale-95";
+						}
+						if (btnSwitch2026) {
+							btnSwitch2026.className = "px-3 py-1.5 rounded-lg text-xs font-mono border border-emerald-500 bg-emerald-950/60 text-emerald-300 font-bold transition cursor-pointer active:scale-95";
+						}
+						if (circleMetricProgress) {
+							circleMetricProgress.setAttribute("stroke", "#10b981");
+							// 90% of 314.16 is 282.74 => offset = 314.16 - 282.74 = 31.42
+							circleMetricProgress.setAttribute("stroke-dashoffset", "31.42");
+						}
+						if (counterMetricVal) {
+							counterMetricVal.className = "text-4xl font-black font-mono text-emerald-300";
+							counterMetricVal.textContent = "90%";
+						}
+						if (counterMetricSub) {
+							counterMetricSub.innerHTML = '<span class="lang-zh">具有单一主任务</span><span class="lang-en">One Main Job</span>';
+						}
+						if (metricEpochLabel) {
+							metricEpochLabel.className = "text-emerald-400 font-bold";
+							metricEpochLabel.textContent = "2026 GOODFIRE AUDIT";
+						}
+						if (metricEpochDesc) {
+							metricEpochDesc.innerHTML = '<span class="lang-zh">Qwen3-32B 极向审计：仅 ~2-4% 的神经元仍未被理解。</span><span class="lang-en">Qwen3-32B pole audit: only ~2-4% remain not understood.</span>';
+						}
+					}
+				}
+
+				if (btnSwitch2023) {
+					btnSwitch2023.addEventListener("click", () => setMetricEpoch("2023"), { signal: lifecycle.signal });
+				}
+				if (btnSwitch2026) {
+					btnSwitch2026.addEventListener("click", () => setMetricEpoch("2026"), { signal: lifecycle.signal });
+				}
+
+				function highlightDonutItem(idx) {
+					[legendItem1, legendItem2, legendItem3].forEach((item, i) => {
+						if (!item) return;
+						if (i === idx) {
+							item.classList.add("ring-2", "ring-white/40");
+						} else {
+							item.classList.remove("ring-2", "ring-white/40");
+						}
+					});
+				}
+
+				if (donutSlice1) donutSlice1.addEventListener("click", () => highlightDonutItem(0), { signal: lifecycle.signal });
+				if (donutSlice2) donutSlice2.addEventListener("click", () => highlightDonutItem(1), { signal: lifecycle.signal });
+				if (donutSlice3) donutSlice3.addEventListener("click", () => highlightDonutItem(2), { signal: lifecycle.signal });
+				if (legendItem1) legendItem1.addEventListener("click", () => highlightDonutItem(0), { signal: lifecycle.signal });
+				if (legendItem2) legendItem2.addEventListener("click", () => highlightDonutItem(1), { signal: lifecycle.signal });
+				if (legendItem3) legendItem3.addEventListener("click", () => highlightDonutItem(2), { signal: lifecycle.signal });
+
+				// ==========================================
+				// 2. THE V-NEURON STAR PUZZLE
+				// ==========================================
+				const vTiles = document.querySelectorAll(".v-tile");
+				const vMeterPosBar = document.getElementById("v-meter-pos-bar");
+				const vMeterNegBar = document.getElementById("v-meter-neg-bar");
+				const vMeterNum = document.getElementById("v-meter-num");
+				const vMeterTileLabel = document.getElementById("v-meter-tile-label");
+				const vMeterSummary = document.getElementById("v-meter-summary");
+				const meterStatusIndicator = document.getElementById("meter-status-indicator");
+				const vClickCount = document.getElementById("v-click-count");
+				const vClickCountEn = document.getElementById("v-click-count-en");
+				const vAnswerBanner = document.getElementById("v-answer-banner");
+				const btnForceRevealV = document.getElementById("btn-force-reveal-v");
+
+				let clickedTilesSet = new Set();
+
+				function updateVMeter(tile) {
+					const type = tile.getAttribute("data-tile-type");
+					const val = parseFloat(tile.getAttribute("data-val") || "0");
+					const nameZh = tile.getAttribute("data-name-zh") || "";
+					const nameEn = tile.getAttribute("data-name-en") || "";
+					const featureZh = tile.getAttribute("data-feature-zh") || "";
+					const featureEn = tile.getAttribute("data-feature-en") || "";
+
+					clickedTilesSet.add(tile);
+					const count = clickedTilesSet.size;
+					if (vClickCount) vClickCount.textContent = count.toString();
+					if (vClickCountEn) vClickCountEn.textContent = count.toString();
+
+					// Highlight selected tile
+					vTiles.forEach(t => {
+						if (t === tile) {
+							t.classList.add("ring-2", type === "v" ? "ring-emerald-400" : "ring-rose-400");
+						} else {
+							t.classList.remove("ring-2", "ring-emerald-400", "ring-rose-400");
+						}
+					});
+
+					// Update gauge display
+					if (val >= 0) {
+						const pct = Math.min(100, Math.max(0, val * 100));
+						if (vMeterPosBar) vMeterPosBar.style.width = `${pct / 2}%`;
+						if (vMeterNegBar) vMeterNegBar.style.width = "0%";
+						if (vMeterNum) {
+							vMeterNum.className = "text-lg text-emerald-300 font-black tracking-wider";
+							vMeterNum.textContent = `+${val.toFixed(2)}`;
+						}
+						if (meterStatusIndicator) {
+							meterStatusIndicator.className = "w-3 h-3 rounded-full bg-emerald-400 animate-ping";
+						}
+					} else {
+						const pct = Math.min(100, Math.max(0, Math.abs(val) * 100));
+						if (vMeterNegBar) vMeterNegBar.style.width = `${pct / 2}%`;
+						if (vMeterPosBar) vMeterPosBar.style.width = "0%";
+						if (vMeterNum) {
+							vMeterNum.className = "text-lg text-rose-400 font-black tracking-wider";
+							vMeterNum.textContent = `${val.toFixed(2)}`;
+						}
+						if (meterStatusIndicator) {
+							meterStatusIndicator.className = "w-3 h-3 rounded-full bg-rose-500 animate-pulse";
+						}
+					}
+
+					if (vMeterTileLabel) {
+						vMeterTileLabel.innerHTML = `<span class="text-white font-bold">${nameZh} / ${nameEn}</span>`;
+					}
+
+					if (vMeterSummary) {
+						if (val > 0) {
+							vMeterSummary.innerHTML = `<span class="lang-zh text-emerald-300 font-bold">⚡ 剧烈放电触发！${featureZh}</span><span class="lang-en text-emerald-300 font-bold">⚡ Strong Positive Fire! ${featureEn}</span>`;
+						} else {
+							vMeterSummary.innerHTML = `<span class="lang-zh text-rose-300 font-bold">🛑 强烈负向抑制！${featureZh}</span><span class="lang-en text-rose-300 font-bold">🛑 Strong Negative Inhibition! ${featureEn}</span>`;
+						}
+					}
+
+					if (count >= 5 && vAnswerBanner) {
+						vAnswerBanner.classList.remove("hidden");
+					}
+				}
+
+				vTiles.forEach(tile => {
+					tile.addEventListener("click", () => updateVMeter(tile), { signal: lifecycle.signal });
+				});
+
+				if (btnForceRevealV) {
+					btnForceRevealV.addEventListener("click", () => {
+						if (vAnswerBanner) {
+							vAnswerBanner.classList.remove("hidden");
+							vAnswerBanner.scrollIntoView({ behavior: "smooth", block: "nearest" });
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 3. TOY NEURON LAB (7x7 GRID + 2-LAYER NETWORK)
+				// ==========================================
+				const pixelGridContainer = document.getElementById("pixel-grid-container");
+				const canvasActivePixelCount = document.getElementById("canvas-active-pixel-count");
+				const btnPresetV = document.getElementById("btn-preset-v");
+				const btnPresetO = document.getElementById("btn-preset-o");
+				const btnPresetDiag = document.getElementById("btn-preset-diag");
+				const btnPresetClear = document.getElementById("btn-preset-clear");
+				const btnResetInspect = document.getElementById("btn-reset-inspect");
+				const selectedNeuronInfo = document.getElementById("selected-neuron-info");
+
+				// 49 pixels: 0 or 1
+				let pixels = new Array(49).fill(0);
+				let isPointerDown = false;
+				let currentInspectingNeuron = null;
+
+				// Layer 1 Fixed Weights (7x7 flattened to 49)
+				// Detector 1: V-Shape
+				// Row 0: empty
+				// Row 1: (1,1) & (1,5) -> idx 8, 12
+				// Row 2: (2,1) & (2,5) -> idx 15, 19
+				// Row 3: (3,2) & (3,4) -> idx 23, 25
+				// Row 4: (4,2) & (4,4) -> idx 30, 32
+				// Row 5: (5,3) -> idx 38
+				// Row 6: (6,3) -> idx 45
+				const weightsV = new Array(49).fill(-0.4);
+				[8, 12, 15, 19, 23, 25, 30, 32, 38, 45].forEach(idx => {
+					weightsV[idx] = 1.2;
+				});
+				const biasV = -0.8;
+
+				// Detector 2: O-Circle
+				// Ring: (1,2),(1,3),(1,4) [9,10,11], (2,1)[15],(2,5)[19], (3,1)[22],(3,5)[26], (4,1)[29],(4,5)[33], (5,2)[37],(5,3)[38],(5,4)[39]
+				// Center (3,3)[24] has heavy negative weight
+				const weightsO = new Array(49).fill(-0.5);
+				[9, 10, 11, 15, 19, 22, 26, 29, 33, 37, 38, 39].forEach(idx => {
+					weightsO[idx] = 1.1;
+				});
+				weightsO[24] = -1.5; // Hole in the middle
+				const biasO = -1.0;
+
+				// Detector 3: Diagonal line
+				// (0,0)[0], (1,1)[8], (2,2)[16], (3,3)[24], (4,4)[32], (5,5)[40], (6,6)[48]
+				const weightsDiag = new Array(49).fill(-0.4);
+				[0, 8, 16, 24, 32, 40, 48].forEach(idx => {
+					weightsDiag[idx] = 1.3;
+				});
+				const biasDiag = -0.8;
+
+				// Populate 49 DOM cells
+				const cellElements = [];
+				if (pixelGridContainer) {
+					pixelGridContainer.innerHTML = "";
+					for (let i = 0; i < 49; i++) {
+						const cell = document.createElement("div");
+						cell.className = "w-full h-full rounded bg-slate-950 border border-slate-800 transition-colors duration-150 cursor-pointer";
+						cell.setAttribute("data-cell-idx", i.toString());
+
+						cell.addEventListener("pointerdown", () => {
+							isPointerDown = true;
+							togglePixel(i);
+						}, { signal: lifecycle.signal });
+
+						cell.addEventListener("pointerenter", () => {
+							if (isPointerDown) {
+								setPixel(i, 1);
+							}
+						}, { signal: lifecycle.signal });
+
+						pixelGridContainer.appendChild(cell);
+						cellElements.push(cell);
+					}
+				}
+
+				window.addEventListener("pointerup", () => {
+					isPointerDown = false;
+				}, { signal: lifecycle.signal });
+
+				function togglePixel(idx) {
+					pixels[idx] = pixels[idx] === 1 ? 0 : 1;
+					refreshLab();
+				}
+
+				function setPixel(idx, val) {
+					if (pixels[idx] !== val) {
+						pixels[idx] = val;
+						refreshLab();
+					}
+				}
+
+				function renderMiniHeatmap(canvasId, weights) {
+					const canvas = document.getElementById(canvasId);
+					if (!canvas) return;
+					const ctx = canvas.getContext("2d");
+					if (!ctx) return;
+					const cellSize = 7; // 49x49 canvas => 7px per cell
+					for (let r = 0; r < 7; r++) {
+						for (let c = 0; c < 7; c++) {
+							const idx = r * 7 + c;
+							const w = weights[idx];
+							if (w > 0) {
+								ctx.fillStyle = `rgba(16, 185, 129, ${Math.min(1, w / 1.2)})`;
+							} else {
+								ctx.fillStyle = `rgba(244, 63, 94, ${Math.min(1, Math.abs(w) / 1.2)})`;
+							}
+							ctx.fillRect(c * cellSize, r * cellSize, cellSize - 1, cellSize - 1);
+						}
+					}
+				}
+
+				// Readout DOM elements
+				const scoreL1V = document.getElementById("score-l1-v");
+				const barL1V = document.getElementById("bar-l1-v");
+				const scoreL1O = document.getElementById("score-l1-o");
+				const barL1O = document.getElementById("bar-l1-o");
+				const scoreL1Diag = document.getElementById("score-l1-diag");
+				const barL1Diag = document.getElementById("bar-l1-diag");
+
+				const scoreL2Arrow = document.getElementById("score-l2-arrow");
+				const barL2Arrow = document.getElementById("bar-l2-arrow");
+				const badgeL2ArrowStatus = document.getElementById("badge-l2-arrow-status");
+				const scoreL2Ring = document.getElementById("score-l2-ring");
+				const barL2Ring = document.getElementById("bar-l2-ring");
+				const badgeL2RingStatus = document.getElementById("badge-l2-ring-status");
+
+				function computeLinear(weights, bias) {
+					let sum = bias;
+					for (let i = 0; i < 49; i++) {
+						sum += weights[i] * pixels[i];
+					}
+					return sum;
+				}
+
+				function relu(val) {
+					return Math.max(0, val);
+				}
+
+				function refreshLab() {
+					// 1. Update Grid Cells Visuals
+					let activeCount = 0;
+					cellElements.forEach((cell, idx) => {
+						if (!cell) return;
+						if (currentInspectingNeuron) {
+							// Highlight weights mode
+							let w = 0;
+							if (currentInspectingNeuron === "v") w = weightsV[idx];
+							if (currentInspectingNeuron === "o") w = weightsO[idx];
+							if (currentInspectingNeuron === "diag") w = weightsDiag[idx];
+
+							if (w > 0.5) {
+								cell.className = "w-full h-full rounded bg-emerald-500/80 border border-emerald-400";
+							} else if (w < -0.2) {
+								cell.className = "w-full h-full rounded bg-rose-950/80 border border-rose-800/80";
+							} else {
+								cell.className = "w-full h-full rounded bg-slate-950 border border-slate-900";
+							}
+						} else {
+							// Normal interactive draw mode
+							if (pixels[idx] === 1) {
+								activeCount++;
+								cell.className = "w-full h-full rounded bg-emerald-400 border border-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.5)]";
+							} else {
+								cell.className = "w-full h-full rounded bg-slate-950 border border-slate-800 hover:border-slate-700";
+							}
+						}
+					});
+
+					if (canvasActivePixelCount) {
+						canvasActivePixelCount.textContent = `${activeCount} 像素点亮 / ${activeCount} Active`;
+					}
+
+					// 2. Layer 1 Computation: ReLU(w·x + b)
+					const rawL1V = computeLinear(weightsV, biasV);
+					const actL1V = relu(rawL1V);
+
+					const rawL1O = computeLinear(weightsO, biasO);
+					const actL1O = relu(rawL1O);
+
+					const rawL1Diag = computeLinear(weightsDiag, biasDiag);
+					const actL1Diag = relu(rawL1Diag);
+
+					if (scoreL1V) scoreL1V.textContent = actL1V.toFixed(2);
+					if (barL1V) barL1V.style.width = `${Math.min(100, (actL1V / 8) * 100)}%`;
+
+					if (scoreL1O) scoreL1O.textContent = actL1O.toFixed(2);
+					if (barL1O) barL1O.style.width = `${Math.min(100, (actL1O / 8) * 100)}%`;
+
+					if (scoreL1Diag) scoreL1Diag.textContent = actL1Diag.toFixed(2);
+					if (barL1Diag) barL1Diag.style.width = `${Math.min(100, (actL1Diag / 8) * 100)}%`;
+
+					// 3. Layer 2 Computation
+					// Concept 1: Arrow = ReLU(1.5*V + 1.0*Diag - 2.0*O - 0.5)
+					const rawL2Arrow = 1.5 * actL1V + 1.0 * actL1Diag - 2.0 * actL1O - 0.5;
+					const actL2Arrow = relu(rawL2Arrow);
+
+					// Concept 2: Ring = ReLU(2.0*O - 1.5*V - 1.0*Diag - 0.5)
+					const rawL2Ring = 2.0 * actL1O - 1.5 * actL1V - 1.0 * actL1Diag - 0.5;
+					const actL2Ring = relu(rawL2Ring);
+
+					if (scoreL2Arrow) scoreL2Arrow.textContent = actL2Arrow.toFixed(2);
+					if (barL2Arrow) barL2Arrow.style.width = `${Math.min(100, (actL2Arrow / 10) * 100)}%`;
+					if (badgeL2ArrowStatus) {
+						if (actL2Arrow > 2.0) {
+							badgeL2ArrowStatus.className = "text-[11px] font-mono text-emerald-400 font-bold";
+							badgeL2ArrowStatus.innerHTML = '<span class="lang-zh">🔥 箭形概念强烈放电激活！</span><span class="lang-en">🔥 Arrow concept firing!</span>';
+						} else {
+							badgeL2ArrowStatus.className = "text-[11px] font-mono text-slate-500";
+							badgeL2ArrowStatus.innerHTML = '<span class="lang-zh">静息基线</span><span class="lang-en">Resting baseline</span>';
+						}
+					}
+
+					if (scoreL2Ring) scoreL2Ring.textContent = actL2Ring.toFixed(2);
+					if (barL2Ring) barL2Ring.style.width = `${Math.min(100, (actL2Ring / 10) * 100)}%`;
+					if (badgeL2RingStatus) {
+						if (actL2Ring > 2.0) {
+							badgeL2RingStatus.className = "text-[11px] font-mono text-cyan-400 font-bold";
+							badgeL2RingStatus.innerHTML = '<span class="lang-zh">🌀 环形概念强烈放电激活！</span><span class="lang-en">🌀 Ring concept firing!</span>';
+						} else {
+							badgeL2RingStatus.className = "text-[11px] font-mono text-slate-500";
+							badgeL2RingStatus.innerHTML = '<span class="lang-zh">静息基线</span><span class="lang-en">Resting baseline</span>';
+						}
+					}
+				}
+
+				// Presets handlers
+				if (btnPresetV) {
+					btnPresetV.addEventListener("click", () => {
+						currentInspectingNeuron = null;
+						pixels = new Array(49).fill(0);
+						[8, 12, 15, 19, 23, 25, 30, 32, 38, 45].forEach(i => { pixels[i] = 1; });
+						refreshLab();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetO) {
+					btnPresetO.addEventListener("click", () => {
+						currentInspectingNeuron = null;
+						pixels = new Array(49).fill(0);
+						[9, 10, 11, 15, 19, 22, 26, 29, 33, 37, 38, 39].forEach(i => { pixels[i] = 1; });
+						refreshLab();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetDiag) {
+					btnPresetDiag.addEventListener("click", () => {
+						currentInspectingNeuron = null;
+						pixels = new Array(49).fill(0);
+						[0, 8, 16, 24, 32, 40, 48].forEach(i => { pixels[i] = 1; });
+						refreshLab();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnPresetClear) {
+					btnPresetClear.addEventListener("click", () => {
+						currentInspectingNeuron = null;
+						pixels = new Array(49).fill(0);
+						refreshLab();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Inspect Neuron Weights Mode
+				const cardNeuronL1V = document.getElementById("card-neuron-l1-v");
+				const cardNeuronL1O = document.getElementById("card-neuron-l1-o");
+				const cardNeuronL1Diag = document.getElementById("card-neuron-l1-diag");
+
+				function inspectNeuron(type, nameZh, nameEn) {
+					currentInspectingNeuron = type;
+					if (selectedNeuronInfo) {
+						selectedNeuronInfo.innerHTML = `<span class="lang-zh text-amber-300 font-bold">正在检视权重：${nameZh}（绿色=正权兴奋，红色=负权抑制）</span><span class="lang-en text-amber-300 font-bold">Inspecting Weights: ${nameEn} (Green=Positive, Red=Inhibition)</span>`;
+					}
+					refreshLab();
+				}
+
+				if (cardNeuronL1V) {
+					cardNeuronL1V.addEventListener("click", () => inspectNeuron("v", "V形探测器", "V-Detector"), { signal: lifecycle.signal });
+				}
+				if (cardNeuronL1O) {
+					cardNeuronL1O.addEventListener("click", () => inspectNeuron("o", "O圆环探测器", "O-Detector"), { signal: lifecycle.signal });
+				}
+				if (cardNeuronL1Diag) {
+					cardNeuronL1Diag.addEventListener("click", () => inspectNeuron("diag", "对角线探测器", "Diagonal-Detector"), { signal: lifecycle.signal });
+				}
+
+				if (btnResetInspect) {
+					btnResetInspect.addEventListener("click", () => {
+						currentInspectingNeuron = null;
+						if (selectedNeuronInfo) {
+							selectedNeuronInfo.innerHTML = `<span class="lang-zh">提示：点击上方任意神经元卡片，画布将切换显示其专属权重分布。</span><span class="lang-en">Tip: Click any neuron card above to preview its target weight heatmap.</span>`;
+						}
+						refreshLab();
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 4. RECURSIVE GENERALIZATION: "IY" TREE
+				// ==========================================
+				const treeData = {
+					"iy": {
+						tierZh: "根部基础：音素与词尾碎片探测器",
+						tierEn: "Root: Phonetic & Token Fragment Detector",
+						title: 'Token: "iy"',
+						bodyZh: "这是神经元最原始的底座功能。它在分词器（Tokenizer）层面响应英文字母组合 'iy' 以及发 /iː/ 结尾的音节，如 -ity、-ify、-ying 等拼写模式。",
+						bodyEn: "The primary root role. At the token level, it fires for the character sequence 'iy' and English phonetic /iː/ endings like clarity, quality, simplify.",
+						tokens: ["qual-<strong>iy</strong>", "clar-<strong>iy</strong>", "simpl-<strong>iy</strong>", "p-<strong>iy</strong>-ing"],
+						takeawayZh: "单任务基准：此时神经元只关心字母与音素的形态组合。",
+						takeawayEn: "Baseline single-job: focused purely on spelling and phonetic form."
+					},
+					"diy": {
+						tierZh: "中间级抽条：缩写词特化分支",
+						tierEn: "Intermediate Branch: Acronym Specialization",
+						title: 'Concept: "diy" (Do-It-Yourself)',
+						bodyZh: "随着特征抽象向深层推进，该神经元开始对'diy'（自己动手做）这一特定缩写词高频激活。它依然继承了'iy'的字符成分，但注入了鲜明的语义专注度。",
+						bodyEn: "As representation deepens, the neuron specializes on the acronym 'diy'. It retains the character components of 'iy', but adds specific semantic focus.",
+						tokens: ["<strong>DIY</strong> crafts", "easy <strong>diy</strong>", "<strong>diy</strong>-er", "home <strong>diy</strong>"],
+						takeawayZh: "第一层泛化：从纯粹音素跃迁为具体的缩写词语义。",
+						takeawayEn: "First generalization: from spelling fragment to an acronym concept."
+					},
+					"full": {
+						tierZh: "高层深展：完全展开短语（无字符重叠！）",
+						tierEn: "High-Level Deep Branch: Expanded Phrase (Zero Char Overlap!)",
+						title: 'Phrase: "do it yourself"',
+						bodyZh: "震撼的科学发现：在深层激活中，该神经元甚至会在看见完全展开的短语'do it yourself'时强烈放电！请注意：该短语里**根本没有任何字母 i 或 y**！这证明它并非随机混杂，而是将主任务的概念完整抽象吸收了。",
+						bodyEn: "The landmark discovery: this neuron fires for 'do it yourself' — which contains NO characters 'i' or 'y' at all! The neuron abstracted the semantic meaning, proving coherent recursive generalization.",
+						tokens: ["<strong>do it yourself</strong> guide", "build it <strong>yourself</strong>", "homemade project"],
+						takeawayZh: "递归泛化精髓：看似身兼两职，其实两项任务彼此高度亲缘。",
+						takeawayEn: "Key takeaway: Related offshoots teach you how the model builds hierarchy."
+					},
+					"crafts": {
+						tierZh: "语义延伸树梢：家装与手工工具",
+						tierEn: "Semantic Leaf: Home Improvement & Crafting",
+						title: 'Application: "diy projects & crafts"',
+						bodyZh: "从'diy'侧向发芽的相关领域分支。当上下文涉及木工、园艺改造与手工制作时，该神经元与邻近回路协同激发。",
+						bodyEn: "A lateral branch from 'diy'. When context involves woodworking, repairs, or crafting, this neuron coordinates with neighboring circuits.",
+						tokens: ["crafting <strong>kits</strong>", "home <strong>renovation</strong>", "woodwork <strong>tools</strong>"],
+						takeawayZh: "侧向抽枝：自然语言概念的网状自然关联。",
+						takeawayEn: "Natural associative branching in language models."
+					},
+					"ity": {
+						tierZh: "形态学分支：抽象名词词尾集合",
+						tierEn: "Morphological Branch: Abstract Noun Suffixes",
+						title: 'Suffix: "-ity" (Abstract Nouns)',
+						bodyZh: "平行分支：由 'iy' 音素向拉丁词源抽象名词后缀（如 purity, density, severity）的规则化语法延伸。",
+						bodyEn: "Parallel branch: extending from the 'iy' sound to regular grammatical abstract noun suffixes (-ity).",
+						tokens: ["sever-<strong>ity</strong>", "dens-<strong>ity</strong>", "pur-<strong>ity</strong>", "acid-<strong>ity</strong>"],
+						takeawayZh: "语法抽象：从拼写碎片跃迁到词性标志。",
+						takeawayEn: "Grammatical abstraction from character fragment to noun marker."
+					}
+				};
+
+				const treeDetailTier = document.getElementById("tree-detail-tier");
+				const treeDetailTitle = document.getElementById("tree-detail-title");
+				const treeDetailBody = document.getElementById("tree-detail-body");
+				const treeDetailTokens = document.getElementById("tree-detail-tokens");
+				const treeDetailTakeaway = document.getElementById("tree-detail-takeaway");
+
+				function selectTreeNode(key) {
+					const data = treeData[key];
+					if (!data) return;
+
+					if (treeDetailTier) {
+						treeDetailTier.innerHTML = `<span class="lang-zh">${data.tierZh}</span><span class="lang-en">${data.tierEn}</span>`;
+					}
+					if (treeDetailTitle) {
+						treeDetailTitle.textContent = data.title;
+					}
+					if (treeDetailBody) {
+						treeDetailBody.innerHTML = `<span class="lang-zh">${data.bodyZh}</span><span class="lang-en">${data.bodyEn}</span>`;
+					}
+					if (treeDetailTokens) {
+						treeDetailTokens.innerHTML = data.tokens.map(t =>
+							`<span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">${t}</span>`
+						).join("");
+					}
+					if (treeDetailTakeaway) {
+						treeDetailTakeaway.innerHTML = `<span class="lang-zh">${data.takeawayZh}</span><span class="lang-en">${data.takeawayEn}</span>`;
+					}
+				}
+
+				const nodeIy = document.getElementById("tree-node-iy");
+				const nodeDiy = document.getElementById("tree-node-diy");
+				const nodeFull = document.getElementById("tree-node-full");
+				const nodeCrafts = document.getElementById("tree-node-crafts");
+				const nodeIty = document.getElementById("tree-node-ity");
+				const nodePhoneticLeaf = document.getElementById("tree-node-phonetic-leaf");
+
+				if (nodeIy) nodeIy.addEventListener("click", () => selectTreeNode("iy"), { signal: lifecycle.signal });
+				if (nodeDiy) nodeDiy.addEventListener("click", () => selectTreeNode("diy"), { signal: lifecycle.signal });
+				if (nodeFull) nodeFull.addEventListener("click", () => selectTreeNode("full"), { signal: lifecycle.signal });
+				if (nodeCrafts) nodeCrafts.addEventListener("click", () => selectTreeNode("crafts"), { signal: lifecycle.signal });
+				if (nodeIty) nodeIty.addEventListener("click", () => selectTreeNode("ity"), { signal: lifecycle.signal });
+				if (nodePhoneticLeaf) nodePhoneticLeaf.addEventListener("click", () => selectTreeNode("ity"), { signal: lifecycle.signal });
+
+				// ==========================================
+				// 5. THE DEBATE TIMELINE
+				// ==========================================
+				const timelineMilestones = [
+					{
+						dateZh: "2017 年 · 回路议程启航",
+						dateEn: "2017 · Circuits Agenda Begins",
+						metaZh: "Chris Olah 等学者发起 (Distill / OpenAI)",
+						metaEn: "Chris Olah et al. at Distill / OpenAI",
+						titleZh: "破译电子芯片般的神经网络回路",
+						titleEn: "Reverse-Engineering Neural Networks Like Circuits",
+						bodyZh: "Chris Olah 与合作者在《Distill》发表系列文章，提出机械可解释性（Mechanistic Interpretability）纲领：神经网络由人类可理解的微观回路（Circuits）与特征节点构成，可以像逆向工程电子集成电路一样被严密解析。",
+						bodyEn: "Chris Olah and colleagues launch the mechanistic interpretability agenda at Distill/OpenAI, proposing that neural networks are composed of understandable circuits that can be reverse-engineered like microchips.",
+						quote: "Scaling ordinary investigation beats engineering a clever new decomposition."
+					},
+					{
+						dateZh: "2020 年 · 命名叠加假说",
+						dateEn: "2020 · 'Zoom In' Paper Names Superposition",
+						metaZh: "Olah 等学者发表《Zoom In》论文",
+						metaEn: "Olah et al. publish 'Zoom In' paper",
+						titleZh: "多语义性与高维空间概念打包",
+						titleEn: "Formalizing Polysemanticity and Superposition",
+						bodyZh: "论文《Zoom In: An Introduction to Circuits》正式命名并形式化了‘叠加假说（Superposition）’：网络利用高维向量空间的近正交几何特性，在有限的物理神经元中挤入远超神经元数量的概念，导致单个神经元呈现出令人费解的多语义性。",
+						bodyEn: "Olah et al. formalize 'superposition' — the theory that neural networks pack more concepts than they have physical neurons by projecting them into overlapping high-dimensional geometric directions.",
+						quote: "Instead, I spent most of a decade figuring out how to look at a model rather than looking at it."
+					},
+					{
+						dateZh: "2023 年 · OpenAI 1.7% 的灰暗结论",
+						dateEn: "2023 · OpenAI Automated Interp Project (~1.7%)",
+						metaZh: "Nick Cammarata 亲自主导项目",
+						metaEn: "Initiated by Nick Cammarata at OpenAI",
+						titleZh: "自动化打分下的集体绝望：98.3% 不可解",
+						titleEn: "Automated Interpretability: Only ~1.7% Legible",
+						bodyZh: "Nick Cammarata 在 OpenAI 启动了利用 GPT-4 自动审计并解释 GPT-2 每一个神经元的大规模实验。最终结果极其惨烈：即便采用最宽松的打分口径，也只有约 1.7% 的神经元能够被人类或 AI 稳定理解。整个可解释性学术界陷入悲观，转向依赖庞大而复杂的稀疏自编码器（SAE）。",
+						bodyEn: "An automated interpretability project at OpenAI (initiated by Cammarata himself) could explain only ~1.7% of neurons under its most generous metric. The field largely concluded individual neurons were hopelessly tangled.",
+						quote: "We were looking at it wrong. I just think you want to try slightly harder; you don't want to give up too quickly."
+					},
+					{
+						dateZh: "2025 年 · 现代架构重训对照实验",
+						dateEn: "2025 · Modern Architecture Retrain (99-100%)",
+						metaZh: "跨越 300 倍尺寸规模实测",
+						metaEn: "Tested across a 300x model size scale",
+						titleZh: "设计与工具的洗礼：末层神经元近乎全清",
+						titleEn: "Modern Design: 99-100% of Final-Layer Neurons Legible",
+						bodyZh: "Cammarata 在相同图像数据和相同尺寸下，采用现代化训练配方（现代规范化与激活）重新训练了 InceptionV1。实验惊人地发现：末层多达 99% 至 100% 的神经元变得极其清晰单义！早年所谓的‘混沌泥潭’，大部分根源于过时的架构缺陷与粗糙的观测方法。",
+						bodyEn: "Cammarata retrained modern versions of the old model at the same size on the same images; reports 99-100% of final-layer neurons were easy to understand across a 300x size scale. Architecture and tools were the culprit.",
+						quote: "Scaling ordinary investigation beats engineering a clever new decomposition."
+					},
+					{
+						dateZh: "2026-10-15 · 长文震撼问世",
+						dateEn: "15 Oct 2026 · 'Neural Networks Are Already Clean'",
+						metaZh: "Nick Cammarata · 26,000 字长篇论文",
+						metaEn: "Nick Cammarata at Goodfire (26k words)",
+						titleZh: "《神经网络本已纯净》：AI 黑盒并不黑",
+						titleEn: "Goodfire Essay: The Black Box Isn't Black",
+						bodyZh: "Cammarata 在 Goodfire 正式发表 26,000 字长文。他在 Qwen3-32B 的深度审计中提出：约 90% 的神经元极向具备单一主任务，重新阐释了 V 神经元与姿态不变性。文章开篇掷地有声：“我想，我关于神经网络本质的好消息要带给大家。”",
+						bodyEn: "Cammarata publishes 'Neural Networks Are Already Clean'. He argues ~90% of Qwen3-32B neuron poles have one main job. Opening line: 'I think I have good news about the nature of neural networks.'",
+						quote: "I think I have good news about the nature of neural networks."
+					},
+					{
+						dateZh: "NOW (2026-10) · 激辩正当时",
+						dateEn: "Now (Oct 2026) · The Field Splits",
+						metaZh: "Hacker News / LessWrong / 顶尖实验室交锋",
+						metaEn: "DeepMind, Anthropic, Goodfire ongoing debate",
+						titleZh: "转折点还是有用假说？伴随论文待发布",
+						titleEn: "A Turning Point or Overstated Working Hypothesis?",
+						bodyZh: "学术界目前高度割裂：Google DeepMind 的 Neel Nanda 仍坚守叠加假说与 SAE 工具；批评者指出 Goodfire 出售分析显微镜具备商业利益；支持者则惊呼这是十年难遇的范式纠偏。技术支持 companion 论文仍在准备中。",
+						bodyEn: "Neel Nanda (Google DeepMind) still defends superposition. Outside researchers have not yet reproduced the audits. Goodfire sells the microscopes, while the community awaits the formal technical companion paper.",
+						quote: "We were looking at it wrong. I just think you want to try slightly harder; you don't want to give up too quickly."
+					}
+				];
+
+				const tlBtns = [
+					document.getElementById("tl-btn-0"),
+					document.getElementById("tl-btn-1"),
+					document.getElementById("tl-btn-2"),
+					document.getElementById("tl-btn-3"),
+					document.getElementById("tl-btn-4"),
+					document.getElementById("tl-btn-5")
+				];
+
+				const tlBadge = document.getElementById("tl-detail-badge");
+				const tlMeta = document.getElementById("tl-detail-meta");
+				const tlTitle = document.getElementById("tl-detail-title");
+				const tlBody = document.getElementById("tl-detail-body");
+				const tlQuote = document.getElementById("tl-detail-quote");
+
+				function selectTimelineNode(idx) {
+					tlBtns.forEach((btn, i) => {
+						if (!btn) return;
+						if (i === idx) {
+							btn.className = "tl-btn p-3 rounded-xl bg-slate-950 border border-emerald-500 text-left cursor-pointer transition active:scale-95 shadow-[0_0_15px_rgba(16,185,129,0.15)]";
+							const dot = btn.querySelector(".tl-dot");
+							if (dot) dot.className = "w-2 h-2 rounded-full bg-emerald-400 animate-pulse tl-dot";
+						} else {
+							btn.className = "tl-btn p-3 rounded-xl bg-slate-950 border border-slate-800 text-left cursor-pointer transition active:scale-95 hover:border-slate-700";
+							const dot = btn.querySelector(".tl-dot");
+							if (dot) dot.className = "w-2 h-2 rounded-full bg-slate-600 tl-dot";
+						}
+					});
+
+					const item = timelineMilestones[idx];
+					if (tlBadge) tlBadge.innerHTML = `<span class="lang-zh">${item.dateZh}</span><span class="lang-en">${item.dateEn}</span>`;
+					if (tlMeta) tlMeta.innerHTML = `<span class="lang-zh">${item.metaZh}</span><span class="lang-en">${item.metaEn}</span>`;
+					if (tlTitle) tlTitle.innerHTML = `<span class="lang-zh">${item.titleZh}</span><span class="lang-en">${item.titleEn}</span>`;
+					if (tlBody) tlBody.innerHTML = `<span class="lang-zh">${item.bodyZh}</span><span class="lang-en">${item.bodyEn}</span>`;
+					if (tlQuote) tlQuote.textContent = `"${item.quote}"`;
+				}
+
+				tlBtns.forEach((btn, i) => {
+					if (btn) {
+						btn.addEventListener("click", () => selectTimelineNode(i), { signal: lifecycle.signal });
+					}
+				});
+
+				// ==========================================
+				// INITIALIZATION RUNNER
+				// ==========================================
+				renderMiniHeatmap("mini-heatmap-v", weightsV);
+				renderMiniHeatmap("mini-heatmap-o", weightsO);
+				renderMiniHeatmap("mini-heatmap-diag", weightsDiag);
+				refreshLab();
+				selectTreeNode("iy");
+				selectTimelineNode(4); // Default to 15 Oct 2026 essay milestone
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initGlassNeurons);
+			} else {
+				initGlassNeurons();
+			}
+			document.addEventListener("astro:page-load", initGlassNeurons);
+		})();
+	</script>
+</MainGridLayout>
