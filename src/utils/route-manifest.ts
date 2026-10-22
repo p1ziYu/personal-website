@@ -25,6 +25,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"event-horizon",
 	"fragile-bits",
 	"ghost-catcher",
+	"glass-neurons",
 	"goldilocks-ink",
 	"grounded-wings",
 	"kinetic-cuisine",
