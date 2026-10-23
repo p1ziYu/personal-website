@@ -32,6 +32,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"lightbearer-lab",
 	"lopsided-world",
 	"one-beat",
+	"one-black-cell",
 	"one-of-one",
 	"phobos-gambit",
 	"quake-watch",
