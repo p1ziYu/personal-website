@@ -1,0 +1,1607 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "ONE BLACK CELL · Elementary Cellular Automata Playground"
+	: "一个黑点，炸开混沌 · ONE BLACK CELL";
+const description = isEn
+	? "From a single black cell and an 8-bit lookup table, explore all 256 elementary cellular automata: Rule 30's deterministic chaos, Rule 90's Sierpinski fractal, Rule 110's universal computation, and Rule 184's traffic jams."
+	: "一个居中黑点，配合 8 位规则表，在确定性世界里炸开整个混沌宇宙。探索全部 256 种初等元胞自动机：30 号混沌、90 号分形、110 号图灵完备宇宙与 184 号交通流。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#050814] text-slate-100 border border-slate-800/80 shadow-2xl selection:bg-amber-500/30 selection:text-amber-200">
+			<!-- Ambient Mathematical Grid & Energy Glows -->
+			<div class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:24px_24px] overflow-hidden"></div>
+			<div class="absolute -top-36 -left-36 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-16 left-1/4 w-96 h-96 bg-rose-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-slate-800/80">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+							<span>HN TODAY (2026-10-23) · RULE 30: ONE BLACK CELL</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+							<span>⚛️</span>
+							<span class="lang-zh">初等元胞自动机 · 256 种离散宇宙</span>
+							<span class="lang-en">Elementary CA · 256 Discrete Universes</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-xs font-mono">
+							<span>⚡</span>
+							<span class="lang-zh">计算不可约性 · 图灵完备</span>
+							<span class="lang-en">Computational Irreducibility · Universal</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-slate-400 hidden sm:block">
+							<span class="lang-zh">离散动力系统沙盒 · 2026-10-23</span>
+							<span class="lang-en">Discrete Dynamical Playground · 2026-10-23</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/one-black-cell/" : "/en/projects/one-black-cell/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 border border-amber-500/40 text-amber-300 hover:text-white hover:bg-amber-950/60 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "切换为中文" : "Switch to English"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-sans">
+					<span class="lang-zh">一个黑点，炸开混沌</span>
+					<span class="lang-en">ONE BLACK CELL</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-amber-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">256 种初等元胞自动机实验室：从 8 位极简真值表到不可预测的图灵宇宙</span>
+					<span class="lang-en">The 256 Elementary Cellular Automata Lab: From an 8-bit lookup table to universal computation</span>
+				</p>
+
+				<div class="space-y-3 max-w-4xl text-slate-300 leading-relaxed text-sm sm:text-base">
+					<p>
+						<span class="lang-zh">
+							<strong>2026 年 10 月 23 日</strong>，Hacker News 首页热门长帖<strong>《Rule 30: one black cell》</strong>引发了全球开发者与复杂系统研究者的全天热议。讨论的核心魅力在于一个令人震惊的认知反差：<strong>一个居中的黑色像素点，加上一行仅有 8 个输出位的极简规则表，就能在几百步演化后自发炸出如同自然界纺锤织锦螺贝壳一般的无尽混沌</strong>。
+						</span>
+						<span class="lang-en">
+							On <strong>23 October 2026</strong>, the Hacker News front-page post <strong>"Rule 30: one black cell"</strong> sparked a day-long worldwide discussion. The visceral hook: <strong>a solitary centered black cell and an eight-row lookup table can spontaneously generate an entire universe of intricate, seashell-like deterministic chaos</strong>.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-slate-400">
+						<span class="lang-zh">
+							本页面并非该演示的简单翻版，而是一个覆盖全部 <strong>256 种初等元胞自动机（Elementary Cellular Automata, ECA）</strong>的完整交互式沙盒。每一个元胞的新状态严格仅取决于它自身与左右相邻的两个邻居（3 个元胞，2³ = 8 种邻域组合）。指定这 8 种组合的黑白输出，便定义了 2⁸ = 256 种独立规则。相同的黑点，换上一张不同的 8 位表，就能在画布上分别走出完美分形、真实交通拥堵激波，乃至能够模拟任意计算机程序的图灵完备世界。<strong>输出的复杂性，永远无法预先通过规则的简陋程度来度量。</strong>
+						</span>
+						<span class="lang-en">
+							This page is our own comprehensive playground for all <strong>256 elementary cellular automata (ECA)</strong>. Each cell's state at the next timestep depends strictly on itself and its two immediate neighbours (3 cells, 2³ = 8 possible local neighbourhoods). Assigning a black or white output to each neighbourhood yields 2⁸ = 256 unique rules. The exact same single black seed, paired with a slightly altered 8-bit lookup table, yields pure self-similar fractals, motorway traffic jams, or a universal Turing-complete computer. <strong>The complexity of the output tells you nothing about the complexity of the rule.</strong>
+						</span>
+					</p>
+				</div>
+			</header>
+
+			<!-- SECTION 1: THE UNIVERSE CANVAS -->
+			<section class="relative z-10 mb-12">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex items-center gap-2">
+						<span class="text-amber-400 font-mono text-xl font-bold">01/</span>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+							<span class="lang-zh">时空织锦画布 · THE UNIVERSE CANVAS</span>
+							<span class="lang-en">THE UNIVERSE CANVAS · Spacetime Weaver</span>
+						</h2>
+					</div>
+					<div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+						<span class="text-slate-400">
+							<span class="lang-zh">经典预设速选:</span>
+							<span class="lang-en">Presets:</span>
+						</span>
+						<div class="flex flex-wrap gap-1.5" id="preset-chips">
+							<button type="button" data-rule="30" class="preset-btn active px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 hover:bg-amber-500/30 transition cursor-pointer active:scale-95">
+								<span class="font-bold">30</span> <span class="text-[11px] opacity-80"><span class="lang-zh">混沌</span><span class="lang-en">Chaos</span></span>
+							</button>
+							<button type="button" data-rule="90" class="preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-cyan-500 hover:text-cyan-300 transition cursor-pointer active:scale-95">
+								<span class="font-bold">90</span> <span class="text-[11px] opacity-80"><span class="lang-zh">分形</span><span class="lang-en">Fractal</span></span>
+							</button>
+							<button type="button" data-rule="110" class="preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-purple-500 hover:text-purple-300 transition cursor-pointer active:scale-95">
+								<span class="font-bold">110</span> <span class="text-[11px] opacity-80"><span class="lang-zh">图灵完备</span><span class="lang-en">Universal</span></span>
+							</button>
+							<button type="button" data-rule="184" class="preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-emerald-500 hover:text-emerald-300 transition cursor-pointer active:scale-95">
+								<span class="font-bold">184</span> <span class="text-[11px] opacity-80"><span class="lang-zh">车流</span><span class="lang-en">Traffic</span></span>
+							</button>
+							<button type="button" data-rule="232" class="preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-blue-500 hover:text-blue-300 transition cursor-pointer active:scale-95">
+								<span class="font-bold">232</span> <span class="text-[11px] opacity-80"><span class="lang-zh">多数决</span><span class="lang-en">Majority</span></span>
+							</button>
+							<button type="button" data-rule="54" class="preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-rose-500 hover:text-rose-300 transition cursor-pointer active:scale-95">
+								<span class="font-bold">54</span> <span class="text-[11px] opacity-80"><span class="lang-zh">孤子</span><span class="lang-en">Solitons</span></span>
+							</button>
+							<button type="button" data-rule="150" class="preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-indigo-500 hover:text-indigo-300 transition cursor-pointer active:scale-95">
+								<span class="font-bold">150</span> <span class="text-[11px] opacity-80"><span class="lang-zh">波纹</span><span class="lang-en">Waves</span></span>
+							</button>
+							<button type="button" data-rule="60" class="preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-teal-500 hover:text-teal-300 transition cursor-pointer active:scale-95">
+								<span class="font-bold">60</span> <span class="text-[11px] opacity-80"><span class="lang-zh">单侧分形</span><span class="lang-en">Cascade</span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- REAL-TIME METRICS STATUS BAR -->
+				<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2.5 mb-4 text-xs font-mono">
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-amber-500/30 shadow-inner">
+						<div class="text-amber-400 font-bold uppercase tracking-wider text-[11px]">
+							<span class="lang-zh">当前规则</span>
+							<span class="lang-en">ACTIVE RULE</span>
+						</div>
+						<div class="flex items-baseline gap-1 mt-0.5">
+							<span id="metric-rule-num" class="text-2xl font-black text-white">30</span>
+							<span class="text-slate-400 text-[11px]">/ 255</span>
+						</div>
+						<div id="metric-rule-bin" class="text-[11px] text-amber-300 font-mono">00011110₂</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+						<div class="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+							<span class="lang-zh">沃尔夫勒姆分类</span>
+							<span class="lang-en">WOLFRAM CLASS</span>
+						</div>
+						<div id="metric-class-name" class="text-base font-black text-rose-400 mt-1">Class 3 · 混沌</div>
+						<div id="metric-class-desc" class="text-[11px] text-slate-400 truncate">非周期不可约混沌</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+						<div class="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+							<span class="lang-zh">已演化世代</span>
+							<span class="lang-en">GENERATIONS</span>
+						</div>
+						<div id="metric-step-count" class="text-2xl font-black text-cyan-300 mt-0.5">180</div>
+						<div class="text-[11px] text-slate-400">时间沿垂直轴向下</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+						<div class="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+							<span class="lang-zh">黑胞存活密度</span>
+							<span class="lang-en">ACTIVE DENSITY</span>
+						</div>
+						<div id="metric-density" class="text-2xl font-black text-emerald-300 mt-0.5">49.8%</div>
+						<div id="metric-alive-count" class="text-[11px] text-slate-400">17,942 / 36,000</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+						<div class="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+							<span class="lang-zh">网格空间宽度</span>
+							<span class="lang-en">GRID WIDTH</span>
+						</div>
+						<div id="metric-grid-dim" class="text-2xl font-black text-purple-300 mt-0.5">401 胞</div>
+						<div class="text-[11px] text-slate-400">周期性环面边界</div>
+					</div>
+
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800">
+						<div class="text-slate-400 font-bold uppercase tracking-wider text-[11px]">
+							<span class="lang-zh">运行帧率 / 状态</span>
+							<span class="lang-en">ENGINE STATUS</span>
+						</div>
+						<div id="metric-fps" class="text-2xl font-black text-amber-300 mt-0.5">60 FPS</div>
+						<div id="metric-engine-state" class="text-[11px] text-emerald-400">● 持续推进中</div>
+					</div>
+				</div>
+
+				<!-- MAIN INTERACTIVE CANVAS WRAPPER -->
+				<div class="relative rounded-2xl overflow-hidden border border-slate-700 bg-[#030611] shadow-2xl group">
+					<div class="relative w-full overflow-x-auto overflow-y-hidden flex justify-center bg-black/40 min-h-[380px] sm:min-h-[460px]">
+						<canvas id="universe-canvas" class="max-w-full block shadow-2xl transition duration-150 cursor-crosshair"></canvas>
+					</div>
+
+					<!-- Hover Cell Inspector Bar -->
+					<div id="canvas-inspector" class="absolute bottom-3 left-3 right-3 sm:right-auto px-3 py-1.5 rounded-lg bg-slate-950/90 border border-slate-700 text-xs font-mono text-slate-300 backdrop-blur-md flex items-center justify-between gap-4 pointer-events-none opacity-90 transition">
+						<div class="flex items-center gap-2">
+							<span class="w-2 h-2 rounded-full bg-amber-400"></span>
+							<span><span class="lang-zh">坐标</span><span class="lang-en">Coord</span>: (<span id="insp-x">0</span>, t=<span id="insp-t">0</span>)</span>
+						</div>
+						<div>
+							<span><span class="lang-zh">状态</span><span class="lang-en">State</span>: <span id="insp-val" class="font-bold text-amber-300">1 (黑胞)</span></span>
+						</div>
+						<div class="hidden sm:block">
+							<span><span class="lang-zh">前驱邻域</span><span class="lang-en">Parent</span>: <span id="insp-neigh" class="font-bold text-cyan-300">100</span></span>
+						</div>
+					</div>
+
+					<!-- Watermark/Hint -->
+					<div class="absolute top-3 right-3 px-2.5 py-1 rounded bg-black/60 border border-white/10 text-[11px] font-mono text-slate-400 backdrop-blur-sm pointer-events-none">
+						<span class="lang-zh">时间轴 ↓ 向下演化</span>
+						<span class="lang-en">Time Flow ↓ Downward</span>
+					</div>
+				</div>
+
+				<!-- CANVAS CONTROLS TOOLBAR -->
+				<div class="mt-4 p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-4">
+					<div class="flex flex-wrap items-center justify-between gap-3">
+						<!-- Play / Step / Reset controls -->
+						<div class="flex flex-wrap items-center gap-2">
+							<button id="btn-play-pause" type="button" class="px-4 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold font-mono text-xs sm:text-sm hover:bg-amber-400 transition cursor-pointer active:scale-95 flex items-center gap-1.5 shadow-lg shadow-amber-500/20">
+								<span id="play-icon">⏸</span>
+								<span id="play-text" class="lang-zh">暂停推进</span>
+								<span id="play-text-en" class="lang-en">Pause</span>
+							</button>
+							<button id="btn-step" type="button" class="px-3.5 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-200 font-mono text-xs sm:text-sm hover:bg-slate-700 hover:text-white transition cursor-pointer active:scale-95" title="Advance 1 Generation">
+								<span>⏭ +1 <span class="lang-zh">步</span><span class="lang-en">step</span></span>
+							</button>
+							<button id="btn-step-10" type="button" class="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-200 font-mono text-xs sm:text-sm hover:bg-slate-700 hover:text-white transition cursor-pointer active:scale-95" title="Advance 10 Generations">
+								<span>+10 <span class="lang-zh">步</span><span class="lang-en">steps</span></span>
+							</button>
+							<button id="btn-restart" type="button" class="px-3.5 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-200 font-mono text-xs sm:text-sm hover:bg-slate-700 hover:text-white transition cursor-pointer active:scale-95" title="Restart simulation from Row 0">
+								<span>↺ <span class="lang-zh">重启演化</span><span class="lang-en">Restart</span></span>
+							</button>
+						</div>
+
+						<!-- Theme & Download controls -->
+						<div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+							<span class="text-slate-400">
+								<span class="lang-zh">配色主题:</span>
+								<span class="lang-en">Theme:</span>
+							</span>
+							<div class="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
+								<button type="button" data-theme="ember" class="theme-btn active px-2.5 py-1 rounded text-amber-300 bg-amber-950/60 border border-amber-600/40 transition">
+									<span class="lang-zh">琥珀烈焰</span>
+									<span class="lang-en">Ember</span>
+								</button>
+								<button type="button" data-theme="neon" class="theme-btn px-2.5 py-1 rounded text-slate-400 hover:text-cyan-300 transition">
+									<span class="lang-zh">霓虹深蓝</span>
+									<span class="lang-en">Neon</span>
+								</button>
+								<button type="button" data-theme="ink" class="theme-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition">
+									<span class="lang-zh">纸墨古籍</span>
+									<span class="lang-en">Ink</span>
+								</button>
+							</div>
+
+							<button id="btn-download" type="button" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-200 hover:text-amber-300 hover:border-amber-500/50 transition cursor-pointer active:scale-95 flex items-center gap-1.5">
+								<span>💾</span>
+								<span class="lang-zh">下载高清 PNG</span>
+								<span class="lang-en">Export PNG</span>
+							</button>
+						</div>
+					</div>
+
+					<!-- Sliders Row: Rule Slider, Speed, Generations, Cell Size -->
+					<div class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-3 border-t border-slate-800 text-xs font-mono">
+						<!-- Rule 0-255 Slider + linked number input -->
+						<div class="space-y-1.5">
+							<div class="flex items-center justify-between">
+								<span class="text-slate-300 font-semibold">
+									<span class="lang-zh">规则编号 (Rule 0–255)</span>
+									<span class="lang-en">Rule Slider (0–255)</span>
+								</span>
+								<div class="flex items-center gap-1">
+									<input id="input-rule-num" type="number" min="0" max="255" value="30" class="w-16 px-1.5 py-0.5 rounded bg-slate-950 border border-amber-500/50 text-amber-300 text-right font-bold focus:outline-none focus:ring-1 focus:ring-amber-400" />
+								</div>
+							</div>
+							<input id="slider-rule-num" type="range" min="0" max="255" value="30" class="w-full accent-amber-500 cursor-pointer" />
+						</div>
+
+						<!-- Speed Slider -->
+						<div class="space-y-1.5">
+							<div class="flex items-center justify-between">
+								<span class="text-slate-300 font-semibold">
+									<span class="lang-zh">演化步进速度</span>
+									<span class="lang-en">Simulation Speed</span>
+								</span>
+								<span id="speed-label" class="text-amber-300">1.0×</span>
+							</div>
+							<input id="slider-speed" type="range" min="1" max="60" value="30" class="w-full accent-amber-500 cursor-pointer" />
+						</div>
+
+						<!-- Generations (Height) Slider -->
+						<div class="space-y-1.5">
+							<div class="flex items-center justify-between">
+								<span class="text-slate-300 font-semibold">
+									<span class="lang-zh">渲染总行数 (世代)</span>
+									<span class="lang-en">Generations (Rows)</span>
+								</span>
+								<span id="gen-label" class="text-cyan-300">180 行</span>
+							</div>
+							<input id="slider-gen" type="range" min="60" max="360" step="10" value="180" class="w-full accent-cyan-500 cursor-pointer" />
+						</div>
+
+						<!-- Cell Size Slider -->
+						<div class="space-y-1.5">
+							<div class="flex items-center justify-between">
+								<span class="text-slate-300 font-semibold">
+									<span class="lang-zh">元胞像素尺寸</span>
+									<span class="lang-en">Cell Pixel Size</span>
+								</span>
+								<span id="cell-size-label" class="text-purple-300">3 px</span>
+							</div>
+							<input id="slider-cell-size" type="range" min="2" max="8" step="1" value="3" class="w-full accent-purple-500 cursor-pointer" />
+						</div>
+					</div>
+
+					<!-- INITIAL ROW SEED EDITOR -->
+					<div class="pt-3 border-t border-slate-800">
+						<div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs font-mono">
+							<div class="flex items-center gap-2">
+								<span class="text-amber-400 font-bold">
+									<span class="lang-zh">初始行配置 (点击下方元胞反转状态):</span>
+									<span class="lang-en">Initial Seed Row (Click cells below to flip):</span>
+								</span>
+								<span id="seed-stat" class="text-slate-400 text-[11px]">(中央单黑点)</span>
+							</div>
+							<div class="flex flex-wrap gap-1.5">
+								<button id="seed-btn-single" type="button" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-amber-400 text-[11px] transition active:scale-95">
+									<span class="lang-zh">居中单点 (默认)</span>
+									<span class="lang-en">Single Center Seed</span>
+								</button>
+								<button id="seed-btn-soup" type="button" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-cyan-400 text-[11px] transition active:scale-95">
+									<span class="lang-zh">随机浑汤 (50%)</span>
+									<span class="lang-en">Random Soup</span>
+								</button>
+								<button id="seed-btn-double" type="button" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-purple-400 text-[11px] transition active:scale-95">
+									<span class="lang-zh">双点种子</span>
+									<span class="lang-en">Double Seed</span>
+								</button>
+								<button id="seed-btn-invert" type="button" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-rose-400 text-[11px] transition active:scale-95">
+									<span class="lang-zh">全局反转</span>
+									<span class="lang-en">Invert Row</span>
+								</button>
+								<button id="seed-btn-clear" type="button" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 text-[11px] transition active:scale-95">
+									<span class="lang-zh">清空全部</span>
+									<span class="lang-en">Clear All</span>
+								</button>
+							</div>
+						</div>
+
+						<!-- Interactive 1D clickable cell strip (centered 61 cells shown) -->
+						<div class="relative p-2 rounded-lg bg-slate-950 border border-slate-800 overflow-x-auto">
+							<div id="seed-cells-strip" class="flex items-center justify-center gap-1 min-w-[500px] py-1 select-none">
+								<!-- Rendered dynamically by script -->
+							</div>
+							<div class="text-[10px] text-center text-slate-500 font-mono mt-1">
+								<span class="lang-zh">▲ 显示中心区域 61 个元胞 · 点击任意小方块可即时翻转其黑白状态并触发全局重演 ▲</span>
+								<span class="lang-en">▲ Displaying central 61 cells · Click any cell to toggle bit & re-evolve ▲</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 2: EIGHT ROWS, 256 UNIVERSES -->
+			<section class="relative z-10 mb-12">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-amber-400 font-mono text-xl font-bold">02/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+						<span class="lang-zh">八行法则，256 个平行宇宙 · THE LOOKUP TABLE</span>
+						<span class="lang-en">EIGHT ROWS, 256 UNIVERSES · The Rule Lookup Visualizer</span>
+					</h2>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						每一个初等元胞自动机的“宇宙物理学”，全部浓缩在下方这 <strong>8 种三元邻域</strong>映射中。观察任意邻域的三元胞排列（左、中、右），下方按钮是该局部在下一刻诞生的输出元胞。<strong>点击任意输出位即可实时翻转（0 ↔ 1）</strong>，观察二进制数与十进制规则编号的瞬时联动！
+					</span>
+					<span class="lang-en">
+						The entirety of an elementary cellular automaton's physics is compressed into the <strong>8 neighbourhood permutations</strong> below. For each 3-cell pattern (left, centre, right), the bottom bit defines the newly born cell. <strong>Click any output bit to flip it (0 ↔ 1)</strong> and watch the binary-to-decimal rule number recalculate live!
+					</span>
+				</p>
+
+				<!-- Aha Caption Banner -->
+				<div class="p-4 rounded-xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-cyan-500/10 border border-amber-500/30 mb-6 font-mono text-xs sm:text-sm text-slate-200">
+					<div class="flex items-center gap-2 text-amber-300 font-bold mb-1">
+						<span>💡</span>
+						<span class="lang-zh">认知顿悟 · THE AHA MOMENT</span>
+						<span class="lang-en">THE AHA MOMENT</span>
+					</div>
+					<div>
+						<span class="lang-zh">
+							“在规则输入框敲入 <strong>30</strong>，看下方 8 位二进制如何严格拼出 <strong>00011110</strong>：
+							(0×128 + 0×64 + 0×32 + 1×16 + 1×8 + 1×4 + 1×2 + 0×1 = <strong>30</strong>)。”
+						</span>
+						<span class="lang-en">
+							"Type <strong>30</strong> and watch the bits spell <strong>00011110</strong>:
+							(0×128 + 0×64 + 0×32 + 1×16 + 1×8 + 1×4 + 1×2 + 0×1 = <strong>30</strong>)."
+						</span>
+					</div>
+				</div>
+
+				<!-- THE 8 NEIGHBOURHOOD CARDS GRID -->
+				<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 font-mono text-xs" id="table-visualizer">
+					<!-- Pattern 7: 111 (weight 128) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="7">
+						<div class="text-[11px] text-slate-400">#7 (111)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="7" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-slate-950 text-slate-400 border-slate-700 hover:border-amber-400">
+							0
+						</button>
+						<div class="text-[10px] text-slate-400">× 128</div>
+					</div>
+
+					<!-- Pattern 6: 110 (weight 64) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="6">
+						<div class="text-[11px] text-slate-400">#6 (110)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="6" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-slate-950 text-slate-400 border-slate-700 hover:border-amber-400">
+							0
+						</button>
+						<div class="text-[10px] text-slate-400">× 64</div>
+					</div>
+
+					<!-- Pattern 5: 101 (weight 32) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="5">
+						<div class="text-[11px] text-slate-400">#5 (101)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="5" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-slate-950 text-slate-400 border-slate-700 hover:border-amber-400">
+							0
+						</button>
+						<div class="text-[10px] text-slate-400">× 32</div>
+					</div>
+
+					<!-- Pattern 4: 100 (weight 16) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="4">
+						<div class="text-[11px] text-slate-400">#4 (100)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="4" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-amber-500/20 text-amber-300 border-amber-500">
+							1
+						</button>
+						<div class="text-[10px] text-amber-400 font-bold">+ 16</div>
+					</div>
+
+					<!-- Pattern 3: 011 (weight 8) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="3">
+						<div class="text-[11px] text-slate-400">#3 (011)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="3" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-amber-500/20 text-amber-300 border-amber-500">
+							1
+						</button>
+						<div class="text-[10px] text-amber-400 font-bold">+ 8</div>
+					</div>
+
+					<!-- Pattern 2: 010 (weight 4) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="2">
+						<div class="text-[11px] text-slate-400">#2 (010)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="2" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-amber-500/20 text-amber-300 border-amber-500">
+							1
+						</button>
+						<div class="text-[10px] text-amber-400 font-bold">+ 4</div>
+					</div>
+
+					<!-- Pattern 1: 001 (weight 2) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="1">
+						<div class="text-[11px] text-slate-400">#1 (001)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-amber-400 border border-amber-300"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="1" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-amber-500/20 text-amber-300 border-amber-500">
+							1
+						</button>
+						<div class="text-[10px] text-amber-400 font-bold">+ 2</div>
+					</div>
+
+					<!-- Pattern 0: 000 (weight 1) -->
+					<div class="p-3 rounded-xl bg-slate-900/90 border border-slate-800 text-center space-y-2 hover:border-slate-700 transition" data-idx="0">
+						<div class="text-[11px] text-slate-400">#0 (000)</div>
+						<div class="flex justify-center gap-1">
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+							<span class="w-4 h-4 rounded-sm bg-slate-950 border border-slate-700"></span>
+						</div>
+						<div class="text-slate-500 text-[10px]">↓ <span class="lang-zh">生成</span><span class="lang-en">yields</span></div>
+						<button type="button" data-bit-idx="0" class="rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-slate-950 text-slate-400 border-slate-700 hover:border-amber-400">
+							0
+						</button>
+						<div class="text-[10px] text-slate-400">× 1</div>
+					</div>
+				</div>
+
+				<!-- Live Decimal Sum Display -->
+				<div class="mt-3 p-3 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs flex flex-wrap items-center justify-between gap-2 text-slate-300">
+					<div>
+						<span class="text-slate-400"><span class="lang-zh">十进制累加公式</span><span class="lang-en">Decimal Sum Formula</span>: </span>
+						<span id="formula-breakdown" class="text-amber-300 font-bold">0 + 0 + 0 + 16 + 8 + 4 + 2 + 0 = 30</span>
+					</div>
+					<div class="text-slate-400 text-[11px]">
+						<span class="lang-zh">8 位二进制 = 2⁸ = 256 种法则全排列</span>
+						<span class="lang-en">8 bits = 2⁸ = 256 total permutations</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 3: RULE GALLERY -->
+			<section class="relative z-10 mb-12">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-amber-400 font-mono text-xl font-bold">03/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+						<span class="lang-zh">经典规则画廊 · THE RULE GALLERY</span>
+						<span class="lang-en">THE RULE GALLERY · Hallmark Universes</span>
+					</h2>
+				</div>
+
+				<p class="text-sm text-slate-300 mb-6 max-w-3xl leading-relaxed">
+					<span class="lang-zh">
+						点击下方任意微型演化缩略图，即可将该经典宇宙装载入上方的主画布。所有缩略图均由微型 Canvas 引擎自单点黑胞实时独立演算生成：
+					</span>
+					<span class="lang-en">
+						Click any thumbnail card below to instantly inject that hallmark rule into the main spacetime canvas. Every thumbnail is rendered live by our mini-engine from a single black seed:
+					</span>
+				</p>
+
+				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="gallery-grid">
+					<!-- Rule 30 -->
+					<div data-gallery-rule="30" class="gallery-card active p-3 rounded-xl bg-slate-900/90 border border-amber-500/80 hover:border-amber-400 transition cursor-pointer group shadow-lg hover:shadow-amber-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-30" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-amber-300 border border-amber-500/30">Class 3</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-amber-400 text-sm">Rule 30</span>
+							<span class="text-[11px] font-mono text-slate-400">L ⊕ (C ∨ R)</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">确定性混沌与计算不可约性</span>
+							<span class="lang-en">Deterministic Chaos & Irreducibility</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">单点炸开无尽伪随机，贝壳纹理，无法预测未来。</span>
+							<span class="lang-en">Single seed blossoms into endless chaos; cone snail shells.</span>
+						</div>
+					</div>
+
+					<!-- Rule 90 -->
+					<div data-gallery-rule="90" class="gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-cyan-400 transition cursor-pointer group shadow-lg hover:shadow-cyan-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-90" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-cyan-300 border border-cyan-500/30">Class 3</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-cyan-400 text-sm">Rule 90</span>
+							<span class="text-[11px] font-mono text-slate-400">L ⊕ R</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">谢尔宾斯基三角与纯粹分形</span>
+							<span class="lang-en">Sierpinski Fractal Triangle</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">最纯粹的加法异或法则，嵌套自相似的几何美。</span>
+							<span class="lang-en">Pure linear XOR producing self-similar nested triangles.</span>
+						</div>
+					</div>
+
+					<!-- Rule 110 -->
+					<div data-gallery-rule="110" class="gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-purple-400 transition cursor-pointer group shadow-lg hover:shadow-purple-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-110" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-purple-300 border border-purple-500/30">Class 4</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-purple-400 text-sm">Rule 110</span>
+							<span class="text-[11px] font-mono text-slate-400">Universal</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">图灵完备：滑翔机与通用计算</span>
+							<span class="lang-en">Universal Turing Completeness</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">Cook 证明：一维局域碰撞足以模拟任意计算机。</span>
+							<span class="lang-en">Matthew Cook's proof: gliders emulate any computer.</span>
+						</div>
+					</div>
+
+					<!-- Rule 184 -->
+					<div data-gallery-rule="184" class="gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-emerald-400 transition cursor-pointer group shadow-lg hover:shadow-emerald-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-184" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-emerald-300 border border-emerald-500/30">Class 2</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-emerald-400 text-sm">Rule 184</span>
+							<span class="text-[11px] font-mono text-slate-400">Traffic</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">单向车流模型与交通拥堵波</span>
+							<span class="lang-en">One-Way Highway Traffic Flow</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">粒子有空就右行，自发涌现激波逆流而上。</span>
+							<span class="lang-en">Particles step right when clear; creates back-propagating shockwaves.</span>
+						</div>
+					</div>
+
+					<!-- Rule 232 -->
+					<div data-gallery-rule="232" class="gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-blue-400 transition cursor-pointer group shadow-lg hover:shadow-blue-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-232" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-blue-300 border border-blue-500/30">Class 2</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-blue-400 text-sm">Rule 232</span>
+							<span class="text-[11px] font-mono text-slate-400">Majority</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">局部多数决与形态快速冻结</span>
+							<span class="lang-en">Local Majority Rule & Freeze</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">三邻域多数派表决，快速消除孤立噪声形成竖纹。</span>
+							<span class="lang-en">Majority vote among 3 neighbours; cleans noise into stable stripes.</span>
+						</div>
+					</div>
+
+					<!-- Rule 54 -->
+					<div data-gallery-rule="54" class="gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-rose-400 transition cursor-pointer group shadow-lg hover:shadow-rose-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-54" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-rose-300 border border-rose-500/30">Class 4</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-rose-400 text-sm">Rule 54</span>
+							<span class="text-[11px] font-mono text-slate-400">Solitons</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">复杂周期孤子与长程相互作用</span>
+							<span class="lang-en">Complex Solitons & Interacting Lines</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">具备类似 Rule 110 的潜在线性计算滑翔机碰撞。</span>
+							<span class="lang-en">Quasi-universal candidate with intricate colliding filaments.</span>
+						</div>
+					</div>
+
+					<!-- Rule 150 -->
+					<div data-gallery-rule="150" class="gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-indigo-400 transition cursor-pointer group shadow-lg hover:shadow-indigo-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-150" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-indigo-300 border border-indigo-500/30">Class 3</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-indigo-400 text-sm">Rule 150</span>
+							<span class="text-[11px] font-mono text-slate-400">L ⊕ C ⊕ R</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">三重异或奇偶嵌套波纹</span>
+							<span class="lang-en">Three-Way XOR Nested Waves</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">三邻居全线性异或，自中心辐射出高频网织分形。</span>
+							<span class="lang-en">Full linear parity across all 3 cells; high-density mesh waves.</span>
+						</div>
+					</div>
+
+					<!-- Rule 60 -->
+					<div data-gallery-rule="60" class="gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-teal-400 transition cursor-pointer group shadow-lg hover:shadow-teal-500/10">
+						<div class="relative w-full h-28 rounded-lg overflow-hidden bg-black/60 mb-2.5 flex items-center justify-center border border-slate-800">
+							<canvas id="thumb-60" width="160" height="90" class="w-full h-full object-cover"></canvas>
+							<span class="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded bg-black/70 text-[10px] font-mono text-teal-300 border border-teal-500/30">Class 3</span>
+						</div>
+						<div class="flex items-center justify-between mb-1">
+							<span class="font-mono font-bold text-teal-400 text-sm">Rule 60</span>
+							<span class="text-[11px] font-mono text-slate-400">L ⊕ C</span>
+						</div>
+						<div class="text-xs text-slate-200 font-semibold mb-1">
+							<span class="lang-zh">单侧偏置与不对称分形瀑布</span>
+							<span class="lang-en">Asymmetrical Cascade Fractal</span>
+						</div>
+						<div class="text-[11px] text-slate-400 leading-snug">
+							<span class="lang-zh">仅依赖左方与自身，向右斜向倾泻的谢尔宾斯基半壁。</span>
+							<span class="lang-en">Left-biased parity yielding a rightward-slanting fractal waterfall.</span>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 4: WHY IT MATTERS -->
+			<section class="relative z-10 mb-12">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-amber-400 font-mono text-xl font-bold">04/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+						<span class="lang-zh">为什么它震撼世界？· WHY IT MATTERS</span>
+						<span class="lang-en">WHY IT MATTERS · Deep Scientific Implications</span>
+					</h2>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm font-sans">
+					<!-- 1. Computational Irreducibility -->
+					<div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+						<div class="flex items-center gap-2 text-amber-400 font-mono font-bold">
+							<span>⚡</span>
+							<span class="lang-zh">计算不可约性 (Computational Irreducibility)</span>
+							<span class="lang-en">Computational Irreducibility</span>
+						</div>
+						<p class="text-slate-300 leading-relaxed">
+							<span class="lang-zh">
+								在经典牛顿力学中，如果已知初速度与位移公式 $x(t) = x_0 + vt$，我们可以直接通过解析式在 $O(1)$ 时间内跳步算出 1,000 秒后的位置。然而斯蒂芬·沃尔夫勒姆（Stephen Wolfram）在 1980 年代提出并于 2002 年巨著《一种新科学》中系统阐述的“<strong>计算不可约性</strong>”揭示了一个颠覆性现实：<strong>在以 Rule 30 为代表的绝大多数复杂系统中，不存在任何可以绕过中间步骤的代数捷径</strong>。要预见第 $T$ 步的样子，你唯一的办法就是完整运行每一步。系统本身就是计算自身未来的最快计算机。
+							</span>
+							<span class="lang-en">
+								In classical mechanics, closed-form equations like $x(t) = x_0 + vt$ let us predict position at $T=1000$ in $O(1)$ time without simulating every microsecond. Stephen Wolfram's concept of <strong>computational irreducibility</strong> reveals the opposite truth: <strong>for complex systems like Rule 30, no algebraic shortcut exists</strong>. To know the state at timestep $T$, one has no alternative but to simulate every intermediate step. The system is fundamentally its own fastest computer.
+							</span>
+						</p>
+					</div>
+
+					<!-- 2. The 2^(2^3) = 256 Proof -->
+					<div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+						<div class="flex items-center gap-2 text-cyan-400 font-mono font-bold">
+							<span>🔢</span>
+							<span class="lang-zh">256 种法则的双重指数推导 (2^(2³))</span>
+							<span class="lang-en">The 2^(2³) = 256 Double Exponent Proof</span>
+						</div>
+						<p class="text-slate-300 leading-relaxed">
+							<span class="lang-zh">
+								为什么初等自动机不多不少刚好 256 个？推导由纯粹的阶乘双重指数构成：
+								每个元胞只有 0 或 1 两种状态。当前状态由自身及左右邻居（共 3 个元胞）决定，因此局部邻域共有 2³ = 8 种排列（111, 110, ..., 000）。规则表必须为这 8 种局部模式各分配一个布尔输出值（0 或 1）。8 个独立的二值槽位，产生可能映射法则总数恰为 2⁸ = 2<sup>(2³)</sup> = 256 种！如果邻域半径扩大到 2（5 个元胞），规则总数便暴涨至 2<sup>(2⁵)</sup> = 2³² ≈ 4.29 × 10⁹；二维摩尔邻域（9 元胞）更是高达 2<sup>512</sup> ≈ 1.34 × 10¹⁵⁴ 种宇宙。
+							</span>
+							<span class="lang-en">
+								Why exactly 256 rules? The derivation is an elegant double exponent:
+								Each cell is binary (0 or 1). Next state depends on 3 cells (left, center, right), creating 2³ = 8 distinct neighbourhoods (111 through 000). An update rule assigns a 0 or 1 to each of these 8 slots. With 8 independent binary decisions, the total number of rules is 2⁸ = 2<sup>(2³)</sup> = 256! Expanding neighbourhood radius to 2 (5 cells) explodes the space to 2<sup>(2⁵)</sup> = 2³² ≈ 4.29 × 10⁹; a 2D 9-cell Moore neighbourhood yields an astronomical 2<sup>512</sup> ≈ 1.34 × 10¹⁵⁴ universes.
+							</span>
+						</p>
+					</div>
+
+					<!-- 3. Mathematica RNG Trivia & Alex Backer 2009 -->
+					<div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+						<div class="flex items-center gap-2 text-purple-400 font-mono font-bold">
+							<span>🎲</span>
+							<span class="lang-zh">Mathematica 随机数八卦与 2009 统计规律</span>
+							<span class="lang-en">Mathematica RNG Trivia & 2009 Regularities</span>
+						</div>
+						<p class="text-slate-300 leading-relaxed">
+							<span class="lang-zh">
+								著名的科学计算软件 Mathematica 曾长期采用 Rule 30 单点黑胞演化的<strong>垂直中心列序列</strong>作为内置伪随机数发生器（Pseudo-RNG）。其肉眼观察完全如同高斯白噪声。然而在随后的学术审计中（如 Alex Backer 2009 年的开创性分析），研究者证明该中心列存在微妙但可测量的<strong>统计正则性与非随机结构缺陷</strong>。这为科学界上了一堂坦诚的哲学课：<strong>“看起来像随机”（random-looking）是真诚的感知，但“真随机”（true random）绝不是——它依然忠实刻录着确定性代数的骨相。</strong>
+							</span>
+							<span class="lang-en">
+								Wolfram's Mathematica software historically deployed the <strong>center vertical column of Rule 30</strong> as its default pseudorandom number generator. Visually, the bitstream mimics thermal noise. However, later rigorous analyses (notably by Alex Backer in 2009) demonstrated that the center column exhibits detectable <strong>statistical regularities and subtle non-random correlations</strong> under specialized cryptographic tests. The honest verdict: "random-looking" is true to human observation, but "true random" is not.
+							</span>
+						</p>
+					</div>
+
+					<!-- 4. Rule 110 & Universal Computation -->
+					<div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+						<div class="flex items-center gap-2 text-emerald-400 font-mono font-bold">
+							<span>💻</span>
+							<span class="lang-zh">Rule 110 与通用计算（图灵完备）</span>
+							<span class="lang-en">Rule 110 & Universal Turing Computation</span>
+						</div>
+						<p class="text-slate-300 leading-relaxed">
+							<span class="lang-zh">
+								1990 年代末，为沃尔夫勒姆工作的年轻数学家马修·库克（Matthew Cook）完成了一项史诗级证明，并于 2002/2004 年正式发表：<strong>Rule 110 是图灵完备的（Universal Computer）</strong>。它通过在一维纸带上自发形成并向前移动的“滑翔机（Gliders）”与周期性背景相碰撞，实现了逻辑门与循环标签系统（Cyclic Tag System）。这证明了宇宙通用计算绝不需要庞大的芯片架构或复杂的指令集——<strong>最简单的一维局部像素互动，便拥有模拟世间一切可计算物理过程的究极威力</strong>。
+							</span>
+							<span class="lang-en">
+								In the late 1990s, mathematician Matthew Cook proved a monumental theorem published in Wolfram's NKS (2002/2004): <strong>Rule 110 is Turing-complete</strong>. By constructing collisions between persistent localized structures ("gliders") on a periodic ether, Rule 110 can emulate any cyclic tag system or universal Turing machine. This demonstrated that universal computation does not require complex silicon architectures: <strong>elementary 1D nearest-neighbour pixel logic is capable of running any program ever written</strong>.
+							</span>
+						</p>
+					</div>
+
+					<!-- 5. Rule 184 & Highway Traffic Flow -->
+					<div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2 md:col-span-2">
+						<div class="flex items-center gap-2 text-rose-400 font-mono font-bold">
+							<span>🚗</span>
+							<span class="lang-zh">Rule 184：宏观高速公路拥堵波的微观涌现</span>
+							<span class="lang-en">Rule 184: Macroscopic Highway Traffic Shockwaves</span>
+						</div>
+						<p class="text-slate-300 leading-relaxed">
+							<span class="lang-zh">
+								如果把黑胞视为汽车、白胞视为空车位，Rule 184 的物理规则极其简洁：“前方为空车位时，车辆向右前进一步；前方有车时原地等待”。仅凭这一条极简法则，画布上便自然涌现出宏观交通工程学中的核心现象：<strong>自由车流、车辆堆叠，以及在拥堵瓶颈处逆着车流方向自发倒退传播的动力学激波（Kinematic Shockwaves）</strong>。无需复杂的流体力学微分方程，离散微观碰撞自发完成了宏观世界的物理重现。
+							</span>
+							<span class="lang-en">
+								If black cells represent cars and white cells vacant highway slots, Rule 184's rule is trivial: "A car moves right if the space ahead is open; otherwise it stays put." From this minimalist rule emerges macroscopic traffic science: <strong>free flow, clustering bottlenecks, and backward-propagating kinematic shockwaves</strong> where congestion ripples upstream against vehicle travel. No complex Navier-Stokes differential equations are needed — discrete local collisions spontaneously recreate macroscopic reality.
+							</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 5: REALITY CHECK STRIP -->
+			<section class="relative z-10 mb-8 p-5 rounded-2xl bg-slate-950/90 border border-slate-800 font-mono text-xs text-slate-300 space-y-3">
+				<div class="flex items-center gap-2 text-amber-400 font-bold uppercase tracking-wider text-sm">
+					<span>🛡️</span>
+					<span class="lang-zh">现实审视与科学诚实 · REALITY CHECK</span>
+					<span class="lang-en">REALITY CHECK & SCIENTIFIC CANDOUR</span>
+				</div>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 leading-relaxed font-sans text-xs">
+					<div class="space-y-1">
+						<span class="text-amber-300 font-mono font-bold block">
+							<span class="lang-zh">1. 确定性 ≠ 超自然真随机</span>
+							<span class="lang-en">1. Deterministic ≠ Supernatural Randomness</span>
+						</span>
+						<p class="text-slate-400">
+							<span class="lang-zh">
+								Rule 30 看上去如同热噪声，但它在数学上是百分之百严格确定性的代数系统：R(t+1) = L(t) ⊕ (C(t) ∨ R(t))。只要给出一模一样的初始种子，哪怕跨越一亿年，它在任意终端演算出的图形都分毫不差。
+							</span>
+							<span class="lang-en">
+								Rule 30 appears noisy, but mathematically it is 100% deterministic: R(t+1) = L(t) ⊕ (C(t) ∨ R(t)). Identical initial seeds yield identical universes across eternity without stochastic deviation.
+							</span>
+						</p>
+					</div>
+
+					<div class="space-y-1">
+						<span class="text-cyan-300 font-mono font-bold block">
+							<span class="lang-zh">2. 严禁用于生产加密密钥</span>
+							<span class="lang-en">2. Do Not Use in Production Cryptography</span>
+						</span>
+						<p class="text-slate-400">
+							<span class="lang-zh">
+								鉴于 Alex Backer（2009）等学者的破译分析，初等自动机的中心列存在统计相关缺陷，切勿将其用于现代密码学、支付安全或商业真随机数生成器中。
+							</span>
+							<span class="lang-en">
+								As proved by Alex Backer (2009), ECA center sequences retain algebraic non-random signatures. Never deploy ECA bitstreams for modern cryptography or cryptographic security keys.
+							</span>
+						</p>
+					</div>
+
+					<div class="space-y-1">
+						<span class="text-purple-300 font-mono font-bold block">
+							<span class="lang-zh">3. 100% 浏览器客户端实时运算</span>
+							<span class="lang-en">3. 100% In-Browser Client Computation</span>
+						</span>
+						<p class="text-slate-400">
+							<span class="lang-zh">
+								本页面上的每一格黑白像素，均由你的浏览器 JavaScript 引擎通过 HTML5 Canvas 2D 逐代实时演算并绘制，绝无外部服务器请求、无预录视频、亦无第三方图床。
+							</span>
+							<span class="lang-en">
+								Every pixel on this page is computed generation by generation directly in your browser via HTML5 Canvas 2D contexts — zero external requests, zero pre-rendered videos, zero server reliance.
+							</span>
+						</p>
+					</div>
+
+					<div class="space-y-1">
+						<span class="text-emerald-300 font-mono font-bold block">
+							<span class="lang-zh">4. 有限画布的环面边界条件</span>
+							<span class="lang-en">4. Toroidal Periodic Boundary Conditions</span>
+						</span>
+						<p class="text-slate-400">
+							<span class="lang-zh">
+								在物理模拟中，无限大的纸带在有限屏幕上通过环面拓扑（Periodic Boundary）实现闭合：画布最左侧元胞的左邻居自动链接至最右侧元胞，观察滑翔机与波纹在边界循环回环。
+							</span>
+							<span class="lang-en">
+								Simulating infinite tape on finite screens is achieved via toroidal periodic boundaries: the leftmost cell wraps to neighbour the rightmost cell, allowing waves to circumnavigate seamlessly.
+							</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- MANDATORY AI DISCLOSURE FOOTER -->
+			<hr class="border-slate-800/80 my-8" />
+			<blockquote class="text-xs text-slate-400 italic mt-6 border-l-2 border-slate-700 pl-4 py-1">
+				<span class="lang-zh">本文由 AI 生成。</span>
+				<span class="lang-en">This article was generated by AI.</span>
+			</blockquote>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE CELLULAR AUTOMATA ENGINE -->
+	<script is:inline>
+		(() => {
+			let cleanup = null;
+
+			function initOneBlackCell() {
+				if (cleanup) {
+					cleanup();
+					cleanup = null;
+				}
+
+				const lifecycle = new AbortController();
+				const animFrameIds = [];
+
+				cleanup = () => {
+					lifecycle.abort();
+					for (const id of animFrameIds) {
+						cancelAnimationFrame(id);
+					}
+				};
+
+				// ==========================================
+				// 1. ENGINE STATE & CONFIG
+				// ==========================================
+				let currentRule = 30;
+				let isPlaying = true;
+				let simSpeed = 30; // frames per second or generation step throttle
+				let maxGenerations = 180;
+				let cellSize = 3;
+				let currentTheme = "ember";
+
+				const GRID_WIDTH = 401; // Odd width gives perfect central cell at index 200!
+				const CENTER_IDX = Math.floor(GRID_WIDTH / 2);
+
+				// History buffer: array of Uint8Array(GRID_WIDTH)
+				let history = [];
+				// Initial seed row: Uint8Array(GRID_WIDTH)
+				let initialRow = new Uint8Array(GRID_WIDTH);
+				initialRow[CENTER_IDX] = 1; // Default: one black cell in center!
+
+				// Themes palette configuration
+				const THEMES = {
+					ember: {
+						bg: "#0d0705",
+						alive: "#f59e0b",
+						aliveGlow: "#ff5722",
+						dead: "#140a07",
+						grid: "#24120c"
+					},
+					neon: {
+						bg: "#030712",
+						alive: "#06b6d4",
+						aliveGlow: "#38bdf8",
+						dead: "#070d1e",
+						grid: "#0f1c36"
+					},
+					ink: {
+						bg: "#f7f4ed",
+						alive: "#18181b",
+						aliveGlow: "#27272a",
+						dead: "#eae5da",
+						grid: "#ded8cb"
+					}
+				};
+
+				// Wolfram classification database
+				const WOLFRAM_CLASSES = {
+					// Class 1: homogeneous / freeze
+					class1: [0, 8, 32, 40, 128, 136, 160, 168, 232],
+					// Class 2: simple periodic / stripes
+					class2: [1, 2, 3, 4, 5, 10, 12, 19, 76, 108, 184, 204],
+					// Class 3: chaotic / random
+					class3: [18, 22, 30, 45, 60, 90, 105, 126, 150],
+					// Class 4: complex / localized gliders / universal
+					class4: [54, 110, 124, 137, 193]
+				};
+
+				function getWolframClass(rule) {
+					if (WOLFRAM_CLASSES.class4.includes(rule)) {
+						return { nameZh: "Class 4 · 复杂图灵完备", nameEn: "Class 4 · Complex / Universal", descZh: "局部滑翔机相撞与通用计算", descEn: "Gliders & universal computation", color: "text-purple-400" };
+					}
+					if (WOLFRAM_CLASSES.class3.includes(rule)) {
+						return { nameZh: "Class 3 · 确定性混沌", nameEn: "Class 3 · Chaotic", descZh: "非周期性不可约混沌结构", descEn: "Aperiodic irreducible chaos", color: "text-rose-400" };
+					}
+					if (WOLFRAM_CLASSES.class2.includes(rule)) {
+						return { nameZh: "Class 2 · 周期条纹", nameEn: "Class 2 · Periodic", descZh: "收敛于周期性振荡与稳定条纹", descEn: "Periodic stripes & oscillations", color: "text-blue-400" };
+					}
+					if (WOLFRAM_CLASSES.class1.includes(rule)) {
+						return { nameZh: "Class 1 · 均质冻结", nameEn: "Class 1 · Homogeneous", descZh: "演化迅速收敛于全死或全生形态", descEn: "Freezes into uniform state", color: "text-slate-400" };
+					}
+					return { nameZh: "Class 2/3 · 复合模式", nameEn: "Class 2/3 · Hybrid", descZh: "介于条纹与混沌之间的混合演化", descEn: "Intermediate discrete dynamical state", color: "text-cyan-400" };
+				}
+
+				// ==========================================
+				// 2. DOM ELEMENT REFERENCES
+				// ==========================================
+				const universeCanvas = document.getElementById("universe-canvas");
+				const uCtx = universeCanvas ? universeCanvas.getContext("2d") : null;
+
+				const metricRuleNum = document.getElementById("metric-rule-num");
+				const metricRuleBin = document.getElementById("metric-rule-bin");
+				const metricClassName = document.getElementById("metric-class-name");
+				const metricClassDesc = document.getElementById("metric-class-desc");
+				const metricStepCount = document.getElementById("metric-step-count");
+				const metricDensity = document.getElementById("metric-density");
+				const metricAliveCount = document.getElementById("metric-alive-count");
+				const metricGridDim = document.getElementById("metric-grid-dim");
+				const metricFps = document.getElementById("metric-fps");
+				const metricEngineState = document.getElementById("metric-engine-state");
+
+				const btnPlayPause = document.getElementById("btn-play-pause");
+				const playIcon = document.getElementById("play-icon");
+				const playText = document.getElementById("play-text");
+				const playTextEn = document.getElementById("play-text-en");
+				const btnStep = document.getElementById("btn-step");
+				const btnStep10 = document.getElementById("btn-step-10");
+				const btnRestart = document.getElementById("btn-restart");
+				const btnDownload = document.getElementById("btn-download");
+
+				const inputRuleNum = document.getElementById("input-rule-num");
+				const sliderRuleNum = document.getElementById("slider-rule-num");
+				const sliderSpeed = document.getElementById("slider-speed");
+				const speedLabel = document.getElementById("speed-label");
+				const sliderGen = document.getElementById("slider-gen");
+				const genLabel = document.getElementById("gen-label");
+				const sliderCellSize = document.getElementById("slider-cell-size");
+				const cellSizeLabel = document.getElementById("cell-size-label");
+
+				const seedCellsStrip = document.getElementById("seed-cells-strip");
+				const seedStat = document.getElementById("seed-stat");
+				const seedBtnSingle = document.getElementById("seed-btn-single");
+				const seedBtnSoup = document.getElementById("seed-btn-soup");
+				const seedBtnDouble = document.getElementById("seed-btn-double");
+				const seedBtnInvert = document.getElementById("seed-btn-invert");
+				const seedBtnClear = document.getElementById("seed-btn-clear");
+
+				const inspX = document.getElementById("insp-x");
+				const inspT = document.getElementById("insp-t");
+				const inspVal = document.getElementById("insp-val");
+				const inspNeigh = document.getElementById("insp-neigh");
+
+				const formulaBreakdown = document.getElementById("formula-breakdown");
+				const ruleBitBtns = document.querySelectorAll(".rule-bit-btn");
+				const presetBtns = document.querySelectorAll(".preset-btn");
+				const themeBtns = document.querySelectorAll(".theme-btn");
+				const galleryCards = document.querySelectorAll(".gallery-card");
+
+				// ==========================================
+				// 3. CORE CELLULAR AUTOMATA COMPUTATION
+				// ==========================================
+				// Compute next generation from previous generation row using currentRule
+				function stepRow(prevRow, rule) {
+					const nextRow = new Uint8Array(GRID_WIDTH);
+					for (let i = 0; i < GRID_WIDTH; i++) {
+						// Periodic toroidal boundary conditions
+						const left = i === 0 ? prevRow[GRID_WIDTH - 1] : prevRow[i - 1];
+						const center = prevRow[i];
+						const right = i === GRID_WIDTH - 1 ? prevRow[0] : prevRow[i + 1];
+
+						const neighborhood = (left << 2) | (center << 1) | right;
+						nextRow[i] = (rule >> neighborhood) & 1;
+					}
+					return nextRow;
+				}
+
+				// Reset history from initialRow
+				function resetSimulation() {
+					history = [];
+					const row0 = new Uint8Array(initialRow);
+					history.push(row0);
+					renderUniverseCanvas();
+					updateStatusMetrics();
+				}
+
+				// Advance 1 generation step
+				function advanceSimulation(count = 1) {
+					for (let k = 0; k < count; k++) {
+						const lastRow = history[history.length - 1];
+						const next = stepRow(lastRow, currentRule);
+						if (history.length >= maxGenerations) {
+							// Waterfall scrolling: discard oldest row, append new row!
+							history.shift();
+						}
+						history.push(next);
+					}
+					renderUniverseCanvas();
+					updateStatusMetrics();
+				}
+
+				// ==========================================
+				// 4. HIGH-DPI CANVAS RENDERING ENGINE
+				// ==========================================
+				function renderUniverseCanvas() {
+					if (!universeCanvas || !uCtx) return;
+
+					const palette = THEMES[currentTheme] || THEMES.ember;
+					const w = GRID_WIDTH * cellSize;
+					const h = maxGenerations * cellSize;
+
+					if (universeCanvas.width !== w || universeCanvas.height !== h) {
+						universeCanvas.width = w;
+						universeCanvas.height = h;
+					}
+
+					// Clear canvas background
+					uCtx.fillStyle = palette.bg;
+					uCtx.fillRect(0, 0, w, h);
+
+					// Draw cell grid generations
+					const rowsToDraw = history.length;
+					const aliveFill = palette.alive;
+
+					uCtx.fillStyle = aliveFill;
+					for (let r = 0; r < rowsToDraw; r++) {
+						const row = history[r];
+						const y = r * cellSize;
+						for (let c = 0; c < GRID_WIDTH; c++) {
+							if (row[c] === 1) {
+								uCtx.fillRect(c * cellSize, y, cellSize, cellSize);
+							}
+						}
+					}
+				}
+
+				// Update real-time statistics and badges
+				function updateStatusMetrics() {
+					if (!metricRuleNum) return;
+
+					metricRuleNum.textContent = currentRule.toString();
+					const binStr = currentRule.toString(2).padStart(8, "0");
+					if (metricRuleBin) metricRuleBin.textContent = `${binStr}₂`;
+
+					const wClass = getWolframClass(currentRule);
+					if (metricClassName) {
+						metricClassName.textContent = wClass.nameZh;
+						metricClassName.className = `text-base font-black ${wClass.color} mt-1`;
+					}
+					if (metricClassDesc) metricClassDesc.textContent = wClass.descZh;
+					if (metricStepCount) metricStepCount.textContent = history.length.toString();
+
+					// Calculate active alive cell count & density across all rows currently visible
+					let totalAlive = 0;
+					let totalCells = history.length * GRID_WIDTH;
+					for (let r = 0; r < history.length; r++) {
+						const row = history[r];
+						for (let c = 0; c < GRID_WIDTH; c++) {
+							if (row[c] === 1) totalAlive++;
+						}
+					}
+					const densityPct = totalCells > 0 ? ((totalAlive / totalCells) * 100).toFixed(1) : "0.0";
+					if (metricDensity) metricDensity.textContent = `${densityPct}%`;
+					if (metricAliveCount) metricAliveCount.textContent = `${totalAlive.toLocaleString()} / ${totalCells.toLocaleString()}`;
+					if (metricGridDim) metricGridDim.textContent = `${GRID_WIDTH} 胞`;
+
+					// Update Lookup Table Visualizer buttons (bit 7 down to bit 0)
+					const weights = [1, 2, 4, 8, 16, 32, 64, 128];
+					let formulaTerms = [];
+
+					ruleBitBtns.forEach((btn) => {
+						const bitIdx = Number.parseInt(btn.getAttribute("data-bit-idx") || "0", 10);
+						const bitVal = (currentRule >> bitIdx) & 1;
+						btn.textContent = bitVal.toString();
+						if (bitVal === 1) {
+							btn.className = "rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-amber-500/20 text-amber-300 border-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.3)]";
+						} else {
+							btn.className = "rule-bit-btn w-full py-1.5 rounded-lg font-black text-sm border transition cursor-pointer active:scale-95 bg-slate-950 text-slate-400 border-slate-700 hover:border-amber-400";
+						}
+					});
+
+					for (let i = 7; i >= 0; i--) {
+						const val = (currentRule >> i) & 1;
+						formulaTerms.push(val === 1 ? weights[i].toString() : "0");
+					}
+					if (formulaBreakdown) {
+						formulaBreakdown.textContent = `${formulaTerms.join(" + ")} = ${currentRule}`;
+					}
+
+					// Synchronize slider and input
+					if (sliderRuleNum && Number.parseInt(sliderRuleNum.value, 10) !== currentRule) {
+						sliderRuleNum.value = currentRule.toString();
+					}
+					if (inputRuleNum && Number.parseInt(inputRuleNum.value, 10) !== currentRule) {
+						inputRuleNum.value = currentRule.toString();
+					}
+
+					// Update active preset chips & gallery card highlights
+					presetBtns.forEach((btn) => {
+						const r = Number.parseInt(btn.getAttribute("data-rule") || "0", 10);
+						if (r === currentRule) {
+							btn.className = "preset-btn active px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 hover:bg-amber-500/30 transition cursor-pointer active:scale-95";
+						} else {
+							btn.className = "preset-btn px-2.5 py-1 rounded bg-slate-900 text-slate-300 border border-slate-700 hover:border-slate-500 transition cursor-pointer active:scale-95";
+						}
+					});
+
+					galleryCards.forEach((card) => {
+						const r = Number.parseInt(card.getAttribute("data-gallery-rule") || "0", 10);
+						if (r === currentRule) {
+							card.className = "gallery-card active p-3 rounded-xl bg-slate-900/90 border border-amber-500/80 hover:border-amber-400 transition cursor-pointer group shadow-lg shadow-amber-500/10";
+						} else {
+							card.className = "gallery-card p-3 rounded-xl bg-slate-900/90 border border-slate-800 hover:border-slate-700 transition cursor-pointer group shadow-lg";
+						}
+					});
+				}
+
+				// ==========================================
+				// 5. ANIMATION MAIN LOOP
+				// ==========================================
+				let lastTimestamp = performance.now();
+				let frameCount = 0;
+				let lastFpsTimestamp = performance.now();
+				let stepAccumulator = 0;
+
+				function loop(timestamp) {
+					if (lifecycle.signal.aborted) return;
+
+					const delta = timestamp - lastTimestamp;
+					lastTimestamp = timestamp;
+
+					// FPS measurement
+					frameCount++;
+					if (timestamp - lastFpsTimestamp >= 1000) {
+						const currentFps = Math.round((frameCount * 1000) / (timestamp - lastFpsTimestamp));
+						if (metricFps) metricFps.textContent = `${currentFps} FPS`;
+						frameCount = 0;
+						lastFpsTimestamp = timestamp;
+					}
+
+					if (isPlaying) {
+						stepAccumulator += delta;
+						const stepInterval = 1000 / simSpeed; // ms per generation step
+						if (stepAccumulator >= stepInterval) {
+							const stepsToRun = Math.min(Math.floor(stepAccumulator / stepInterval), 4);
+							stepAccumulator %= stepInterval;
+							advanceSimulation(stepsToRun);
+						}
+					}
+
+					const id = requestAnimationFrame(loop);
+					animFrameIds.push(id);
+				}
+
+				// ==========================================
+				// 6. INITIAL SEED ROW STRIP EDITOR
+				// ==========================================
+				// Render interactive clickable strip for central 61 cells
+				function renderSeedStrip() {
+					if (!seedCellsStrip) return;
+					seedCellsStrip.innerHTML = "";
+
+					const windowRadius = 30; // 30 on left, center, 30 on right = 61 cells
+					const startIdx = CENTER_IDX - windowRadius;
+					const endIdx = CENTER_IDX + windowRadius;
+
+					for (let i = startIdx; i <= endIdx; i++) {
+						const isCenter = i === CENTER_IDX;
+						const cellBtn = document.createElement("button");
+						cellBtn.type = "button";
+						cellBtn.setAttribute("data-cell-idx", i.toString());
+						const isAlive = initialRow[i] === 1;
+
+						let classes = "w-3.5 h-6 rounded-xs transition cursor-pointer flex-shrink-0 active:scale-90 ";
+						if (isAlive) {
+							classes += isCenter
+								? "bg-amber-400 border border-white shadow-[0_0_6px_rgba(245,158,11,0.8)]"
+								: "bg-amber-500 border border-amber-300";
+						} else {
+							classes += isCenter
+								? "bg-slate-900 border border-amber-500/50 hover:bg-slate-800"
+								: "bg-slate-950 border border-slate-800 hover:bg-slate-800";
+						}
+						cellBtn.className = classes;
+						cellBtn.title = `Cell ${i - CENTER_IDX} (${isAlive ? "Black / 1" : "White / 0"})`;
+
+						cellBtn.addEventListener("click", () => {
+							initialRow[i] = initialRow[i] === 1 ? 0 : 1;
+							renderSeedStrip();
+							resetSimulation();
+						}, { signal: lifecycle.signal });
+
+						seedCellsStrip.appendChild(cellBtn);
+					}
+
+					// Update seed status description
+					let totalAliveInSeed = 0;
+					for (let i = 0; i < GRID_WIDTH; i++) {
+						if (initialRow[i] === 1) totalAliveInSeed++;
+					}
+					if (seedStat) {
+						if (totalAliveInSeed === 1 && initialRow[CENTER_IDX] === 1) {
+							seedStat.textContent = "(中央单黑点)";
+						} else if (totalAliveInSeed === 0) {
+							seedStat.textContent = "(全白空白种子)";
+						} else {
+							seedStat.textContent = `(${totalAliveInSeed} 个活元胞活跃)`;
+						}
+					}
+				}
+
+				// Seed preset handlers
+				if (seedBtnSingle) {
+					seedBtnSingle.addEventListener("click", () => {
+						initialRow.fill(0);
+						initialRow[CENTER_IDX] = 1;
+						renderSeedStrip();
+						resetSimulation();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (seedBtnSoup) {
+					seedBtnSoup.addEventListener("click", () => {
+						for (let i = 0; i < GRID_WIDTH; i++) {
+							initialRow[i] = Math.random() < 0.5 ? 1 : 0;
+						}
+						renderSeedStrip();
+						resetSimulation();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (seedBtnDouble) {
+					seedBtnDouble.addEventListener("click", () => {
+						initialRow.fill(0);
+						initialRow[CENTER_IDX] = 1;
+						initialRow[CENTER_IDX + 1] = 1;
+						renderSeedStrip();
+						resetSimulation();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (seedBtnInvert) {
+					seedBtnInvert.addEventListener("click", () => {
+						for (let i = 0; i < GRID_WIDTH; i++) {
+							initialRow[i] = initialRow[i] === 1 ? 0 : 1;
+						}
+						renderSeedStrip();
+						resetSimulation();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (seedBtnClear) {
+					seedBtnClear.addEventListener("click", () => {
+						initialRow.fill(0);
+						renderSeedStrip();
+						resetSimulation();
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 7. USER INTERFACE CONTROLS & LISTENERS
+				// ==========================================
+				function setRule(newRule) {
+					currentRule = Math.max(0, Math.min(255, newRule));
+					resetSimulation();
+				}
+
+				// Play/Pause button
+				if (btnPlayPause) {
+					btnPlayPause.addEventListener("click", () => {
+						isPlaying = !isPlaying;
+						if (playIcon) playIcon.textContent = isPlaying ? "⏸" : "▶";
+						if (playText) playText.textContent = isPlaying ? "暂停推进" : "继续推进";
+						if (playTextEn) playTextEn.textContent = isPlaying ? "Pause" : "Resume";
+						if (metricEngineState) {
+							metricEngineState.textContent = isPlaying ? "● 持续推进中" : "⏸ 暂停待命";
+							metricEngineState.className = isPlaying ? "text-[11px] text-emerald-400" : "text-[11px] text-amber-400";
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				// Step buttons
+				if (btnStep) {
+					btnStep.addEventListener("click", () => {
+						isPlaying = false;
+						if (playIcon) playIcon.textContent = "▶";
+						if (playText) playText.textContent = "继续推进";
+						if (playTextEn) playTextEn.textContent = "Resume";
+						if (metricEngineState) {
+							metricEngineState.textContent = "⏸ 步进模式";
+							metricEngineState.className = "text-[11px] text-cyan-400";
+						}
+						advanceSimulation(1);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (btnStep10) {
+					btnStep10.addEventListener("click", () => {
+						isPlaying = false;
+						if (playIcon) playIcon.textContent = "▶";
+						if (playText) playText.textContent = "继续推进";
+						if (playTextEn) playTextEn.textContent = "Resume";
+						advanceSimulation(10);
+					}, { signal: lifecycle.signal });
+				}
+
+				// Restart button
+				if (btnRestart) {
+					btnRestart.addEventListener("click", () => {
+						resetSimulation();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Sliders listeners
+				if (sliderRuleNum) {
+					sliderRuleNum.addEventListener("input", (e) => {
+						const val = Number.parseInt(e.target.value, 10);
+						setRule(val);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (inputRuleNum) {
+					inputRuleNum.addEventListener("change", (e) => {
+						const val = Number.parseInt(e.target.value, 10) || 0;
+						setRule(val);
+					}, { signal: lifecycle.signal });
+				}
+
+				if (sliderSpeed) {
+					sliderSpeed.addEventListener("input", (e) => {
+						simSpeed = Number.parseInt(e.target.value, 10);
+						if (speedLabel) speedLabel.textContent = `${(simSpeed / 30).toFixed(1)}×`;
+					}, { signal: lifecycle.signal });
+				}
+
+				if (sliderGen) {
+					sliderGen.addEventListener("input", (e) => {
+						maxGenerations = Number.parseInt(e.target.value, 10);
+						if (genLabel) genLabel.textContent = `${maxGenerations} 行`;
+						renderUniverseCanvas();
+					}, { signal: lifecycle.signal });
+				}
+
+				if (sliderCellSize) {
+					sliderCellSize.addEventListener("input", (e) => {
+						cellSize = Number.parseInt(e.target.value, 10);
+						if (cellSizeLabel) cellSizeLabel.textContent = `${cellSize} px`;
+						renderUniverseCanvas();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Rule table bit buttons
+				ruleBitBtns.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						const bitIdx = Number.parseInt(btn.getAttribute("data-bit-idx") || "0", 10);
+						// Flip the bit at bitIdx
+						const newRule = currentRule ^ (1 << bitIdx);
+						setRule(newRule);
+					}, { signal: lifecycle.signal });
+				});
+
+				// Preset buttons
+				presetBtns.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						const r = Number.parseInt(btn.getAttribute("data-rule") || "0", 10);
+						setRule(r);
+					}, { signal: lifecycle.signal });
+				});
+
+				// Gallery cards
+				galleryCards.forEach((card) => {
+					card.addEventListener("click", () => {
+						const r = Number.parseInt(card.getAttribute("data-gallery-rule") || "0", 10);
+						setRule(r);
+					}, { signal: lifecycle.signal });
+				});
+
+				// Theme buttons
+				themeBtns.forEach((btn) => {
+					btn.addEventListener("click", () => {
+						const th = btn.getAttribute("data-theme") || "ember";
+						currentTheme = th;
+						themeBtns.forEach((b) => {
+							if (b === btn) {
+								b.className = "theme-btn active px-2.5 py-1 rounded text-amber-300 bg-amber-950/60 border border-amber-600/40 transition";
+							} else {
+								b.className = "theme-btn px-2.5 py-1 rounded text-slate-400 hover:text-white transition";
+							}
+						});
+						renderUniverseCanvas();
+					}, { signal: lifecycle.signal });
+				});
+
+				// Export high-resolution PNG
+				if (btnDownload && universeCanvas) {
+					btnDownload.addEventListener("click", () => {
+						const link = document.createElement("a");
+						link.download = `rule-${currentRule}-one-black-cell.png`;
+						link.href = universeCanvas.toDataURL("image/png");
+						link.click();
+					}, { signal: lifecycle.signal });
+				}
+
+				// Canvas Hover Coordinate Inspector
+				if (universeCanvas) {
+					universeCanvas.addEventListener("mousemove", (e) => {
+						const rect = universeCanvas.getBoundingClientRect();
+						const scaleX = universeCanvas.width / rect.width;
+						const scaleY = universeCanvas.height / rect.height;
+
+						const canvasX = (e.clientX - rect.left) * scaleX;
+						const canvasY = (e.clientY - rect.top) * scaleY;
+
+						const col = Math.floor(canvasX / cellSize);
+						const row = Math.floor(canvasY / cellSize);
+
+						if (row >= 0 && row < history.length && col >= 0 && col < GRID_WIDTH) {
+							const val = history[row][col];
+							if (inspX) inspX.textContent = (col - CENTER_IDX).toString();
+							if (inspT) inspT.textContent = row.toString();
+							if (inspVal) {
+								inspVal.textContent = val === 1 ? "1 (黑胞)" : "0 (白胞)";
+								inspVal.className = val === 1 ? "font-bold text-amber-300" : "font-bold text-slate-400";
+							}
+
+							// Parent neighbourhood inspection
+							if (row > 0 && inspNeigh) {
+								const prevRow = history[row - 1];
+								const l = col === 0 ? prevRow[GRID_WIDTH - 1] : prevRow[col - 1];
+								const c = prevRow[col];
+								const r = col === GRID_WIDTH - 1 ? prevRow[0] : prevRow[col + 1];
+								inspNeigh.textContent = `${l}${c}${r}`;
+							}
+						}
+					}, { signal: lifecycle.signal });
+				}
+
+				// ==========================================
+				// 8. RENDER GALLERY MINI THUMBNAILS
+				// ==========================================
+				// Dedicated offline mini-renderers for Rule Gallery
+				function renderGalleryThumbnails() {
+					const presets = [30, 90, 110, 184, 232, 54, 150, 60];
+					const thumbW = 160;
+					const thumbH = 90;
+
+					presets.forEach((ruleNum) => {
+						const canvas = document.getElementById(`thumb-${ruleNum}`);
+						if (!canvas) return;
+						const ctx = canvas.getContext("2d");
+						if (!ctx) return;
+
+						ctx.fillStyle = "#030712";
+						ctx.fillRect(0, 0, thumbW, thumbH);
+
+						// Simulate ruleNum with single center black cell for 90 generations
+						let row = new Uint8Array(thumbW);
+						row[Math.floor(thumbW / 2)] = 1;
+
+						ctx.fillStyle = ruleNum === 30 ? "#f59e0b" : ruleNum === 90 ? "#06b6d4" : ruleNum === 110 ? "#c084fc" : ruleNum === 184 ? "#34d399" : ruleNum === 232 ? "#60a5fa" : ruleNum === 54 ? "#fb7185" : ruleNum === 150 ? "#818cf8" : "#2dd4bf";
+
+						for (let t = 0; t < thumbH; t++) {
+							for (let x = 0; x < thumbW; x++) {
+								if (row[x] === 1) {
+									ctx.fillRect(x, t, 1, 1);
+								}
+							}
+							const nextRow = new Uint8Array(thumbW);
+							for (let x = 0; x < thumbW; x++) {
+								const l = x === 0 ? row[thumbW - 1] : row[x - 1];
+								const c = row[x];
+								const r = x === thumbW - 1 ? row[0] : row[x + 1];
+								const nh = (l << 2) | (c << 1) | r;
+								nextRow[x] = (ruleNum >> nh) & 1;
+							}
+							row = nextRow;
+						}
+					});
+				}
+
+				// ==========================================
+				// 9. STARTUP INITIALIZATION
+				// ==========================================
+				renderSeedStrip();
+				resetSimulation();
+				renderGalleryThumbnails();
+
+				// Pre-populate initial 120 steps immediately so user lands on a glorious grown Rule 30 pattern!
+				advanceSimulation(120);
+
+				const firstAnimId = requestAnimationFrame(loop);
+				animFrameIds.push(firstAnimId);
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initOneBlackCell);
+			} else {
+				initOneBlackCell();
+			}
+			document.addEventListener("astro:page-load", initOneBlackCell);
+		})();
+	</script>
+</MainGridLayout>
