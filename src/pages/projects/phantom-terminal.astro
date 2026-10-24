@@ -1,0 +1,1627 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+
+interface Props {
+	lang?: string;
+}
+
+const { lang = Astro.url.pathname.startsWith("/en") ? "en" : "zh_CN" } =
+	Astro.props;
+const isEn = lang === "en";
+
+const title = isEn
+	? "THE PHANTOM TERMINAL · When a 360M Model Pretends to Be a Terminal"
+	: "终端在做梦 · 3.6亿参数神经网络伪装的幻影终端";
+const description = isEn
+	? "No shell, no filesystem — every keystroke feeds into a 360M parameter neural network predicting terminal screen diffs. Exploring WorldTUI: Qwen2.5-Coder-0.5B fine-tuned into a 208 MB in-browser world model, the 333-token vocabulary, the COPY scroll trick, and the quiet tragedy of layer-7 memory loss."
+	: "没有真实 Shell，没有物理文件系统，每一次键盘敲击都由 3.6 亿参数的神经网络直接预测终端屏幕的网格变化。剖析 WorldTUI：Qwen2.5-Coder-0.5B 微调出的 208MB 浏览器世界模型、333 极简词表、屏幕差分 COPY 技巧与深层记忆灾难。";
+---
+
+<MainGridLayout title={title} description={description} lang={lang}>
+	<div class="flex w-full rounded-(--radius-large) overflow-hidden relative min-h-32 mb-8">
+		<div class="z-10 px-4 sm:px-8 py-8 relative w-full rounded-(--radius-large) overflow-hidden bg-[#070d0a] text-emerald-100 border border-emerald-900/60 shadow-2xl selection:bg-emerald-500/30 selection:text-emerald-200">
+			<!-- Ambient Phosphor Glow & Scanline Background -->
+			<div class="absolute inset-0 pointer-events-none opacity-15 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:20px_20px] overflow-hidden"></div>
+			<div class="absolute -top-36 -left-36 w-96 h-96 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute top-1/3 -right-32 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none"></div>
+			<div class="absolute bottom-16 left-1/3 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+			<!-- HERO HEADER SECTION -->
+			<header class="relative z-10 mb-10 pb-8 border-b border-emerald-900/60">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex flex-wrap items-center gap-2">
+						<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-semibold tracking-wide">
+							<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+							<span>HN 2026-10-21 · 621 PTS · WORLDTUI</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-mono">
+							<span>🖥️</span>
+							<span class="lang-zh">世界模型终端 · 360M 参数</span>
+							<span class="lang-en">World Model TUI · 360M Params</span>
+						</div>
+						<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono">
+							<span>⚡</span>
+							<span class="lang-zh">WebGPU 本地 208MB · 零后端</span>
+							<span class="lang-en">WebGPU In-Browser 208MB · No Shell</span>
+						</div>
+					</div>
+
+					<!-- In-Page Language Switcher -->
+					<div class="flex items-center gap-3">
+						<div class="text-xs font-mono text-emerald-400/70 hidden sm:block">
+							<span class="lang-zh">交互式原理解析 · 2026-10-24</span>
+							<span class="lang-en">Interactive Deep Dive · 2026-10-24</span>
+						</div>
+						<a
+							id="inpage-lang-toggle"
+							href={isEn ? "/projects/phantom-terminal/" : "/en/projects/phantom-terminal/"}
+							class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 hover:text-white hover:bg-emerald-900/80 font-mono text-xs transition cursor-pointer active:scale-95"
+							title={isEn ? "切换为中文" : "Switch to English"}
+						>
+							<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+								<path d="m12.87 15.07-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/>
+							</svg>
+							<span class="lang-zh font-bold">English</span>
+							<span class="lang-en font-bold">中文</span>
+						</a>
+					</div>
+				</div>
+
+				<h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-2 font-mono">
+					<span class="lang-zh">终端在做梦</span>
+					<span class="lang-en">THE PHANTOM TERMINAL</span>
+				</h1>
+
+				<p class="text-lg sm:text-xl font-bold text-emerald-400 mb-4 tracking-wide font-mono">
+					<span class="lang-zh">没有 Shell，没有文件系统：3.6 亿参数神经网络直接预测屏幕差分</span>
+					<span class="lang-en">No Shell, No Filesystem: A 360M Neural Network Predicts Screen Diffs Per Keystroke</span>
+				</p>
+
+				<div class="space-y-3 max-w-4xl text-emerald-100/90 leading-relaxed text-sm sm:text-base font-sans">
+					<p>
+						<span class="lang-zh">
+							<strong>2026 年 10 月 21 日</strong>，Hacker News 首页热门讨论（作者 simedw，斩获约 621 点赞、186 条深度讨论）引爆了极客社区：<strong>《WorldTUI: I trained a 360M model to pretend to be a terminal》</strong>。屏幕背后没有 bash、没有 zsh、没有任何 Linux 内核与物理磁盘——用户的每一个原始按键字节直接喂给一个小模型，模型直接预测终端<strong>屏幕字符网格的局部差分与光标位置</strong>。
+						</span>
+						<span class="lang-en">
+							On <strong>21 October 2026</strong>, a front-page Hacker News post by simedw (~621 points, ~186 comments) captured the imagination of systems hackers worldwide: <strong>"WorldTUI: I trained a 360M model to pretend to be a terminal."</strong> There is no bash, no zsh, no operating system, and no filesystem. Every raw keystroke enters a small neural network, which directly predicts <strong>screen character-grid diffs and cursor movements</strong>.
+						</span>
+					</p>
+					<p class="text-xs sm:text-sm text-emerald-200/70">
+						<span class="lang-zh">
+							这是谷歌 <strong>Genie 3</strong>（应用由模型生成而非代码编写）理念在现实中最轻巧的落地雏形。本页面并非对该演示的机械复制，而是我们针对其核心技术机理的原创深度剖析与交互演练场。从 333 个极端微词表、屏幕差分 COPY 压缩，到 DAgger 自我修复与第 7 层被剔除后“记忆悄然暴毙”的残酷蒸馏事故，带你完整透视这个 208MB 的“终端世界模型”。
+						</span>
+						<span class="lang-en">
+							This is Google's <strong>Genie 3</strong> vision (applications learned rather than written) condensed into the smallest viable universe. This page is our original interactive exploration of WorldTUI's inner mechanisms: the 333-token vocabulary, the COPY scroll trick, DAgger self-repair, and the chilling distillation finding where dropping Layer 7 silently vaporized all memory while keeping next-token accuracy intact.
+						</span>
+					</p>
+				</div>
+
+				<!-- TRANSPARENCY NOTICE BANNER -->
+				<div class="mt-6 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs sm:text-sm leading-relaxed font-mono">
+					<div class="flex items-start gap-2.5">
+						<span class="text-base sm:text-lg select-none">⚠️</span>
+						<div>
+							<span class="lang-zh">
+								<strong>透明度前置声明</strong>：下方可操作的“幻影终端”是一个纯手写、完全确定性的 JavaScript 状态机玩具，<strong>绝非真正的神经网络模型</strong>。它通过规则模拟了世界模型的交互手感与典型幻觉；真正的 WorldTUI 是一个完整的 208 MB Qwen2.5-Coder-0.5B (int4) 模型，通过 WebGPU WGSL 着色器在读者浏览器的标签页内本地推理运行。
+							</span>
+							<span class="lang-en">
+								<strong>Upfront Transparency Notice</strong>: The playable interactive terminal below is a deterministic, hand-written JavaScript toy, <strong>NOT a machine learning model</strong>. It is designed to illustrate the interactive sensation and scripted model drifts; simedw's real WorldTUI is a genuine 208 MB Qwen2.5-Coder-0.5B (int4) running locally in your browser via WebGPU WGSL compute shaders.
+							</span>
+						</div>
+					</div>
+				</div>
+			</header>
+
+			<!-- SECTION 1: THE PLAYABLE TOY TERMINAL -->
+			<section class="relative z-10 mb-14">
+				<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+					<div class="flex items-center gap-2">
+						<span class="text-emerald-400 font-mono text-xl font-bold">01/</span>
+						<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight font-mono">
+							<span class="lang-zh">幻影终端演练场 · THE PHANTOM TERMINAL</span>
+							<span class="lang-en">THE PHANTOM TERMINAL · Playable Toy</span>
+						</h2>
+					</div>
+
+					<!-- Real Shell vs World-Model Toggle -->
+					<div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+						<span class="text-emerald-400/80 mr-1 hidden sm:inline">
+							<span class="lang-zh">运行模式:</span>
+							<span class="lang-en">Mode:</span>
+						</span>
+						<button
+							type="button"
+							id="mode-real-btn"
+							class="px-3 py-1.5 rounded-lg border border-emerald-500/60 bg-emerald-500/20 text-emerald-200 font-bold hover:bg-emerald-500/30 transition cursor-pointer active:scale-95 shadow-[0_0_10px_rgba(16,185,129,0.2)]"
+						>
+							<span class="lang-zh">🟢 真实 Shell 模式 (精确持久)</span>
+							<span class="lang-en">🟢 Real Shell Mode (Exact)</span>
+						</button>
+						<button
+							type="button"
+							id="mode-model-btn"
+							class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900/80 text-slate-300 font-bold hover:border-amber-500/60 hover:text-amber-300 transition cursor-pointer active:scale-95"
+						>
+							<span class="lang-zh">🧠 世界模型模式 (模拟漂移幻觉)</span>
+							<span class="lang-en">🧠 World-Model Mode (Simulated Drift)</span>
+						</button>
+						<button
+							type="button"
+							id="term-reset-btn"
+							class="px-2.5 py-1.5 rounded-lg border border-slate-700 bg-slate-900/60 text-slate-400 hover:text-white hover:border-slate-500 transition cursor-pointer active:scale-95"
+							title="Reset terminal filesystem and history"
+						>
+							<span class="lang-zh">↺ 重置</span>
+							<span class="lang-en">↺ Reset</span>
+						</button>
+					</div>
+				</div>
+
+				<!-- Mode Explanatory Pill -->
+				<div id="mode-desc-pill" class="mb-4 px-3.5 py-2 rounded-lg bg-emerald-950/40 border border-emerald-900/50 text-xs font-mono text-emerald-300 flex items-center justify-between">
+					<div id="mode-desc-text">
+						<span class="lang-zh"><strong>当前模式：真实 Shell</strong> —— 文件修改精确写入，追加行绝不丢失，路径严谨记忆。</span>
+						<span class="lang-en"><strong>Current: Real Shell Mode</strong> — Files persist faithfully, appends never vanish, paths accurately remembered.</span>
+					</div>
+					<span class="text-[11px] text-emerald-400/60 font-sans hidden md:inline">
+						<span class="lang-zh">切换至世界模型体验“模型失忆”与“幻觉补全”</span>
+						<span class="lang-en">Switch to World-Model Mode to experience hallucinations</span>
+					</span>
+				</div>
+
+				<!-- TERMINAL WINDOW WRAPPER -->
+				<div class="rounded-xl overflow-hidden border border-emerald-800/60 bg-[#040806] shadow-2xl">
+					<!-- Title Bar -->
+					<div class="px-4 py-2.5 bg-[#09130d] border-b border-emerald-900/60 flex items-center justify-between select-none">
+						<div class="flex items-center gap-2">
+							<span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+							<span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+							<span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+							<span class="ml-2 text-xs font-mono text-emerald-400/80 font-bold">guest@world-tui:~ (tty1) [hand-written JS toy]</span>
+						</div>
+						<div class="flex items-center gap-2 text-[11px] font-mono text-emerald-500/60">
+							<span id="term-status-badge" class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800/60 text-emerald-400">
+								SHELL: READY
+							</span>
+						</div>
+					</div>
+
+					<!-- Screen Body -->
+					<div
+						id="terminal-screen"
+						class="p-4 sm:p-5 font-mono text-xs sm:text-sm text-emerald-300 leading-relaxed min-h-[360px] max-h-[480px] overflow-y-auto cursor-text bg-[#030705] relative selection:bg-emerald-500/30 selection:text-white"
+					>
+						<!-- Past Outputs container -->
+						<div id="term-output-history" class="space-y-1"></div>
+
+						<!-- Active Snake Board Container (Hidden by default) -->
+						<div id="term-snake-container" class="hidden my-2 p-3 bg-black/90 rounded border border-emerald-600/60">
+							<div class="text-xs text-amber-300 mb-1 flex items-center justify-between">
+								<span>🐍 SNAKE IN TERMINAL (CHARACTER GRID GAME)</span>
+								<span id="snake-score-display" class="font-bold text-emerald-400">SCORE: 0</span>
+							</div>
+							<pre id="snake-ascii-grid" class="font-mono text-emerald-400 leading-none select-none text-[13px]"></pre>
+							<div class="mt-2 text-[11px] text-emerald-500 flex flex-wrap items-center justify-between gap-2">
+								<span>
+									<span class="lang-zh">方向键 / WASD 移动 · 按 Q 退出回终端</span>
+									<span class="lang-en">Arrows / WASD to move · Press Q to quit to prompt</span>
+								</span>
+								<button id="snake-quit-btn" type="button" class="px-2 py-0.5 rounded bg-rose-950 border border-rose-700 text-rose-300 hover:bg-rose-900 text-xs">
+									<span class="lang-zh">退出 Snake (Q)</span>
+									<span class="lang-en">Quit Snake (Q)</span>
+								</button>
+							</div>
+						</div>
+
+						<!-- Active Prompt Row -->
+						<div id="term-input-row" class="flex items-center gap-1.5 mt-2">
+							<span id="term-prompt-label" class="text-emerald-400 font-bold select-none shrink-0">guest@world-tui:~$</span>
+							<div class="relative flex-1 flex items-center">
+								<input
+									id="term-input"
+									type="text"
+									autocomplete="off"
+									autocorrect="off"
+									autocapitalize="off"
+									spellcheck="false"
+									class="w-full bg-transparent border-none outline-none text-emerald-200 font-mono text-xs sm:text-sm p-0 m-0 focus:ring-0"
+									aria-label="Terminal Input"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<!-- Mobile On-Screen Snake Controls (only shown when snake active) -->
+					<div id="snake-mobile-controls" class="hidden px-4 py-3 bg-[#08120c] border-t border-emerald-900/60 flex items-center justify-center gap-3 select-none">
+						<button data-dir="up" class="snake-ctrl-btn px-4 py-2 rounded bg-emerald-950 border border-emerald-700 text-emerald-300 active:scale-90 font-mono font-bold">▲</button>
+						<button data-dir="left" class="snake-ctrl-btn px-4 py-2 rounded bg-emerald-950 border border-emerald-700 text-emerald-300 active:scale-90 font-mono font-bold">◀</button>
+						<button data-dir="down" class="snake-ctrl-btn px-4 py-2 rounded bg-emerald-950 border border-emerald-700 text-emerald-300 active:scale-90 font-mono font-bold">▼</button>
+						<button data-dir="right" class="snake-ctrl-btn px-4 py-2 rounded bg-emerald-950 border border-emerald-700 text-emerald-300 active:scale-90 font-mono font-bold">▶</button>
+					</div>
+
+					<!-- Bottom Quick Chips Bar -->
+					<div class="px-4 py-2.5 bg-[#070e0a] border-t border-emerald-900/60 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+						<div class="flex items-center gap-1.5 text-emerald-400/70">
+							<span>⚡</span>
+							<span class="lang-zh">快捷指令:</span>
+							<span class="lang-en">Quick Run:</span>
+						</div>
+						<div class="flex flex-wrap items-center gap-1.5" id="term-quick-chips">
+							<button type="button" data-cmd="help" class="quick-cmd-btn px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-800/80 text-emerald-300 hover:bg-emerald-900 transition active:scale-95">help</button>
+							<button type="button" data-cmd="ls -la" class="quick-cmd-btn px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-800/80 text-emerald-300 hover:bg-emerald-900 transition active:scale-95">ls -la</button>
+							<button type="button" data-cmd="echo green >> colors.txt" class="quick-cmd-btn px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-800/80 text-emerald-300 hover:bg-emerald-900 transition active:scale-95">echo green &gt;&gt; colors.txt</button>
+							<button type="button" data-cmd="cat colors.txt" class="quick-cmd-btn px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-800/80 text-emerald-300 hover:bg-emerald-900 transition active:scale-95">cat colors.txt</button>
+							<button type="button" data-cmd="pythoon" class="quick-cmd-btn px-2.5 py-1 rounded bg-amber-950/50 border border-amber-800/70 text-amber-300 hover:bg-amber-900/60 transition active:scale-95" title="Type typo to test model behavior">pythoon (typo!)</button>
+							<button type="button" data-cmd="snake" class="quick-cmd-btn px-2.5 py-1 rounded bg-cyan-950/60 border border-cyan-800/80 text-cyan-300 hover:bg-cyan-900 transition active:scale-95">snake 🐍</button>
+							<button type="button" data-cmd="clear" class="quick-cmd-btn px-2.5 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300 hover:bg-slate-800 transition active:scale-95">clear</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 2: THE SCREEN IS THE STATE -->
+			<section class="relative z-10 mb-14">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-cyan-400 font-mono text-xl font-bold">02/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight font-mono">
+						<span class="lang-zh">屏幕即状态 · 屏幕差分与 COPY 技巧</span>
+						<span class="lang-en">THE SCREEN IS THE STATE · Screen Diffs & The COPY Trick</span>
+					</h2>
+				</div>
+
+				<p class="text-sm sm:text-base text-emerald-100/90 max-w-4xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						终端本质上是一个二维字符矩阵（如 80 列 × 24 行），而非像 ChatGPT 对话框那样的单向文本流。普通语言模型只能向末尾追加 token，根本无法原生表达光标跳跃回顶部、vim 插入新行或终端清屏。WorldTUI 的核心突破在于：<strong>将终端屏幕视为显存快照，每次按键只预测修改了哪些行（Screen Diffs）与最终光标位置</strong>。
+					</span>
+					<span class="lang-en">
+						A terminal is fundamentally a 2D character matrix (e.g. 80 columns by 24 rows), not a unidirectional stream of text. Conventional LLMs append tokens to the end, making it impossible to express cursor jumps to the top left, vim row insertions, or screen clears. WorldTUI's key insight: <strong>the terminal screen is a frame buffer; each keystroke predicts which rows changed (Screen Diffs) and where the cursor ended up</strong>.
+					</span>
+				</p>
+
+				<!-- Scenario Picker Tabs -->
+				<div class="flex flex-wrap gap-2 mb-4">
+					<button
+						type="button"
+						data-scenario="type"
+						class="diff-scenario-btn active px-3.5 py-2 rounded-lg bg-cyan-500/20 border border-cyan-500/60 text-cyan-200 font-mono text-xs font-bold transition cursor-pointer"
+					>
+						<span class="lang-zh">情境 A: 键入单字 (打字)</span>
+						<span class="lang-en">Scenario A: Type Character</span>
+					</button>
+					<button
+						type="button"
+						data-scenario="scroll"
+						class="diff-scenario-btn px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 font-mono text-xs font-bold hover:border-cyan-500/40 hover:text-cyan-300 transition cursor-pointer"
+					>
+						<span class="lang-zh">情境 B: 底部回车滚屏 (COPY 奇迹)</span>
+						<span class="lang-en">Scenario B: Scroll on Enter (COPY Trick)</span>
+					</button>
+					<button
+						type="button"
+						data-scenario="clear"
+						class="diff-scenario-btn px-3.5 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 font-mono text-xs font-bold hover:border-cyan-500/40 hover:text-cyan-300 transition cursor-pointer"
+					>
+						<span class="lang-zh">情境 C: 执行 clear 清屏</span>
+						<span class="lang-en">Scenario C: Clear Command</span>
+					</button>
+				</div>
+
+				<!-- Side by Side Visual Grids -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+					<!-- Before Grid -->
+					<div class="p-4 rounded-xl bg-[#050c08] border border-emerald-900/60">
+						<div class="flex items-center justify-between text-xs font-mono text-emerald-400 mb-2">
+							<span class="font-bold">
+								<span class="lang-zh">按键前屏幕状态 (Screen Before)</span>
+								<span class="lang-en">Screen State Before Keystroke</span>
+							</span>
+							<span id="diff-before-cursor" class="text-slate-400">CURSOR: (23, 17)</span>
+						</div>
+						<div id="diff-grid-before" class="p-3 bg-black rounded font-mono text-xs text-emerald-300/80 leading-tight overflow-x-auto min-h-[140px] whitespace-pre"></div>
+					</div>
+
+					<!-- After Grid -->
+					<div class="p-4 rounded-xl bg-[#050c08] border border-cyan-900/60">
+						<div class="flex items-center justify-between text-xs font-mono text-cyan-400 mb-2">
+							<span class="font-bold">
+								<span class="lang-zh">预测后屏幕状态 (Screen After)</span>
+								<span class="lang-en">Predicted Screen State After</span>
+							</span>
+							<span id="diff-after-cursor" class="text-amber-300 font-bold">CURSOR: (23, 18)</span>
+						</div>
+						<div id="diff-grid-after" class="p-3 bg-black rounded font-mono text-xs text-cyan-300/90 leading-tight overflow-x-auto min-h-[140px] whitespace-pre"></div>
+					</div>
+				</div>
+
+				<!-- Generated WorldTUI Token Stream Box -->
+				<div class="p-4 rounded-xl bg-[#040806] border border-emerald-800/60 mb-6">
+					<div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-emerald-400 mb-2">
+						<div class="flex items-center gap-2">
+							<span class="text-amber-400 font-bold">⚡ WORLDTUI EMITTED TOKEN STREAM</span>
+							<span class="text-slate-400">
+								<span class="lang-zh">(受限语法受管解码)</span>
+								<span class="lang-en">(Grammar-constrained)</span>
+							</span>
+						</div>
+						<div class="text-emerald-300 font-bold" id="diff-token-count-badge">
+							Tokens: 8
+						</div>
+					</div>
+					<pre id="diff-tokens-output" class="p-3 bg-black/90 rounded border border-emerald-950 font-mono text-xs text-amber-200 overflow-x-auto leading-relaxed"></pre>
+				</div>
+
+				<!-- Interactive COPY Trick Token Cost Calculator -->
+				<div class="p-5 rounded-xl bg-[#08130d] border border-emerald-700/50">
+					<div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+						<div>
+							<h3 class="text-sm sm:text-base font-bold text-white font-mono">
+								<span class="lang-zh">全屏滚动画布开销算力对比 · THE COPY TRICK</span>
+								<span class="lang-en">Scroll Cost: Full Redraw vs COPY Trick</span>
+							</h3>
+							<p class="text-xs text-emerald-300/70 mt-0.5">
+								<span class="lang-zh">普通全屏重绘每按一次回车需约 3,000 tokens；COPY 技巧使每行缩减至 3 个 tokens。</span>
+								<span class="lang-en">Redrawing 24 rows costs ~3,000 tokens per Enter; COPY trick uses just 3 tokens per row.</span>
+							</p>
+						</div>
+						<div class="flex items-center gap-2 font-mono text-xs">
+							<span class="text-slate-400">
+								<span class="lang-zh">终端屏幕行数 (Rows):</span>
+								<span class="lang-en">Terminal Rows:</span>
+							</span>
+							<span id="slider-rows-val" class="px-2.5 py-1 rounded bg-emerald-950 border border-emerald-700 text-emerald-300 font-bold text-sm">24</span>
+						</div>
+					</div>
+
+					<!-- Live Slider -->
+					<div class="mb-5">
+						<input
+							id="slider-rows"
+							type="range"
+							min="10"
+							max="60"
+							value="24"
+							step="1"
+							class="w-full h-2 bg-emerald-950 rounded-lg appearance-none cursor-pointer accent-emerald-400"
+						/>
+						<div class="flex justify-between text-[11px] font-mono text-slate-500 mt-1">
+							<span>10 <span class="lang-zh">行</span><span class="lang-en">rows</span></span>
+							<span>24 <span class="lang-zh">行 (标准)</span><span class="lang-en">rows (Standard)</span></span>
+							<span>40 <span class="lang-zh">行</span><span class="lang-en">rows</span></span>
+							<span>60 <span class="lang-zh">行 (大屏)</span><span class="lang-en">rows (Large)</span></span>
+						</div>
+					</div>
+
+					<!-- Visual Comparison Bars -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+						<!-- Without COPY Trick -->
+						<div class="p-3.5 rounded-lg bg-rose-950/30 border border-rose-900/60">
+							<div class="flex items-center justify-between text-rose-300 mb-1 font-bold">
+								<span>
+									<span class="lang-zh">传统逐行重绘开销</span>
+									<span class="lang-en">Traditional Full Redraw</span>
+								</span>
+								<span id="cost-full-redraw" class="text-sm">2,880 tokens</span>
+							</div>
+							<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden mb-2">
+								<div id="bar-full-redraw" class="bg-rose-500 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
+							</div>
+							<p class="text-[11px] text-slate-400 leading-normal">
+								<span class="lang-zh">整屏 80×Rows 字符全部重新生成，单次按键即耗尽大半注意力窗口与算力。</span>
+								<span class="lang-en">Regenerates all characters per row; exhausting GPU attention and context budgets.</span>
+							</p>
+						</div>
+
+						<!-- With COPY Trick -->
+						<div class="p-3.5 rounded-lg bg-emerald-950/40 border border-emerald-700/60">
+							<div class="flex items-center justify-between text-emerald-300 mb-1 font-bold">
+								<span>
+									<span class="lang-zh">WorldTUI COPY 技巧</span>
+									<span class="lang-en">WorldTUI COPY Trick</span>
+								</span>
+								<span id="cost-copy-trick" class="text-sm text-emerald-400 font-black">77 tokens</span>
+							</div>
+							<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden mb-2">
+								<div id="bar-copy-trick" class="bg-emerald-400 h-full rounded-full transition-all duration-300" style="width: 3.5%;"></div>
+							</div>
+							<div class="flex items-center justify-between text-[11px]">
+								<span class="text-emerald-300 font-bold" id="cost-savings-pct">97.3% 算力与 Token 节省</span>
+								<span class="text-slate-400">ROW_n COPY m</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 3: 333 TOKENS AND SIZE LADDER -->
+			<section class="relative z-10 mb-14">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-amber-400 font-mono text-xl font-bold">03/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight font-mono">
+						<span class="lang-zh">333 词表与极限瘦身阶梯</span>
+						<span class="lang-en">333 TOKENS & THE SHRINKING LADDER</span>
+					</h2>
+				</div>
+
+				<p class="text-sm sm:text-base text-emerald-100/90 max-w-4xl leading-relaxed mb-6">
+					<span class="lang-zh">
+						基座模型 Qwen2.5-Coder-0.5B 包含 4.94 亿参数，仅其庞大的 151,936 个自然语言词表嵌入层（Embedding Table）就占了 1.36 亿参数。对于纯字符网格终端而言，这几乎全都是浪费。WorldTUI 将词表极限精简至恰好 <strong>333 个 tokens</strong>，直接砍掉了 1.34 亿嵌入权重，再辅以 int4 量化，成功将模型塞进浏览器的 208 MB 内存中。
+					</span>
+					<span class="lang-en">
+						The base Qwen2.5-Coder-0.5B model has ~494M parameters, of which the embedding table for its 151,936-token vocabulary occupies 136M parameters. WorldTUI pruned this to strictly <strong>333 tokens</strong>, immediately ditching 134M weights. Combined with int4 quantization, the final browser package lands at just 208 MB.
+					</span>
+				</p>
+
+				<!-- Interactive 333 Vocabulary Breakdown Bar -->
+				<div class="p-5 rounded-xl bg-[#050c08] border border-emerald-800/60 mb-6">
+					<div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-emerald-400 mb-3">
+						<span class="font-bold">
+							<span class="lang-zh">333 词表构成分布 (点击分段查看详情)</span>
+							<span class="lang-en">333 Token Vocabulary Breakdown (Click segments to inspect)</span>
+						</span>
+						<span class="text-slate-400">Total: 333 tokens vs 151,936 base</span>
+					</div>
+
+					<!-- Segmented Bar -->
+					<div class="flex h-10 w-full rounded-lg overflow-hidden border border-emerald-700/60 font-mono text-xs font-bold cursor-pointer select-none">
+						<button
+							type="button"
+							id="vocab-seg-bytes"
+							class="vocab-btn h-full bg-emerald-600/40 hover:bg-emerald-500/50 text-emerald-200 border-r border-emerald-900 transition flex items-center justify-center px-2"
+							style="width: 76.88%;"
+							title="256 Byte Tokens (0x00 - 0xFF)"
+						>
+							<span class="truncate">256 Byte Tokens (76.9%)</span>
+						</button>
+						<button
+							type="button"
+							id="vocab-seg-rows"
+							class="vocab-btn h-full bg-cyan-600/40 hover:bg-cyan-500/50 text-cyan-200 border-r border-cyan-900 transition flex items-center justify-center px-2"
+							style="width: 19.22%;"
+							title="64 Row Tokens (ROW_0 - ROW_63)"
+						>
+							<span class="truncate">64 Rows (19.2%)</span>
+						</button>
+						<button
+							type="button"
+							id="vocab-seg-ctrl"
+							class="vocab-btn h-full bg-amber-600/40 hover:bg-amber-500/50 text-amber-200 transition flex items-center justify-center px-2"
+							style="width: 3.90%;"
+							title="13 Control Tokens"
+						>
+							<span class="truncate">13 Ops</span>
+						</button>
+					</div>
+
+					<!-- Dynamic Inspector Box -->
+					<div id="vocab-inspector" class="mt-4 p-4 rounded-lg bg-black/60 border border-emerald-900/60 font-mono text-xs leading-relaxed text-emerald-200">
+						<div class="font-bold text-emerald-400 mb-1 flex items-center justify-between">
+							<span id="vocab-insp-title">256 单字节 Token (Byte Tokens)</span>
+							<span id="vocab-insp-range" class="text-slate-400">ID: 0 - 255 (0x00 ~ 0xFF)</span>
+						</div>
+						<p id="vocab-insp-desc" class="text-slate-300">
+							覆盖全部标准单字节 ASCII 与 UTF-8 原始字节流。普通字母为自身（如 'a' 为 0x61），Enter 键为 0x0D (\r)，Escape 为 0x1B，方向键为 ESC [ D 等标准 VT100 序列。
+						</p>
+					</div>
+				</div>
+
+				<!-- The Shrinking Ladder (3 Cards) -->
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono">
+					<!-- Step 1 -->
+					<div class="p-4 rounded-xl bg-[#060e0a] border border-slate-700/60 relative overflow-hidden">
+						<div class="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">STEP 1 · BASELINE</div>
+						<div class="text-lg font-black text-white">Qwen2.5-Coder-0.5B</div>
+						<div class="mt-3 space-y-1.5 text-xs text-slate-300">
+							<div class="flex justify-between">
+								<span class="text-slate-400">Parameters:</span>
+								<span class="text-slate-200 font-bold">~494M</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Vocabulary:</span>
+								<span class="text-slate-200 font-bold">151,936 tokens</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Embedding Weights:</span>
+								<span class="text-rose-400 font-bold">136M params</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Model File Size:</span>
+								<span class="text-white font-bold">990 MB (fp16)</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Step 2 -->
+					<div class="p-4 rounded-xl bg-[#06120b] border border-emerald-700/60 relative overflow-hidden">
+						<div class="text-xs text-emerald-400 font-bold uppercase tracking-wider mb-1">STEP 2 · VOCAB CUT</div>
+						<div class="text-lg font-black text-emerald-300">Pruned 333 Vocab</div>
+						<div class="mt-3 space-y-1.5 text-xs text-emerald-200">
+							<div class="flex justify-between">
+								<span class="text-slate-400">Parameters:</span>
+								<span class="text-emerald-300 font-bold">~360M (-27%)</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Vocabulary:</span>
+								<span class="text-emerald-300 font-bold">333 tokens</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Saved Embedding:</span>
+								<span class="text-emerald-400 font-bold">134M params deleted</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Model File Size:</span>
+								<span class="text-white font-bold">716 MB</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Step 3 -->
+					<div class="p-4 rounded-xl bg-[#091b10] border border-cyan-500/60 relative overflow-hidden shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+						<div class="text-xs text-cyan-300 font-bold uppercase tracking-wider mb-1">STEP 3 · IN-BROWSER INT4</div>
+						<div class="text-lg font-black text-cyan-200">WebGPU WGSL Artifact</div>
+						<div class="mt-3 space-y-1.5 text-xs text-cyan-100">
+							<div class="flex justify-between">
+								<span class="text-slate-400">Quantization:</span>
+								<span class="text-cyan-300 font-bold">int4</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Runtime:</span>
+								<span class="text-cyan-300 font-bold">JS Qwen + WebGPU</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Typing Latency:</span>
+								<span class="text-emerald-400 font-bold">~60 ms (M4 Mac)</span>
+							</div>
+							<div class="flex justify-between">
+								<span class="text-slate-400">Final Download Size:</span>
+								<span class="text-amber-300 font-black text-sm">208 MB</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 4: BENCHMARKS, HONESTLY -->
+			<section class="relative z-10 mb-14">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-rose-400 font-mono text-xl font-bold">04/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight font-mono">
+						<span class="lang-zh">基准与诚实的惨痛教训</span>
+						<span class="lang-en">BENCHMARKS, HONESTLY · ShellBench & The Layer 7 Collapse</span>
+					</h2>
+				</div>
+
+				<p class="text-sm sm:text-base text-emerald-100/90 max-w-4xl leading-relaxed mb-6 font-sans">
+					<span class="lang-zh">
+						在作者自行设计的非训练集测试基准中，WorldTUI 展现出了惊人的拟真度。但模型绝非万能：它依然远不是一个可靠的文件系统，一旦进行陌生的多步复合操作就会迅速崩溃。更震撼的是在模型蒸馏（Distillation）实验中发生的“第 7 层隐性死亡”惨剧。
+					</span>
+					<span class="lang-en">
+						In the author's handwritten evaluations (held out from training data), WorldTUI showed impressive exact outputs. Yet it remains far from a reliable shell. The starkest finding came from distillation experiments: removing Layer 7 silently destroyed memory readbacks while next-token accuracy appeared virtually untouched.
+					</span>
+				</p>
+
+				<!-- Side by Side Benchmark Cards -->
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 font-mono text-xs">
+					<!-- ShellBench -->
+					<div class="p-4 rounded-xl bg-[#050c08] border border-emerald-800/60">
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-bold text-emerald-300">
+								<span class="lang-zh">ShellBench 精确输出测试 (106 指令)</span>
+								<span class="lang-en">ShellBench Exact Output (106 Commands)</span>
+							</span>
+							<span class="text-slate-400">24 bash sessions</span>
+						</div>
+
+						<div class="space-y-3 mt-3">
+							<!-- Prompted Qwen2.5-Coder-0.5B -->
+							<div>
+								<div class="flex justify-between text-slate-300 mb-1">
+									<span>Prompted Qwen2.5-Coder-0.5B</span>
+									<span class="font-bold">52 / 106 (49.1%)</span>
+								</div>
+								<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden">
+									<div class="bg-slate-600 h-full rounded-full" style="width: 49.05%;"></div>
+								</div>
+							</div>
+
+							<!-- Prompted Qwen3-0.6B -->
+							<div>
+								<div class="flex justify-between text-slate-300 mb-1">
+									<span>Prompted Qwen3-0.6B</span>
+									<span class="font-bold">60 / 106 (56.6%)</span>
+								</div>
+								<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden">
+									<div class="bg-cyan-600 h-full rounded-full" style="width: 56.60%;"></div>
+								</div>
+							</div>
+
+							<!-- WorldTUI 360M -->
+							<div>
+								<div class="flex justify-between text-emerald-300 mb-1 font-bold">
+									<span>WorldTUI (360M fine-tuned)</span>
+									<span class="text-emerald-400">80 / 106 (75.5%)</span>
+								</div>
+								<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden">
+									<div class="bg-emerald-400 h-full rounded-full" style="width: 75.47%;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Memory Test -->
+					<div class="p-4 rounded-xl bg-[#050c08] border border-emerald-800/60">
+						<div class="flex items-center justify-between mb-2">
+							<span class="font-bold text-emerald-300">
+								<span class="lang-zh">跨文件记忆回读测试 (32 个世界)</span>
+								<span class="lang-en">Memory Readback Test (32 Worlds)</span>
+							</span>
+							<span class="text-slate-400">Write 2, read back later</span>
+						</div>
+
+						<div class="space-y-3 mt-3">
+							<!-- Prompted Models -->
+							<div>
+								<div class="flex justify-between text-slate-300 mb-1">
+									<span>Prompted Coder-0.5B / Qwen3-0.6B</span>
+									<span class="font-bold text-rose-400">2 & 3 / 13 (15% ~ 23%)</span>
+								</div>
+								<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden">
+									<div class="bg-rose-500/80 h-full rounded-full" style="width: 23%;"></div>
+								</div>
+							</div>
+
+							<!-- WorldTUI 360M -->
+							<div>
+								<div class="flex justify-between text-emerald-300 mb-1 font-bold">
+									<span>WorldTUI (360M)</span>
+									<span class="text-amber-300">9 / 13 (69.2%)</span>
+								</div>
+								<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden">
+									<div class="bg-amber-400 h-full rounded-full" style="width: 69.2%;"></div>
+								</div>
+							</div>
+
+							<!-- Teacher Model -->
+							<div>
+								<div class="flex justify-between text-cyan-300 mb-1 font-bold">
+									<span>Full Teacher (64-Readback Bench)</span>
+									<span class="text-cyan-400">64 / 64 (100.0%)</span>
+								</div>
+								<div class="w-full bg-slate-900 h-2.5 rounded-full overflow-hidden">
+									<div class="bg-cyan-400 h-full rounded-full" style="width: 100%;"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- THE LAYER-7 DISTILLATION THREE-STEP STRIP -->
+				<div class="p-5 rounded-xl bg-[#0d0909] border border-rose-800/60 font-mono">
+					<div class="flex items-center gap-2 mb-3">
+						<span class="text-rose-400 font-bold">🧪 蒸馏沉痛启示 · THE LAYER-7 SILENT COLLAPSE</span>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+						<!-- Strip 1 -->
+						<div class="p-3.5 rounded-lg bg-black/60 border border-slate-700">
+							<div class="text-rose-400 font-bold mb-1">STEP 1: 剥离第 7 层 (Drop Layer 7)</div>
+							<p class="text-slate-300 leading-relaxed font-sans mb-2">
+								<span class="lang-zh">
+									在不重训的情况下直接砍去第 7 层。下一个 Token 预测准确率从 <strong>99.3% 仅微降至 98.9%</strong>，指标看起来几乎完好如初。
+								</span>
+								<span class="lang-en">
+									Removing Layer 7 without retraining barely dented next-token accuracy: 99.3% to 98.9%. Surface metrics looked healthy.
+								</span>
+							</p>
+							<div class="text-rose-300 font-bold">
+								<span class="lang-zh">后果：64 次记忆回读直接归零 (0 / 64)！</span>
+								<span class="lang-en">Outcome: Exact memory collapsed from 64/64 to 0/64!</span>
+							</div>
+						</div>
+
+						<!-- Strip 2 -->
+						<div class="p-3.5 rounded-lg bg-black/60 border border-slate-700">
+							<div class="text-amber-400 font-bold mb-1">STEP 2: 16 层保留学生模型</div>
+							<p class="text-slate-300 leading-relaxed font-sans mb-2">
+								<span class="lang-zh">
+									构建 16 层学生模型并强制保留第 1、7、15、22 层。此时模型成功恢复了 <strong>64/64 记忆回读</strong>。
+								</span>
+								<span class="lang-en">
+									A 16-layer student retaining layers 1, 7, 15, and 22 recovered 64/64 exact memory readbacks.
+								</span>
+							</p>
+							<div class="text-amber-300 font-bold">
+								<span class="lang-zh">代价：ShellBench 从 78 分滑落至 65 分。</span>
+								<span class="lang-en">Cost: ShellBench fell from 78 to 65.</span>
+							</div>
+						</div>
+
+						<!-- Strip 3 -->
+						<div class="p-3.5 rounded-lg bg-black/60 border border-rose-900/60">
+							<div class="text-rose-300 font-bold mb-1">STEP 3: 放弃蒸馏路线</div>
+							<p class="text-slate-300 leading-relaxed font-sans mb-2">
+								<span class="lang-zh">
+									在多次权衡容量与记忆深度后，作者最终决定放弃蒸馏，转而使用 int4 量化保留完整的 24 层结构。
+								</span>
+								<span class="lang-en">
+									The author abandoned distillation, opting instead for int4 quantization on the full 24-layer model.
+								</span>
+							</p>
+							<div class="text-slate-400 italic">
+								<span class="lang-zh">“A student can look fine and have quietly lost its memory.”</span>
+								<span class="lang-en">"A student can look fine and have quietly lost its memory."</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-4 pt-3 border-t border-rose-950 text-xs text-rose-300/80 font-sans leading-relaxed">
+						<span class="lang-zh">
+							💡 <strong>启示录</strong>：评估自回归世界模型绝不能仅看困惑度（Perplexity）或 Next-Token 精度。模型可以在 99% 的场景下流畅对齐语法，却在暗中丧失了跨指令保存变量与文件状态的能力。
+						</span>
+						<span class="lang-en">
+							💡 <strong>Takeaway</strong>: Evaluating autoregressive world models purely on perplexity or next-token accuracy is treacherous. A model can stay fluent across 99% of formatting tokens while silently losing all state persistence.
+						</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 5: WHY IT MATTERS -->
+			<section class="relative z-10 mb-14">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-purple-400 font-mono text-xl font-bold">05/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight font-mono">
+						<span class="lang-zh">为什么这至关重要 · WHY IT MATTERS</span>
+						<span class="lang-en">WHY IT MATTERS · The Smallest Viable World</span>
+					</h2>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm font-sans text-emerald-100/90 leading-relaxed">
+					<div class="p-4 rounded-xl bg-[#060c08] border border-emerald-900/60">
+						<h3 class="font-bold text-white text-base font-mono mb-2 flex items-center gap-1.5">
+							<span>🎮</span>
+							<span class="lang-zh">Genie 3 哲学在微型世界的投射</span>
+							<span class="lang-en">Genie 3's Dream in the Smallest World</span>
+						</h3>
+						<p>
+							<span class="lang-zh">
+								谷歌的 Genie 3 揭示了一种全新的软件范式：应用程序不再由工程师逐行编写业务逻辑，而是由多模态神经网络根据玩家输入预测下一帧画面。WorldTUI 则将这一庞大愿景压缩到了极简的“字符网格世界”中：终端不需要内核与文件驱动，一切行为皆因因果演化而涌现。
+							</span>
+							<span class="lang-en">
+								Google's Genie 3 demonstrated software where game engines are replaced by neural predictions of the next video frame. WorldTUI scales this down to the minimal character grid: no kernel, no disk driver — behavior emerges purely from learned screen dynamics.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-4 rounded-xl bg-[#060c08] border border-emerald-900/60">
+						<h3 class="font-bold text-white text-base font-mono mb-2 flex items-center gap-1.5">
+							<span>📦</span>
+							<span class="lang-zh">Docker 赋予的完美无尽标注</span>
+							<span class="lang-en">Docker's Infinite Free Supervision</span>
+						</h3>
+						<p>
+							<span class="lang-zh">
+								为什么终端是世界模型的最佳起点？因为真实程序在 Docker 容器内的运行可以产生近乎无限、毫无噪声且百分之百准确因果的屏幕录像。33.6 万条会话、随机化提示符、注入的打字手误，加上预训练代码大模型本身就具备的 bash 知识，使其在仅 75 GPU 小时内便完成了拟真。
+							</span>
+							<span class="lang-en">
+								Why is the terminal the ideal first world? Because running real code in Docker provides limitless, noiseless, perfectly causal ground-truth recordings. 336k episodes, randomized personas, and simulated typos combined with pretrained coding weights yielded an interactive world in just 75 RTX 4090 hours.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-4 rounded-xl bg-[#060c08] border border-emerald-900/60">
+						<h3 class="font-bold text-white text-base font-mono mb-2 flex items-center gap-1.5">
+							<span>⚡</span>
+							<span class="lang-zh">差分预测：把终端当显存而非打字机</span>
+							<span class="lang-en">Predicting Diffs: Framebuffer Over Typewriter</span>
+						</h3>
+						<p>
+							<span class="lang-zh">
+								绝大多数试图让 LLM 充当终端的项目都失败在“文本追加”的思维陷阱里。终端从不是打字机，而是二维显存。通过屏幕快照对齐、行标记（ROW_n）、COPY 指令与语法受限解码，WorldTUI 彻底解决了光标跳转、清屏与滚动计算开销爆炸的技术死穴。
+							</span>
+							<span class="lang-en">
+								Previous attempts to make LLMs mimic terminals stumbled into the typewriter trap. A terminal is a 2D framebuffer. Using screen snapshots, ROW tokens, the COPY operator, and grammar-constrained decoding solves cursor leaps, clears, and scroll latency in one stroke.
+							</span>
+						</p>
+					</div>
+
+					<div class="p-4 rounded-xl bg-[#060c08] border border-emerald-900/60">
+						<h3 class="font-bold text-white text-base font-mono mb-2 flex items-center gap-1.5">
+							<span>🧩</span>
+							<span class="lang-zh">投机并行验证：突破自回归延迟高墙</span>
+							<span class="lang-en">Parallel Rows & Speculative Verification</span>
+						</h3>
+						<p>
+							<span class="lang-zh">
+								终端的大多数行相互独立。WorldTUI 在 batch 内并行生成各行预测，再由串行验证器对齐冲突，使大画面重绘延迟暴降近 90%。在配备 M4 芯片的 Mac 浏览器中，单键击键延迟仅为 60 毫秒，实现了真正可玩的本地交互体验。
+							</span>
+							<span class="lang-en">
+								Most terminal rows are independent. WorldTUI drafts rows in parallel within a single batch, checked by a sequential verifier. Large-frame p95 latency fell from 6.7s to 0.87s on an RTX 4090, achieving ~60ms keystroke response on an M4 Mac WebGPU tab.
+							</span>
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<!-- SECTION 6: REALITY CHECK -->
+			<section class="relative z-10 mb-8">
+				<div class="flex items-center gap-2 mb-3">
+					<span class="text-amber-400 font-mono text-xl font-bold">06/</span>
+					<h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight font-mono">
+						<span class="lang-zh">现实审视 · REALITY CHECK</span>
+						<span class="lang-en">REALITY CHECK · Honest Boundaries</span>
+					</h2>
+				</div>
+
+				<div class="p-4 rounded-xl bg-[#08120c] border border-amber-500/40 text-xs sm:text-sm font-mono text-amber-200/90 leading-relaxed space-y-2">
+					<p>
+						<span class="lang-zh">
+							• <strong>本页面的终端是玩具，不是模型</strong>：它无法产生真实 WorldTUI 那种源自数十亿 token 权重的未定义涌现乐趣；其“漂移现象”是手写的教学脚本，旨在帮助读者形象理解世界模型的局限。
+						</span>
+						<span class="lang-en">
+							• <strong>The terminal on this page is a toy, not a model</strong>: It cannot surprise you with organic emergent hallucinations; its drifts are scripted to educate readers on world-model limitations.
+						</span>
+					</p>
+					<p>
+						<span class="lang-zh">
+							• <strong>WorldTUI 本身绝不可信任</strong>：它不是一个可靠的文件系统。多次追加写入极易丢失，非常规命令组合容易失控，严禁用于任何严肃生产场景。
+						</span>
+						<span class="lang-en">
+							• <strong>WorldTUI itself is not a dependable shell</strong>: It drops appended lines, stumbles on novel pipelines, and must never be trusted with real files.
+						</span>
+					</p>
+					<p>
+						<span class="lang-zh">
+							• <strong>基准数据为作者自测</strong>：所有 ShellBench 与记忆回读测试均为原作者 simedw 独立评估发布，非第三方独立机构背书。
+						</span>
+						<span class="lang-en">
+							• <strong>Benchmarks are author-reported</strong>: All scores (ShellBench, memory readbacks) originate from simedw's self-published evaluation.
+						</span>
+					</p>
+				</div>
+			</section>
+
+			<!-- FOOTER AI DISCLOSURE -->
+			<footer class="relative z-10 pt-6 border-t border-emerald-900/60">
+				<blockquote class="text-xs text-emerald-400/60 italic font-serif">
+					<span class="lang-zh">> *本文由 AI 生成。*</span>
+					<span class="lang-en">> *This article was generated by AI.*</span>
+				</blockquote>
+			</footer>
+		</div>
+	</div>
+
+	<!-- CLIENT-SIDE SCRIPT FOR INTERACTIVE TERMINAL & VISUALIZERS -->
+	<script is:inline>
+		(function () {
+			let lifecycle = new AbortController();
+			let snakeIntervalId = null;
+
+			function initPhantomTerminal() {
+				// Clean up previous runs if navigating with Swup
+				lifecycle.abort();
+				lifecycle = new AbortController();
+				if (snakeIntervalId) {
+					clearInterval(snakeIntervalId);
+					snakeIntervalId = null;
+				}
+
+				const signal = lifecycle.signal;
+
+				// ----------------------------------------------------
+				// 1. PLAYABLE TOY TERMINAL STATE MACHINE
+				// ----------------------------------------------------
+				let isWorldModelMode = false;
+				let currentDir = "~";
+				let cmdHistory = [];
+				let historyIdx = -1;
+				let driftCounter = 0;
+
+				// Virtual Filesystem
+				let fs = {
+					"~": {
+						"notes.txt": "WorldTUI is trained on 336k terminal episodes from real Docker sessions.\nVocabulary: 333 tokens (256 bytes + 64 rows + 13 ops).\nMemory test: layer 7 removal collapsed exact recall 64/64 -> 0/64.",
+						"colors.txt": "red\nblue",
+						"projects": {
+							"snake.sh": "#!/bin/bash\necho 'Running snake on character grid...'",
+							"readme.md": "# Mini Projects\nExplore terminal world models."
+						}
+					}
+				};
+
+				// DOM references
+				const termOutput = document.getElementById("term-output-history");
+				const termInput = document.getElementById("term-input");
+				const termPrompt = document.getElementById("term-prompt-label");
+				const termScreen = document.getElementById("terminal-screen");
+				const modeRealBtn = document.getElementById("mode-real-btn");
+				const modeModelBtn = document.getElementById("mode-model-btn");
+				const modeDescText = document.getElementById("mode-desc-text");
+				const termStatusBadge = document.getElementById("term-status-badge");
+				const termResetBtn = document.getElementById("term-reset-btn");
+
+				// Snake DOM references
+				const snakeContainer = document.getElementById("term-snake-container");
+				const snakeGridPre = document.getElementById("snake-ascii-grid");
+				const snakeScoreDisplay = document.getElementById("snake-score-display");
+				const snakeQuitBtn = document.getElementById("snake-quit-btn");
+				const snakeMobileControls = document.getElementById("snake-mobile-controls");
+				const termInputRow = document.getElementById("term-input-row");
+
+				function printLine(htmlText, className = "") {
+					if (!termOutput) return;
+					const div = document.createElement("div");
+					if (className) div.className = className;
+					div.innerHTML = htmlText;
+					termOutput.appendChild(div);
+					if (termScreen) termScreen.scrollTop = termScreen.scrollHeight;
+				}
+
+				function printDriftBadge(zhMsg, enMsg) {
+					printLine(`
+						<div class="my-1.5 px-3 py-1.5 rounded bg-amber-500/15 border border-amber-500/50 text-amber-300 text-xs font-mono">
+							<span class="font-bold text-amber-400">⚡ [DRIFT / 漂移]</span>
+							<span class="lang-zh">${zhMsg}</span>
+							<span class="lang-en">${enMsg}</span>
+						</div>
+					`);
+				}
+
+				function updatePrompt() {
+					if (termPrompt) {
+						termPrompt.textContent = `guest@world-tui:${currentDir}$`;
+					}
+				}
+
+				function getDirRef(path) {
+					if (path === "~") return fs["~"];
+					if (path === "~/projects") return fs["~"]["projects"];
+					return null;
+				}
+
+				function resetTerminal() {
+					if (termOutput) termOutput.innerHTML = "";
+					currentDir = "~";
+					updatePrompt();
+					driftCounter = 0;
+					fs = {
+						"~": {
+							"notes.txt": "WorldTUI is trained on 336k terminal episodes from real Docker sessions.\nVocabulary: 333 tokens (256 bytes + 64 rows + 13 ops).\nMemory test: layer 7 removal collapsed exact recall 64/64 -> 0/64.",
+							"colors.txt": "red\nblue",
+							"projects": {
+								"snake.sh": "#!/bin/bash\necho 'Running snake on character grid...'",
+								"readme.md": "# Mini Projects\nExplore terminal world models."
+							}
+						}
+					};
+
+					printLine(`<div class="text-slate-400">Linux worldtui-vm 6.10.0-tui #1 SMP PREEMPT_DYNAMIC x86_64</div>`);
+					printLine(`<div class="text-emerald-400 font-bold">Welcome to Phantom Terminal (Toy Deterministic State Machine)</div>`);
+					printLine(`<div class="text-xs text-slate-400 mb-2">Type <span class="text-amber-300 font-bold">help</span> to list commands, or try <span class="text-cyan-300 font-bold">snake</span>, <span class="text-cyan-300 font-bold">ls -la</span>, <span class="text-amber-300 font-bold">pythoon</span>.</div>`);
+					printLine(`<div class="font-bold text-white"><span class="text-emerald-400">guest@world-tui:~$</span> ls -la</div>`);
+					printLine(`<div><span class="text-cyan-400 font-bold">projects/</span>  <span class="text-emerald-300">colors.txt</span>  <span class="text-emerald-300">notes.txt</span></div>`);
+					printLine(`<div class="font-bold text-white"><span class="text-emerald-400">guest@world-tui:~$</span> cat notes.txt</div>`);
+					printLine(`<div class="whitespace-pre text-emerald-300">WorldTUI: 360M model predicts terminal screen diffs. No real shell.\nVocabulary: 333 tokens | Docker sessions: 336k episodes | Memory: layer 7.</div>`);
+				}
+
+				// Switch Modes
+				function setMode(isModel) {
+					isWorldModelMode = isModel;
+					if (modeRealBtn && modeModelBtn && modeDescText && termStatusBadge) {
+						if (!isModel) {
+							modeRealBtn.className = "px-3 py-1.5 rounded-lg border border-emerald-500/60 bg-emerald-500/20 text-emerald-200 font-bold hover:bg-emerald-500/30 transition cursor-pointer active:scale-95 shadow-[0_0_10px_rgba(16,185,129,0.2)]";
+							modeModelBtn.className = "px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900/80 text-slate-300 font-bold hover:border-amber-500/60 hover:text-amber-300 transition cursor-pointer active:scale-95";
+							modeDescText.innerHTML = `
+								<span class="lang-zh"><strong>当前模式：真实 Shell</strong> —— 文件修改精确写入，追加行绝不丢失，路径严谨记忆。</span>
+								<span class="lang-en"><strong>Current: Real Shell Mode</strong> — Files persist faithfully, appends never vanish, paths accurately remembered.</span>
+							`;
+							termStatusBadge.textContent = "SHELL: REAL (EXACT)";
+							termStatusBadge.className = "px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800/60 text-emerald-400";
+						} else {
+							modeRealBtn.className = "px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900/80 text-slate-300 font-bold hover:border-emerald-500/60 hover:text-emerald-300 transition cursor-pointer active:scale-95";
+							modeModelBtn.className = "px-3 py-1.5 rounded-lg border border-amber-500/60 bg-amber-500/20 text-amber-200 font-bold hover:bg-amber-500/30 transition cursor-pointer active:scale-95 shadow-[0_0_10px_rgba(245,158,11,0.2)]";
+							modeDescText.innerHTML = `
+								<span class="lang-zh"><strong>当前模式：世界模型模式</strong> —— 模拟 WorldTUI 的典型局限：追加行丢失、幻觉补全文件、错别字伪装 REPL。</span>
+								<span class="lang-en"><strong>Current: World-Model Mode</strong> — Simulates WorldTUI's limits: vanishing appends, hallucinated files, typo tolerance.</span>
+							`;
+							termStatusBadge.textContent = "SHELL: MODEL (DRIFT ON)";
+							termStatusBadge.className = "px-2 py-0.5 rounded bg-amber-950 border border-amber-800/60 text-amber-400";
+						}
+					}
+				}
+
+				if (modeRealBtn) modeRealBtn.addEventListener("click", () => setMode(false), { signal });
+				if (modeModelBtn) modeModelBtn.addEventListener("click", () => setMode(true), { signal });
+				if (termResetBtn) termResetBtn.addEventListener("click", () => resetTerminal(), { signal });
+
+				// ----------------------------------------------------
+				// SNAKE GAME IN CHARACTER GRID
+				// ----------------------------------------------------
+				let snakeActive = false;
+				let snakeWidth = 28;
+				let snakeHeight = 10;
+				let snakeBody = [];
+				let snakeDir = { x: 1, y: 0 };
+				let nextSnakeDir = { x: 1, y: 0 };
+				let snakeFood = { x: 10, y: 5 };
+				let snakeScore = 0;
+
+				function startSnake() {
+					snakeActive = true;
+					snakeBody = [
+						{ x: 5, y: 5 },
+						{ x: 4, y: 5 },
+						{ x: 3, y: 5 }
+					];
+					snakeDir = { x: 1, y: 0 };
+					nextSnakeDir = { x: 1, y: 0 };
+					snakeScore = 0;
+					spawnFood();
+
+					if (snakeContainer) snakeContainer.classList.remove("hidden");
+					if (snakeMobileControls) snakeMobileControls.classList.remove("hidden");
+					if (termInputRow) termInputRow.classList.add("hidden");
+
+					renderSnakeGrid();
+
+					if (snakeIntervalId) clearInterval(snakeIntervalId);
+					snakeIntervalId = setInterval(snakeTick, 140);
+				}
+
+				function spawnFood() {
+					let valid = false;
+					while (!valid) {
+						snakeFood.x = Math.floor(Math.random() * (snakeWidth - 2)) + 1;
+						snakeFood.y = Math.floor(Math.random() * (snakeHeight - 2)) + 1;
+						valid = !snakeBody.some(seg => seg.x === snakeFood.x && seg.y === snakeFood.y);
+					}
+				}
+
+				function snakeTick() {
+					if (!snakeActive) return;
+
+					snakeDir = nextSnakeDir;
+					const head = { x: snakeBody[0].x + snakeDir.x, y: snakeBody[0].y + snakeDir.y };
+
+					// Wall collision
+					if (head.x <= 0 || head.x >= snakeWidth - 1 || head.y <= 0 || head.y >= snakeHeight - 1) {
+						endSnake("Hit wall! (撞墙死亡)");
+						return;
+					}
+
+					// Self collision
+					if (snakeBody.some(seg => seg.x === head.x && seg.y === head.y)) {
+						endSnake("Ate self! (咬到自身)");
+						return;
+					}
+
+					snakeBody.unshift(head);
+
+					// Food eaten?
+					if (head.x === snakeFood.x && head.y === snakeFood.y) {
+						snakeScore += 10;
+						if (snakeScoreDisplay) snakeScoreDisplay.textContent = `SCORE: ${snakeScore}`;
+						spawnFood();
+					} else {
+						snakeBody.pop();
+					}
+
+					renderSnakeGrid();
+				}
+
+				function renderSnakeGrid() {
+					if (!snakeGridPre) return;
+					let lines = [];
+					for (let y = 0; y < snakeHeight; y++) {
+						let rowChars = [];
+						for (let x = 0; x < snakeWidth; x++) {
+							if (y === 0 || y === snakeHeight - 1) {
+								rowChars.push(x === 0 || x === snakeWidth - 1 ? "+" : "-");
+							} else if (x === 0 || x === snakeWidth - 1) {
+								rowChars.push("|");
+							} else if (x === snakeBody[0].x && y === snakeBody[0].y) {
+								rowChars.push("@"); // Head
+							} else if (snakeBody.some(seg => seg.x === x && seg.y === y)) {
+								rowChars.push("o"); // Body
+							} else if (x === snakeFood.x && y === snakeFood.y) {
+								rowChars.push("*"); // Food
+							} else {
+								rowChars.push(" ");
+							}
+						}
+						lines.push(rowChars.join(""));
+					}
+					snakeGridPre.textContent = lines.join("\n");
+				}
+
+				function endSnake(reason = "") {
+					snakeActive = false;
+					if (snakeIntervalId) {
+						clearInterval(snakeIntervalId);
+						snakeIntervalId = null;
+					}
+					if (snakeContainer) snakeContainer.classList.add("hidden");
+					if (snakeMobileControls) snakeMobileControls.classList.add("hidden");
+					if (termInputRow) termInputRow.classList.remove("hidden");
+					if (termInput) termInput.focus();
+
+					printLine(`
+						<div class="text-amber-400 font-bold my-1">
+							[Snake Session Terminated] Score: ${snakeScore} ${reason ? `(${reason})` : ""}
+						</div>
+					`);
+					if (termScreen) termScreen.scrollTop = termScreen.scrollHeight;
+				}
+
+				if (snakeQuitBtn) snakeQuitBtn.addEventListener("click", () => endSnake("Quit by user"), { signal });
+
+				// Mobile snake controls
+				document.querySelectorAll(".snake-ctrl-btn").forEach(btn => {
+					btn.addEventListener("click", () => {
+						const dir = btn.getAttribute("data-dir");
+						if (dir === "up" && snakeDir.y === 0) nextSnakeDir = { x: 0, y: -1 };
+						if (dir === "down" && snakeDir.y === 0) nextSnakeDir = { x: 0, y: 1 };
+						if (dir === "left" && snakeDir.x === 0) nextSnakeDir = { x: -1, y: 0 };
+						if (dir === "right" && snakeDir.x === 0) nextSnakeDir = { x: 1, y: 0 };
+					}, { signal });
+				});
+
+				// Keyboard listener for snake & input focus
+				window.addEventListener("keydown", (e) => {
+					if (snakeActive) {
+						if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") {
+							e.preventDefault();
+							if (snakeDir.y === 0) nextSnakeDir = { x: 0, y: -1 };
+						} else if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") {
+							e.preventDefault();
+							if (snakeDir.y === 0) nextSnakeDir = { x: 0, y: 1 };
+						} else if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") {
+							e.preventDefault();
+							if (snakeDir.x === 0) nextSnakeDir = { x: -1, y: 0 };
+						} else if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") {
+							e.preventDefault();
+							if (snakeDir.x === 0) nextSnakeDir = { x: 1, y: 0 };
+						} else if (e.key === "q" || e.key === "Q") {
+							e.preventDefault();
+							endSnake("Quit by key (Q)");
+						}
+					}
+				}, { signal });
+
+				// ----------------------------------------------------
+				// COMMAND EXECUTION LOGIC
+				// ----------------------------------------------------
+				function handleCommand(rawCmd) {
+					const trimmed = rawCmd.trim();
+					printLine(`<div class="font-bold text-white"><span class="text-emerald-400">guest@world-tui:${currentDir}$</span> ${escapeHtml(trimmed)}</div>`);
+					if (!trimmed) return;
+
+					cmdHistory.push(trimmed);
+					historyIdx = cmdHistory.length;
+					driftCounter++;
+
+					const tokens = trimmed.split(/\s+/);
+					const cmd = tokens[0].toLowerCase();
+
+					// Special check for pythoon typo!
+					if (cmd === "pythoon" || cmd === "pythonn") {
+						if (!isWorldModelMode) {
+							printLine(`<div class="text-rose-400">bash: ${escapeHtml(cmd)}: command not found</div>`);
+						} else {
+							printLine(`
+								<div class="text-cyan-300 font-mono">
+									Python 3.12.2 (main, Mar 10 2026, 14:02:11) [GCC 13.2.0] on linux<br/>
+									Type "help", "copyright", "credits" or "license" for more information.<br/>
+									&gt;&gt;&gt; 
+								</div>
+							`);
+							printDriftBadge(
+								`拟真容错幻觉：真实 Shell 会报错 "command not found"；WorldTUI 识别出类似 python 的拼写，直接预测了 Python REPL 交互环境首屏！`,
+								`Plausible Typo Hallucination: A real shell aborts with "command not found"; WorldTUI recognizes python-like tokens and hallucinated the interactive REPL banner!`
+							);
+						}
+						return;
+					}
+
+					switch (cmd) {
+						case "help":
+							printLine(`
+								<div class="text-slate-300 space-y-1 text-xs">
+									<div class="text-amber-400 font-bold">Available Commands (Toy Shell):</div>
+									<div><span class="text-emerald-300 font-bold">ls [-la]</span> : List directory contents</div>
+									<div><span class="text-emerald-300 font-bold">pwd</span> : Print working directory</div>
+									<div><span class="text-emerald-300 font-bold">cd &lt;dir&gt;</span> : Change directory (cd .., cd projects, cd ~)</div>
+									<div><span class="text-emerald-300 font-bold">mkdir &lt;dir&gt;</span> : Create a new directory</div>
+									<div><span class="text-emerald-300 font-bold">echo &lt;text&gt; &gt; &lt;file&gt;</span> : Overwrite text into file</div>
+									<div><span class="text-emerald-300 font-bold">echo &lt;text&gt; &gt;&gt; &lt;file&gt;</span> : Append text into file</div>
+									<div><span class="text-emerald-300 font-bold">cat &lt;file&gt;</span> : Print file content</div>
+									<div><span class="text-emerald-300 font-bold">rm &lt;file&gt;</span> : Remove a file</div>
+									<div><span class="text-emerald-300 font-bold">snake</span> : Launch character-grid snake game!</div>
+									<div><span class="text-emerald-300 font-bold">clear</span> : Clear screen output</div>
+								</div>
+							`);
+							break;
+
+						case "clear":
+							if (termOutput) termOutput.innerHTML = "";
+							break;
+
+						case "pwd":
+							printLine(`<div>${currentDir === "~" ? "/home/guest" : "/home/guest/projects"}</div>`);
+							break;
+
+						case "snake":
+							startSnake();
+							break;
+
+						case "ls": {
+							const dirObj = getDirRef(currentDir);
+							if (!dirObj) {
+								printLine(`<div class="text-rose-400">ls: cannot access directory</div>`);
+								break;
+							}
+
+							let items = Object.keys(dirObj);
+
+							// In World-Model Mode, occasionally hallucinate plausible files!
+							if (isWorldModelMode && (driftCounter >= 3 || Math.random() < 0.5) && !items.includes("todo.md")) {
+								items.push("todo.md");
+								const rendered = items.map(k => typeof dirObj[k] === "object" || k === "projects" ? `<span class="text-cyan-400 font-bold">${k}/</span>` : `<span class="text-emerald-300">${k}</span>`).join("  ");
+								printLine(`<div>${rendered}</div>`);
+								printDriftBadge(
+									`幻觉文件生成：当前目录原本并未创建 "todo.md"；世界模型根据标准 Linux 开发目录的经验自发脑补补全了该文件。`,
+									`Hallucinated File: The directory never had "todo.md"; the world model hallucinated a plausible developer file based on training priors.`
+								);
+								break;
+							}
+
+							const rendered = items.map(k => typeof dirObj[k] === "object" ? `<span class="text-cyan-400 font-bold">${k}/</span>` : `<span class="text-emerald-300">${k}</span>`).join("  ");
+							printLine(`<div>${rendered}</div>`);
+							break;
+						}
+
+						case "cd": {
+							const target = tokens[1] || "~";
+							if (target === "~" || target === "") {
+								currentDir = "~";
+								updatePrompt();
+							} else if (target === "..") {
+								currentDir = "~";
+								updatePrompt();
+							} else if (target === "projects" && currentDir === "~") {
+								currentDir = "~/projects";
+								updatePrompt();
+							} else {
+								printLine(`<div class="text-rose-400">bash: cd: ${escapeHtml(target)}: No such file or directory</div>`);
+							}
+							break;
+						}
+
+						case "mkdir": {
+							const newDir = tokens[1];
+							if (!newDir) {
+								printLine(`<div class="text-rose-400">mkdir: missing operand</div>`);
+								break;
+							}
+							const dirObj = getDirRef(currentDir);
+							if (dirObj) {
+								dirObj[newDir] = {};
+								printLine(`<div class="text-slate-400">Directory '${escapeHtml(newDir)}' created.</div>`);
+							}
+							break;
+						}
+
+						case "echo": {
+							// Check for redirection > or >>
+							const appendMatch = trimmed.match(/^echo\s+(.*?)\s*>>\s*(.+)$/i);
+							const overwriteMatch = trimmed.match(/^echo\s+(.*?)\s*>\s*(.+)$/i);
+
+							if (appendMatch) {
+								let text = appendMatch[1].replace(/^["']|["']$/g, "");
+								let file = appendMatch[2].trim();
+								const dirObj = getDirRef(currentDir);
+								if (dirObj) {
+									if (dirObj[file]) {
+										dirObj[file] += "\n" + text;
+									} else {
+										dirObj[file] = text;
+									}
+									printLine(`<div class="text-slate-400">Appended to ${escapeHtml(file)}.</div>`);
+								}
+							} else if (overwriteMatch) {
+								let text = overwriteMatch[1].replace(/^["']|["']$/g, "");
+								let file = overwriteMatch[2].trim();
+								const dirObj = getDirRef(currentDir);
+								if (dirObj) {
+									dirObj[file] = text;
+									printLine(`<div class="text-slate-400">Written to ${escapeHtml(file)}.</div>`);
+								}
+							} else {
+								const echoText = trimmed.replace(/^echo\s*/i, "").replace(/^["']|["']$/g, "");
+								printLine(`<div>${escapeHtml(echoText)}</div>`);
+							}
+							break;
+						}
+
+						case "cat": {
+							const file = tokens[1];
+							if (!file) {
+								printLine(`<div class="text-rose-400">cat: missing file operand</div>`);
+								break;
+							}
+							const dirObj = getDirRef(currentDir);
+
+							// In World-Model Mode, simulate vanishing append!
+							if (isWorldModelMode && file === "colors.txt") {
+								printLine(`<div class="whitespace-pre text-emerald-300">red\nblue</div>`);
+								if (dirObj && dirObj["colors.txt"] && dirObj["colors.txt"].includes("green")) {
+									printDriftBadge(
+										`模型失忆 (Vanishing Append)：真实 Shell 应该显示追加写入的 "green"；WorldTUI 在多次交互后经常发生追加行丢失。`,
+										`Model Amnesia (Vanishing Append): A real shell displays the appended "green"; WorldTUI frequently drops lines appended via >>.`
+									);
+								}
+								break;
+							}
+
+							if (dirObj && dirObj[file] !== undefined) {
+								if (typeof dirObj[file] === "object") {
+									printLine(`<div class="text-rose-400">cat: ${escapeHtml(file)}: Is a directory</div>`);
+								} else {
+									printLine(`<div class="whitespace-pre text-emerald-300">${escapeHtml(dirObj[file])}</div>`);
+								}
+							} else {
+								printLine(`<div class="text-rose-400">cat: ${escapeHtml(file)}: No such file or directory</div>`);
+							}
+							break;
+						}
+
+						case "rm": {
+							const file = tokens[1];
+							if (!file) {
+								printLine(`<div class="text-rose-400">rm: missing operand</div>`);
+								break;
+							}
+							const dirObj = getDirRef(currentDir);
+							if (dirObj && dirObj[file] !== undefined) {
+								delete dirObj[file];
+								printLine(`<div class="text-slate-400">Removed '${escapeHtml(file)}'.</div>`);
+							} else {
+								printLine(`<div class="text-rose-400">rm: cannot remove '${escapeHtml(file)}': No such file or directory</div>`);
+							}
+							break;
+						}
+
+						default:
+							printLine(`<div class="text-rose-400">bash: ${escapeHtml(cmd)}: command not found</div>`);
+							break;
+					}
+				}
+
+				function escapeHtml(str) {
+					return String(str)
+						.replace(/&/g, "&amp;")
+						.replace(/</g, "&lt;")
+						.replace(/>/g, "&gt;");
+				}
+
+				// Input Keydown (Enter, Up, Down)
+				if (termInput) {
+					termInput.addEventListener("keydown", (e) => {
+						if (e.key === "Enter") {
+							e.preventDefault();
+							const val = termInput.value;
+							termInput.value = "";
+							handleCommand(val);
+						} else if (e.key === "ArrowUp") {
+							e.preventDefault();
+							if (cmdHistory.length > 0 && historyIdx > 0) {
+								historyIdx--;
+								termInput.value = cmdHistory[historyIdx];
+							}
+						} else if (e.key === "ArrowDown") {
+							e.preventDefault();
+							if (historyIdx < cmdHistory.length - 1) {
+								historyIdx++;
+								termInput.value = cmdHistory[historyIdx];
+							} else {
+								historyIdx = cmdHistory.length;
+								termInput.value = "";
+							}
+						}
+					}, { signal });
+				}
+
+				// Terminal screen click focuses input
+				if (termScreen && termInput) {
+					termScreen.addEventListener("click", () => {
+						if (!snakeActive) termInput.focus();
+					}, { signal });
+				}
+
+				// Quick Run Chips
+				document.querySelectorAll(".quick-cmd-btn").forEach(btn => {
+					btn.addEventListener("click", () => {
+						const cmd = btn.getAttribute("data-cmd");
+						if (cmd) {
+							if (termInput) termInput.value = "";
+							handleCommand(cmd);
+							if (termInput) termInput.focus();
+						}
+					}, { signal });
+				});
+
+				// ----------------------------------------------------
+				// 2. SCREEN DIFF VISUALIZER (SECTION 2)
+				// ----------------------------------------------------
+				const diffScenarios = {
+					type: {
+						before: [
+							"guest@world-tui:~$ ls",
+							"notes.txt  colors.txt  projects/",
+							"guest@world-tui:~$ echo ",
+							"                        "
+						],
+						after: [
+							"guest@world-tui:~$ ls",
+							"notes.txt  colors.txt  projects/",
+							"guest@world-tui:~$ echo x",
+							"                        "
+						],
+						beforeCursor: "(2, 24)",
+						afterCursor: "(2, 25)",
+						tokens: "ROW_2 0x67 0x75 0x65 0x73 0x74 0x40 0x77 ... 0x78\nCURSOR 2 25",
+						tokenCount: 8
+					},
+					scroll: {
+						before: [
+							"[row 00] Output log entry alpha",
+							"[row 01] Output log entry beta",
+							"[row 02] Compiling webgpu shaders...",
+							"guest@world-tui:~$            "
+						],
+						after: [
+							"[row 01] Output log entry beta",
+							"[row 02] Compiling webgpu shaders...",
+							"guest@world-tui:~$            ",
+							"guest@world-tui:~$            "
+						],
+						beforeCursor: "(3, 18)",
+						afterCursor: "(3, 18)",
+						tokens: "ROW_0 COPY 1\nROW_1 COPY 2\nROW_2 COPY 3\nROW_3 guest@world-tui:~$\nCURSOR 3 18",
+						tokenCount: 16
+					},
+					clear: {
+						before: [
+							"guest@world-tui:~$ python3 -m http.server",
+							"Serving HTTP on 0.0.0.0 port 8000...",
+							"127.0.0.1 - - [21/Oct/2026] 'GET / HTTP/1.1' 200",
+							"guest@world-tui:~$ clear      "
+						],
+						after: [
+							"guest@world-tui:~$            ",
+							"                              ",
+							"                              ",
+							"                              "
+						],
+						beforeCursor: "(3, 24)",
+						afterCursor: "(0, 18)",
+						tokens: "CLR\nROW_0 guest@world-tui:~$\nCURSOR 0 18",
+						tokenCount: 6
+					}
+				};
+
+				const diffGridBefore = document.getElementById("diff-grid-before");
+				const diffGridAfter = document.getElementById("diff-grid-after");
+				const diffBeforeCursor = document.getElementById("diff-before-cursor");
+				const diffAfterCursor = document.getElementById("diff-after-cursor");
+				const diffTokensOutput = document.getElementById("diff-tokens-output");
+				const diffTokenCountBadge = document.getElementById("diff-token-count-badge");
+
+				function renderDiffScenario(key) {
+					const scn = diffScenarios[key] || diffScenarios.type;
+					if (diffGridBefore) diffGridBefore.textContent = scn.before.join("\n");
+					if (diffGridAfter) diffGridAfter.textContent = scn.after.join("\n");
+					if (diffBeforeCursor) diffBeforeCursor.textContent = `CURSOR: ${scn.beforeCursor}`;
+					if (diffAfterCursor) diffAfterCursor.textContent = `CURSOR: ${scn.afterCursor}`;
+					if (diffTokensOutput) diffTokensOutput.textContent = scn.tokens;
+					if (diffTokenCountBadge) diffTokenCountBadge.textContent = `Tokens: ${scn.tokenCount}`;
+				}
+
+				document.querySelectorAll(".diff-scenario-btn").forEach(btn => {
+					btn.addEventListener("click", () => {
+						document.querySelectorAll(".diff-scenario-btn").forEach(b => {
+							b.classList.remove("active", "bg-cyan-500/20", "border-cyan-500/60", "text-cyan-200");
+							b.classList.add("bg-slate-900", "border-slate-700", "text-slate-300");
+						});
+						btn.classList.add("active", "bg-cyan-500/20", "border-cyan-500/60", "text-cyan-200");
+						btn.classList.remove("bg-slate-900", "border-slate-700", "text-slate-300");
+
+						const scn = btn.getAttribute("data-scenario");
+						renderDiffScenario(scn);
+					}, { signal });
+				});
+
+				// Live Token Height Slider
+				const sliderRows = document.getElementById("slider-rows");
+				const sliderRowsVal = document.getElementById("slider-rows-val");
+				const costFullRedraw = document.getElementById("cost-full-redraw");
+				const costCopyTrick = document.getElementById("cost-copy-trick");
+				const barCopyTrick = document.getElementById("bar-copy-trick");
+				const costSavingsPct = document.getElementById("cost-savings-pct");
+
+				function updateSliderCalculations(rows) {
+					const redrawCost = rows * 120;
+					const copyCost = rows * 3 + 5;
+					const savings = ((1 - (copyCost / redrawCost)) * 100).toFixed(1);
+
+					if (sliderRowsVal) sliderRowsVal.textContent = rows.toString();
+					if (costFullRedraw) costFullRedraw.textContent = `${redrawCost.toLocaleString()} tokens`;
+					if (costCopyTrick) costCopyTrick.textContent = `${copyCost} tokens`;
+					if (costSavingsPct) costSavingsPct.textContent = `${savings}% 算力与 Token 节省`;
+					if (barCopyTrick) {
+						const pct = Math.max(2, (copyCost / redrawCost) * 100);
+						barCopyTrick.style.width = `${pct}%`;
+					}
+				}
+
+				if (sliderRows) {
+					sliderRows.addEventListener("input", (e) => {
+						updateSliderCalculations(parseInt(e.target.value, 10));
+					}, { signal });
+				}
+
+				// ----------------------------------------------------
+				// 3. 333 VOCABULARY INSPECTOR (SECTION 3)
+				// ----------------------------------------------------
+				const vocabData = {
+					bytes: {
+						title: "256 单字节 Token (Byte Tokens)",
+						range: "ID: 0 - 255 (0x00 ~ 0xFF)",
+						desc: "覆盖全部 ASCII 与 UTF-8 原始字节。普通字母为自身（'a' 为 0x61），Enter 键为 0x0D (\\r)，Escape 为 0x1B，方向键为 ESC [ D 等标准 VT100 字节序列。模型不再预测单词，而是预测终端底层字节。"
+					},
+					rows: {
+						title: "64 行索引 Token (Row Tokens)",
+						range: "ID: 256 - 319 (ROW_0 ~ ROW_63)",
+						desc: "代表终端字符网格的目标行号（最大支持 64 行全高屏幕）。配合后续字节或 COPY 指令指定某一行在本次按键中发生的内容覆写。"
+					},
+					ctrl: {
+						title: "13 控制与特殊操作 Token (Special Ops)",
+						range: "ID: 320 - 332 (COPY, CURSOR, WAIT, CLR...)",
+						desc: "包含实现高速渲染的核心指令：COPY（整行克隆）、CURSOR（更新光标行与列）、WAIT（空闲定时器，用于贪吃蛇在无按键时自动向前爬行）、CLR（清屏指令）与边界 EOF 标记。"
+					}
+				};
+
+				const vocabInspTitle = document.getElementById("vocab-insp-title");
+				const vocabInspRange = document.getElementById("vocab-insp-range");
+				const vocabInspDesc = document.getElementById("vocab-insp-desc");
+
+				function setVocabInspector(key) {
+					const item = vocabData[key] || vocabData.bytes;
+					if (vocabInspTitle) vocabInspTitle.textContent = item.title;
+					if (vocabInspRange) vocabInspRange.textContent = item.range;
+					if (vocabInspDesc) vocabInspDesc.textContent = item.desc;
+				}
+
+				const segBytes = document.getElementById("vocab-seg-bytes");
+				const segRows = document.getElementById("vocab-seg-rows");
+				const segCtrl = document.getElementById("vocab-seg-ctrl");
+
+				if (segBytes) segBytes.addEventListener("click", () => setVocabInspector("bytes"), { signal });
+				if (segRows) segRows.addEventListener("click", () => setVocabInspector("rows"), { signal });
+				if (segCtrl) segCtrl.addEventListener("click", () => setVocabInspector("ctrl"), { signal });
+
+				// ----------------------------------------------------
+				// STARTUP BOOTSTRAP
+				// ----------------------------------------------------
+				resetTerminal();
+				renderDiffScenario("type");
+				updateSliderCalculations(24);
+			}
+
+			if (document.readyState === "loading") {
+				document.addEventListener("DOMContentLoaded", initPhantomTerminal);
+			} else {
+				initPhantomTerminal();
+			}
+			document.addEventListener("astro:page-load", initPhantomTerminal);
+		})();
+	</script>
+</MainGridLayout>
