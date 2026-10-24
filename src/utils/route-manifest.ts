@@ -34,6 +34,7 @@ export const ENGLISH_PROJECT_SLUGS: ReadonlySet<string> = new Set<string>([
 	"one-beat",
 	"one-black-cell",
 	"one-of-one",
+	"phantom-terminal",
 	"phobos-gambit",
 	"quake-watch",
 	"sliding-graphene",
